@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Solid black fill — invisible against Color="#000000" splash background.
+       Replaces the .NET logo so no icon appears during the native OS splash. -->
+  <rect width="128" height="128" fill="#000000"/>
+</svg>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MantuGames.Views.Controls"
+             Shell.NavBarIsVisible="False"
+             x:Class="MantuGames.Views.WordFinderPage">
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="#FBF4ED" Dark="#1F1B1B" />
+    </ContentPage.BackgroundColor>
+    <AbsoluteLayout>
+
+        <!-- MAIN CONTENT -->
+        <Grid x:Name="RootGrid"
+              RowDefinitions="Auto,Auto,Auto,*,Auto,Auto"
+              Padding="12,16,12,8" RowSpacing="6"
+              AbsoluteLayout.LayoutFlags="All"
+              AbsoluteLayout.LayoutBounds="0,0,1,1">
+
+            <!-- TOP BAR -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="6">
+                <ImageButton Grid.Column="0" Source="icon_back_round.svg" Padding="0" HeightRequest="48" WidthRequest="48"
+                        BackgroundColor="Transparent"
+                        Clicked="OnBackClicked" VerticalOptions="Center"  />
+                <Frame Grid.Column="1" BackgroundColor="#8ECCCC" CornerRadius="20"
+                       Padding="12,6" HasShadow="False"
+                       HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="{Binding LevelDisplay}" TextColor="White"
+                           FontSize="16" FontFamily="BrickSans" FontAttributes="Bold" HorizontalOptions="Center" />
+                </Frame>
+                <ImageButton Grid.Column="2" Source="information.png"
+                             HeightRequest="24" WidthRequest="24"
+                             BackgroundColor="Transparent" Padding="0"
+                             Margin="0,0,4,0"
+                             Clicked="OnRulesClicked"
+                             VerticalOptions="Center" />
+                <ImageButton Grid.Column="3" Source="pause.png"
+                             HeightRequest="24" WidthRequest="24"
+                             BackgroundColor="Transparent" Padding="0"
+                             Margin="4,0"
+                             Clicked="OnPause"
+                             VerticalOptions="Center" />
+            </Grid>
+
+            <!-- TIMER -->
+            <controls:GameTimerView x:Name="WordFinderTimer" Grid.Row="2"
+                                    SecondsRemaining="{Binding TimeRemainingSec}" />
+
+            <!-- LETTER GRID centered -->
+            <Frame Grid.Row="3"
+                   BackgroundColor="White" CornerRadius="16"
+                   Padding="6" HasShadow="True"
+                   VerticalOptions="Center" HorizontalOptions="Center">
+                <Grid x:Name="LetterGrid" ColumnSpacing="2" RowSpacing="2" />
+            </Frame>
+
+            <!-- WORD LIST at bottom in multi-column table -->
+            <Frame Grid.Row="4"
+                   BackgroundColor="White" CornerRadius="16"
+                   Padding="10,8" HasShadow="True"
+                   HorizontalOptions="Fill">
+                <StackLayout Spacing="4">
+                    <Label Text="Find these words:" FontSize="13" FontFamily="BrickSans" FontAttributes="Bold"
+                           TextColor="#8ECCCC" HorizontalOptions="Center" />
+                    <CollectionView ItemsSource="{Binding Words}" SelectionMode="None">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="8" VerticalItemSpacing="4" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="6,4" CornerRadius="8" HasShadow="False"
+                                       BackgroundColor="#F1F8E9"
+                                       HorizontalOptions="Fill"
+                                       Margin="2">
+                                    <Label Text="{Binding DisplayWord}"
+                                           FontSize="13" FontFamily="BrickSans" FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           HorizontalTextAlignment="Center"
+                                            TextColor="#4A3728" />
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
+
+            <!-- SHOW SOLUTION + HINT row -->
+            <Grid Grid.Row="5" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Button Grid.Column="0"
+                        Text="Show Solution"
+                        FontSize="14" FontAttributes="Bold"
+                        TextColor="White" BackgroundColor="#C4A4D4"
+                        CornerRadius="20" HeightRequest="40"
+                        Command="{Binding ShowSolutionCommand}" />
+
+            </Grid>
+        </Grid>
+
+        <!-- WIN/LOSS POPUP -->
+        <controls:GameResultPopup
+            x:Name="ResultPopup"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            NextLevelRequested="OnNextLevel"
+            RetryRequested="OnRetry" />
+
+        <controls:PauseOverlay x:Name="PauseOverlay" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+        <controls:ConfirmPopup x:Name="ConfirmPopup" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+        <controls:RulesPopup x:Name="RulesPopup" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+    </AbsoluteLayout>
+</ContentPage>
