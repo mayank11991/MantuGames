@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MantuGames.Views.Controls"
+             Shell.NavBarIsVisible="False"
+             x:Class="MantuGames.Views.BlockPuzzlePage">
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="#FBF4ED" Dark="#2D2A3D" />
+    </ContentPage.BackgroundColor>
+
+    <AbsoluteLayout>
+
+        <Grid x:Name="PageRoot" RowDefinitions="Auto,Auto,*,Auto"
+              Padding="8,44,8,8" RowSpacing="6"
+              AbsoluteLayout.LayoutFlags="All"
+              AbsoluteLayout.LayoutBounds="0,0,1,1">
+
+            <!-- TOP BAR -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto,Auto" ColumnSpacing="8"
+                  Padding="4,0">
+                <ImageButton Grid.Column="0" Source="icon_back_round.svg"
+                             Padding="0" HeightRequest="44" WidthRequest="44"
+                             BackgroundColor="Transparent" Clicked="OnBackClicked"
+                             VerticalOptions="Center"/>
+                <Border Grid.Column="1" BackgroundColor="#3A364A" StrokeThickness="0"
+                        Padding="12,6" VerticalOptions="Center">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                    <Label Text="{Binding LevelDisplay}" TextColor="#F0E6D8"
+                           FontSize="15" FontFamily="BrickSans" FontAttributes="Bold" HorizontalOptions="Center"/>
+                </Border>
+                <ImageButton Grid.Column="3" Source="information.png"
+                             HeightRequest="24" WidthRequest="24"
+                             BackgroundColor="Transparent" Padding="0"
+                             Margin="0,0,4,0"
+                             Clicked="OnRulesClicked"
+                             VerticalOptions="Center" />
+                <ImageButton Grid.Column="4" Source="pause.png"
+                             HeightRequest="24" WidthRequest="24"
+                             BackgroundColor="Transparent" Padding="0"
+                             Margin="4,0"
+                             Clicked="OnPause"
+                             VerticalOptions="Center" />
+            </Grid>
+
+           <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="10">
+               <Border Grid.Column="3" BackgroundColor="#3A364A" StrokeThickness="0"
+                       Padding="10,5" VerticalOptions="Center">
+                   <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                   <StackLayout Spacing="0">
+                       <Label Text="SCORE" TextColor="#B0A696" FontSize="9" FontFamily="BrickSans"
+                              FontAttributes="Bold" HorizontalOptions="Center"/>
+                       <Label Text="{Binding Score}" TextColor="White"
+                              FontSize="13" FontFamily="BrickSans" FontAttributes="Bold" HorizontalOptions="Center"/>
+                   </StackLayout>
+               </Border>
+               <Border Grid.Column="4" BackgroundColor="#3A364A" StrokeThickness="0"
+                       Padding="10,5" VerticalOptions="Center">
+                   <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                   <StackLayout Spacing="0">
+                       <Label Text="LINES" TextColor="#B0A696" FontSize="9" FontFamily="BrickSans"
+                              FontAttributes="Bold" HorizontalOptions="Center"/>
+                       <Label Text="{Binding LinesCleared}" TextColor="#D4B896"
+                              FontSize="13" FontFamily="BrickSans" FontAttributes="Bold" HorizontalOptions="Center"/>
+                   </StackLayout>
+               </Border>
+           </HorizontalStackLayout>
+            
+            
+            <!-- GAME AREA -->
+            <!-- Fill (not Center) so BoardContainer's actual bounds equal the
+                 remaining space in this "*" row, after the top bar/score row/
+                 next-piece panel take theirs. BuildBoard() measures this
+                 container's real size instead of guessing from screen size,
+                 so the board can never grow into the panel below it. -->
+            <Border Grid.Row="2" x:Name="BoardContainer"
+                    BackgroundColor="#1B2838" StrokeThickness="2" Stroke="#5A5670"
+                    VerticalOptions="Fill" HorizontalOptions="Fill">
+                <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnRotate"/>
+                    <PanGestureRecognizer PanUpdated="OnPanBoard"/>
+                </Border.GestureRecognizers>
+                <Grid x:Name="BoardGrid" RowSpacing="0" ColumnSpacing="0"
+                      HorizontalOptions="Center" VerticalOptions="Center"
+                      InputTransparent="True"/>
+            </Border>
+
+            <!-- BOTTOM PANEL: Next piece + score -->
+            <Border Grid.Row="3" x:Name="NextPieceOverlay"
+                    BackgroundColor="#1B2838" StrokeThickness="1" Stroke="#5A5670"
+                    HorizontalOptions="Center" Padding="10,6" Margin="0,4,0,8">
+                <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                <HorizontalStackLayout Spacing="12">
+                    <Label Text="NEXT" TextColor="#B0A696" FontSize="12" FontFamily="BrickSans"
+                           FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Grid x:Name="NextPieceGrid" RowSpacing="0" ColumnSpacing="0"
+                          HorizontalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Border>
+
+        </Grid>
+
+        <controls:GameResultPopup x:Name="ResultPopup"
+            AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"
+            NextLevelRequested="OnNextLevel" RetryRequested="OnRetry"/>
+
+        <controls:PauseOverlay x:Name="PauseOverlay" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+        <controls:ConfirmPopup x:Name="ConfirmPopup" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+        <controls:RulesPopup x:Name="RulesPopup" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+    </AbsoluteLayout>
+</ContentPage>

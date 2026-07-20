@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#FF4433"
+             x:Class="MantuGames.Views.SplashPage">
+
+    <Grid x:Name="Root" HorizontalOptions="Fill" VerticalOptions="Fill">
+        <GraphicsView x:Name="DustCanvas"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill"
+                      InputTransparent="True" />
+        <VerticalStackLayout x:Name="CenterStack"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             Spacing="10">
+            <HorizontalStackLayout x:Name="MantuRow"
+                                   HorizontalOptions="Center"
+                                   Spacing="4" />
+            <Label x:Name="GamingsLabel"
+                   Text="GAMINGS"
+                   FontFamily="BrickSans"
+                   FontSize="14"
+                   TextColor="#ffffff"
+                   HorizontalOptions="Center"
+                   CharacterSpacing="8"
+                   Opacity="0"
+                   Padding="10,0,10,10" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>

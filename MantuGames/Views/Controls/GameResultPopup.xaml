@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentView
+    x:Class="MantuGames.Views.Controls.GameResultPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    IsVisible="False">
+
+    <Grid>
+        <!-- Dim backdrop -->
+        <BoxView BackgroundColor="#882D2A3D" HorizontalOptions="Fill" VerticalOptions="Fill" />
+
+        <!-- Popup card -->
+        <Border x:Name="PopupCard"
+                StrokeThickness="0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                WidthRequest="310">
+            <Border.BackgroundColor>
+                <AppThemeBinding Light="#FFFFFF" Dark="#3A364A" />
+            </Border.BackgroundColor>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="32"/>
+            </Border.StrokeShape>
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,6" Radius="24" Opacity="0.28"/>
+            </Border.Shadow>
+
+            <StackLayout Spacing="0" Padding="24,20,24,28">
+
+                <!-- Hero icon (trophy or clock) -->
+                <Image x:Name="HeroIcon"
+                       HeightRequest="100"
+                       WidthRequest="100"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,8"/>
+
+                <!-- Stars row (win only) -->
+                <StackLayout x:Name="StarsRow"
+                             Orientation="Horizontal"
+                             HorizontalOptions="Center"
+                             Spacing="6"
+                             IsVisible="False"
+                             Margin="0,0,0,6">
+                    <Image x:Name="StarImg1" HeightRequest="48" WidthRequest="48"/>
+                    <Image x:Name="StarImg2" HeightRequest="48" WidthRequest="48"/>
+                    <Image x:Name="StarImg3" HeightRequest="48" WidthRequest="48"/>
+                </StackLayout>
+
+                <!-- Title -->
+                <Label x:Name="TitleLabel"
+                       FontFamily="BrickSans"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                       Margin="0,0,0,2"/>
+
+                <!-- Points badge -->
+                <Border x:Name="PointsBadge"
+                        BackgroundColor="#D4B896"
+                        StrokeThickness="0"
+                        HorizontalOptions="Center"
+                        IsVisible="False"
+                        Margin="0,4,0,4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16"/>
+                    </Border.StrokeShape>
+                    <Label x:Name="PointsLabel"
+                           FontFamily="BrickSans"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           Padding="14,5"/>
+                </Border>
+
+                <!-- Message -->
+                <Label x:Name="MessageLabel"
+                       FontSize="14"
+                       TextColor="#8B7B6A"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,4,0,18"/>
+
+                <!-- Primary action button (Next Level / Try Again) -->
+                <Border x:Name="PrimaryBorder"
+                        StrokeThickness="0"
+                        HorizontalOptions="Fill"
+                        Margin="0,0,0,10">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="28"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,4" Radius="8" Opacity="0.22"/>
+                    </Border.Shadow>
+                    <Grid HeightRequest="58">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPrimaryClicked"/>
+                        </Grid.GestureRecognizers>
+                        <!-- icon on left -->
+                        <Image x:Name="PrimaryIcon"
+                               HeightRequest="38" WidthRequest="38"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"
+                               Margin="10,0,0,0"/>
+                        <!-- label centred -->
+                        <Label x:Name="PrimaryLabel"
+                               FontFamily="BrickSans"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Secondary action (Retry, win screen only) -->
+                <Border x:Name="SecondaryBorder"
+                        BackgroundColor="#E8B4B4"
+                        StrokeThickness="2"
+                        Stroke="#A8C4A0"
+                        HorizontalOptions="Fill"
+                        IsVisible="False">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="28"/>
+                    </Border.StrokeShape>
+                    <Grid HeightRequest="50">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSecondaryClicked"/>
+                        </Grid.GestureRecognizers>
+                        <Image Source="icon_retry.svg"
+                               HeightRequest="32" WidthRequest="32"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"
+                               Margin="10,0,0,0"/>
+                        <Label FontFamily="BrickSans"
+                               FontSize="16"
+                               TextColor="#4A3728"
+                               Text="Retry"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+            </StackLayout>
+        </Border>
+    </Grid>
+</ContentView>

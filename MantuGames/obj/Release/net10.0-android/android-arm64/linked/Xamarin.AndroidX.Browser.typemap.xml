@@ -1,0 +1,25 @@
+<api type="release" assembly-name="Xamarin.AndroidX.Browser" mvid="d08d9b51791b44f8a2b37bf05863bca3">
+  <module assembly-name="Xamarin.AndroidX.Browser" mvid="d08d9b51791b44f8a2b37bf05863bca3" mvid-bytes="UZuN0Bt5+ESis3vwWGO8ow==">
+    <duplicates>
+      <entry java-name="android/support/customtabs/IAuthTabCallback" managed-type-name="Android.Support.CustomTabs.IAuthTabCallbackInvoker" token="33554448" />
+      <entry java-name="androidx/browser/auth/AuthTabCallback" managed-type-name="AndroidX.Browser.Auth.IAuthTabCallbackInvoker" token="33554452" />
+      <entry java-name="androidx/browser/customtabs/CustomTabsServiceConnection" managed-type-name="AndroidX.Browser.CustomTabs.CustomTabsServiceConnectionInvoker" token="33554460" />
+      <entry java-name="androidx/browser/customtabs/EngagementSignalsCallback" managed-type-name="AndroidX.Browser.CustomTabs.IEngagementSignalsCallbackInvoker" token="33554464" />
+    </duplicates>
+    <types-scratch>
+      <entry key="android/support/customtabs/IAuthTabCallback" java-name="android/support/customtabs/IAuthTabCallback" managed-type-name="Android.Support.CustomTabs.IAuthTabCallback" token="33554447" skip-in-java-to-managed="True" />
+      <entry key="androidx/browser/auth/AuthTabSession" java-name="androidx/browser/auth/AuthTabSession" managed-type-name="AndroidX.Browser.Auth.AuthTabSession" token="33554449" />
+      <entry key="androidx/browser/auth/AuthTabSession$PendingSession" java-name="androidx/browser/auth/AuthTabSession$PendingSession" managed-type-name="AndroidX.Browser.Auth.AuthTabSession/PendingSession" token="33554450" />
+      <entry key="androidx/browser/auth/AuthTabCallback" java-name="androidx/browser/auth/AuthTabCallback" managed-type-name="AndroidX.Browser.Auth.IAuthTabCallback" token="33554451" skip-in-java-to-managed="True" />
+      <entry key="androidx/browser/customtabs/CustomTabsClient" java-name="androidx/browser/customtabs/CustomTabsClient" managed-type-name="AndroidX.Browser.CustomTabs.CustomTabsClient" token="33554453" />
+      <entry key="androidx/browser/customtabs/CustomTabsClient_CustomTabsCallbackImpl" java-name="androidx/browser/customtabs/CustomTabsClient_CustomTabsCallbackImpl" managed-type-name="AndroidX.Browser.CustomTabs.CustomTabsClient/CustomTabsCallbackImpl" token="33554456" />
+      <entry key="crc64396a3fe5f8138e3f/KeepAliveService" java-name="crc64396a3fe5f8138e3f/KeepAliveService" managed-type-name="AndroidX.Browser.CustomTabs.KeepAliveService" token="33554457" />
+      <entry key="androidx/browser/customtabs/CustomTabsCallback" java-name="androidx/browser/customtabs/CustomTabsCallback" managed-type-name="AndroidX.Browser.CustomTabs.CustomTabsCallback" token="33554458" />
+      <entry key="androidx/browser/customtabs/CustomTabsServiceConnection" java-name="androidx/browser/customtabs/CustomTabsServiceConnection" managed-type-name="AndroidX.Browser.CustomTabs.CustomTabsServiceConnection" token="33554459" />
+      <entry key="androidx/browser/customtabs/CustomTabsSession" java-name="androidx/browser/customtabs/CustomTabsSession" managed-type-name="AndroidX.Browser.CustomTabs.CustomTabsSession" token="33554461" />
+      <entry key="androidx/browser/customtabs/CustomTabsSession$PendingSession" java-name="androidx/browser/customtabs/CustomTabsSession$PendingSession" managed-type-name="AndroidX.Browser.CustomTabs.CustomTabsSession/PendingSession" token="33554462" />
+      <entry key="androidx/browser/customtabs/EngagementSignalsCallback" java-name="androidx/browser/customtabs/EngagementSignalsCallback" managed-type-name="AndroidX.Browser.CustomTabs.IEngagementSignalsCallback" token="33554463" skip-in-java-to-managed="True" />
+      <entry key="androidx/browser/customtabs/PrefetchOptions" java-name="androidx/browser/customtabs/PrefetchOptions" managed-type-name="AndroidX.Browser.CustomTabs.PrefetchOptions" token="33554465" />
+    </types-scratch>
+  </module>
+</api>

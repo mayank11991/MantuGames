@@ -1,0 +1,255 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = true
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.VerifyReferenceTrimCompatibility = 
+build_property.VerifyReferenceAotCompatibility = 
+build_property.MauiXamlNoWarn = 
+build_property.EnableMauiXamlDiagnostics = true
+build_property.MauiXamlLineInfo = 
+build_property.Configuration = Debug
+build_property.TargetFramework = net10.0-android
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MantuGames
+build_property.ProjectDir = /Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/DashboardPage.xaml]
+build_metadata.AdditionalFiles.GenKind = 
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = 
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.DashboardPage.xaml
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = Views/DashboardPage.xaml
+build_metadata.AdditionalFiles.RelativePath = 
+build_metadata.AdditionalFiles.RelativePath = Views/DashboardPage.xaml
+build_metadata.AdditionalFiles.Inflator = 
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Colors.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Styles.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/BlockPuzzlePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.BlockPuzzlePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/BlockPuzzlePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/BlockPuzzlePage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/CardMemoryPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.CardMemoryPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/CardMemoryPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/CardMemoryPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/ConfirmPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.ConfirmPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/ConfirmPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/ConfirmPopup.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/GameResultPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.GameResultPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/GameResultPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/GameResultPopup.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/GameTimerView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.GameTimerView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/GameTimerView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/GameTimerView.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/PauseOverlay.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.PauseOverlay.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/PauseOverlay.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/PauseOverlay.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/ProfilePopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.ProfilePopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/ProfilePopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/ProfilePopup.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/RulesPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.RulesPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/RulesPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/RulesPopup.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/SettingsPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.SettingsPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/SettingsPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/SettingsPopup.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/LevelMapPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.LevelMapPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/LevelMapPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/LevelMapPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/MathGamePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.MathGamePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/MathGamePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/MathGamePage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/MazeRunnerPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.MazeRunnerPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/MazeRunnerPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/MazeRunnerPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/PuzzlePetsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.PuzzlePetsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/PuzzlePetsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/PuzzlePetsPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/SplashPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.SplashPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/SplashPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/SplashPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/SudokuPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.SudokuPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/SudokuPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/SudokuPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/TowerOfHanoiPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.TowerOfHanoiPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/TowerOfHanoiPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/TowerOfHanoiPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/WordFinderPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.WordFinderPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/WordFinderPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/WordFinderPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 

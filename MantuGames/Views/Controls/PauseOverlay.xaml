@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="MantuGames.Views.Controls.PauseOverlay"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid x:Name="Overlay"
+          BackgroundColor="{AppThemeBinding Light=#882D2A3D, Dark=#882D2A3D}"
+          InputTransparent="False">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnOverlayTapped" />
+        </Grid.GestureRecognizers>
+        <VerticalStackLayout VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Spacing="24">
+            <Label Text="PAUSED"
+                   FontFamily="BrickSans"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center">
+                <Label.TextColor>
+                    <AppThemeBinding Light="#F0E6D8" Dark="#F0E6D8" />
+                </Label.TextColor>
+            </Label>
+
+            <Border BackgroundColor="#D4B896"
+                    StrokeThickness="0"
+                    Padding="28,12"
+                    HorizontalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14" />
+                </Border.StrokeShape>
+                <Label Text="RESUME"
+                       FontFamily="BrickSans"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnResume" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Border>
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentView>

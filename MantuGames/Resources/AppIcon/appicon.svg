@@ -1,0 +1,32 @@
+<svg width="456" height="456" viewBox="0 0 456 456" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="456" y2="456" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="456" height="456" fill="url(#bgGrad)"/>
+
+  <!-- gamepad shadow -->
+  <rect x="118" y="184" width="220" height="100" rx="50" fill="#2B0B98" opacity="0.18"/>
+
+  <!-- gamepad body -->
+  <rect x="118" y="178" width="220" height="100" rx="50" fill="#FFFFFF"/>
+
+  <!-- d-pad -->
+  <rect x="143" y="222" width="40" height="12" rx="4" fill="#2B0B98"/>
+  <rect x="157" y="208" width="12" height="40" rx="4" fill="#2B0B98"/>
+
+  <!-- action buttons -->
+  <circle cx="289" cy="211" r="12" fill="#FFD166"/>
+  <circle cx="313" cy="234" r="12" fill="#06D6A0"/>
+
+  <!-- sparkles -->
+  <g transform="translate(150,150) scale(0.85)">
+    <path d="M 0,-28 C 6,-9 9,-6 28,0 C 9,6 6,9 0,28 C -6,9 -9,6 -28,0 C -9,-6 -6,-9 0,-28 Z" fill="#FFD166"/>
+  </g>
+  <g transform="translate(306,306) scale(0.75)">
+    <path d="M 0,-28 C 6,-9 9,-6 28,0 C 9,6 6,9 0,28 C -6,9 -9,6 -28,0 C -9,-6 -6,-9 0,-28 Z" fill="#FFFFFF" opacity="0.9"/>
+  </g>
+</svg>

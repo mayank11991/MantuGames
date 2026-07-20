@@ -1,0 +1,8 @@
+<api type="release" assembly-name="MantuGames" mvid="f073ff2443454a63bc98bb32fb10e1e3">
+  <module assembly-name="MantuGames" mvid="f073ff2443454a63bc98bb32fb10e1e3" mvid-bytes="JP9z8EVDY0q8mLsy+xDh4w==">
+    <types-scratch>
+      <entry key="crc6490a491547de00fc7/MainActivity" java-name="crc6490a491547de00fc7/MainActivity" managed-type-name="MantuGames.MainActivity" token="33554441" />
+      <entry key="crc6490a491547de00fc7/MainApplication" java-name="crc6490a491547de00fc7/MainApplication" managed-type-name="MantuGames.MainApplication" token="33554442" />
+    </types-scratch>
+  </module>
+</api>

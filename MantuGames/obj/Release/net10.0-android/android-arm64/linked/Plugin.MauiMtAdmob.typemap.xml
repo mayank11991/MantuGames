@@ -1,0 +1,30 @@
+<api type="release" assembly-name="Plugin.MauiMtAdmob" mvid="3e7e013d7a084d168d01a25c81499995">
+  <module assembly-name="Plugin.MauiMtAdmob" mvid="3e7e013d7a084d168d01a25c81499995" mvid-bytes="PQF+Pgh6Fk2NAaJcgUmZlQ==">
+    <types-scratch>
+      <entry key="crc64f98ae9be26790314/InterstitialAd" java-name="crc64f98ae9be26790314/InterstitialAd" managed-type-name="Android.Gms.Ads.Hack.InterstitialAd" token="33554435" />
+      <entry key="com/google/android/gms/ads/interstitial/InterstitialAdLoadCallback" java-name="com/google/android/gms/ads/interstitial/InterstitialAdLoadCallback" managed-type-name="Android.Gms.Ads.Hack.InterstitialAdLoadCallback" token="33554436" />
+      <entry key="crc64f98ae9be26790314/RewardedAd" java-name="crc64f98ae9be26790314/RewardedAd" managed-type-name="Android.Gms.Ads.Hack.RewardedAd" token="33554437" />
+      <entry key="com/google/android/gms/ads/rewarded/RewardedAdLoadCallback" java-name="com/google/android/gms/ads/rewarded/RewardedAdLoadCallback" managed-type-name="Android.Gms.Ads.Hack.RewardedAdLoadCallback" token="33554438" />
+      <entry key="crc64f98ae9be26790314/RewardedInterstitialAd" java-name="crc64f98ae9be26790314/RewardedInterstitialAd" managed-type-name="Android.Gms.Ads.Hack.RewardedInterstitialAd" token="33554439" />
+      <entry key="com/google/android/gms/ads/rewardedinterstitial/RewardedInterstitialAdLoadCallback" java-name="com/google/android/gms/ads/rewardedinterstitial/RewardedInterstitialAdLoadCallback" managed-type-name="Android.Gms.Ads.Hack.RewardedInterstitialAdLoadCallback" token="33554440" />
+      <entry key="crc64f98ae9be26790314/AppOpenAd" java-name="crc64f98ae9be26790314/AppOpenAd" managed-type-name="Android.Gms.Ads.Hack.AppOpenAd" token="33554441" />
+      <entry key="com/google/android/gms/ads/appopen/AppOpenAd$AppOpenAdLoadCallback" java-name="com/google/android/gms/ads/appopen/AppOpenAd$AppOpenAdLoadCallback" managed-type-name="Android.Gms.Ads.Hack.AppOpenAdLoadCallback" token="33554442" />
+      <entry key="crc64f98ae9be26790314/AdManagerInterstitialAd" java-name="crc64f98ae9be26790314/AdManagerInterstitialAd" managed-type-name="Android.Gms.Ads.Hack.AdManagerInterstitialAd" token="33554443" />
+      <entry key="com/google/android/gms/ads/admanager/AdManagerInterstitialAdLoadCallback" java-name="com/google/android/gms/ads/admanager/AdManagerInterstitialAdLoadCallback" managed-type-name="Android.Gms.Ads.Hack.AdManagerInterstitialAdLoadCallback" token="33554444" />
+      <entry key="crc6491bfa4099bd0c3ba/MauiMTAdmob" java-name="crc6491bfa4099bd0c3ba/MauiMTAdmob" managed-type-name="Plugin.MauiMtAdmob.MauiMTAdmob" token="33554450" />
+      <entry key="crc64509fec87287e985b/AdMInterstitialService" java-name="crc64509fec87287e985b/AdMInterstitialService" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.AdMInterstitialService" token="33554451" />
+      <entry key="crc64509fec87287e985b/AdMRewardInterstitialService" java-name="crc64509fec87287e985b/AdMRewardInterstitialService" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardInterstitialService" token="33554453" />
+      <entry key="crc64509fec87287e985b/AdMRewardService" java-name="crc64509fec87287e985b/AdMRewardService" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardService" token="33554454" />
+      <entry key="crc64509fec87287e985b/AppOpenAdManager" java-name="crc64509fec87287e985b/AppOpenAdManager" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.AppOpenAdManager" token="33554456" />
+      <entry key="crc64509fec87287e985b/InterstitialService" java-name="crc64509fec87287e985b/InterstitialService" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.InterstitialService" token="33554457" />
+      <entry key="crc64509fec87287e985b/MyAdBannerListener" java-name="crc64509fec87287e985b/MyAdBannerListener" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.MyAdBannerListener" token="33554462" />
+      <entry key="crc64509fec87287e985b/MyFullScreenContentCallback" java-name="crc64509fec87287e985b/MyFullScreenContentCallback" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.MyFullScreenContentCallback" token="33554463" />
+      <entry key="crc64509fec87287e985b/NativeAdManager" java-name="crc64509fec87287e985b/NativeAdManager" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.NativeAdManager" token="33554465" />
+      <entry key="crc64509fec87287e985b/RewardInterstitialService" java-name="crc64509fec87287e985b/RewardInterstitialService" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService" token="33554466" />
+      <entry key="crc64509fec87287e985b/RewardInterstitialService_RewardInterstitialLoadCallbackImpl" java-name="crc64509fec87287e985b/RewardInterstitialService_RewardInterstitialLoadCallbackImpl" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService/RewardInterstitialLoadCallbackImpl" token="33554507" />
+      <entry key="crc64509fec87287e985b/RewardService" java-name="crc64509fec87287e985b/RewardService" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.RewardService" token="33554467" />
+      <entry key="crc64509fec87287e985b/RewardService_RewardLoadCallbackImpl" java-name="crc64509fec87287e985b/RewardService_RewardLoadCallbackImpl" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.RewardService/RewardLoadCallbackImpl" token="33554508" />
+      <entry key="crc64509fec87287e985b/UMPImplementation" java-name="crc64509fec87287e985b/UMPImplementation" managed-type-name="Plugin.MauiMtAdmob.Platforms.Android.UMPImplementation" token="33554468" />
+    </types-scratch>
+  </module>
+</api>

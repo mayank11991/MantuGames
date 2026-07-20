@@ -1,0 +1,7 @@
+<api type="release" assembly-name="Xamarin.AndroidX.Lifecycle.ViewModelSavedState.Android" mvid="52676e0df7ed4029a5de7d0bf5ba6099">
+  <module assembly-name="Xamarin.AndroidX.Lifecycle.ViewModelSavedState.Android" mvid="52676e0df7ed4029a5de7d0bf5ba6099" mvid-bytes="DW5nUu33KUCl3n0L9bpgmQ==">
+    <types-scratch>
+      <entry key="androidx/lifecycle/SavedStateHandle" java-name="androidx/lifecycle/SavedStateHandle" managed-type-name="AndroidX.Lifecycle.SavedStateHandle" token="33554434" />
+    </types-scratch>
+  </module>
+</api>

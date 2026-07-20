@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MantuGames</name>
+    </assembly>
+    <members>
+        <member name="T:MantuGames.Converters.CellBackgroundConverter">
+            <summary>Returns background color for a Sudoku cell based on its state.</summary>
+        </member>
+        <member name="T:MantuGames.Converters.CellTextColorConverter">
+            <summary>Returns text color for a cell.</summary>
+        </member>
+        <member name="T:MantuGames.Converters.TimerColorConverter">
+            <summary>Timer bar color — green → orange → red as time runs out.</summary>
+        </member>
+        <member name="T:MantuGames.Converters.InverseBoolConverter">
+            <summary>Bool to visibility (IsVisible).</summary>
+        </member>
+        <member name="M:MantuGames.Models.HanoiPuzzle.GetPileBottomToTop(System.Int32)">
+            <summary>
+            Returns discs bottom-to-top: index 0 = largest (bottom), last = smallest (top).
+            Use this order for rendering — draw index 0 first (at bottom of pole visual).
+            </summary>
+        </member>
+        <member name="T:MantuGames.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+    </members>
+</doc>

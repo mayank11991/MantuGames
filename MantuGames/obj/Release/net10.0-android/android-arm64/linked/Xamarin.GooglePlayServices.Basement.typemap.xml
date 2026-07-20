@@ -1,0 +1,10 @@
+<api type="release" assembly-name="Xamarin.GooglePlayServices.Basement" mvid="ee19bf76b82347f0b7ce2d30411574b0">
+  <module assembly-name="Xamarin.GooglePlayServices.Basement" mvid="ee19bf76b82347f0b7ce2d30411574b0" mvid-bytes="dr8Z7iO48Ee3zi0wQRV0sA==">
+    <duplicates>
+      <entry java-name="com/google/android/gms/common/internal/safeparcel/AbstractSafeParcelable" managed-type-name="Android.Gms.Common.Internal.SafeParcel.AbstractSafeParcelableInvoker" token="33554436" />
+    </duplicates>
+    <types-scratch>
+      <entry key="com/google/android/gms/common/internal/safeparcel/AbstractSafeParcelable" java-name="com/google/android/gms/common/internal/safeparcel/AbstractSafeParcelable" managed-type-name="Android.Gms.Common.Internal.SafeParcel.AbstractSafeParcelable" token="33554435" />
+    </types-scratch>
+  </module>
+</api>

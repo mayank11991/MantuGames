@@ -1,0 +1,28 @@
+<api>
+  <jcw-types>
+    <type name="CustomTabsClient_CustomTabsCallbackImpl" package="androidx.browser.customtabs" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="androidx.browser.customtabs.CustomTabsCallback" partial_assembly_qualified_name="AndroidX.Browser.CustomTabs.CustomTabsClient+CustomTabsCallbackImpl, Xamarin.AndroidX.Browser">
+      <constructors>
+        <constructor name="CustomTabsClient_CustomTabsCallbackImpl" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onNavigationEvent" method="n_onNavigationEvent:(ILandroid/os/Bundle;)V:GetOnNavigationEvent_ILandroid_os_Bundle_Handler" jni_signature="(ILandroid/os/Bundle;)V" params="int p0, android.os.Bundle p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="extraCallback" method="n_extraCallback:(Ljava/lang/String;Landroid/os/Bundle;)V:GetExtraCallback_Ljava_lang_String_Landroid_os_Bundle_Handler" jni_signature="(Ljava/lang/String;Landroid/os/Bundle;)V" params="java.lang.String p0, android.os.Bundle p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="KeepAliveService" package="crc64396a3fe5f8138e3f" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.app.Service" partial_assembly_qualified_name="AndroidX.Browser.CustomTabs.KeepAliveService, Xamarin.AndroidX.Browser">
+      <constructors>
+        <constructor name="KeepAliveService" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onBind" method="n_onBind:(Landroid/content/Intent;)Landroid/os/IBinder;:GetOnBind_Landroid_content_Intent_Handler" jni_signature="(Landroid/content/Intent;)Landroid/os/IBinder;" params="android.content.Intent p0" retval="android.os.IBinder" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="Xamarin.AndroidX.Browser" module-name="Xamarin.AndroidX.Browser.dll">
+    <type assembly-qualified-name="Android.Support.CustomTabs.IAuthTabCallback, Xamarin.AndroidX.Browser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.support.customtabs.IAuthTabCallback" java-key="android.support.customtabs.IAuthTabCallback" managed-key="Android.Support.CustomTabs.IAuthTabCallback" partial-assembly-qualified-name="Android.Support.CustomTabs.IAuthTabCallback, Xamarin.AndroidX.Browser" />
+    <type assembly-qualified-name="AndroidX.Browser.Auth.IAuthTabCallback, Xamarin.AndroidX.Browser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="androidx.browser.auth.AuthTabCallback" java-key="androidx.browser.auth.AuthTabCallback" managed-key="AndroidX.Browser.Auth.IAuthTabCallback" partial-assembly-qualified-name="AndroidX.Browser.Auth.IAuthTabCallback, Xamarin.AndroidX.Browser" />
+    <type assembly-qualified-name="AndroidX.Browser.CustomTabs.CustomTabsClient+CustomTabsCallbackImpl, Xamarin.AndroidX.Browser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="androidx.browser.customtabs.CustomTabsClient_CustomTabsCallbackImpl" java-key="androidx.browser.customtabs.CustomTabsClient_CustomTabsCallbackImpl" managed-key="AndroidX.Browser.CustomTabs.CustomTabsClient.CustomTabsCallbackImpl" partial-assembly-qualified-name="AndroidX.Browser.CustomTabs.CustomTabsClient+CustomTabsCallbackImpl, Xamarin.AndroidX.Browser" />
+    <type assembly-qualified-name="AndroidX.Browser.CustomTabs.KeepAliveService, Xamarin.AndroidX.Browser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="androidx.browser.customtabs.KeepAliveService" java-key="crc64396a3fe5f8138e3f.KeepAliveService" managed-key="AndroidX.Browser.CustomTabs.KeepAliveService" partial-assembly-qualified-name="AndroidX.Browser.CustomTabs.KeepAliveService, Xamarin.AndroidX.Browser" />
+    <type assembly-qualified-name="AndroidX.Browser.CustomTabs.IEngagementSignalsCallback, Xamarin.AndroidX.Browser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="androidx.browser.customtabs.EngagementSignalsCallback" java-key="androidx.browser.customtabs.EngagementSignalsCallback" managed-key="AndroidX.Browser.CustomTabs.IEngagementSignalsCallback" partial-assembly-qualified-name="AndroidX.Browser.CustomTabs.IEngagementSignalsCallback, Xamarin.AndroidX.Browser" />
+  </acw-types>
+</api>

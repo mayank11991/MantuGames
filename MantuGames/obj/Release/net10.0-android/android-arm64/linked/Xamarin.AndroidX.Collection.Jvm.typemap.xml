@@ -1,0 +1,7 @@
+<api type="release" assembly-name="Xamarin.AndroidX.Collection.Jvm" mvid="9700c5e564b74efea859988afb66c5ea">
+  <module assembly-name="Xamarin.AndroidX.Collection.Jvm" mvid="9700c5e564b74efea859988afb66c5ea" mvid-bytes="5cUAl7dk/k6oWZiK+2bF6g==">
+    <types-scratch>
+      <entry key="androidx/collection/SparseArrayCompat" java-name="androidx/collection/SparseArrayCompat" managed-type-name="AndroidX.Collection.SparseArrayCompat" token="33554450" />
+    </types-scratch>
+  </module>
+</api>

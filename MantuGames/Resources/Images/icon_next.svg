@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- shadow -->
+  <circle cx="50" cy="52" r="46" fill="#1B5E20" opacity="0.3"/>
+  <!-- main circle -->
+  <circle cx="50" cy="50" r="46" fill="#66BB6A"/>
+  <!-- highlight -->
+  <!-- play/forward arrow -->
+  <polygon points="36,28 36,72 72,50" fill="white"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- outer ring / shadow -->
+  <circle cx="50" cy="52" r="46" fill="#1565C0" opacity="0.3"/>
+  <!-- main circle -->
+  <circle cx="50" cy="50" r="46" fill="#42A5F5"/>
+  <!-- highlight arc -->
+  <!-- circular arrow -->
+  <path d="M50,22 A28,28 0 1,1 26,65" stroke="white" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- arrowhead -->
+  <polygon points="18,55 21,76 40,64" fill="white"/>
+</svg>
