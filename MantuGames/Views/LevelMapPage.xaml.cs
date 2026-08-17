@@ -81,8 +81,6 @@ public partial class LevelMapPage : ContentPage
             FaceColor = accent,
             FaceOpacity = lp.IsLocked ? 0.6 : 1.0,
             ShadowBrush = lp.IsLocked ? Brush.Transparent : new SolidColorBrush(Color.FromArgb("#882D2A3D")),
-            ShowNumber = !lp.IsLocked,
-            ShowLock = lp.IsLocked,
             ShowStars = lp.IsCompleted,
             LevelText = lp.LevelNumber.ToString(),
         };
@@ -169,4 +167,24 @@ public class LevelTileViewModel : INotifyPropertyChanged
     public bool Star3 { get; set; }
     public bool Star4 { get; set; }
     public bool Star5 { get; set; }
+
+    public View FaceContent => IsLocked
+        ? new Image
+        {
+            Source = "lock",
+            HeightRequest = 34,
+            WidthRequest = 34,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        }
+        : new Label
+        {
+            Text = LevelText,
+            FontFamily = "Orbitron",
+            FontSize = 34,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = Color.FromArgb("#160D02"),
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
 }

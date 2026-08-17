@@ -6,113 +6,29 @@ namespace MantuGames.Views.Controls;
 public partial class ProfilePopup : ContentView
 {
     private bool _submitted;
-    private int _day = 1;
-    private int _month = 1;
-    private int _year;
+    private int _selectedColorIndex = 0;
 
     public event EventHandler<PlayerProfile>? ProfileCreated;
 
-    private static readonly string[] Months =
-        { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+    private static readonly string[] AvatarPalette =
+    {
+        "#22D3EE", "#A855F7", "#FF9F1C", "#34D399",
+        "#F43F5E", "#3B82F6", "#FACC15", "#EC4899",
+    };
 
     public ProfilePopup()
     {
         InitializeComponent();
-        UpdateLabels();
-    }
-
-    private void UpdateLabels()
-    {
-        DayLabel.Text = _day.ToString();
-        MonthLabel.Text = Months[_month - 1];
-        YearLabel.Text = _year.ToString();
-    }
-
-    private int DaysInMonth() => DateTime.DaysInMonth(_year, _month);
-
-    // ── Swipe spinners: swipe up = increase, swipe down = decrease ──
-    private float _dayPanY, _monthPanY, _yearPanY;
-
-    private void OnDayPan(object sender, PanUpdatedEventArgs e)
-    {
-        switch (e.StatusType)
-        {
-            case GestureStatus.Started: _dayPanY = 0; break;
-            case GestureStatus.Running: _dayPanY = (float)e.TotalY; break;
-            case GestureStatus.Completed:
-            case GestureStatus.Canceled:
-                StepDay((int)Math.Round(-_dayPanY / 60.0));
-                break;
-        }
-    }
-
-    private void OnMonthPan(object sender, PanUpdatedEventArgs e)
-    {
-        switch (e.StatusType)
-        {
-            case GestureStatus.Started: _monthPanY = 0; break;
-            case GestureStatus.Running: _monthPanY = (float)e.TotalY; break;
-            case GestureStatus.Completed:
-            case GestureStatus.Canceled:
-                StepMonth((int)Math.Round(-_monthPanY / 60.0));
-                break;
-        }
-    }
-
-    private void OnYearPan(object sender, PanUpdatedEventArgs e)
-    {
-        switch (e.StatusType)
-        {
-            case GestureStatus.Started: _yearPanY = 0; break;
-            case GestureStatus.Running: _yearPanY = (float)e.TotalY; break;
-            case GestureStatus.Completed:
-            case GestureStatus.Canceled:
-                StepYear((int)Math.Round(-_yearPanY / 60.0));
-                break;
-        }
-    }
-
-    private void StepDay(int delta)
-    {
-        if (delta == 0) return;
-        int max = DaysInMonth();
-        _day = ((_day - 1 + delta) % max + max) % max + 1;
-        UpdateLabels();
-    }
-
-    private void StepMonth(int delta)
-    {
-        if (delta == 0) return;
-        _month = ((_month - 1 + delta) % 12 + 12) % 12 + 1;
-        ClampDay();
-        UpdateLabels();
-    }
-
-    private void StepYear(int delta)
-    {
-        if (delta == 0) return;
-        _year = Math.Max(DateTime.Now.Year - 80,
-                         Math.Min(DateTime.Now.Year, _year + delta));
-        ClampDay();
-        UpdateLabels();
-    }
-
-    private void ClampDay()
-    {
-        int max = DaysInMonth();
-        if (_day > max) _day = max;
     }
 
     public void Show()
     {
         _submitted = false;
-        _year = DateTime.Now.Year - 10;
-        _month = 1;
-        _day = 1;
+        _selectedColorIndex = 0;
         NameEntry.Text = "";
         NameEntry.PlaceholderColor = Color.FromArgb("#DCC8A8");
-        UpdateLabels();
+        BuildColorPicker();
+        UpdateColorSelection();
         IsVisible = true;
         Opacity = 0;
         Scale = 0.8;
@@ -134,6 +50,50 @@ public partial class ProfilePopup : ContentView
         });
     }
 
+    private void BuildColorPicker()
+    {
+        ColorPickerGrid.Children.Clear();
+        for (int i = 0; i < AvatarPalette.Length; i++)
+        {
+            int idx = i;
+            var border = new Border
+            {
+                BackgroundColor = Color.FromArgb(AvatarPalette[i]),
+                StrokeThickness = 0,
+                WidthRequest = 60,
+                HeightRequest = 50,
+            };
+            border.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 };
+            border.GestureRecognizers.Add(new TapGestureRecognizer
+            {
+                Command = new Command(() => SelectColor(idx))
+            });
+            Grid.SetRow(border, i / 4);
+            Grid.SetColumn(border, i % 4);
+            ColorPickerGrid.Children.Add(border);
+        }
+    }
+
+    private void SelectColor(int index)
+    {
+        _selectedColorIndex = index;
+        UpdateColorSelection();
+        AudioService.Instance.Play("tap");
+    }
+
+    private void UpdateColorSelection()
+    {
+        foreach (var child in ColorPickerGrid.Children)
+        {
+            int idx = ColorPickerGrid.Children.IndexOf(child);
+            if (child is Border b)
+            {
+                b.StrokeThickness = idx == _selectedColorIndex ? 4 : 0;
+                b.Stroke = idx == _selectedColorIndex ? new SolidColorBrush(Color.FromArgb("#FF9F1C")) : null;
+            }
+        }
+    }
+
     private void OnOverlayTapped(object sender, TappedEventArgs e)
     {
         // Consume tap to prevent passing through
@@ -151,7 +111,10 @@ public partial class ProfilePopup : ContentView
 
         _submitted = true;
 
-        var profile = ProfileService.AddProfile(name, $"{Months[_month - 1]} {_day}, {_year}");
+        var profile = ProfileService.AddProfile(name);
+        // Override the auto-assigned color with user's selection
+        profile.Color = AvatarPalette[_selectedColorIndex];
+        ProfileService.Save();
 
         AudioService.Instance.Play("win");
         Hide();
