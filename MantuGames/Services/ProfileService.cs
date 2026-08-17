@@ -61,7 +61,6 @@ public static class ProfileService
         var profile = new PlayerProfile
         {
             Name = Preferences.Default.Get("player_name", "Player 1"),
-            Dob = Preferences.Default.Get("player_dob", ""),
             Color = AvatarPalette[0],
         };
         if (string.IsNullOrWhiteSpace(profile.Name)) profile.Name = "Player 1";
@@ -76,6 +75,7 @@ public static class ProfileService
         {
             "sudoku", "wordfinder", "mathchallenge", "towerofhanoi",
             "cardmemory", "puzzlepets", "blockpuzzle", "mazerunner",
+            "animalcrush",
         };
         bool hadProgress = false;
         foreach (var g in games)
@@ -114,12 +114,11 @@ public static class ProfileService
         return false;
     }
 
-    public static PlayerProfile AddProfile(string name, string dob)
+    public static PlayerProfile AddProfile(string name)
     {
         var profile = new PlayerProfile
         {
             Name = name.Trim(),
-            Dob = dob,
             Color = AvatarPalette[_profiles.Count % AvatarPalette.Length],
         };
         _profiles.Add(profile);
@@ -142,7 +141,7 @@ public static class ProfileService
         ProfilesChanged?.Invoke(null, EventArgs.Empty);
     }
 
-    private static void Save()
+    public static void Save()
     {
         Preferences.Default.Set(ProfilesKey, JsonSerializer.Serialize(_profiles));
     }

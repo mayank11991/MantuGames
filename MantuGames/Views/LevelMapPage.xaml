@@ -80,43 +80,35 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Style="{StaticResource PanelCard}"
-                           Padding="0"
-                           BackgroundColor="Transparent"
-                           HasShadow="False"
-                           BorderColor="Transparent"
-                           CornerRadius="18"
-                           HeightRequest="82"
-                           WidthRequest="82">
-                        <Frame.GestureRecognizers>
+                    <Border BackgroundColor="Transparent"
+                            Padding="4"
+                            StrokeThickness="0">
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.LevelTappedCommand}"
                                 CommandParameter="{Binding .}" />
-                        </Frame.GestureRecognizers>
+                        </Border.GestureRecognizers>
                         <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
-                            <Grid Grid.Row="0"
-                                  HorizontalOptions="Center"
-                                  VerticalOptions="Center"
-                                  WidthRequest="74"
-                                  HeightRequest="74">
-                                <Border x:Name="LevelBg"
-                                        BackgroundColor="{Binding BgColor}"
-                                        Stroke="{Binding StrokeColor}"
-                                        StrokeThickness="2"
-                                        HorizontalOptions="Fill"
-                                        VerticalOptions="Fill">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="18" />
-                                    </Border.StrokeShape>
-                                    <Border.Shadow>
-                                        <Shadow
-                                            Brush="{Binding ShadowBrush}"
-                                            Offset="0,4"
-                                            Radius="8"
-                                            Opacity="0.45" />
-                                    </Border.Shadow>
-                                </Border>
-                                <Border BackgroundColor="{Binding FaceColor}"
+                            <Border x:Name="LevelBg"
+                                    BackgroundColor="{Binding BgColor}"
+                                    Stroke="{Binding StrokeColor}"
+                                    StrokeThickness="2"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    WidthRequest="74"
+                                    HeightRequest="74">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="18" />
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow
+                                        Brush="{Binding ShadowBrush}"
+                                        Offset="0,4"
+                                        Radius="8"
+                                        Opacity="0.45" />
+                                </Border.Shadow>
+                                <Border Content="{Binding FaceContent}"
+                                        BackgroundColor="{Binding FaceColor}"
                                         StrokeThickness="0"
                                         Opacity="{Binding FaceOpacity}"
                                         Margin="5"
@@ -126,23 +118,7 @@
                                         <RoundRectangle CornerRadius="14" />
                                     </Border.StrokeShape>
                                 </Border>
-                                <Grid HorizontalOptions="Center" VerticalOptions="Center">
-                                    <Label Text="{Binding LevelText}"
-                                           FontFamily="Orbitron"
-                                           FontSize="34"
-                                           FontAttributes="Bold"
-                                           TextColor="#160D02"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center"
-                                           IsVisible="{Binding ShowNumber}" />
-                                    <Image Source="lock"
-                                           HeightRequest="34"
-                                           WidthRequest="34"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center"
-                                           IsVisible="{Binding ShowLock}" />
-                                </Grid>
-                            </Grid>
+                            </Border>
                             <HorizontalStackLayout Grid.Row="1"
                                                    HorizontalOptions="Center"
                                                    Spacing="1"
@@ -164,7 +140,7 @@
                                        Opacity="0.45" IsVisible="{Binding Star5}" />
                             </HorizontalStackLayout>
                         </Grid>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
