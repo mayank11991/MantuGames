@@ -79,23 +79,23 @@ private static readonly string[] Tier3 = // 5-letter, levels 13+ (original 20 + 
         if (level <= 5)
         {
             bank = Tier1;
-            GridSize = 6;
-            wordCount = 3 + (level - 1) % 2;
+            GridSize = 9;
+            wordCount = 5 + (level - 1) % 2;
         }
         else if (level <= 12)
         {
             bank = Tier2;
-            GridSize = 7;
-            wordCount = 3 + (level - 6) % 3;
+            GridSize = 9;
+            wordCount = 6 + (level - 6) % 3;
         }
         else
         {
             bank = Tier3;
-            GridSize = 8;
-            wordCount = 3 + (level - 13) % 3;
+            GridSize = 9;
+            wordCount = 7 + (level - 13) % 3;
         }
 
-        wordCount = Math.Min(wordCount, 5);
+        wordCount = Math.Min(wordCount, 9);
 
         Grid = new char[GridSize, GridSize];
         Words.Clear();
@@ -120,13 +120,31 @@ private static readonly string[] Tier3 = // 5-letter, levels 13+ (original 20 + 
     private bool TryPlace(string word)
     {
         var directions = Enum.GetValues<Direction>().OrderBy(_ => _rng.Next()).ToArray();
-        for (int attempt = 0; attempt < 50; attempt++)
+
+        // Phase 1: overlapping placement — cross at least one letter of an
+        // already-placed word (words share the same letter at the crossing cell).
+        for (int attempt = 0; attempt < 250; attempt++)
         {
             var dir = directions[attempt % directions.Length];
             int row = _rng.Next(GridSize);
             int col = _rng.Next(GridSize);
 
-            if (CanPlace(word, row, col, dir))
+            if (CanPlace(word, row, col, dir, requireOverlap: true))
+            {
+                Place(word, row, col, dir);
+                Words.Add(new PlacedWord { Word = word, StartRow = row, StartCol = col, Dir = dir });
+                return true;
+            }
+        }
+
+        // Phase 2: clean placement — no crossing at all.
+        for (int attempt = 0; attempt < 150; attempt++)
+        {
+            var dir = directions[attempt % directions.Length];
+            int row = _rng.Next(GridSize);
+            int col = _rng.Next(GridSize);
+
+            if (CanPlace(word, row, col, dir, requireOverlap: false))
             {
                 Place(word, row, col, dir);
                 Words.Add(new PlacedWord { Word = word, StartRow = row, StartCol = col, Dir = dir });
@@ -137,20 +155,25 @@ private static readonly string[] Tier3 = // 5-letter, levels 13+ (original 20 + 
         return false;
     }
 
-    private bool CanPlace(string word, int row, int col, Direction dir)
+    private bool CanPlace(string word, int row, int col, Direction dir, bool requireOverlap)
     {
         int dr = dir == Direction.Down || dir == Direction.DiagonalDown ? 1 : 0;
         int dc = dir == Direction.Right || dir == Direction.DiagonalDown ? 1 : 0;
 
+        int matches = 0;
         for (int i = 0; i < word.Length; i++)
         {
             int r = row + dr * i;
             int c = col + dc * i;
             if (r < 0 || r >= GridSize || c < 0 || c >= GridSize) return false;
-            if (Grid[r, c] != '\0' && Grid[r, c] != word[i]) return false;
+            if (Grid[r, c] == '\0') continue;
+            // Occupied cells must share the same letter — never overwrite a
+            // placed letter or the crossed word would become un-findable.
+            if (Grid[r, c] != word[i]) return false;
+            matches++;
         }
 
-        return true;
+        return !requireOverlap || matches > 0;
     }
 
     private void Place(string word, int row, int col, Direction dir)

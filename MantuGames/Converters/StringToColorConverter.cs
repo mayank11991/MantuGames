@@ -10,7 +10,16 @@ public class StringToColorConverter : IValueConverter
         {
             try
             {
-                return Color.FromArgb(hex);
+                var color = Color.FromArgb(hex.StartsWith('#') ? hex : "#" + hex);
+                if (parameter != null && color != null)
+                {
+                    var raw = parameter.ToString();
+                    if (byte.TryParse(raw.TrimStart('#'), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var alpha))
+                    {
+                        color = Color.FromArgb($"#{alpha:X2}{color.ToHex().Substring(1)}");
+                    }
+                }
+                return color;
             }
             catch
             {

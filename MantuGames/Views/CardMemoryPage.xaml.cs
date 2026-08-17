@@ -8,12 +8,6 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class CardMemoryPage : ContentPage
 {
-    private static readonly string[] AnimalImages =
-    {
-        "butterfly.png", "cat.png", "elephant.png", "girafe.png",
-        "lion.png", "octopas.png", "owl.png"
-    };
-
     private CardMemoryViewModel _vm;
     private int _startLevel = 1;
 
@@ -64,9 +58,34 @@ public partial class CardMemoryPage : ContentPage
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnRulesClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object sender, EventArgs e)
     {
-        RulesPopup.Show(GameRules.GetRules("cardmemory"));
+        if (_vm == null || _vm.IsGameOver) return;
+
+        if (CoinService.GetCoins("cardmemory") < CoinService.SolutionCost)
+        {
+            CoinShopPopup.ShowForGame("cardmemory");
+            return;
+        }
+        CoinService.SpendCoins("cardmemory", CoinService.SolutionCost);
+
+        SolutionButton.IsEnabled = false;
+        _vm.RevealAll();
+        _ = RevealThenEndAsync();
+    }
+
+    private async Task RevealThenEndAsync()
+    {
+        try
+        {
+            await Task.Delay(2500);
+            if (_vm != null && !_vm.IsGameOver)
+                _vm.ForceEnd(false);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in RevealThenEndAsync: {ex.Message}");
+        }
     }
 
     // ── BACK ────────────────────────────────────────────────────────
@@ -214,14 +233,14 @@ public partial class CardMemoryPage : ContentPage
             if (card.IsMatched)
             {
                 border.BackgroundColor = Color.FromArgb("#4CAF50");
-                cardImage.Source = ImageSource.FromFile(AnimalImages[(card.Id / 2) % AnimalImages.Length]);
+                cardImage.Source = ImageSource.FromFile(card.Image);
                 questionMark.IsVisible = false;
                 SetScrewsVisible(false);
             }
             else if (card.IsFlipped)
             {
                 border.BackgroundColor = Color.FromArgb("#7C4DFF");
-                cardImage.Source = ImageSource.FromFile(AnimalImages[(card.Id / 2) % AnimalImages.Length]);
+                cardImage.Source = ImageSource.FromFile(card.Image);
                 questionMark.IsVisible = false;
                 SetScrewsVisible(false);
             }
@@ -293,6 +312,7 @@ public partial class CardMemoryPage : ContentPage
         _vm = new CardMemoryViewModel(_startLevel);
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
+        SolutionButton.IsEnabled = true;
         BuildCards();
     }
 
@@ -302,6 +322,7 @@ public partial class CardMemoryPage : ContentPage
         _vm = new CardMemoryViewModel(_startLevel);
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
+        SolutionButton.IsEnabled = true;
         BuildCards();
     }
 }

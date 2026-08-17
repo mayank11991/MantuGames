@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="MantuGames.Views.Controls.UpdatePopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid x:Name="Overlay" BackgroundColor="#CC0B0E14" InputTransparent="False">
+        <Grid VerticalOptions="Center"
+              HorizontalOptions="Center"
+              Padding="28"
+              InputTransparent="False">
+
+            <Border Background="#182136"
+                    Stroke="#2EFFFFFF"
+                    StrokeThickness="1"
+                    Padding="24"
+                    WidthRequest="320"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="24" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#000000" Offset="0,8" Radius="24" Opacity="0.25" />
+                </Border.Shadow>
+
+                <VerticalStackLayout Spacing="18" HorizontalOptions="Center">
+
+                    <Label x:Name="TitleLabel"
+                           Text="Update Available"
+                           FontFamily="Orbitron"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#E7ECF5"
+                           HorizontalOptions="Center" />
+
+                    <Label x:Name="VersionLabel"
+                           FontFamily="Inter"
+                           FontSize="13"
+                           TextColor="#9AA7BD"
+                           HorizontalOptions="Center" />
+
+                    <ScrollView MaximumHeightRequest="140">
+                        <Label x:Name="NotesLabel"
+                               FontFamily="Inter"
+                               FontSize="14"
+                               LineHeight="1.4"
+                               TextColor="#9AA7BD" />
+                    </ScrollView>
+
+                    <Border x:Name="UpdateBorder"
+                            BackgroundColor="#FF9F1C"
+                            StrokeThickness="0"
+                            Padding="32,10"
+                            HorizontalOptions="Center"
+                            MinimumWidthRequest="140">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="14" />
+                        </Border.StrokeShape>
+                        <Label Text="UPDATE NOW"
+                               FontFamily="Orbitron"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#160D02"
+                               HorizontalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnUpdate" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Border>
+
+                    <Label x:Name="LaterLabel"
+                           Text="Not now"
+                           FontFamily="Inter"
+                           FontSize="13"
+                           TextColor="#9AA7BD"
+                           TextDecorations="Underline"
+                           HorizontalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLater" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentView>

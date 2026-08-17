@@ -5,36 +5,30 @@
              Shell.NavBarIsVisible="False"
              x:Class="MantuGames.Views.BlockPuzzlePage">
     <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#FBF4ED" Dark="#2D2A3D" />
+        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
     </ContentPage.BackgroundColor>
 
     <AbsoluteLayout>
 
-        <Grid x:Name="PageRoot" RowDefinitions="Auto,Auto,*,Auto"
-              Padding="8,44,8,8" RowSpacing="6"
+        <Grid x:Name="PageRoot" RowDefinitions="Auto,Auto,Auto,*,Auto"
+              Padding="12,16,12,8" RowSpacing="6"
               AbsoluteLayout.LayoutFlags="All"
               AbsoluteLayout.LayoutBounds="0,0,1,1">
 
-            <!-- TOP BAR -->
-            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto,Auto" ColumnSpacing="8"
+            <!-- TOP BAR: back | level badge | pause -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6"
                   Padding="4,0">
                 <ImageButton Grid.Column="0" Source="icon_back_round.svg"
-                             Padding="0" HeightRequest="44" WidthRequest="44"
+                             Padding="0" HeightRequest="48" WidthRequest="48"
                              BackgroundColor="Transparent" Clicked="OnBackClicked"
                              VerticalOptions="Center"/>
-                <Border Grid.Column="1" BackgroundColor="#3A364A" StrokeThickness="0"
-                        Padding="12,6" VerticalOptions="Center">
-                    <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                    <Label Text="{Binding LevelDisplay}" TextColor="#F0E6D8"
-                           FontSize="15" FontFamily="BrickSans" FontAttributes="Bold" HorizontalOptions="Center"/>
-                </Border>
-                <ImageButton Grid.Column="3" Source="information.png"
-                             HeightRequest="24" WidthRequest="24"
-                             BackgroundColor="Transparent" Padding="0"
-                             Margin="0,0,4,0"
-                             Clicked="OnRulesClicked"
-                             VerticalOptions="Center" />
-                <ImageButton Grid.Column="4" Source="pause.png"
+                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                       Padding="12,6" HasShadow="False"
+                       HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="{Binding LevelDisplay}" TextColor="#F97316"
+                           FontSize="16" FontFamily="Orbitron" FontAttributes="Bold" HorizontalOptions="Center"/>
+                </Frame>
+                <ImageButton Grid.Column="2" Source="pause.svg"
                              HeightRequest="24" WidthRequest="24"
                              BackgroundColor="Transparent" Padding="0"
                              Margin="4,0"
@@ -42,25 +36,29 @@
                              VerticalOptions="Center" />
             </Grid>
 
-           <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="10">
-               <Border Grid.Column="3" BackgroundColor="#3A364A" StrokeThickness="0"
+            <!-- TIMER -->
+            <controls:GameTimerView x:Name="BlockTimer" Grid.Row="1"
+                                    SecondsRemaining="{Binding TimeRemainingSec}" />
+
+           <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="10">
+               <Border BackgroundColor="#182136" StrokeThickness="0"
                        Padding="10,5" VerticalOptions="Center">
                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                    <StackLayout Spacing="0">
-                       <Label Text="SCORE" TextColor="#B0A696" FontSize="9" FontFamily="BrickSans"
+                       <Label Text="SCORE" TextColor="#9AA7BD" FontSize="9" FontFamily="Orbitron"
                               FontAttributes="Bold" HorizontalOptions="Center"/>
-                       <Label Text="{Binding Score}" TextColor="White"
-                              FontSize="13" FontFamily="BrickSans" FontAttributes="Bold" HorizontalOptions="Center"/>
+                       <Label Text="{Binding Score}" TextColor="#E7ECF5"
+                              FontSize="13" FontFamily="Orbitron" FontAttributes="Bold" HorizontalOptions="Center"/>
                    </StackLayout>
                </Border>
-               <Border Grid.Column="4" BackgroundColor="#3A364A" StrokeThickness="0"
+               <Border BackgroundColor="#182136" StrokeThickness="0"
                        Padding="10,5" VerticalOptions="Center">
                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                    <StackLayout Spacing="0">
-                       <Label Text="LINES" TextColor="#B0A696" FontSize="9" FontFamily="BrickSans"
+                       <Label Text="LINES" TextColor="#9AA7BD" FontSize="9" FontFamily="Orbitron"
                               FontAttributes="Bold" HorizontalOptions="Center"/>
-                       <Label Text="{Binding LinesCleared}" TextColor="#D4B896"
-                              FontSize="13" FontFamily="BrickSans" FontAttributes="Bold" HorizontalOptions="Center"/>
+                       <Label Text="{Binding LinesDisplay}" TextColor="#F97316"
+                              FontSize="13" FontFamily="Orbitron" FontAttributes="Bold" HorizontalOptions="Center"/>
                    </StackLayout>
                </Border>
            </HorizontalStackLayout>
@@ -72,8 +70,8 @@
                  next-piece panel take theirs. BuildBoard() measures this
                  container's real size instead of guessing from screen size,
                  so the board can never grow into the panel below it. -->
-            <Border Grid.Row="2" x:Name="BoardContainer"
-                    BackgroundColor="#1B2838" StrokeThickness="2" Stroke="#5A5670"
+            <Border Grid.Row="3" x:Name="BoardContainer"
+                    BackgroundColor="#0F1420" StrokeThickness="2" Stroke="#2EFFFFFF"
                     VerticalOptions="Fill" HorizontalOptions="Fill">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
                 <Border.GestureRecognizers>
@@ -85,18 +83,27 @@
                       InputTransparent="True"/>
             </Border>
 
-            <!-- BOTTOM PANEL: Next piece + score -->
-            <Border Grid.Row="3" x:Name="NextPieceOverlay"
-                    BackgroundColor="#1B2838" StrokeThickness="1" Stroke="#5A5670"
-                    HorizontalOptions="Center" Padding="10,6" Margin="0,4,0,8">
-                <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
-                <HorizontalStackLayout Spacing="12">
-                    <Label Text="NEXT" TextColor="#B0A696" FontSize="12" FontFamily="BrickSans"
-                           FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Grid x:Name="NextPieceGrid" RowSpacing="0" ColumnSpacing="0"
-                          HorizontalOptions="Center"/>
-                </HorizontalStackLayout>
-            </Border>
+            <!-- BOTTOM PANEL: Next piece + Show Solution -->
+            <VerticalStackLayout Grid.Row="4" Spacing="6">
+                <Border x:Name="NextPieceOverlay"
+                        BackgroundColor="#131A29" StrokeThickness="1" Stroke="#2EFFFFFF"
+                        HorizontalOptions="Center" Padding="10,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="NEXT" TextColor="#9AA7BD" FontSize="12" FontFamily="Orbitron"
+                               FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Grid x:Name="NextPieceGrid" RowSpacing="0" ColumnSpacing="0"
+                              HorizontalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+                <Button x:Name="SolutionButton"
+                        Text="Show Solution"
+                        FontSize="14" FontAttributes="Bold"
+                        TextColor="#160D02" BackgroundColor="#FF9F1C"
+                        CornerRadius="20" HeightRequest="40"
+                        Margin="60,0"
+                        Clicked="OnShowSolutionClicked" />
+            </VerticalStackLayout>
 
         </Grid>
 
@@ -112,7 +119,7 @@
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 
-        <controls:RulesPopup x:Name="RulesPopup" IsVisible="False"
+        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False"
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 

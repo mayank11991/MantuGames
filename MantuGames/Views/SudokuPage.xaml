@@ -8,7 +8,7 @@
     xmlns:controls="clr-namespace:MantuGames.Views.Controls"
     Shell.NavBarIsVisible="False">
     <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#FBF4ED" Dark="#1F1B1B" />
+        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
     </ContentPage.BackgroundColor>
 
     <ContentPage.Resources>
@@ -27,7 +27,7 @@
               AbsoluteLayout.LayoutBounds="0,0,1,1">
 
             <!-- TOP BAR: Back + Level + Pause -->
-            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="6">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
                 <ImageButton Grid.Column="0"
                         Source="icon_back_round.svg" HeightRequest="48" WidthRequest="48"
                         BackgroundColor="Transparent" Padding="0"
@@ -36,20 +36,14 @@
                         VerticalOptions="Center"
                        />
 
-                <Frame Grid.Column="1" BackgroundColor="#C4A4D4" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
                        Padding="12,6" HasShadow="False"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="White"
-                           FontSize="16" FontFamily="BrickSans" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#22D3EE"
+                           FontSize="16" FontFamily="Orbitron" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
 
-                <ImageButton Grid.Column="2" Source="information.png"
-                             HeightRequest="24" WidthRequest="24"
-                             BackgroundColor="Transparent" Padding="0"
-                             Margin="0,0,4,0"
-                             Clicked="OnRulesClicked"
-                             VerticalOptions="Center" />
-                <ImageButton Grid.Column="3" Source="pause.png"
+                <ImageButton Grid.Column="2" Source="pause.svg"
                              HeightRequest="24" WidthRequest="24"
                              BackgroundColor="Transparent" Padding="0"
                              Margin="4,0"
@@ -62,7 +56,7 @@
                                     SecondsRemaining="{Binding TimeRemainingSec}" />
 
             <!-- SUDOKU GRID -->
-            <Frame Grid.Row="3" BackgroundColor="White" CornerRadius="20" Padding="6"
+            <Frame Grid.Row="3" BackgroundColor="#182136" CornerRadius="20" Padding="6"
                    HasShadow="True" VerticalOptions="Center" HorizontalOptions="Center">
                 <Grid x:Name="SudokuGrid" ColumnSpacing="3" RowSpacing="3" />
             </Frame>
@@ -71,41 +65,41 @@
             <Grid Grid.Row="4" ColumnDefinitions="*,*,*,*,*,Auto"
                   ColumnSpacing="6" Padding="4,6">
                 <ImageButton Grid.Column="0" Source="cat.png"
-                             BackgroundColor="#DCC8A8" CornerRadius="14" HeightRequest="58"
+                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
                              Padding="8"
                              Command="{Binding EnterNumberCommand}" CommandParameter="1" />
                 <ImageButton Grid.Column="1" Source="elephant.png"
-                             BackgroundColor="#DCC8A8" CornerRadius="14" HeightRequest="58"
+                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
                              Padding="8"
                              Command="{Binding EnterNumberCommand}" CommandParameter="2" />
                 <ImageButton Grid.Column="2" Source="lion.png"
-                             BackgroundColor="#DCC8A8" CornerRadius="14" HeightRequest="58"
+                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
                              Padding="8"
                              Command="{Binding EnterNumberCommand}" CommandParameter="3" />
                 <ImageButton Grid.Column="3" Source="owl.png"
-                             BackgroundColor="#DCC8A8" CornerRadius="14" HeightRequest="58"
+                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
                              Padding="8"
                              Command="{Binding EnterNumberCommand}" CommandParameter="4" />
                 <ImageButton Grid.Column="4" Source="butterfly.png"
-                             BackgroundColor="#DCC8A8" CornerRadius="14" HeightRequest="58"
+                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
                              Padding="8"
                              Command="{Binding EnterNumberCommand}" CommandParameter="5" />
                 <Button Grid.Column="5" Text="⌫"
                         FontSize="28" FontAttributes="Bold"
-                        TextColor="White"
-                        BackgroundColor="#78909C" CornerRadius="14"
+                        TextColor="#E7ECF5"
+                        BackgroundColor="#3B4A63" CornerRadius="14"
                         HeightRequest="58" WidthRequest="58" Padding="0"
                         Command="{Binding EraseCommand}" />
             </Grid>
 
             <!-- SHOW SOLUTION -->
             <Button Grid.Row="5"
-                    Text="💡 Show Solution"
+                    Text="Show Solution"
                     FontSize="15" FontAttributes="Bold"
-                    TextColor="White" BackgroundColor="#9C27B0"
+                    TextColor="#160D02" BackgroundColor="#FF9F1C"
                     CornerRadius="20" HeightRequest="44"
                     Margin="40,0"
-                    Command="{Binding ShowSolutionCommand}" />
+                    Clicked="OnShowSolutionClicked" />
 
         </Grid>
 
@@ -125,7 +119,7 @@
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 
-        <controls:RulesPopup x:Name="RulesPopup" IsVisible="False"
+        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False"
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 

@@ -71,9 +71,15 @@ namespace MantuGames.Views
             try { _vm?.ResumeTimer(); } catch { }
         }
 
-        private void OnRulesClicked(object sender, EventArgs e)
+        private void OnShowSolutionClicked(object sender, EventArgs e)
         {
-            RulesPopup.Show(GameRules.GetRules("sudoku"));
+            if (CoinService.GetCoins("sudoku") < CoinService.SolutionCost)
+            {
+                CoinShopPopup.ShowForGame("sudoku");
+                return;
+            }
+            CoinService.SpendCoins("sudoku", CoinService.SolutionCost);
+            _vm?.ShowSolutionCommand.Execute(null);
         }
 
         // ── BACK ────────────────────────────────────────────────────

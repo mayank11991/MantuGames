@@ -66,9 +66,15 @@ public partial class WordFinderPage : ContentPage
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnRulesClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object sender, EventArgs e)
     {
-        RulesPopup.Show(GameRules.GetRules("wordfinder"));
+        if (CoinService.GetCoins("wordfinder") < CoinService.SolutionCost)
+        {
+            CoinShopPopup.ShowForGame("wordfinder");
+            return;
+        }
+        CoinService.SpendCoins("wordfinder", CoinService.SolutionCost);
+        _vm?.ShowSolutionCommand.Execute(null);
     }
 
     // ── BACK ────────────────────────────────────────────────────
@@ -177,7 +183,8 @@ public partial class WordFinderPage : ContentPage
         var tap = new TapGestureRecognizer();
         tap.Tapped += async (s, e) =>
         {
-            if (!cell.IsFound && !_vm.IsGameOver)
+            // Found cells can be part of an overlapping word too — keep them selectable.
+            if (!_vm.IsGameOver)
             {
                 _vm.TapCellCommand.Execute(cell);
                 AudioService.Instance.Play("tap");
@@ -193,7 +200,7 @@ public partial class WordFinderPage : ContentPage
         var pan = new PanGestureRecognizer();
         pan.PanUpdated += (s, e) =>
         {
-            if (_vm.IsGameOver || cell.IsFound) return;
+            if (_vm.IsGameOver) return;
             switch (e.StatusType)
             {
                 case GestureStatus.Started:
@@ -226,7 +233,7 @@ public partial class WordFinderPage : ContentPage
                         if (targetRow != _lastDragRow || targetCol != _lastDragCol)
                         {
                             var targetCell = _vm.Cells.FirstOrDefault(c => c.Row == targetRow && c.Col == targetCol);
-                            if (targetCell != null && !targetCell.IsFound)
+                            if (targetCell != null)
                             {
                                 _lastDragRow = targetRow;
                                 _lastDragCol = targetCol;

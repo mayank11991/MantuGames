@@ -7,149 +7,176 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:conv="clr-namespace:MantuGames.Converters"
     xmlns:controls="clr-namespace:MantuGames.Views.Controls"
-    BackgroundColor="#FBF4ED"
+    BackgroundColor="{StaticResource ColorBg}"
     Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
         <conv:StringToColorConverter x:Key="StringToColor" />
-        <conv:TitleFontSizeConverter x:Key="TitleFontSize" />
-        <conv:CardColorToGradientConverter x:Key="CardGradient" />
-        <conv:CardColorToGlowBrushConverter x:Key="CardGlow" />
     </ContentPage.Resources>
 
-    <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#FBF4ED" Dark="##1F0B29" />
-    </ContentPage.BackgroundColor>
+    <Grid RowDefinitions="Auto,Auto,*">
 
-    <Grid RowDefinitions="Auto,*">
-        <GraphicsView x:Name="BgCanvas"
-                      Grid.RowSpan="2"
-                      HorizontalOptions="Fill"
-                      VerticalOptions="Fill"
-                      InputTransparent="True" />
-
-        <!-- ── HEADER ── -->
-        <Grid Grid.Row="0" Padding="20,20,20,12">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto" Padding="0,0,0,4">
-                <Label x:Name="PlayerNameLabel"
-                       Grid.Column="0"
-                       FontFamily="BrickSans"
-                       FontSize="14"
-                       VerticalOptions="Center">
-                    <Label.TextColor>
-                        <AppThemeBinding Light="#212120" Dark="#ffffff" />
-                    </Label.TextColor>
-                </Label>
-                <Label x:Name="PointsLabel"
-                       Grid.Column="1"
-                       FontFamily="BrickSans"
-                       FontSize="13"
-                       VerticalOptions="Center"
-                       Margin="0,0,8,0"
-                       Padding="8,4">
-                    <Label.TextColor>
-                        <AppThemeBinding Light="#212120" Dark="#ffffff" />
-                    </Label.TextColor>
-                </Label>
-
-                <ImageButton HeightRequest="25" WidthRequest="25" Grid.Column="2"
-                             Source="gear" Clicked="OnSettingsClicked" />
-
-                <!-- <Border  -->
-                <!--         StrokeThickness="1" -->
-                <!--         Padding="10,4" -->
-                <!--         Margin="0,0,8,0"> -->
-                <!--     <Border.StrokeShape> -->
-                <!--         <RoundRectangle CornerRadius="12" /> -->
-                <!--     </Border.StrokeShape> -->
-                <!--     <Border.Stroke> -->
-                <!--         <AppThemeBinding Light="#DCC8A8" Dark="#5A5670" /> -->
-                <!--     </Border.Stroke> -->
-                <!--     <Border.BackgroundColor> -->
-                <!--         <AppThemeBinding Light="#DCC8A822" Dark="#3A364A" /> -->
-                <!--     </Border.BackgroundColor> -->
-                <!--     <Border.GestureRecognizers> -->
-                <!--         <TapGestureRecognizer Tapped="" /> -->
-                <!--     </Border.GestureRecognizers> -->
-                <!--     <Label Text="⚙" -->
-                <!--            FontSize="18" -->
-                <!--            VerticalOptions="Center" -->
-                <!--            HorizontalOptions="Center" /> -->
-                <!-- </Border> -->
-            </Grid>
-
-            <StackLayout Grid.Row="1" Spacing="2">
-                <Label Text="Fun Learning"
-                       FontFamily="BrickSans"
-                       FontSize="20"
-                       FontAttributes="Bold" HorizontalTextAlignment="Center"
-                       HorizontalOptions="Center"
-                       CharacterSpacing="3">
-                    <Label.TextColor>
-                        <AppThemeBinding Light="#212120" Dark="#ffffff" />
-                    </Label.TextColor>
-                </Label>
-                <Label Text="Fun games that make learning exciting!"
-                       FontFamily="BrickSans"
-                       FontSize="13"
-                       HorizontalOptions="Center" HorizontalTextAlignment="Center"
-                       Opacity="0.8">
-                    <Label.TextColor>
-                        <AppThemeBinding Light="#212120" Dark="#ffffff" />
-                    </Label.TextColor>
-                </Label>
-            </StackLayout>
+        <!-- ── TOP BAR ── -->
+        <Grid Grid.Row="0" Padding="20,14,20,6" ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+            <Label x:Name="PlayerNameLabel"
+                   Grid.Column="0"
+                   FontFamily="Orbitron"
+                   FontSize="13"
+                   CharacterSpacing="1"
+                   TextColor="{StaticResource ColorText}"
+                   VerticalOptions="Center" />
+            <Label x:Name="PointsLabel"
+                   Grid.Column="1"
+                   FontFamily="Inter"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource ColorCta}"
+                   VerticalOptions="Center"
+                   Margin="0,0,10,0" />
+            <Label x:Name="CoinBalanceLabel"
+                   Grid.Column="2"
+                   FontFamily="Orbitron"
+                   FontSize="11"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource ColorAccent}"
+                   VerticalOptions="Center"
+                   Margin="0,0,8,0" />
+            <ImageButton Grid.Column="3"
+                         HeightRequest="20" WidthRequest="20"
+                         Source="coin.png" Scale="0.7"
+                         BackgroundColor="Transparent" Padding="0"
+                         Margin="0,0,10,0"
+                         SemanticProperties.Description="Coin shop"
+                         Clicked="OnCoinShopClicked"
+                         VerticalOptions="Center" />
+            <ImageButton Grid.Column="4"
+                         HeightRequest="20" WidthRequest="20"
+                         Source="gear" Scale="0.7"
+                         BackgroundColor="Transparent" Padding="0"
+                         SemanticProperties.Description="Settings"
+                         Clicked="OnSettingsClicked"
+                         VerticalOptions="Center" />
         </Grid>
 
-        <!-- ── GAME GRID ── -->
-        <!-- No ScrollView: the grid always fills the remaining space exactly, so card
-             size (bound to CardImageHeight, computed in code-behind) shrinks to fit
-             any screen instead of scrolling. -->
-        <CollectionView Grid.Row="1"
+        <!-- ── HERO (matches website .hero-content) ── -->
+        <VerticalStackLayout Grid.Row="1" Spacing="8" Padding="24,8,24,18">
+            <Label Text="MANTU GAMES STUDIO"
+                   FontFamily="Orbitron"
+                   FontSize="10"
+                   CharacterSpacing="4"
+                   TextColor="{StaticResource ColorAccent}"
+                   HorizontalOptions="Center"
+                   Padding="14,6"
+                   HorizontalTextAlignment="Center">
+                <Label.BackgroundColor>
+                    <Color>#1422D3EE</Color>
+                </Label.BackgroundColor>
+            </Label>
+            <Label FontFamily="Orbitron" FontSize="26" FontAttributes="Bold"
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                   CharacterSpacing="1" TextColor="{StaticResource ColorText}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="PLAY. LEARN. " />
+                        <Span Text="EXPLORE." TextColor="{StaticResource ColorAccent}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Text="Fun games that make learning exciting!"
+                   FontFamily="Inter"
+                   FontSize="13"
+                   TextColor="{StaticResource ColorMuted}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center" />
+            <Border BackgroundColor="{StaticResource ColorPanel}"
+                    Stroke="{StaticResource ColorLine}"
+                    StrokeThickness="1"
+                    Padding="14,2"
+                    Margin="0,6,0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14" />
+                </Border.StrokeShape>
+                <Entry x:Name="SearchEntry"
+                       Placeholder="Search games by name or ID"
+                       PlaceholderColor="{StaticResource ColorMuted}"
+                       TextColor="{StaticResource ColorText}"
+                       FontFamily="Inter"
+                       FontSize="13"
+                       BackgroundColor="Transparent"
+                       SemanticProperties.Description="Search games by name or ID"
+                       TextChanged="OnSearchTextChanged" />
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- ── GAME GRID (matches website .game-grid) ── -->
+<CollectionView Grid.Row="2"
                          x:Name="GamesCollectionView"
                          ItemsSource="{Binding GamesList}"
                          SelectionMode="None"
-                         HorizontalOptions="Fill"
-                         VerticalOptions="Fill"
-                         Margin="4,2,4,2">
+                         Margin="12,0,12,8"
+                         VerticalOptions="Fill">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                                  Span="2"
-                                 HorizontalItemSpacing="1"
-                                 VerticalItemSpacing="1" />
+                                 HorizontalItemSpacing="10"
+                                 VerticalItemSpacing="10" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="0" IsClippedToBounds="False">
-                        <Grid.GestureRecognizers>
+                    <Frame Style="{StaticResource PanelCard}"
+                           Padding="14"
+                           BackgroundColor="{StaticResource ColorPanel}"
+                           HasShadow="False"
+                           BorderColor="{Binding CardColor, Converter={StaticResource StringToColor}, ConverterParameter=0x59}"
+                           CornerRadius="12">
+                        <Frame.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.NavigateCommand}"
                                 CommandParameter="{Binding .}" />
-                        </Grid.GestureRecognizers>
-
-                       
-                            <Grid>
+                        </Frame.GestureRecognizers>
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+                            <Border Grid.Row="0"
+                                    WidthRequest="44" HeightRequest="44"
+                                    HorizontalOptions="Center"
+                                    BackgroundColor="{Binding CardColor, Converter={StaticResource StringToColor}, ConverterParameter=0x2E}"
+                                    StrokeThickness="1"
+                                    Stroke="{Binding CardColor, Converter={StaticResource StringToColor}}"
+                                    Margin="0,0,0,8">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
                                 <Image Source="{Binding ImageName}"
-                                       Aspect="AspectFit"
-                                       Margin="1"
+                                       Aspect="AspectFill"
                                        HorizontalOptions="Fill"
                                        VerticalOptions="Fill" />
-                            </Grid>
-                       
-                    </Grid>
+                            </Border>
+                            <Label Grid.Row="1"
+                                   Text="{Binding Title}"
+                                   FontFamily="Orbitron"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource ColorText}"
+                                   CharacterSpacing="0.5" />
+                            <Label Grid.Row="2"
+                                   Text="{Binding Description}"
+                                   FontFamily="Inter"
+                                   FontSize="11"
+                                   TextColor="{StaticResource ColorMuted}"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="2" />
+                        </Grid>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <controls:SettingsPopup x:Name="SettingsPopup" IsVisible="False" Grid.RowSpan="2" />
-        <controls:ProfilePopup x:Name="ProfilePopup" IsVisible="False" Grid.RowSpan="2" />
+        <controls:SettingsPopup x:Name="SettingsPopup" IsVisible="False" Grid.RowSpan="3" />
+        <controls:ProfilePopup x:Name="ProfilePopup" IsVisible="False" Grid.RowSpan="3" />
+        <controls:ProfilePickerPopup x:Name="ProfilePicker" IsVisible="False" Grid.RowSpan="3" />
+        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False" Grid.RowSpan="3" />
+        <controls:StatsPopup x:Name="StatsPopup" IsVisible="False" Grid.RowSpan="3" />
+        <controls:UpdatePopup x:Name="UpdatePopup" IsVisible="False" Grid.RowSpan="3" />
 
     </Grid>
 </ContentPage>

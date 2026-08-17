@@ -62,6 +62,20 @@ namespace MantuGames.Converters
             => throw new NotImplementedException();
     }
 
+    /// <summary>Converts total seconds to "m:ss" display string.</summary>
+    public class SecondsToTimeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is int sec)
+                return $"{sec / 60}:{sec % 60:D2}";
+            return "0:00";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
+    }
+
     /// <summary>Bool to visibility (IsVisible).</summary>
     public class InverseBoolConverter : IValueConverter
     {

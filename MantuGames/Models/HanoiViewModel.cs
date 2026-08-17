@@ -124,25 +124,23 @@ public class HanoiViewModel : INotifyPropertyChanged
         StopTimer();
         IsGameOver = true;
         SolutionWasShown = true;
-        int aux = 3 - Puzzle.StartPole - Puzzle.GoalPole;
-        _ = AutoSolveAsync(Puzzle.DiscCount, Puzzle.StartPole, Puzzle.GoalPole, aux,
-            onDone: () => { MainThread.BeginInvokeOnMainThread(() => GameEnded?.Invoke(false)); });
+        // Discs start scattered across all poles, so solve the actual state:
+        // HanoiSolver computes the exact move sequence.
+        var moves = HanoiSolver.Solve(Puzzle);
+        _ = AnimateSolutionAsync(moves);
     }
 
-    private async System.Threading.Tasks.Task AutoSolveAsync(int n, int from, int to, int aux, Action onDone = null)
+    private async System.Threading.Tasks.Task AnimateSolutionAsync(List<(int From, int To)> moves)
     {
-        if (n == 0)
-            return;
+        foreach (var (from, to) in moves)
+        {
+            Puzzle.TryMove(from, to);
+            MoveCount = Puzzle.MoveCount;
+            MainThread.BeginInvokeOnMainThread(() => BoardChanged?.Invoke());
+            await System.Threading.Tasks.Task.Delay(500);
+        }
 
-        await AutoSolveAsync(n - 1, from, aux, to);
-        Puzzle.TryMove(from, to);
-        MoveCount = Puzzle.MoveCount;
-        MainThread.BeginInvokeOnMainThread(() => BoardChanged?.Invoke());
-        await System.Threading.Tasks.Task.Delay(500);
-        await AutoSolveAsync(n - 1, aux, to, from);
-
-        if (n == Puzzle.DiscCount)
-            onDone?.Invoke();
+        MainThread.BeginInvokeOnMainThread(() => GameEnded?.Invoke(false));
     }
 
     private void EndGame(bool win)

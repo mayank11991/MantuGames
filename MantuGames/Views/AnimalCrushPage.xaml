@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MantuGames.Views.Controls"
+             Shell.NavBarIsVisible="False"
+             x:Class="MantuGames.Views.AnimalCrushPage">
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
+    </ContentPage.BackgroundColor>
+    <AbsoluteLayout>
+
+        <!-- MAIN CONTENT -->
+        <Grid x:Name="RootGrid"
+              RowDefinitions="Auto,Auto,Auto,Auto,*"
+              Padding="12,16,12,8" RowSpacing="8"
+              AbsoluteLayout.LayoutFlags="All"
+              AbsoluteLayout.LayoutBounds="0,0,1,1">
+
+            <!-- TOP BAR: back | level badge | pause -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
+                <ImageButton Grid.Column="0" Source="icon_back_round.svg" Padding="0"
+                             HeightRequest="48" WidthRequest="48"
+                             BackgroundColor="Transparent"
+                             Clicked="OnBackClicked" VerticalOptions="Center" />
+                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                       Padding="12,6" HasShadow="False"
+                       HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="{Binding LevelDisplay}" TextColor="#F43F5E"
+                           FontSize="16" FontFamily="Orbitron" FontAttributes="Bold" HorizontalOptions="Center" />
+                </Frame>
+                <ImageButton Grid.Column="2" Source="pause.svg"
+                             HeightRequest="24" WidthRequest="24"
+                             BackgroundColor="Transparent" Padding="0"
+                             Margin="4,0"
+                             Clicked="OnPause"
+                             VerticalOptions="Center" />
+            </Grid>
+
+            <!-- TIMER -->
+            <controls:GameTimerView Grid.Row="1"
+                                    TotalSeconds="{Binding TotalSecondsForLevel}"
+                                    SecondsRemaining="{Binding TimeRemainingSec}" />
+
+            <!-- SCORE / TARGET -->
+            <HorizontalStackLayout Grid.Row="2" Spacing="10" HorizontalOptions="Center">
+                <Border BackgroundColor="#182136" StrokeThickness="0" Padding="10,5">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                    <StackLayout Spacing="0">
+                        <Label Text="SCORE" TextColor="#9AA7BD" FontSize="9" FontFamily="Orbitron"
+                               FontAttributes="Bold" HorizontalOptions="Center"/>
+                        <Label Text="{Binding ScoreDisplay}" TextColor="#F43F5E"
+                               FontSize="14" FontFamily="Orbitron" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Border>
+            </HorizontalStackLayout>
+
+            <!-- POWER-UPS: hammer | rocket | bomb -->
+            <Grid Grid.Row="3" ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="18"
+                  HorizontalOptions="Center">
+                <Border x:Name="HammerButton" Grid.Column="0"
+                        BackgroundColor="#182136" Padding="12,6"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 14">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHammerTapped" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="6">
+                        <Image Source="hammer.png" WidthRequest="24" HeightRequest="24"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding HammerCount}" TextColor="#9AA7BD"
+                               FontSize="13" FontFamily="Orbitron" FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                <Border x:Name="RocketButton" Grid.Column="1"
+                        BackgroundColor="#182136" Padding="12,6"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 14">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRocketTapped" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="6">
+                        <Image Source="rocket.png" WidthRequest="24" HeightRequest="24"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding RocketCount}" TextColor="#9AA7BD"
+                               FontSize="13" FontFamily="Orbitron" FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                <Border x:Name="BombButton" Grid.Column="2"
+                        BackgroundColor="#182136" Padding="12,6"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 14">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBombTapped" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="6">
+                        <Image Source="bomb.png" WidthRequest="24" HeightRequest="24"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding BombCount}" TextColor="#9AA7BD"
+                               FontSize="13" FontFamily="Orbitron" FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- BOARD -->
+            <VerticalStackLayout Grid.Row="4" Spacing="8">
+                <Grid x:Name="BoardGrid"
+                      ColumnSpacing="4" RowSpacing="4"
+                      Padding="5,8"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <PanGestureRecognizer PanUpdated="OnBoardPan" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+
+                <Button x:Name="SolutionButton"
+                        Text="Show Solution"
+                        FontSize="15" FontAttributes="Bold"
+                        TextColor="#160D02" BackgroundColor="#FF9F1C"
+                        CornerRadius="20" HeightRequest="44"
+                        Margin="60,0"
+                        Clicked="OnShowSolutionClicked" />
+            </VerticalStackLayout>
+
+        </Grid>
+
+        <!-- WIN/LOSS POPUP -->
+        <controls:GameResultPopup
+            x:Name="ResultPopup"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            NextLevelRequested="OnNextLevel"
+            RetryRequested="OnRetry" />
+
+        <controls:PauseOverlay x:Name="PauseOverlay" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+        <controls:ConfirmPopup x:Name="ConfirmPopup" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+    </AbsoluteLayout>
+</ContentPage>

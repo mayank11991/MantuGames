@@ -10,12 +10,14 @@ public class AudioService
     private readonly Dictionary<string, IAudioPlayer?> _cache = new();
     private IAudioPlayer _bgPlayer;
     private bool _musicEnabled = true;
+    private bool _sfxEnabled = true;
 
     public AudioService(IAudioManager audio)
     {
         _audio = audio;
         Instance = this;
         _musicEnabled = Preferences.Get("music_enabled", true);
+        _sfxEnabled = Preferences.Get("sfx_enabled", true);
     }
 
     public async Task PreloadAsync()
@@ -34,12 +36,24 @@ public class AudioService
 
         try
         {
-            var bgStream = await FileSystem.OpenAppPackageFileAsync("bgmusic.wav");
+            var bgStream = await FileSystem.OpenAppPackageFileAsync("bg_new.mp3");
             _bgPlayer = _audio.CreatePlayer(bgStream);
             _bgPlayer.Loop = true;
+            _bgPlayer.Volume = 0.5; // background track — keep it decently low
             _bgPlayer.PlaybackEnded += OnBgPlaybackEnded;
         }
-        catch { }
+        catch
+        {
+            // Fall back to the legacy track if the new one is missing
+            try
+            {
+                var bgStream = await FileSystem.OpenAppPackageFileAsync("bgmusic.wav");
+                _bgPlayer = _audio.CreatePlayer(bgStream);
+                _bgPlayer.Loop = true;
+                _bgPlayer.PlaybackEnded += OnBgPlaybackEnded;
+            }
+            catch { }
+        }
     }
 
     private void OnBgPlaybackEnded(object sender, EventArgs e)
@@ -57,6 +71,7 @@ public class AudioService
 
     public void Play(string name)
     {
+        if (!_sfxEnabled) return;
         try
         {
             if (_cache.TryGetValue(name, out var player) && player != null)
@@ -66,6 +81,16 @@ public class AudioService
             }
         }
         catch { }
+    }
+
+    public bool SfxEnabled
+    {
+        get => _sfxEnabled;
+        set
+        {
+            _sfxEnabled = value;
+            Preferences.Set("sfx_enabled", value);
+        }
     }
 
     public bool MusicEnabled

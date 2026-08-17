@@ -5,11 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid x:Name="Overlay"
-          BackgroundColor="{AppThemeBinding Light=#882D2A3D, Dark=#882D2A3D}"
+          BackgroundColor="#CC0B0E14"
           InputTransparent="False">
 
-        <Border Background="{AppThemeBinding Light=#FBF4ED, Dark=#2D2A3D}"
-                Stroke="{AppThemeBinding Light=#DCC8A8, Dark=#5A5670}"
+        <Border Background="{AppThemeBinding Light=#182136, Dark=#182136}"
+                Stroke="{AppThemeBinding Light=#2EFFFFFF, Dark=#2EFFFFFF}"
                 StrokeThickness="1"
                 Padding="24"
                 MaximumWidthRequest="340"
@@ -21,20 +21,20 @@
             <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
                 <Label x:Name="TitleLabel"
                        Text="How to Play"
-                       FontFamily="BrickSans"
+                       FontFamily="Orbitron"
                        FontSize="22"
                        FontAttributes="Bold"
-                       TextColor="{AppThemeBinding Light=#2D2A3D, Dark=#F0E6D8}"
+                       TextColor="#E7ECF5"
                        HorizontalOptions="Center" />
                 <ScrollView MaximumHeightRequest="320">
                     <Label x:Name="BodyLabel"
-                           FontFamily="BrickSans"
+                           FontFamily="Inter"
                            FontSize="15"
                            LineHeight="1.5"
-                           TextColor="{AppThemeBinding Light=#5D4037, Dark=#E0D5C5}"
+                           TextColor="#9AA7BD"
                            HorizontalOptions="Start" />
                 </ScrollView>
-                <Border BackgroundColor="#D4B896"
+                <Border BackgroundColor="#FF9F1C"
                         StrokeThickness="0"
                         Padding="32,10"
                         HorizontalOptions="Center"
@@ -43,10 +43,10 @@
                         <RoundRectangle CornerRadius="14" />
                     </Border.StrokeShape>
                     <Label Text="Got it!"
-                           FontFamily="BrickSans"
+                           FontFamily="Orbitron"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="White"
+                           TextColor="#160D02"
                            HorizontalOptions="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnDismiss" />

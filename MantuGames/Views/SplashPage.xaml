@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="#FF4433"
+             BackgroundColor="#0B0E14"
              x:Class="MantuGames.Views.SplashPage">
 
     <Grid x:Name="Root" HorizontalOptions="Fill" VerticalOptions="Fill">
@@ -20,13 +20,20 @@
                                    Spacing="4" />
             <Label x:Name="GamingsLabel"
                    Text="GAMINGS"
-                   FontFamily="BrickSans"
+                   FontFamily="Orbitron"
                    FontSize="14"
-                   TextColor="#ffffff"
+                   TextColor="#22D3EE"
                    HorizontalOptions="Center"
                    CharacterSpacing="8"
                    Opacity="0"
                    Padding="10,0,10,10" />
+            <Image x:Name="SlothImage"
+                   Source="sloth.png"
+                   HeightRequest="120"
+                   WidthRequest="120"
+                   HorizontalOptions="Center"
+                   Opacity="0"
+                   Margin="0,4,0,0" />
         </VerticalStackLayout>
     </Grid>
 

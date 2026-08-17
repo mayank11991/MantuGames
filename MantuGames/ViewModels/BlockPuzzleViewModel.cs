@@ -21,8 +21,10 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
     private int  _score;
     private int  _level;
     private int  _linesCleared;
+    private int  _timeRemainingSec;
     private bool _isGameOver;
     private System.Threading.Timer _dropTimer;
+    private IDispatcherTimer _gameTimer;
     private static readonly Random Rng = new();
 
     // ── Public properties ─────────────────────────────────────────────────────
@@ -86,9 +88,21 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
         private set { _isGameOver = value; OnPropertyChanged(); }
     }
 
+    /// <summary>Level completes once this many lines are cleared.</summary>
+    public int LevelTargetLines => Math.Min(30, 18 + 2 * (_level - 1));
+
+    /// <summary>Level time budget in seconds (5 minutes — enough for a full level).</summary>
+    public const int LevelTimerSeconds = 300;
+
+    public int TimeRemainingSec
+    {
+        get => _timeRemainingSec;
+        private set { _timeRemainingSec = value; OnPropertyChanged(); }
+    }
+
     public string LevelDisplay => $"Level {_level}";
     public string ScoreDisplay => $"Score: {_score}";
-    public string LinesDisplay => $"Lines: {_linesCleared}";
+    public string LinesDisplay => $"{_linesCleared}/{LevelTargetLines}";
 
     // ── Commands ──────────────────────────────────────────────────────────────
     public ICommand MoveLeftCommand   { get; }
@@ -116,9 +130,11 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
     public void StartLevel(int level)
     {
         StopTimer();
+        StopGameTimer();
         Level        = level;
         Score        = 0;
         LinesCleared = 0;
+        TimeRemainingSec = LevelTimerSeconds;
         IsGameOver   = false;
         _board       = new bool[Rows, Cols];
         _boardColors = new Color[Rows, Cols];
@@ -131,6 +147,7 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
         SpawnNextPiece();
         SpawnPiece();
         StartTimer();
+        StartGameTimer();
         BoardChanged?.Invoke();
     }
 
@@ -155,6 +172,7 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
         {
             IsGameOver = true;
             StopTimer();
+            StopGameTimer();
             GameEnded?.Invoke(false);
         }
     }
@@ -304,23 +322,21 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
         UpdateScore(cleared);
         LinesCleared += cleared;
 
-        int newLevel = (_linesCleared / 10) + 1;
-        if (newLevel > _level)
-        {
-            Level = newLevel;
-            RestartTimerForLevel();
-        }
-
         PieceLocked?.Invoke();
         BoardChanged?.Invoke();
+
+        // Level complete — enough lines cleared
+        if (LinesCleared >= LevelTargetLines)
+        {
+            IsGameOver = true;
+            StopTimer();
+            StopGameTimer();
+            GameEnded?.Invoke(true);
+            return;
+        }
+
         SpawnPiece();
         BoardChanged?.Invoke();
-    }
-
-    private void RestartTimerForLevel()
-    {
-        StopTimer();
-        if (!_isGameOver) StartTimer();
     }
 
     // ── Clear completed lines ─────────────────────────────────────────────────
@@ -367,10 +383,41 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
         Score += pts * _level;
     }
 
+    // ── Level countdown timer ──────────────────────────────────────────────
+    private void StartGameTimer()
+    {
+        _gameTimer = Application.Current?.Dispatcher?.CreateTimer();
+        if (_gameTimer == null) return;
+        _gameTimer.Interval = TimeSpan.FromSeconds(1);
+        _gameTimer.Tick += OnGameTick;
+        _gameTimer.Start();
+    }
+
+    private void StopGameTimer()
+    {
+        if (_gameTimer == null) return;
+        _gameTimer.Tick -= OnGameTick;
+        _gameTimer.Stop();
+        _gameTimer = null;
+    }
+
+    private void OnGameTick(object? s, EventArgs e)
+    {
+        if (_isGameOver) return;
+        TimeRemainingSec = Math.Max(0, TimeRemainingSec - 1);
+        if (TimeRemainingSec <= 0)
+        {
+            IsGameOver = true;
+            StopTimer();
+            StopGameTimer();
+            GameEnded?.Invoke(false);
+        }
+    }
+
     // ── Cleanup ───────────────────────────────────────────────────────────────
-    public void Cleanup() => StopTimer();
-    public void PauseTimer() => StopTimer();
-    public void ResumeTimer() => StartTimer();
+    public void Cleanup() { StopTimer(); StopGameTimer(); }
+    public void PauseTimer() { StopTimer(); StopGameTimer(); }
+    public void ResumeTimer() { StartTimer(); StartGameTimer(); }
 
     // ── INotifyPropertyChanged ────────────────────────────────────────────────
     public event PropertyChangedEventHandler PropertyChanged;

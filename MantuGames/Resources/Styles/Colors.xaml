@@ -1,31 +1,70 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MantuGames.Resources.Styles.Colors">
 
-    <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
+    <!-- ══════════════════════════════════════════════════════════════
+         Mantu Games — Website design system (mayank11991.github.io)
+         Dark universe theme: deep space bg, cyan/purple/orange accents
+         ══════════════════════════════════════════════════════════════ -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <!-- ── Surfaces ─────────────────────────────────────────────── -->
+    <Color x:Key="ColorBg">#0B0E14</Color>          <!-- page background     -->
+    <Color x:Key="ColorBg2">#0F1420</Color>         <!-- card gradient end   -->
+    <Color x:Key="ColorPanel">#131A29</Color>       <!-- card / panel        -->
+    <Color x:Key="ColorPanel2">#182136</Color>      <!-- raised panel        -->
+    <Color x:Key="ColorLine">#12FFFFFF</Color>      <!-- 1px borders (7%)    -->
+    <Color x:Key="ColorLineStrong">#2EFFFFFF</Color><!-- strong borders(18%) -->
 
-    <Color x:Key="White">White</Color>
-    <Color x:Key="Black">Black</Color>
-    <Color x:Key="Magenta">#D600AA</Color>
-    <Color x:Key="MidnightBlue">#190649</Color>
-    <Color x:Key="OffBlack">#1f1f1f</Color>
+    <!-- ── Text ─────────────────────────────────────────────────── -->
+    <Color x:Key="ColorText">#E7ECF5</Color>
+    <Color x:Key="ColorMuted">#9AA7BD</Color>
+    <Color x:Key="ColorOnDark">#160D02</Color>      <!-- text on orange CTA  -->
 
-    <Color x:Key="Gray100">#E1E1E1</Color>
-    <Color x:Key="Gray200">#C8C8C8</Color>
-    <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
-    <Color x:Key="Gray500">#6E6E6E</Color>
-    <Color x:Key="Gray600">#404040</Color>
-    <Color x:Key="Gray900">#212121</Color>
-    <Color x:Key="Gray950">#141414</Color>
+    <!-- ── Accents ──────────────────────────────────────────────── -->
+    <Color x:Key="ColorAccent">#22D3EE</Color>      <!-- cyan   -->
+    <Color x:Key="ColorAccent2">#A855F7</Color>     <!-- purple -->
+    <Color x:Key="ColorCta">#FF9F1C</Color>         <!-- orange -->
+    <Color x:Key="ColorCtaEnd">#FF6B35</Color>      <!-- orange gradient end-->
+    <Color x:Key="ColorCtaHover">#FFB347</Color>
+
+    <!-- ── Per-game accents (matches website game cards) ────────── -->
+    <Color x:Key="ColorGameSudoku">#22D3EE</Color>
+    <Color x:Key="ColorGameWordFinder">#A855F7</Color>
+    <Color x:Key="ColorGameMath">#F59E0B</Color>
+    <Color x:Key="ColorGameHanoi">#EF4444</Color>
+    <Color x:Key="ColorGameCardMemory">#34D399</Color>
+    <Color x:Key="ColorGamePuzzlePets">#F472B6</Color>
+    <Color x:Key="ColorGameBlockPuzzle">#F97316</Color>
+    <Color x:Key="ColorGameMazeRunner">#3B82F6</Color>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         Legacy keys kept so existing pages keep working. Values are
+         mapped into the dark theme so no page renders bright/white.
+         ══════════════════════════════════════════════════════════════ -->
+
+    <Color x:Key="Primary">#22D3EE</Color>
+    <Color x:Key="PrimaryDark">#0E7490</Color>
+    <Color x:Key="PrimaryDarkText">#E7ECF5</Color>
+    <Color x:Key="Secondary">#A855F7</Color>
+    <Color x:Key="SecondaryDarkText">#E7ECF5</Color>
+    <Color x:Key="Tertiary">#FF9F1C</Color>
+
+    <Color x:Key="White">#E7ECF5</Color>
+    <Color x:Key="Black">#0B0E14</Color>
+    <Color x:Key="Magenta">#F472B6</Color>
+    <Color x:Key="MidnightBlue">#E7ECF5</Color>
+    <Color x:Key="OffBlack">#0B0E14</Color>
+
+    <Color x:Key="Gray100">#E7ECF5</Color>
+    <Color x:Key="Gray200">#C9D4E5</Color>
+    <Color x:Key="Gray300">#9AA7BD</Color>
+    <Color x:Key="Gray400">#6B7A93</Color>
+    <Color x:Key="Gray500">#4A5568</Color>
+    <Color x:Key="Gray600">#313C4F</Color>
+    <Color x:Key="Gray900">#182136</Color>
+    <Color x:Key="Gray950">#0F1420</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
