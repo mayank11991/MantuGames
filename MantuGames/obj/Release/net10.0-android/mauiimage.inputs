@@ -60,4 +60,4 @@ File=Resources/Images/tetris.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsApp
 File=Resources/Images/towerofhanoi.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources/Images/wordfinder.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
 File=Resources/Images/wr.jpg;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=;ForegroundScale=;ForegroundFile=
-File=Resources/AppIcon/appicon.png;Link=;BaseSize=;Resize=;TintColor=;Color=;IsAppIcon=True;ForegroundScale=;ForegroundFile=
+File=Resources/AppIcon/appicon.png;Link=;BaseSize=;Resize=false;TintColor=;Color=;IsAppIcon=True;ForegroundScale=;ForegroundFile=

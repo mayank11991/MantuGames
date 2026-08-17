@@ -1,4 +1,4 @@
-<api type="debug" assembly-name="MantuGames" mvid="4ddb0c09216340648b3c66bea041ca1f">
+<api type="debug" assembly-name="MantuGames" mvid="8d22101ffa71482ebc458b0d22d236ed">
   <java-to-managed>
     <entry java-name="crc6490a491547de00fc7/MainActivity" managed-name="MantuGames.MainActivity, MantuGames" managed-type-token-id="33554439" />
     <entry java-name="crc6490a491547de00fc7/MainApplication" managed-name="MantuGames.MainApplication, MantuGames" managed-type-token-id="33554440" />
