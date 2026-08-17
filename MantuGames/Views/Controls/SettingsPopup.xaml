@@ -17,7 +17,7 @@
             <Border Background="#182136"
                     Stroke="#2EFFFFFF"
                     StrokeThickness="1"
-                    Padding="24"
+                    Padding="0"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill">
                 <Border.StrokeShape>
@@ -27,7 +27,8 @@
                     <Shadow Brush="#000000" Offset="0,8" Radius="24" Opacity="0.25" />
                 </Border.Shadow>
 
-                <VerticalStackLayout Spacing="20">
+                <ScrollView VerticalScrollBarVisibility="Never">
+                    <VerticalStackLayout Spacing="16" Padding="24,20,24,20">
 
                     <Label Text="SETTINGS"
                            FontFamily="Orbitron"
@@ -229,6 +230,7 @@
                     </Border>
 
                 </VerticalStackLayout>
+                </ScrollView>
             </Border>
 
         </Grid>
