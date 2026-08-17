@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MantuGames")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.2.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2+89c723f3bcb7edbfcab516eba5f80b1d99990a16")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2+602657d58108ce1b2815a0fc32010992a7ae9eee")]
 [assembly: System.Reflection.AssemblyProductAttribute("MantuGames")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MantuGames")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.2.0")]

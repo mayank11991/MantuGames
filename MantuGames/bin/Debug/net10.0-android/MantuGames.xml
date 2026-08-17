@@ -127,7 +127,7 @@
         </member>
         <member name="T:MantuGames.Services.StatsService">
             <summary>
-            Per-game lifetime statistics: games played, games won, best score.
+            Per-game lifetime statistics: games played, games won.
             </summary>
         </member>
         <member name="T:MantuGames.Services.UpdateService">
