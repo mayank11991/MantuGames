@@ -295,9 +295,9 @@ public partial class CardMemoryPage : ContentPage
             int elapsed = total - _vm.TimeRemainingSec;
 
             int stars  = isWin ? ProgressService.CalcStars(elapsed, total) : 0;
-            int points = isWin ? ProgressService.CalcPoints(stars, elapsed, total) : 0;
+            int coins  = isWin ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
 
-            await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, total, stars, points, gameId: "cardmemory");
+            await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, total, stars, coins, gameId: "cardmemory");
         }
         catch (Exception ex)
         {

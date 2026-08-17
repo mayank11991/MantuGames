@@ -13,7 +13,7 @@ public partial class GameResultPopup : ContentView
     private string _gameId;
     private int _levelNumber;
     private int _completionStars;
-    private int _completionPoints;
+    private int _completionCoins;
     private AdService _adService;
 
     public GameResultPopup()
@@ -22,16 +22,16 @@ public partial class GameResultPopup : ContentView
     }
 
     public async Task Show(bool isWin, int levelNumber, int elapsedSeconds,
-                           int totalSeconds = 210, int stars = 0, int points = 0,
+                           int totalSeconds = 210, int stars = 0, int coins = 0,
                            string reason = null, string gameId = null)
     {
         _isWin = isWin;
         _gameId = gameId;
         _levelNumber = levelNumber;
         _completionStars = stars;
-        _completionPoints = points;
+        _completionCoins = coins;
 
-        StatsService.RecordGame(gameId, isWin, points);
+        StatsService.RecordGame(gameId, isWin, coins);
 
         AudioService.Instance.Play(isWin ? "win" : "lose");
         if (isWin) VibrationHelper.LongPress();
@@ -49,10 +49,10 @@ public partial class GameResultPopup : ContentView
             TitleLabel.Text      = "You Won!";
             TitleLabel.TextColor = Color.FromArgb("#34D399");
 
-            if (points > 0)
+            if (coins > 0)
             {
                 PointsBadge.IsVisible = true;
-                PointsLabel.Text      = $"+{points} pts";
+                PointsLabel.Text      = $"+{coins} coins";
             }
             else
                 PointsBadge.IsVisible = false;
@@ -102,12 +102,12 @@ public partial class GameResultPopup : ContentView
 
     // ── RATE US NUDGE ─────────────────────────────────────────────
     // Shown after every 5th completed game until the player rates or
-    // dismisses it twice. Never interrupts wins that award points.
+    // dismisses it twice. Never interrupts wins that award coins.
     private async System.Threading.Tasks.Task MaybeRateNudgeAsync()
     {
         try
         {
-            if (!_isWin || _completionPoints == 0) return;
+            if (!_isWin || _completionCoins == 0) return;
             if (Preferences.Get("rate_done", false)) return;
 
             int completed = Preferences.Get("games_completed", 0) + 1;
@@ -153,7 +153,7 @@ public partial class GameResultPopup : ContentView
     private void CompleteLevelAndProceed()
     {
         if (!string.IsNullOrEmpty(_gameId))
-            ProgressService.Instance.CompleteLevel(_gameId, _levelNumber, _completionStars, _completionPoints);
+            ProgressService.Instance.CompleteLevel(_gameId, _levelNumber, _completionStars);
         NextLevelRequested?.Invoke(this, EventArgs.Empty);
     }
 

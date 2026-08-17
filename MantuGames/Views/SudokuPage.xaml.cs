@@ -221,9 +221,9 @@ namespace MantuGames.Views
                     reason = "Solution Shown";
 
                 int stars  = isWin && reason == null ? ProgressService.CalcStars(elapsed, 210) : 0;
-                int points = isWin && reason == null ? ProgressService.CalcPoints(stars, elapsed, 210) : 0;
+                int coins = isWin && reason == null ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
 
-                await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, 210, stars, points, reason, "sudoku");
+                await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, 210, stars, coins, reason, "sudoku");
             }
             catch (Exception ex)
             {

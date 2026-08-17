@@ -404,7 +404,7 @@ public partial class PuzzlePetsPage : ContentPage
 
             int elapsed = (int)(DateTime.Now - _startTime).TotalSeconds;
             int stars = ProgressService.CalcStars(elapsed, _totalSec);
-            int pts = ProgressService.CalcPoints(stars, elapsed, _totalSec);
+            int coins = stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 };
 
             foreach (var cell in _gridCells)
             {
@@ -414,7 +414,7 @@ public partial class PuzzlePetsPage : ContentPage
 
             StatusLabel.Text = "Puzzle Complete!";
 
-            _ = ResultPopup.Show(true, _level, elapsed, _totalSec, stars, pts, gameId: "puzzlepets");
+            _ = ResultPopup.Show(true, _level, elapsed, _totalSec, stars, coins, gameId: "puzzlepets");
         }
         catch (Exception ex)
         {

@@ -54,7 +54,6 @@ public partial class DashboardPage : ContentPage
         }
 
         SettingsPopup.ProgressReset += OnProgressReset;
-        RefreshPoints();
         RefreshCoins();
 
         // Show the active player's name
@@ -102,15 +101,6 @@ public partial class DashboardPage : ContentPage
         AudioService.Instance.StopMusic();
     }
 
-    private void RefreshPoints()
-    {
-        int totalPoints = 0;
-        var games = DashboardViewModel.Games;
-        foreach (var g in games)
-            totalPoints += ProgressService.Instance.GetTotalPoints(g.Id);
-        PointsLabel.Text = totalPoints > 0 ? $"{totalPoints} pts" : "";
-    }
-
     private void RefreshCoins()
     {
         CoinBalanceLabel.Text = CoinService.GetTotalCoins() > 0 ? $"{CoinService.GetTotalCoins()}" : "";
@@ -118,7 +108,6 @@ public partial class DashboardPage : ContentPage
 
     private void OnProgressReset(object sender, EventArgs e)
     {
-        RefreshPoints();
         RefreshCoins();
     }
 
@@ -130,7 +119,6 @@ public partial class DashboardPage : ContentPage
     private void OnProfileSelected(object? sender, Models.PlayerProfile profile)
     {
         PlayerNameLabel.Text = profile.Name;
-        RefreshPoints();
         RefreshCoins();
     }
 

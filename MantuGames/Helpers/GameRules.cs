@@ -20,7 +20,7 @@ public static class GameRules
             + "• Swipe left/right to move the falling piece\n"
             + "• Tap to rotate the piece\n"
             + "• Swipe down to drop it faster\n"
-            + "• Complete a row to clear it and earn points\n"
+            + "• Complete a row to clear it and earn coins\n"
             + "• The game ends when blocks reach the top!",
 
         "cardmemory" => "Flip cards to find matching animal pairs!\n\n"
@@ -54,7 +54,7 @@ public static class GameRules
             + "• An equation with a missing number will appear\n"
             + "• Choose the correct answer from the four choices\n"
             + "• Answer quickly — you have a limited time per level\n"
-            + "• Each correct answer scores points\n"
+            + "• Each correct answer earns coins\n"
             + "• See how many you can get right!",
 
         _ => "No rules available for this game."

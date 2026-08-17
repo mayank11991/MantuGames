@@ -823,9 +823,9 @@ public partial class AnimalCrushPage : ContentPage
             int elapsed = total - _vm.TimeRemainingSec;
 
             int stars  = isWin ? ProgressService.CalcStars(elapsed, total) : 0;
-            int points = isWin ? ProgressService.CalcPoints(stars, elapsed, total) : 0;
+            int coins  = isWin ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
 
-            await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, total, stars, points,
+            await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, total, stars, coins,
                 isWin ? null : "Time's up!", "animalcrush");
         }
         catch (Exception ex)

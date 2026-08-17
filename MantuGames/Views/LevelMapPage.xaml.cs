@@ -52,9 +52,8 @@ public partial class LevelMapPage : ContentPage
 
         GameTitleLabel.Text = info?.Title ?? _gameId;
 
-        int totalPts = ProgressService.Instance.GetTotalPoints(_gameId);
         int coins = CoinService.GetCoins(_gameId);
-        PointsLabel.Text = coins > 0 ? $"{totalPts} pts   {coins} coins" : $"{totalPts} pts";
+        PointsLabel.Text = coins > 0 ? $"{coins} coins" : "";
 
         Levels.Clear();
 
