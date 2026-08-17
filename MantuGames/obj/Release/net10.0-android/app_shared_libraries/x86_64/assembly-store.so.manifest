@@ -217,7 +217,7 @@
 0xc2bcfec99f69365e di:126 mi:126 do:5912714 ds:14386 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.ViewPager2.dll
 0xc5293b19e4dc230e di:118 mi:118 do:5703867 ds:8454 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.Navigation.Fragment
 0xc74d70d4aa96cef3 di:119 mi:119 do:5712321 ds:20311 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.Navigation.Runtime.Android
-0xc915bc2ed429064a di:135 mi:135 do:6378673 ds:189959 ddo:0 dds:0 cdo:0 cds:0 MantuGames.dll
+0xc915bc2ed429064a di:135 mi:135 do:6378673 ds:187834 ddo:0 dds:0 cdo:0 cds:0 MantuGames.dll
 0xcab3493c70141c2d di:65 mi:65 do:3214054 ds:9980 ddo:0 dds:0 cdo:0 cds:0 pl/Microsoft.Maui.Controls.resources
 0xcacfddc9f7c6de76 di:68 mi:68 do:3244019 ds:9989 ddo:0 dds:0 cdo:0 cds:0 ro/Microsoft.Maui.Controls.resources.dll
 0xcc5c3bb714c4561e di:133 mi:133 do:6343268 ds:11179 ddo:0 dds:0 cdo:0 cds:0 Xamarin.KotlinX.Coroutines.Core.Jvm.dll
@@ -226,7 +226,7 @@
 0xcd10a42808629144 di:22 mi:22 do:566347 ds:4061 ddo:0 dds:0 cdo:0 cds:0 System.Net.Requests
 0xcdd0c48b6937b21c di:124 mi:124 do:5873130 ds:16605 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.SwipeRefreshLayout
 0xcf23d8093f3ceadf di:9 mi:9 do:128800 ds:24763 ddo:0 dds:0 cdo:0 cds:0 System.Diagnostics.DiagnosticSource.dll
-0xd0a778406d3f558e di:135 mi:135 do:6378673 ds:189959 ddo:0 dds:0 cdo:0 cds:0 MantuGames
+0xd0a778406d3f558e di:135 mi:135 do:6378673 ds:187834 ddo:0 dds:0 cdo:0 cds:0 MantuGames
 0xd16fd7fb9bbcd43e di:84 mi:84 do:3412721 ds:3320 ddo:0 dds:0 cdo:0 cds:0 Microsoft.Extensions.Diagnostics.Abstractions
 0xd333d0af9e423810 di:28 mi:28 do:770895 ds:4468 ddo:0 dds:0 cdo:0 cds:0 System.Runtime.InteropServices
 0xd3426d966bb704f5 di:102 mi:102 do:5280239 ds:8107 ddo:0 dds:0 cdo:0 cds:0 Xamarin.AndroidX.AppCompat.AppCompatResources.dll

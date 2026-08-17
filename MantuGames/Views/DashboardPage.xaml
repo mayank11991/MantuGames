@@ -157,7 +157,9 @@
                                    FontSize="14"
                                    FontAttributes="Bold"
                                    TextColor="{StaticResource ColorText}"
-                                   CharacterSpacing="0.5" />
+                                   CharacterSpacing="0.5"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center" />
                             <Label Grid.Row="2"
                                    Text="{Binding Description}"
                                    FontFamily="Inter"

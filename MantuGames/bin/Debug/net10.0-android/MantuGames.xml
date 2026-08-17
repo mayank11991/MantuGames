@@ -35,6 +35,13 @@
         <member name="P:MantuGames.Models.AnimalCrushPuzzle.AnimalCount">
             <summary>Number of distinct animal types (5 easy, 6 hard).</summary>
         </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.Generate(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a board for the given level. <paramref name="timerSec"/> and
+            <paramref name="targetScore"/> come from the caller (the game page),
+            so the model stays free of platform services.
+            </summary>
+        </member>
         <member name="M:MantuGames.Models.AnimalCrushPuzzle.HasPossibleMove">
             <summary>True when at least one adjacent swap would create a match.</summary>
         </member>
@@ -53,6 +60,19 @@
         </member>
         <member name="M:MantuGames.Models.AnimalCrushPuzzle.Reshuffle">
             <summary>Re-seeds the board until a move exists (used when stuck).</summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.GetPowerUpCells(MantuGames.Models.AnimalCrushPuzzle.PowerUpKind,System.Int32,System.Int32)">
+            <summary>
+            Cells affected by a power-up placed at (r, c):
+            hammer = the tile itself; rocket = whole row + column;
+            bomb = the tile + up to 3 tiles in each direction (plus shape).
+            </summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.UsePowerUp(MantuGames.Models.AnimalCrushPuzzle.PowerUpKind,System.Int32,System.Int32)">
+            <summary>
+            Applies a power-up at (r, c): clears its cells, lets gravity refill
+            and resolves any cascades. Returns the score gained.
+            </summary>
         </member>
         <member name="M:MantuGames.Models.HanoiPuzzle.Clone">
             <summary>Deep copy of the puzzle state (used by the solver and tests).</summary>
@@ -116,10 +136,24 @@
             reports whether an update is available or required.
             </summary>
         </member>
+        <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.TrySwipeAsync(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Swipes a tile in direction (dr, dc) and swaps it with its neighbour.
+            </summary>
+        </member>
         <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.TrySwapAsync(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             Attempts a swap. Returns true when the swap was valid and scored.
             </summary>
+        </member>
+        <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.UsePowerUpAsync(MantuGames.Models.AnimalCrushPuzzle.PowerUpKind,System.Int32,System.Int32)">
+            <summary>
+            Uses a power-up on a tile. Returns -1 when the power-up is not owned,
+            otherwise the score gained (0 is possible).
+            </summary>
+        </member>
+        <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.BuyPowerUp(MantuGames.Models.AnimalCrushPuzzle.PowerUpKind)">
+            <summary>Spends coins to buy one more power-up. Returns false when unaffordable.</summary>
         </member>
         <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.FindHint">
             <summary>Finds a swap that creates a match, or null.</summary>

@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: microsoft
+          java-version: "17"
+
+      - name: Install MAUI Android workload
+        run: dotnet workload install maui-android --skip-manifest-update
+
+      - name: Restore
+        run: dotnet restore MantuGames/MantuGames.csproj
+
+      - name: Run unit tests
+        run: dotnet test MantuGames.Tests/MantuGames.Tests.csproj -c Release
+
+      - name: Build (Release)
+        env:
+          ANDROID_KEY_PASS: ${{ secrets.ANDROID_KEY_PASS }}
+          ANDROID_STORE_PASS: ${{ secrets.ANDROID_STORE_PASS }}
+        run: dotnet build MantuGames/MantuGames.csproj -c Release -f net10.0-android --no-restore

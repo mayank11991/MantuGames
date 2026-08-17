@@ -3138,3 +3138,6 @@
 /Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/res/xml/data_extraction_rules.xml
 /Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/assets/bg_new.mp3
 /Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/resizetizer/r/drawable/animalcrush.png
+/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/resizetizer/r/drawable/hammer.png
+/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/resizetizer/r/drawable/rocket.png
+/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/resizetizer/r/drawable/bomb.png

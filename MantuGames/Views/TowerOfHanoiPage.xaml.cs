@@ -395,8 +395,8 @@ public partial class TowerOfHanoiPage : ContentPage
             int elapsed = _vm.TotalTimerSec - _vm.TimeRemainingSec;
             string reason = _vm.SolutionWasShown ? "Solution Shown" : null;
             int stars  = isWin && reason == null ? ProgressService.CalcStars(elapsed, _vm.TotalTimerSec) : 0;
-            int points = isWin && reason == null ? ProgressService.CalcPoints(stars, elapsed, _vm.TotalTimerSec) : 0;
-            await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, _vm.TotalTimerSec, stars, points, reason, "towerofhanoi");
+            int coins = isWin && reason == null ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
+            await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, _vm.TotalTimerSec, stars, coins, reason, "towerofhanoi");
         }
         catch (Exception ex)
         {

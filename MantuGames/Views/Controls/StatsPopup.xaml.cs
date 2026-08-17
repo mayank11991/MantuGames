@@ -66,17 +66,6 @@ public partial class StatsPopup : ContentView
 
             StatsGrid.Children.Add(new Label
             {
-                Text = s.BestPoints > 0 ? $"{s.BestPoints} pts" : "—",
-                FontFamily = "Orbitron",
-                FontSize = 12,
-                TextColor = Color.FromArgb("#22D3EE"),
-                VerticalOptions = LayoutOptions.Center,
-            });
-            Grid.SetRow((BindableObject)StatsGrid.Children[^1], row);
-            Grid.SetColumn((BindableObject)StatsGrid.Children[^1], 2);
-
-            StatsGrid.Children.Add(new Label
-            {
                 Text = StatsService.WinRate(s.Played, s.Won) > 0 ? $"{StatsService.WinRate(s.Played, s.Won):0}%" : "—",
                 FontFamily = "Orbitron",
                 FontSize = 12,
@@ -84,7 +73,7 @@ public partial class StatsPopup : ContentView
                 VerticalOptions = LayoutOptions.Center,
             });
             Grid.SetRow((BindableObject)StatsGrid.Children[^1], row);
-            Grid.SetColumn((BindableObject)StatsGrid.Children[^1], 3);
+            Grid.SetColumn((BindableObject)StatsGrid.Children[^1], 2);
 
             row++;
         }

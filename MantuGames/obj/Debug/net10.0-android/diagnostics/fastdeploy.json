@@ -4,14 +4,14 @@
     "target.prop.ro.product.build.version.sdk": "36",
     "target.prop.ro.product.cpu.abilist": "arm64-v8a",
     "target.prop.ro.product.manufacturer": "samsung",
-    "target.prop.ro.product.model": "SM-F741B",
+    "target.prop.ro.product.model": "SM-G766B",
     "target.prop.ro.product.cpu.abi": "unknown",
     "deploy.error.code": "",
     "deploy.tool": "xamarin.sync",
     "deploy.result": "Success",
     "deploy.supports.fastdev": "True",
     "deploy.systemapp": "False",
-    "deploy.duration.ms": "27182",
+    "deploy.duration.ms": "12090",
     "pii.deploy.error": "",
     "pii.deploy.file": ""
   }

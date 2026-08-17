@@ -1,2 +1,2 @@
-AdbTarget=
+AdbTarget=-s adb-R5CY41CQFRF-NUm2a8._adb-tls-connect._tcp
 AdbOptions=

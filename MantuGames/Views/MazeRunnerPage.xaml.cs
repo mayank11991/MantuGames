@@ -511,11 +511,11 @@ public partial class MazeRunnerPage : ContentPage
 
         int elapsed = (int)(DateTime.Now - _startTime).TotalSeconds;
         int stars = ProgressService.CalcStars(elapsed, _totalSec);
-        int pts = ProgressService.CalcPoints(stars, elapsed, _totalSec);
+        int coins = stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 };
 
         await DoWinAnimation();
         await Task.Delay(100);
-        _ = ResultPopup.Show(true, _level, elapsed, _totalSec, stars, pts, gameId: "mazerunner");
+        _ = ResultPopup.Show(true, _level, elapsed, _totalSec, stars, coins, gameId: "mazerunner");
     }
 
     private async Task DoWinAnimation()

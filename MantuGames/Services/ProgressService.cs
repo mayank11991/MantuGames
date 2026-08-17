@@ -22,14 +22,6 @@ public class ProgressService
         return pct < 0.40 ? 3 : pct < 0.70 ? 2 : 1;
     }
 
-    // ── POINTS CALCULATION ─────────────────────────────────────────
-    public static int CalcPoints(int stars, int elapsedSec, int totalSec)
-    {
-        int basePoints = stars == 3 ? 100 : stars == 2 ? 60 : 30;
-        int timeBonus  = Math.Max(0, (int)((totalSec - elapsedSec) * 0.5));
-        return basePoints + timeBonus;
-    }
-
     // ── LEVEL PROGRESS ─────────────────────────────────────────────
     public List<LevelProgress> GetLevels(string gameId, int visibleCount)
     {
@@ -44,7 +36,7 @@ public class ProgressService
         return list;
     }
 
-    public void CompleteLevel(string gameId, int levelNumber, int stars = 0, int points = 0)
+    public void CompleteLevel(string gameId, int levelNumber, int stars = 0)
     {
         SetState(gameId, levelNumber,     LevelState.Completed);
         SetState(gameId, levelNumber + 1, LevelState.Unlocked);
@@ -54,19 +46,16 @@ public class ProgressService
         if (stars > existing)
             Preferences.Set(StarsKey(gameId, levelNumber), stars);
 
-        // Accumulate points
-        if (points > 0)
+        // Award coins based on stars earned
+        if (stars > 0)
         {
-            int total = GetTotalPoints(gameId);
-            Preferences.Set(PointsKey(gameId), total + points);
+            int coinReward = stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 };
+            CoinService.AddCoins(gameId, coinReward);
         }
     }
 
     public int GetStars(string gameId, int level) =>
         Preferences.Get(StarsKey(gameId, level), 0);
-
-    public int GetTotalPoints(string gameId) =>
-        Preferences.Get(PointsKey(gameId), 0);
 
     public int GetHighestUnlocked(string gameId)
     {
@@ -96,5 +85,4 @@ public class ProgressService
 
     private static string Key(string gameId, int level)      => ProfileService.Key($"{gameId}_level_{level}_state");
     private static string StarsKey(string gameId, int level) => ProfileService.Key($"{gameId}_level_{level}_stars");
-    private static string PointsKey(string gameId)           => ProfileService.Key($"{gameId}_total_points");
 }
