@@ -1,0 +1,24 @@
+<api type="release" assembly-name="Xamarin.Essentials" mvid="ece5520fdfac44b3a41dd58bb0a9be41">
+  <module assembly-name="Xamarin.Essentials" mvid="ece5520fdfac44b3a41dd58bb0a9be41" mvid-bytes="D1Ll7Kzfs0SkHdWLsKm+QQ==">
+    <types-scratch>
+      <entry key="crc64a0e0a82d0db9a07d/AccelerometerListener" java-name="crc64a0e0a82d0db9a07d/AccelerometerListener" managed-type-name="Xamarin.Essentials.AccelerometerListener" token="33554651" />
+      <entry key="crc64a0e0a82d0db9a07d/BarometerListener" java-name="crc64a0e0a82d0db9a07d/BarometerListener" managed-type-name="Xamarin.Essentials.BarometerListener" token="33554652" />
+      <entry key="crc64a0e0a82d0db9a07d/BatteryBroadcastReceiver" java-name="crc64a0e0a82d0db9a07d/BatteryBroadcastReceiver" managed-type-name="Xamarin.Essentials.BatteryBroadcastReceiver" token="33554653" />
+      <entry key="crc64a0e0a82d0db9a07d/EnergySaverBroadcastReceiver" java-name="crc64a0e0a82d0db9a07d/EnergySaverBroadcastReceiver" managed-type-name="Xamarin.Essentials.EnergySaverBroadcastReceiver" token="33554654" />
+      <entry key="crc64a0e0a82d0db9a07d/ClipboardChangeListener" java-name="crc64a0e0a82d0db9a07d/ClipboardChangeListener" managed-type-name="Xamarin.Essentials.ClipboardChangeListener" token="33554655" />
+      <entry key="crc64a0e0a82d0db9a07d/SensorListener" java-name="crc64a0e0a82d0db9a07d/SensorListener" managed-type-name="Xamarin.Essentials.SensorListener" token="33554656" />
+      <entry key="crc64a0e0a82d0db9a07d/ConnectivityBroadcastReceiver" java-name="crc64a0e0a82d0db9a07d/ConnectivityBroadcastReceiver" managed-type-name="Xamarin.Essentials.ConnectivityBroadcastReceiver" token="33554657" />
+      <entry key="crc64a0e0a82d0db9a07d/Listener" java-name="crc64a0e0a82d0db9a07d/Listener" managed-type-name="Xamarin.Essentials.Listener" token="33554659" />
+      <entry key="crc64a0e0a82d0db9a07d/SingleLocationListener" java-name="crc64a0e0a82d0db9a07d/SingleLocationListener" managed-type-name="Xamarin.Essentials.SingleLocationListener" token="33554660" />
+      <entry key="crc64a0e0a82d0db9a07d/GyroscopeListener" java-name="crc64a0e0a82d0db9a07d/GyroscopeListener" managed-type-name="Xamarin.Essentials.GyroscopeListener" token="33554661" />
+      <entry key="crc64a0e0a82d0db9a07d/MagnetometerListener" java-name="crc64a0e0a82d0db9a07d/MagnetometerListener" managed-type-name="Xamarin.Essentials.MagnetometerListener" token="33554662" />
+      <entry key="crc64a0e0a82d0db9a07d/OrientationSensorListener" java-name="crc64a0e0a82d0db9a07d/OrientationSensorListener" managed-type-name="Xamarin.Essentials.OrientationSensorListener" token="33554663" />
+      <entry key="crc64a0e0a82d0db9a07d/ActivityLifecycleContextListener" java-name="crc64a0e0a82d0db9a07d/ActivityLifecycleContextListener" managed-type-name="Xamarin.Essentials.ActivityLifecycleContextListener" token="33554666" />
+      <entry key="crc64a0e0a82d0db9a07d/IntermediateActivity" java-name="crc64a0e0a82d0db9a07d/IntermediateActivity" managed-type-name="Xamarin.Essentials.IntermediateActivity" token="33554667" />
+      <entry key="crc64a0e0a82d0db9a07d/TextToSpeechImplementation" java-name="crc64a0e0a82d0db9a07d/TextToSpeechImplementation" managed-type-name="Xamarin.Essentials.TextToSpeechImplementation" token="33554670" />
+      <entry key="xamarin/essentials/fileProvider" java-name="xamarin/essentials/fileProvider" managed-type-name="Xamarin.Essentials.FileProvider" token="33554674" />
+      <entry key="crc64a0e0a82d0db9a07d/WebAuthenticatorCallbackActivity" java-name="crc64a0e0a82d0db9a07d/WebAuthenticatorCallbackActivity" managed-type-name="Xamarin.Essentials.WebAuthenticatorCallbackActivity" token="33554680" />
+      <entry key="crc64a0e0a82d0db9a07d/WebAuthenticatorIntermediateActivity" java-name="crc64a0e0a82d0db9a07d/WebAuthenticatorIntermediateActivity" managed-type-name="Xamarin.Essentials.WebAuthenticatorIntermediateActivity" token="33554681" />
+    </types-scratch>
+  </module>
+</api>

@@ -262,8 +262,8 @@ public class ChoiceViewModel : INotifyPropertyChanged
     public string BgColor => State switch
     {
         ChoiceState.Correct => "#4CAF50",
-        ChoiceState.Wrong => "#F44336",
-        _ => "#7C4DFF"
+        ChoiceState.Wrong => "#EF4444",
+        _ => "#A855F7"
     };
 
     public string TextColor => "#FFFFFF";

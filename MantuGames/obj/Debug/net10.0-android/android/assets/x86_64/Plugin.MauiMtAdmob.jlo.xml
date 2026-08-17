@@ -1,0 +1,228 @@
+<api>
+  <jcw-types>
+    <type name="InterstitialAd" package="crc64f98ae9be26790314" is_abstract="True" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.Gms.Ads.Hack.InterstitialAd, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="InterstitialAd" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+    </type>
+    <type name="RewardedAd" package="crc64f98ae9be26790314" is_abstract="True" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.Gms.Ads.Hack.RewardedAd, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="RewardedAd" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+    </type>
+    <type name="RewardedInterstitialAd" package="crc64f98ae9be26790314" is_abstract="True" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.Gms.Ads.Hack.RewardedInterstitialAd, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="RewardedInterstitialAd" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+    </type>
+    <type name="AppOpenAd" package="crc64f98ae9be26790314" is_abstract="True" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.Gms.Ads.Hack.AppOpenAd, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="AppOpenAd" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+    </type>
+    <type name="AdManagerInterstitialAd" package="crc64f98ae9be26790314" is_abstract="True" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.Gms.Ads.Hack.AdManagerInterstitialAd, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="AdManagerInterstitialAd" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+    </type>
+    <type name="MauiMTAdmob" package="crc6491bfa4099bd0c3ba" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob">
+      <implemented_interfaces>
+        <interface name="com.google.android.gms.ads.initialization.OnInitializationCompleteListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="MauiMTAdmob" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onInitializationComplete" method="n_onInitializationComplete:(Lcom/google/android/gms/ads/initialization/InitializationStatus;)V:GetOnInitializationComplete_Lcom_google_android_gms_ads_initialization_InitializationStatus_Handler:Android.Gms.Ads.Initialization.IOnInitializationCompleteListenerInvoker, Xamarin.GooglePlayServices.Ads.Lite" jni_signature="(Lcom/google/android/gms/ads/initialization/InitializationStatus;)V" params="com.google.android.gms.ads.initialization.InitializationStatus p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="AdMInterstitialService" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.AdMInterstitialService, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="AdMInterstitialService" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="AdMInterstitialService" method="n_.ctor:(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V:" jni_signature="(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V" managed_parameters="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob" params="crc6491bfa4099bd0c3ba.MauiMTAdmob p0" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0" />
+      </constructors>
+      <methods>
+        <method name="onAdLoaded" method="n_onAdLoaded:(Lcom/google/android/gms/ads/admanager/AdManagerInterstitialAd;)V:GetOnAdLoadedHandler" jni_signature="(Lcom/google/android/gms/ads/admanager/AdManagerInterstitialAd;)V" params="com.google.android.gms.ads.admanager.AdManagerInterstitialAd p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdFailedToLoad" method="n_onAdFailedToLoad:(Lcom/google/android/gms/ads/LoadAdError;)V:GetOnAdFailedToLoad_Lcom_google_android_gms_ads_LoadAdError_Handler" jni_signature="(Lcom/google/android/gms/ads/LoadAdError;)V" params="com.google.android.gms.ads.LoadAdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="AdMRewardInterstitialService" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardInterstitialService, Plugin.MauiMtAdmob">
+      <implemented_interfaces>
+        <interface name="com.google.android.gms.ads.OnUserEarnedRewardListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AdMRewardInterstitialService" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="AdMRewardInterstitialService" method="n_.ctor:(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V:" jni_signature="(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V" managed_parameters="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob" params="crc6491bfa4099bd0c3ba.MauiMTAdmob p0" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0" />
+      </constructors>
+      <methods>
+        <method name="onAdLoaded" method="n_onAdLoaded:(Lcom/google/android/gms/ads/rewardedinterstitial/RewardedInterstitialAd;)V:GetOnAdLoadedHandler" jni_signature="(Lcom/google/android/gms/ads/rewardedinterstitial/RewardedInterstitialAd;)V" params="com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdFailedToLoad" method="n_onAdFailedToLoad:(Lcom/google/android/gms/ads/LoadAdError;)V:GetOnAdFailedToLoad_Lcom_google_android_gms_ads_LoadAdError_Handler" jni_signature="(Lcom/google/android/gms/ads/LoadAdError;)V" params="com.google.android.gms.ads.LoadAdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onUserEarnedReward" method="n_onUserEarnedReward:(Lcom/google/android/gms/ads/rewarded/RewardItem;)V:GetOnUserEarnedReward_Lcom_google_android_gms_ads_rewarded_RewardItem_Handler:Android.Gms.Ads.IOnUserEarnedRewardListenerInvoker, Xamarin.GooglePlayServices.Ads.Lite" jni_signature="(Lcom/google/android/gms/ads/rewarded/RewardItem;)V" params="com.google.android.gms.ads.rewarded.RewardItem p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="AdMRewardService" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.rewarded.RewardedAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardService, Plugin.MauiMtAdmob">
+      <implemented_interfaces>
+        <interface name="com.google.android.gms.ads.OnUserEarnedRewardListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AdMRewardService" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="AdMRewardService" method="n_.ctor:(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V:" jni_signature="(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V" managed_parameters="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob" params="crc6491bfa4099bd0c3ba.MauiMTAdmob p0" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0" />
+      </constructors>
+      <methods>
+        <method name="onAdFailedToLoad" method="n_onAdFailedToLoad:(Lcom/google/android/gms/ads/LoadAdError;)V:GetOnAdFailedToLoad_Lcom_google_android_gms_ads_LoadAdError_Handler" jni_signature="(Lcom/google/android/gms/ads/LoadAdError;)V" params="com.google.android.gms.ads.LoadAdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdLoaded" method="n_onAdLoaded:(Lcom/google/android/gms/ads/rewarded/RewardedAd;)V:GetOnAdLoadedHandler" jni_signature="(Lcom/google/android/gms/ads/rewarded/RewardedAd;)V" params="com.google.android.gms.ads.rewarded.RewardedAd p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onUserEarnedReward" method="n_onUserEarnedReward:(Lcom/google/android/gms/ads/rewarded/RewardItem;)V:GetOnUserEarnedReward_Lcom_google_android_gms_ads_rewarded_RewardItem_Handler:Android.Gms.Ads.IOnUserEarnedRewardListenerInvoker, Xamarin.GooglePlayServices.Ads.Lite" jni_signature="(Lcom/google/android/gms/ads/rewarded/RewardItem;)V" params="com.google.android.gms.ads.rewarded.RewardItem p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="AppOpenAdManager" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.AppOpenAdManager, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="AppOpenAdManager" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="AppOpenAdManager" method="n_.ctor:(Lcrc6488302ad6e9e4df1a/MauiAppCompatActivity;Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;Ljava/lang/String;)V:" jni_signature="(Lcrc6488302ad6e9e4df1a/MauiAppCompatActivity;Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;Ljava/lang/String;)V" managed_parameters="Microsoft.Maui.MauiAppCompatActivity, Microsoft.Maui:Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob:System.String, System.Private.CoreLib" params="crc6488302ad6e9e4df1a.MauiAppCompatActivity p0, crc6491bfa4099bd0c3ba.MauiMTAdmob p1, java.lang.String p2" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0, p1, p2" />
+      </constructors>
+      <methods>
+        <method name="onAdLoaded" method="n_onAdLoaded:(Lcom/google/android/gms/ads/appopen/AppOpenAd;)V:GetOnAdLoadedHandler" jni_signature="(Lcom/google/android/gms/ads/appopen/AppOpenAd;)V" params="com.google.android.gms.ads.appopen.AppOpenAd p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdFailedToLoad" method="n_onAdFailedToLoad:(Lcom/google/android/gms/ads/LoadAdError;)V:GetOnAdFailedToLoad_Lcom_google_android_gms_ads_LoadAdError_Handler" jni_signature="(Lcom/google/android/gms/ads/LoadAdError;)V" params="com.google.android.gms.ads.LoadAdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="InterstitialService" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.InterstitialService, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="InterstitialService" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="InterstitialService" method="n_.ctor:(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V:" jni_signature="(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V" managed_parameters="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob" params="crc6491bfa4099bd0c3ba.MauiMTAdmob p0" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0" />
+      </constructors>
+      <methods>
+        <method name="onAdLoaded" method="n_onAdLoaded:(Lcom/google/android/gms/ads/interstitial/InterstitialAd;)V:GetOnAdLoadedHandler" jni_signature="(Lcom/google/android/gms/ads/interstitial/InterstitialAd;)V" params="com.google.android.gms.ads.interstitial.InterstitialAd p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdFailedToLoad" method="n_onAdFailedToLoad:(Lcom/google/android/gms/ads/LoadAdError;)V:GetOnAdFailedToLoad_Lcom_google_android_gms_ads_LoadAdError_Handler" jni_signature="(Lcom/google/android/gms/ads/LoadAdError;)V" params="com.google.android.gms.ads.LoadAdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="MyAdBannerListener" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.AdListener" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.MyAdBannerListener, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="MyAdBannerListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAdClicked" method="n_onAdClicked:()V:GetOnAdClickedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdClosed" method="n_onAdClosed:()V:GetOnAdClosedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdImpression" method="n_onAdImpression:()V:GetOnAdImpressionHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdOpened" method="n_onAdOpened:()V:GetOnAdOpenedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdFailedToLoad" method="n_onAdFailedToLoad:(Lcom/google/android/gms/ads/LoadAdError;)V:GetOnAdFailedToLoad_Lcom_google_android_gms_ads_LoadAdError_Handler" jni_signature="(Lcom/google/android/gms/ads/LoadAdError;)V" params="com.google.android.gms.ads.LoadAdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdLoaded" method="n_onAdLoaded:()V:GetOnAdLoadedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdSwipeGestureClicked" method="n_onAdSwipeGestureClicked:()V:GetOnAdSwipeGestureClickedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+      </methods>
+    </type>
+    <type name="MyFullScreenContentCallback" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.FullScreenContentCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.MyFullScreenContentCallback, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="MyFullScreenContentCallback" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="MyFullScreenContentCallback" method="n_.ctor:(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;ILcrc64509fec87287e985b/AppOpenAdManager;)V:" jni_signature="(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;ILcrc64509fec87287e985b/AppOpenAdManager;)V" managed_parameters="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob:Plugin.MauiMtAdmob.Extra.AdType, Plugin.MauiMtAdmob:Plugin.MauiMtAdmob.Platforms.Android.AppOpenAdManager, Plugin.MauiMtAdmob" params="crc6491bfa4099bd0c3ba.MauiMTAdmob p0, int p1, crc64509fec87287e985b.AppOpenAdManager p2" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0, p1, p2" />
+      </constructors>
+      <methods>
+        <method name="onAdDismissedFullScreenContent" method="n_onAdDismissedFullScreenContent:()V:GetOnAdDismissedFullScreenContentHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdFailedToShowFullScreenContent" method="n_onAdFailedToShowFullScreenContent:(Lcom/google/android/gms/ads/AdError;)V:GetOnAdFailedToShowFullScreenContent_Lcom_google_android_gms_ads_AdError_Handler" jni_signature="(Lcom/google/android/gms/ads/AdError;)V" params="com.google.android.gms.ads.AdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdShowedFullScreenContent" method="n_onAdShowedFullScreenContent:()V:GetOnAdShowedFullScreenContentHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdImpression" method="n_onAdImpression:()V:GetOnAdImpressionHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdClicked" method="n_onAdClicked:()V:GetOnAdClickedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+      </methods>
+    </type>
+    <type name="NativeAdManager" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.AdListener" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.NativeAdManager, Plugin.MauiMtAdmob">
+      <implemented_interfaces>
+        <interface name="com.google.android.gms.ads.nativead.NativeAd.OnNativeAdLoadedListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="NativeAdManager" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="NativeAdManager" method="n_.ctor:(Lcrc6488302ad6e9e4df1a/MauiAppCompatActivity;Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;Ljava/lang/String;)V:" jni_signature="(Lcrc6488302ad6e9e4df1a/MauiAppCompatActivity;Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;Ljava/lang/String;)V" managed_parameters="Microsoft.Maui.MauiAppCompatActivity, Microsoft.Maui:Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob:System.String, System.Private.CoreLib" params="crc6488302ad6e9e4df1a.MauiAppCompatActivity p0, crc6491bfa4099bd0c3ba.MauiMTAdmob p1, java.lang.String p2" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0, p1, p2" />
+      </constructors>
+      <methods>
+        <method name="onAdClicked" method="n_onAdClicked:()V:GetOnAdClickedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdClosed" method="n_onAdClosed:()V:GetOnAdClosedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdFailedToLoad" method="n_onAdFailedToLoad:(Lcom/google/android/gms/ads/LoadAdError;)V:GetOnAdFailedToLoad_Lcom_google_android_gms_ads_LoadAdError_Handler" jni_signature="(Lcom/google/android/gms/ads/LoadAdError;)V" params="com.google.android.gms.ads.LoadAdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdImpression" method="n_onAdImpression:()V:GetOnAdImpressionHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdLoaded" method="n_onAdLoaded:()V:GetOnAdLoadedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onAdOpened" method="n_onAdOpened:()V:GetOnAdOpenedHandler" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onNativeAdLoaded" method="n_onNativeAdLoaded:(Lcom/google/android/gms/ads/nativead/NativeAd;)V:GetOnNativeAdLoaded_Lcom_google_android_gms_ads_nativead_NativeAd_Handler:Android.Gms.Ads.NativeAd.NativeAd+IOnNativeAdLoadedListenerInvoker, Xamarin.GooglePlayServices.Ads.Lite" jni_signature="(Lcom/google/android/gms/ads/nativead/NativeAd;)V" params="com.google.android.gms.ads.nativead.NativeAd p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="RewardInterstitialService" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService, Plugin.MauiMtAdmob">
+      <implemented_interfaces>
+        <interface name="com.google.android.gms.ads.OnUserEarnedRewardListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="RewardInterstitialService" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="RewardInterstitialService" method="n_.ctor:(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V:" jni_signature="(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V" managed_parameters="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob" params="crc6491bfa4099bd0c3ba.MauiMTAdmob p0" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0" />
+      </constructors>
+      <methods>
+        <method name="onUserEarnedReward" method="n_onUserEarnedReward:(Lcom/google/android/gms/ads/rewarded/RewardItem;)V:GetOnUserEarnedReward_Lcom_google_android_gms_ads_rewarded_RewardItem_Handler:Android.Gms.Ads.IOnUserEarnedRewardListenerInvoker, Xamarin.GooglePlayServices.Ads.Lite" jni_signature="(Lcom/google/android/gms/ads/rewarded/RewardItem;)V" params="com.google.android.gms.ads.rewarded.RewardItem p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="RewardInterstitialService_RewardInterstitialLoadCallbackImpl" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService+RewardInterstitialLoadCallbackImpl, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="RewardInterstitialService_RewardInterstitialLoadCallbackImpl" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAdFailedToLoad" method="n_onAdFailedToLoad:(Lcom/google/android/gms/ads/LoadAdError;)V:GetOnAdFailedToLoad_Lcom_google_android_gms_ads_LoadAdError_Handler" jni_signature="(Lcom/google/android/gms/ads/LoadAdError;)V" params="com.google.android.gms.ads.LoadAdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdLoaded" method="n_onAdLoaded:(Lcom/google/android/gms/ads/rewardedinterstitial/RewardedInterstitialAd;)V:GetOnAdLoadedHandler" jni_signature="(Lcom/google/android/gms/ads/rewardedinterstitial/RewardedInterstitialAd;)V" params="com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="RewardService" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.rewarded.RewardedAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.RewardService, Plugin.MauiMtAdmob">
+      <implemented_interfaces>
+        <interface name="com.google.android.gms.ads.OnUserEarnedRewardListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="RewardService" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="RewardService" method="n_.ctor:(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V:" jni_signature="(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;)V" managed_parameters="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob" params="crc6491bfa4099bd0c3ba.MauiMTAdmob p0" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0" />
+      </constructors>
+      <methods>
+        <method name="onUserEarnedReward" method="n_onUserEarnedReward:(Lcom/google/android/gms/ads/rewarded/RewardItem;)V:GetOnUserEarnedReward_Lcom_google_android_gms_ads_rewarded_RewardItem_Handler:Android.Gms.Ads.IOnUserEarnedRewardListenerInvoker, Xamarin.GooglePlayServices.Ads.Lite" jni_signature="(Lcom/google/android/gms/ads/rewarded/RewardItem;)V" params="com.google.android.gms.ads.rewarded.RewardItem p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="RewardService_RewardLoadCallbackImpl" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.rewarded.RewardedAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.RewardService+RewardLoadCallbackImpl, Plugin.MauiMtAdmob">
+      <constructors>
+        <constructor name="RewardService_RewardLoadCallbackImpl" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAdFailedToLoad" method="n_onAdFailedToLoad:(Lcom/google/android/gms/ads/LoadAdError;)V:GetOnAdFailedToLoad_Lcom_google_android_gms_ads_LoadAdError_Handler" jni_signature="(Lcom/google/android/gms/ads/LoadAdError;)V" params="com.google.android.gms.ads.LoadAdError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAdLoaded" method="n_onAdLoaded:(Lcom/google/android/gms/ads/rewarded/RewardedAd;)V:GetOnAdLoadedHandler" jni_signature="(Lcom/google/android/gms/ads/rewarded/RewardedAd;)V" params="com.google.android.gms.ads.rewarded.RewardedAd p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="UMPImplementation" package="crc64509fec87287e985b" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback" partial_assembly_qualified_name="Plugin.MauiMtAdmob.Platforms.Android.UMPImplementation, Plugin.MauiMtAdmob">
+      <implemented_interfaces>
+        <interface name="com.google.android.ump.ConsentInformation.OnConsentInfoUpdateSuccessListener" />
+        <interface name="com.google.android.ump.ConsentInformation.OnConsentInfoUpdateFailureListener" />
+        <interface name="com.google.android.ump.ConsentForm.OnConsentFormDismissedListener" />
+        <interface name="com.google.android.ump.UserMessagingPlatform.OnConsentFormLoadSuccessListener" />
+        <interface name="com.google.android.ump.UserMessagingPlatform.OnConsentFormLoadFailureListener" />
+        <interface name="com.google.android.gms.ads.initialization.OnInitializationCompleteListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="UMPImplementation" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="UMPImplementation" method="n_.ctor:(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;Lcrc6488302ad6e9e4df1a/MauiAppCompatActivity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;ZIZ)V:" jni_signature="(Lcrc6491bfa4099bd0c3ba/MauiMTAdmob;Lcrc6488302ad6e9e4df1a/MauiAppCompatActivity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;ZIZ)V" managed_parameters="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob:Microsoft.Maui.MauiAppCompatActivity, Microsoft.Maui:System.String, System.Private.CoreLib:System.String, System.Private.CoreLib:System.String, System.Private.CoreLib:System.Boolean, System.Private.CoreLib:System.String, System.Private.CoreLib:System.Boolean, System.Private.CoreLib:Plugin.MauiMtAdmob.Extra.DebugGeography, Plugin.MauiMtAdmob:System.Boolean, System.Private.CoreLib" params="crc6491bfa4099bd0c3ba.MauiMTAdmob p0, crc6488302ad6e9e4df1a.MauiAppCompatActivity p1, java.lang.String p2, java.lang.String p3, java.lang.String p4, boolean p5, java.lang.String p6, boolean p7, int p8, boolean p9" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0, p1, p2, p3, p4, p5, p6, p7, p8, p9" />
+      </constructors>
+      <methods>
+        <method name="onConsentInfoUpdateSuccess" method="n_onConsentInfoUpdateSuccess:()V:GetOnConsentInfoUpdateSuccessHandler:Xamarin.Google.UserMesssagingPlatform.IConsentInformationOnConsentInfoUpdateSuccessListenerInvoker, Xamarin.Google.UserMessagingPlatform" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onConsentInfoUpdateFailure" method="n_onConsentInfoUpdateFailure:(Lcom/google/android/ump/FormError;)V:GetOnConsentInfoUpdateFailure_Lcom_google_android_ump_FormError_Handler:Xamarin.Google.UserMesssagingPlatform.IConsentInformationOnConsentInfoUpdateFailureListenerInvoker, Xamarin.Google.UserMessagingPlatform" jni_signature="(Lcom/google/android/ump/FormError;)V" params="com.google.android.ump.FormError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onConsentFormDismissed" method="n_onConsentFormDismissed:(Lcom/google/android/ump/FormError;)V:GetOnConsentFormDismissed_Lcom_google_android_ump_FormError_Handler:Xamarin.Google.UserMesssagingPlatform.IConsentFormOnConsentFormDismissedListenerInvoker, Xamarin.Google.UserMessagingPlatform" jni_signature="(Lcom/google/android/ump/FormError;)V" params="com.google.android.ump.FormError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onConsentFormLoadSuccess" method="n_onConsentFormLoadSuccess:(Lcom/google/android/ump/ConsentForm;)V:GetOnConsentFormLoadSuccess_Lcom_google_android_ump_ConsentForm_Handler:Xamarin.Google.UserMesssagingPlatform.UserMessagingPlatform+IOnConsentFormLoadSuccessListenerInvoker, Xamarin.Google.UserMessagingPlatform" jni_signature="(Lcom/google/android/ump/ConsentForm;)V" params="com.google.android.ump.ConsentForm p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onConsentFormLoadFailure" method="n_onConsentFormLoadFailure:(Lcom/google/android/ump/FormError;)V:GetOnConsentFormLoadFailure_Lcom_google_android_ump_FormError_Handler:Xamarin.Google.UserMesssagingPlatform.UserMessagingPlatform+IOnConsentFormLoadFailureListenerInvoker, Xamarin.Google.UserMessagingPlatform" jni_signature="(Lcom/google/android/ump/FormError;)V" params="com.google.android.ump.FormError p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onInitializationComplete" method="n_onInitializationComplete:(Lcom/google/android/gms/ads/initialization/InitializationStatus;)V:GetOnInitializationComplete_Lcom_google_android_gms_ads_initialization_InitializationStatus_Handler:Android.Gms.Ads.Initialization.IOnInitializationCompleteListenerInvoker, Xamarin.GooglePlayServices.Ads.Lite" jni_signature="(Lcom/google/android/gms/ads/initialization/InitializationStatus;)V" params="com.google.android.gms.ads.initialization.InitializationStatus p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="Plugin.MauiMtAdmob" module-name="Plugin.MauiMtAdmob.dll">
+    <type assembly-qualified-name="Android.Gms.Ads.Hack.InterstitialAd, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.gms.ads.hack.InterstitialAd" java-key="crc64f98ae9be26790314.InterstitialAd" managed-key="Android.Gms.Ads.Hack.InterstitialAd" partial-assembly-qualified-name="Android.Gms.Ads.Hack.InterstitialAd, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Android.Gms.Ads.Hack.RewardedAd, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.gms.ads.hack.RewardedAd" java-key="crc64f98ae9be26790314.RewardedAd" managed-key="Android.Gms.Ads.Hack.RewardedAd" partial-assembly-qualified-name="Android.Gms.Ads.Hack.RewardedAd, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Android.Gms.Ads.Hack.RewardedInterstitialAd, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.gms.ads.hack.RewardedInterstitialAd" java-key="crc64f98ae9be26790314.RewardedInterstitialAd" managed-key="Android.Gms.Ads.Hack.RewardedInterstitialAd" partial-assembly-qualified-name="Android.Gms.Ads.Hack.RewardedInterstitialAd, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Android.Gms.Ads.Hack.AppOpenAd, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.gms.ads.hack.AppOpenAd" java-key="crc64f98ae9be26790314.AppOpenAd" managed-key="Android.Gms.Ads.Hack.AppOpenAd" partial-assembly-qualified-name="Android.Gms.Ads.Hack.AppOpenAd, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Android.Gms.Ads.Hack.AdManagerInterstitialAd, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.gms.ads.hack.AdManagerInterstitialAd" java-key="crc64f98ae9be26790314.AdManagerInterstitialAd" managed-key="Android.Gms.Ads.Hack.AdManagerInterstitialAd" partial-assembly-qualified-name="Android.Gms.Ads.Hack.AdManagerInterstitialAd, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.MauiMTAdmob" java-key="crc6491bfa4099bd0c3ba.MauiMTAdmob" managed-key="Plugin.MauiMtAdmob.MauiMTAdmob" partial-assembly-qualified-name="Plugin.MauiMtAdmob.MauiMTAdmob, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.AdMInterstitialService, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.AdMInterstitialService" java-key="crc64509fec87287e985b.AdMInterstitialService" managed-key="Plugin.MauiMtAdmob.Platforms.Android.AdMInterstitialService" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.AdMInterstitialService, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardInterstitialService, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.AdMRewardInterstitialService" java-key="crc64509fec87287e985b.AdMRewardInterstitialService" managed-key="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardInterstitialService" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardInterstitialService, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardService, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.AdMRewardService" java-key="crc64509fec87287e985b.AdMRewardService" managed-key="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardService" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.AdMRewardService, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.AppOpenAdManager, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.AppOpenAdManager" java-key="crc64509fec87287e985b.AppOpenAdManager" managed-key="Plugin.MauiMtAdmob.Platforms.Android.AppOpenAdManager" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.AppOpenAdManager, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.InterstitialService, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.InterstitialService" java-key="crc64509fec87287e985b.InterstitialService" managed-key="Plugin.MauiMtAdmob.Platforms.Android.InterstitialService" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.InterstitialService, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.MyAdBannerListener, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.MyAdBannerListener" java-key="crc64509fec87287e985b.MyAdBannerListener" managed-key="Plugin.MauiMtAdmob.Platforms.Android.MyAdBannerListener" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.MyAdBannerListener, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.MyFullScreenContentCallback, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.MyFullScreenContentCallback" java-key="crc64509fec87287e985b.MyFullScreenContentCallback" managed-key="Plugin.MauiMtAdmob.Platforms.Android.MyFullScreenContentCallback" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.MyFullScreenContentCallback, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.NativeAdManager, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.NativeAdManager" java-key="crc64509fec87287e985b.NativeAdManager" managed-key="Plugin.MauiMtAdmob.Platforms.Android.NativeAdManager" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.NativeAdManager, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.RewardInterstitialService" java-key="crc64509fec87287e985b.RewardInterstitialService" managed-key="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService+RewardInterstitialLoadCallbackImpl, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.RewardInterstitialService_RewardInterstitialLoadCallbackImpl" java-key="crc64509fec87287e985b.RewardInterstitialService_RewardInterstitialLoadCallbackImpl" managed-key="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService.RewardInterstitialLoadCallbackImpl" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.RewardInterstitialService+RewardInterstitialLoadCallbackImpl, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.RewardService, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.RewardService" java-key="crc64509fec87287e985b.RewardService" managed-key="Plugin.MauiMtAdmob.Platforms.Android.RewardService" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.RewardService, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.RewardService+RewardLoadCallbackImpl, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.RewardService_RewardLoadCallbackImpl" java-key="crc64509fec87287e985b.RewardService_RewardLoadCallbackImpl" managed-key="Plugin.MauiMtAdmob.Platforms.Android.RewardService.RewardLoadCallbackImpl" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.RewardService+RewardLoadCallbackImpl, Plugin.MauiMtAdmob" />
+    <type assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.UMPImplementation, Plugin.MauiMtAdmob, Version=2.4.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.mauimtadmob.platforms.android.UMPImplementation" java-key="crc64509fec87287e985b.UMPImplementation" managed-key="Plugin.MauiMtAdmob.Platforms.Android.UMPImplementation" partial-assembly-qualified-name="Plugin.MauiMtAdmob.Platforms.Android.UMPImplementation, Plugin.MauiMtAdmob" />
+  </acw-types>
+</api>

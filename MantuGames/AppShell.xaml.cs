@@ -14,5 +14,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("mazerunner", typeof(Views.MazeRunnerPage));
         Routing.RegisterRoute("puzzlepets", typeof(Views.PuzzlePetsPage));
         Routing.RegisterRoute("blockpuzzle", typeof(Views.BlockPuzzlePage));
+        Routing.RegisterRoute("animalcrush", typeof(Views.AnimalCrushPage));
     }
 }

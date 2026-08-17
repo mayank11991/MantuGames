@@ -17,16 +17,17 @@
                <MauiXaml Update="MyPage.xaml" Inflator="Default" /> (reverts to defaults: Runtime for Debug, XamlC for Release)
                <MauiXaml Update="MyPage.xaml" Inflator="Runtime" /> (force runtime inflation) -->
         <MauiXamlInflator>SourceGen</MauiXamlInflator>
+        <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
 
         <!-- Display name -->
-        <ApplicationTitle>MantuGames</ApplicationTitle>
+        <ApplicationTitle>Mantu Games</ApplicationTitle>
 
         <!-- App Identifier -->
         <ApplicationId>com.mantugames.app</ApplicationId>
 
         <!-- Versions -->
-        <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
-        <ApplicationVersion>2</ApplicationVersion>
+        <ApplicationDisplayVersion>1.0.2</ApplicationDisplayVersion>
+        <ApplicationVersion>3</ApplicationVersion>
 
         <!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
         <WindowsPackageType>None</WindowsPackageType>
@@ -35,15 +36,21 @@
         <AndroidKeyStore>True</AndroidKeyStore>
         <AndroidSigningKeyStore>mantugames.keystore</AndroidSigningKeyStore>
         <AndroidSigningKeyAlias>mantugames</AndroidSigningKeyAlias>
-        <AndroidSigningKeyPass>Xamarin@11991</AndroidSigningKeyPass>
-        <AndroidSigningStorePass>Xamarin@11991</AndroidSigningStorePass>
+        <!-- Signing passwords: use env vars (recommended for CI) or fall back to local values -->
+        <AndroidSigningKeyPass Condition="'$(ANDROID_KEY_PASS)' != ''">$(ANDROID_KEY_PASS)</AndroidSigningKeyPass>
+        <AndroidSigningKeyPass Condition="'$(ANDROID_KEY_PASS)' == ''">Xamarin@11991</AndroidSigningKeyPass>
+        <AndroidSigningStorePass Condition="'$(ANDROID_STORE_PASS)' != ''">$(ANDROID_STORE_PASS)</AndroidSigningStorePass>
+        <AndroidSigningStorePass Condition="'$(ANDROID_STORE_PASS)' == ''">Xamarin@11991</AndroidSigningStorePass>
+        <!-- R8 code shrinking + ProGuard keep rules for Release builds -->
+        <AndroidLinkTool Condition="'$(Configuration)' == 'Release'">r8</AndroidLinkTool>
+        <AndroidProguardFile>proguard.cfg</AndroidProguardFile>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     </PropertyGroup>
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#0B0E14" />
 
         <!-- Splash Screen -->
         <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#000000" BaseSize="128,128" />
@@ -54,6 +61,18 @@
         <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
 
+        <!-- Resource Dictionaries -->
+        <MauiXaml Update="Resources/Styles/Colors.xaml" />
+        <MauiXaml Update="Resources/Styles/Styles.xaml" />
+        <Compile Update="Resources/Styles/Colors.xaml.cs">
+            <DependentUpon>Colors.xaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Resources/Styles/Styles.xaml.cs">
+            <DependentUpon>Styles.xaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
@@ -63,6 +82,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
         <PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
         <PackageReference Include="Plugin.MauiMTAdmob" Version="2.4.0" />
+        <PackageReference Include="Plugin.InAppBilling" Version="5.0.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -105,6 +125,14 @@
 
     <ItemGroup>
       <AdditionalFiles Include="Views\DashboardPage.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="obj\Debug\net10.0-android\MantuGames.genruntimeconfig.cache" />
+      <Content Include="obj\Debug\net10.0-android\MantuGames.sourcelink.json" />
+      <Content Include="obj\Debug\net10.0-android\XamlC.stamp" />
+      <Content Include="obj\Debug\net10.0-android\_Microsoft.Android.Resource.Designer.dll" />
+      <Content Include="obj\rider.project.restore.info" />
     </ItemGroup>
 
 </Project>

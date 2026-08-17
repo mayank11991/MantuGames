@@ -1,0 +1,201 @@
+<api>
+  <jcw-types>
+    <type name="InternalAcknowledgePurchaseResponseListener" package="crc64f0146600faa7a777" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.InternalAcknowledgePurchaseResponseListener, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.AcknowledgePurchaseResponseListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="InternalAcknowledgePurchaseResponseListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAcknowledgePurchaseResponse" method="n_onAcknowledgePurchaseResponse:(Lcom/android/billingclient/api/BillingResult;)V:GetOnAcknowledgePurchaseResponse_Lcom_android_billingclient_api_BillingResult_Handler:Android.BillingClient.Api.IAcknowledgePurchaseResponseListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;)V" params="com.android.billingclient.api.BillingResult p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="InternalBillingClientStateListener" package="crc64f0146600faa7a777" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.InternalBillingClientStateListener, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.BillingClientStateListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="InternalBillingClientStateListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onBillingServiceDisconnected" method="n_onBillingServiceDisconnected:()V:GetOnBillingServiceDisconnectedHandler:Android.BillingClient.Api.IBillingClientStateListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="()V" retval="void" />
+        <method name="onBillingSetupFinished" method="n_onBillingSetupFinished:(Lcom/android/billingclient/api/BillingResult;)V:GetOnBillingSetupFinished_Lcom_android_billingclient_api_BillingResult_Handler:Android.BillingClient.Api.IBillingClientStateListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;)V" params="com.android.billingclient.api.BillingResult p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="InternalConsumeResponseListener" package="crc64f0146600faa7a777" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.InternalConsumeResponseListener, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.ConsumeResponseListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="InternalConsumeResponseListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onConsumeResponse" method="n_onConsumeResponse:(Lcom/android/billingclient/api/BillingResult;Ljava/lang/String;)V:GetOnConsumeResponse_Lcom_android_billingclient_api_BillingResult_Ljava_lang_String_Handler:Android.BillingClient.Api.IConsumeResponseListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;Ljava/lang/String;)V" params="com.android.billingclient.api.BillingResult p0, java.lang.String p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="InternalPriceChangeConfirmationListener" package="crc64f0146600faa7a777" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.InternalPriceChangeConfirmationListener, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.PriceChangeConfirmationListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="InternalPriceChangeConfirmationListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onPriceChangeConfirmationResult" method="n_onPriceChangeConfirmationResult:(Lcom/android/billingclient/api/BillingResult;)V:GetOnPriceChangeConfirmationResult_Lcom_android_billingclient_api_BillingResult_Handler:Android.BillingClient.Api.IPriceChangeConfirmationListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;)V" params="com.android.billingclient.api.BillingResult p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="InternalPurchaseHistoryResponseListener" package="crc64f0146600faa7a777" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.InternalPurchaseHistoryResponseListener, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.PurchaseHistoryResponseListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="InternalPurchaseHistoryResponseListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onPurchaseHistoryResponse" method="n_onPurchaseHistoryResponse:(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V:GetOnPurchaseHistoryResponse_Lcom_android_billingclient_api_BillingResult_Ljava_util_List_Handler:Android.BillingClient.Api.IPurchaseHistoryResponseListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V" params="com.android.billingclient.api.BillingResult p0, java.util.List p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="InternalPurchasesUpdatedListener" package="crc64f0146600faa7a777" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.InternalPurchasesUpdatedListener, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.PurchasesUpdatedListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="InternalPurchasesUpdatedListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onPurchasesUpdated" method="n_onPurchasesUpdated:(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V:GetOnPurchasesUpdated_Lcom_android_billingclient_api_BillingResult_Ljava_util_List_Handler:Android.BillingClient.Api.IPurchasesUpdatedListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V" params="com.android.billingclient.api.BillingResult p0, java.util.List p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="InternalSkuDetailsResponseListener" package="crc64f0146600faa7a777" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.InternalSkuDetailsResponseListener, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.SkuDetailsResponseListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="InternalSkuDetailsResponseListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onSkuDetailsResponse" method="n_onSkuDetailsResponse:(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V:GetOnSkuDetailsResponse_Lcom_android_billingclient_api_BillingResult_Ljava_util_List_Handler:Android.BillingClient.Api.ISkuDetailsResponseListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V" params="com.android.billingclient.api.BillingResult p0, java.util.List p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="AcknowledgePurchaseResponseListenerImplementor" package="mono.com.android.billingclient.api" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.IAcknowledgePurchaseResponseListenerImplementor, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.AcknowledgePurchaseResponseListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AcknowledgePurchaseResponseListenerImplementor" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAcknowledgePurchaseResponse" method="n_onAcknowledgePurchaseResponse:(Lcom/android/billingclient/api/BillingResult;)V:GetOnAcknowledgePurchaseResponse_Lcom_android_billingclient_api_BillingResult_Handler:Android.BillingClient.Api.IAcknowledgePurchaseResponseListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;)V" params="com.android.billingclient.api.BillingResult p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="BillingClientStateListenerImplementor" package="mono.com.android.billingclient.api" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.IBillingClientStateListenerImplementor, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.BillingClientStateListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="BillingClientStateListenerImplementor" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onBillingServiceDisconnected" method="n_onBillingServiceDisconnected:()V:GetOnBillingServiceDisconnectedHandler:Android.BillingClient.Api.IBillingClientStateListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="()V" retval="void" />
+        <method name="onBillingSetupFinished" method="n_onBillingSetupFinished:(Lcom/android/billingclient/api/BillingResult;)V:GetOnBillingSetupFinished_Lcom_android_billingclient_api_BillingResult_Handler:Android.BillingClient.Api.IBillingClientStateListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;)V" params="com.android.billingclient.api.BillingResult p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="ConsumeResponseListenerImplementor" package="mono.com.android.billingclient.api" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.IConsumeResponseListenerImplementor, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.ConsumeResponseListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="ConsumeResponseListenerImplementor" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onConsumeResponse" method="n_onConsumeResponse:(Lcom/android/billingclient/api/BillingResult;Ljava/lang/String;)V:GetOnConsumeResponse_Lcom_android_billingclient_api_BillingResult_Ljava_lang_String_Handler:Android.BillingClient.Api.IConsumeResponseListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;Ljava/lang/String;)V" params="com.android.billingclient.api.BillingResult p0, java.lang.String p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="PriceChangeConfirmationListenerImplementor" package="mono.com.android.billingclient.api" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.IPriceChangeConfirmationListenerImplementor, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.PriceChangeConfirmationListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="PriceChangeConfirmationListenerImplementor" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onPriceChangeConfirmationResult" method="n_onPriceChangeConfirmationResult:(Lcom/android/billingclient/api/BillingResult;)V:GetOnPriceChangeConfirmationResult_Lcom_android_billingclient_api_BillingResult_Handler:Android.BillingClient.Api.IPriceChangeConfirmationListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;)V" params="com.android.billingclient.api.BillingResult p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="PurchaseHistoryResponseListenerImplementor" package="mono.com.android.billingclient.api" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.IPurchaseHistoryResponseListenerImplementor, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.PurchaseHistoryResponseListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="PurchaseHistoryResponseListenerImplementor" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onPurchaseHistoryResponse" method="n_onPurchaseHistoryResponse:(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V:GetOnPurchaseHistoryResponse_Lcom_android_billingclient_api_BillingResult_Ljava_util_List_Handler:Android.BillingClient.Api.IPurchaseHistoryResponseListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V" params="com.android.billingclient.api.BillingResult p0, java.util.List p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="PurchasesResponseListenerImplementor" package="mono.com.android.billingclient.api" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.IPurchasesResponseListenerImplementor, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.PurchasesResponseListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="PurchasesResponseListenerImplementor" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onQueryPurchasesResponse" method="n_onQueryPurchasesResponse:(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V:GetOnQueryPurchasesResponse_Lcom_android_billingclient_api_BillingResult_Ljava_util_List_Handler:Android.BillingClient.Api.IPurchasesResponseListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V" params="com.android.billingclient.api.BillingResult p0, java.util.List p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="PurchasesUpdatedListenerImplementor" package="mono.com.android.billingclient.api" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.IPurchasesUpdatedListenerImplementor, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.PurchasesUpdatedListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="PurchasesUpdatedListenerImplementor" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onPurchasesUpdated" method="n_onPurchasesUpdated:(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V:GetOnPurchasesUpdated_Lcom_android_billingclient_api_BillingResult_Ljava_util_List_Handler:Android.BillingClient.Api.IPurchasesUpdatedListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V" params="com.android.billingclient.api.BillingResult p0, java.util.List p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="SkuDetailsResponseListenerImplementor" package="mono.com.android.billingclient.api" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.BillingClient.Api.ISkuDetailsResponseListenerImplementor, Xamarin.Android.Google.BillingClient">
+      <implemented_interfaces>
+        <interface name="com.android.billingclient.api.SkuDetailsResponseListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="SkuDetailsResponseListenerImplementor" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onSkuDetailsResponse" method="n_onSkuDetailsResponse:(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V:GetOnSkuDetailsResponse_Lcom_android_billingclient_api_BillingResult_Ljava_util_List_Handler:Android.BillingClient.Api.ISkuDetailsResponseListenerInvoker, Xamarin.Android.Google.BillingClient" jni_signature="(Lcom/android/billingclient/api/BillingResult;Ljava/util/List;)V" params="com.android.billingclient.api.BillingResult p0, java.util.List p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="Xamarin.Android.Google.BillingClient" module-name="Xamarin.Android.Google.BillingClient.dll">
+    <type assembly-qualified-name="Android.BillingClient.Api.BillingClient+IBillingResponseCode, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.BillingClient$BillingResponseCode" java-key="com.android.billingclient.api.BillingClient$BillingResponseCode" managed-key="Android.BillingClient.Api.BillingClient.IBillingResponseCode" partial-assembly-qualified-name="Android.BillingClient.Api.BillingClient+IBillingResponseCode, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.BillingClient+IConnectionState, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.BillingClient$ConnectionState" java-key="com.android.billingclient.api.BillingClient$ConnectionState" managed-key="Android.BillingClient.Api.BillingClient.IConnectionState" partial-assembly-qualified-name="Android.BillingClient.Api.BillingClient+IConnectionState, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.BillingClient+IFeatureType, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.BillingClient$FeatureType" java-key="com.android.billingclient.api.BillingClient$FeatureType" managed-key="Android.BillingClient.Api.BillingClient.IFeatureType" partial-assembly-qualified-name="Android.BillingClient.Api.BillingClient+IFeatureType, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.BillingClient+ISkuType, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.BillingClient$SkuType" java-key="com.android.billingclient.api.BillingClient$SkuType" managed-key="Android.BillingClient.Api.BillingClient.ISkuType" partial-assembly-qualified-name="Android.BillingClient.Api.BillingClient+ISkuType, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.InternalAcknowledgePurchaseResponseListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.billingclient.api.InternalAcknowledgePurchaseResponseListener" java-key="crc64f0146600faa7a777.InternalAcknowledgePurchaseResponseListener" managed-key="Android.BillingClient.Api.InternalAcknowledgePurchaseResponseListener" partial-assembly-qualified-name="Android.BillingClient.Api.InternalAcknowledgePurchaseResponseListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.InternalBillingClientStateListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.billingclient.api.InternalBillingClientStateListener" java-key="crc64f0146600faa7a777.InternalBillingClientStateListener" managed-key="Android.BillingClient.Api.InternalBillingClientStateListener" partial-assembly-qualified-name="Android.BillingClient.Api.InternalBillingClientStateListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.InternalConsumeResponseListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.billingclient.api.InternalConsumeResponseListener" java-key="crc64f0146600faa7a777.InternalConsumeResponseListener" managed-key="Android.BillingClient.Api.InternalConsumeResponseListener" partial-assembly-qualified-name="Android.BillingClient.Api.InternalConsumeResponseListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.InternalPriceChangeConfirmationListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.billingclient.api.InternalPriceChangeConfirmationListener" java-key="crc64f0146600faa7a777.InternalPriceChangeConfirmationListener" managed-key="Android.BillingClient.Api.InternalPriceChangeConfirmationListener" partial-assembly-qualified-name="Android.BillingClient.Api.InternalPriceChangeConfirmationListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.InternalPurchaseHistoryResponseListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.billingclient.api.InternalPurchaseHistoryResponseListener" java-key="crc64f0146600faa7a777.InternalPurchaseHistoryResponseListener" managed-key="Android.BillingClient.Api.InternalPurchaseHistoryResponseListener" partial-assembly-qualified-name="Android.BillingClient.Api.InternalPurchaseHistoryResponseListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.InternalPurchasesUpdatedListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.billingclient.api.InternalPurchasesUpdatedListener" java-key="crc64f0146600faa7a777.InternalPurchasesUpdatedListener" managed-key="Android.BillingClient.Api.InternalPurchasesUpdatedListener" partial-assembly-qualified-name="Android.BillingClient.Api.InternalPurchasesUpdatedListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.InternalSkuDetailsResponseListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.billingclient.api.InternalSkuDetailsResponseListener" java-key="crc64f0146600faa7a777.InternalSkuDetailsResponseListener" managed-key="Android.BillingClient.Api.InternalSkuDetailsResponseListener" partial-assembly-qualified-name="Android.BillingClient.Api.InternalSkuDetailsResponseListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.BillingFlowParams+IProrationMode, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.BillingFlowParams$ProrationMode" java-key="com.android.billingclient.api.BillingFlowParams$ProrationMode" managed-key="Android.BillingClient.Api.BillingFlowParams.IProrationMode" partial-assembly-qualified-name="Android.BillingClient.Api.BillingFlowParams+IProrationMode, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IAcknowledgePurchaseResponseListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.AcknowledgePurchaseResponseListener" java-key="com.android.billingclient.api.AcknowledgePurchaseResponseListener" managed-key="Android.BillingClient.Api.IAcknowledgePurchaseResponseListener" partial-assembly-qualified-name="Android.BillingClient.Api.IAcknowledgePurchaseResponseListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IAcknowledgePurchaseResponseListenerImplementor, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mono.com.android.billingclient.api.AcknowledgePurchaseResponseListenerImplementor" java-key="mono.com.android.billingclient.api.AcknowledgePurchaseResponseListenerImplementor" managed-key="Android.BillingClient.Api.IAcknowledgePurchaseResponseListenerImplementor" partial-assembly-qualified-name="Android.BillingClient.Api.IAcknowledgePurchaseResponseListenerImplementor, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IBillingClientStateListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.BillingClientStateListener" java-key="com.android.billingclient.api.BillingClientStateListener" managed-key="Android.BillingClient.Api.IBillingClientStateListener" partial-assembly-qualified-name="Android.BillingClient.Api.IBillingClientStateListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IBillingClientStateListenerImplementor, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mono.com.android.billingclient.api.BillingClientStateListenerImplementor" java-key="mono.com.android.billingclient.api.BillingClientStateListenerImplementor" managed-key="Android.BillingClient.Api.IBillingClientStateListenerImplementor" partial-assembly-qualified-name="Android.BillingClient.Api.IBillingClientStateListenerImplementor, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IConsumeResponseListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.ConsumeResponseListener" java-key="com.android.billingclient.api.ConsumeResponseListener" managed-key="Android.BillingClient.Api.IConsumeResponseListener" partial-assembly-qualified-name="Android.BillingClient.Api.IConsumeResponseListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IConsumeResponseListenerImplementor, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mono.com.android.billingclient.api.ConsumeResponseListenerImplementor" java-key="mono.com.android.billingclient.api.ConsumeResponseListenerImplementor" managed-key="Android.BillingClient.Api.IConsumeResponseListenerImplementor" partial-assembly-qualified-name="Android.BillingClient.Api.IConsumeResponseListenerImplementor, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IPriceChangeConfirmationListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.PriceChangeConfirmationListener" java-key="com.android.billingclient.api.PriceChangeConfirmationListener" managed-key="Android.BillingClient.Api.IPriceChangeConfirmationListener" partial-assembly-qualified-name="Android.BillingClient.Api.IPriceChangeConfirmationListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IPriceChangeConfirmationListenerImplementor, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mono.com.android.billingclient.api.PriceChangeConfirmationListenerImplementor" java-key="mono.com.android.billingclient.api.PriceChangeConfirmationListenerImplementor" managed-key="Android.BillingClient.Api.IPriceChangeConfirmationListenerImplementor" partial-assembly-qualified-name="Android.BillingClient.Api.IPriceChangeConfirmationListenerImplementor, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IPurchaseHistoryResponseListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.PurchaseHistoryResponseListener" java-key="com.android.billingclient.api.PurchaseHistoryResponseListener" managed-key="Android.BillingClient.Api.IPurchaseHistoryResponseListener" partial-assembly-qualified-name="Android.BillingClient.Api.IPurchaseHistoryResponseListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IPurchaseHistoryResponseListenerImplementor, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mono.com.android.billingclient.api.PurchaseHistoryResponseListenerImplementor" java-key="mono.com.android.billingclient.api.PurchaseHistoryResponseListenerImplementor" managed-key="Android.BillingClient.Api.IPurchaseHistoryResponseListenerImplementor" partial-assembly-qualified-name="Android.BillingClient.Api.IPurchaseHistoryResponseListenerImplementor, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IPurchasesResponseListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.PurchasesResponseListener" java-key="com.android.billingclient.api.PurchasesResponseListener" managed-key="Android.BillingClient.Api.IPurchasesResponseListener" partial-assembly-qualified-name="Android.BillingClient.Api.IPurchasesResponseListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IPurchasesResponseListenerImplementor, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mono.com.android.billingclient.api.PurchasesResponseListenerImplementor" java-key="mono.com.android.billingclient.api.PurchasesResponseListenerImplementor" managed-key="Android.BillingClient.Api.IPurchasesResponseListenerImplementor" partial-assembly-qualified-name="Android.BillingClient.Api.IPurchasesResponseListenerImplementor, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IPurchasesUpdatedListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.PurchasesUpdatedListener" java-key="com.android.billingclient.api.PurchasesUpdatedListener" managed-key="Android.BillingClient.Api.IPurchasesUpdatedListener" partial-assembly-qualified-name="Android.BillingClient.Api.IPurchasesUpdatedListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.IPurchasesUpdatedListenerImplementor, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mono.com.android.billingclient.api.PurchasesUpdatedListenerImplementor" java-key="mono.com.android.billingclient.api.PurchasesUpdatedListenerImplementor" managed-key="Android.BillingClient.Api.IPurchasesUpdatedListenerImplementor" partial-assembly-qualified-name="Android.BillingClient.Api.IPurchasesUpdatedListenerImplementor, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.ISkuDetailsResponseListener, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.android.billingclient.api.SkuDetailsResponseListener" java-key="com.android.billingclient.api.SkuDetailsResponseListener" managed-key="Android.BillingClient.Api.ISkuDetailsResponseListener" partial-assembly-qualified-name="Android.BillingClient.Api.ISkuDetailsResponseListener, Xamarin.Android.Google.BillingClient" />
+    <type assembly-qualified-name="Android.BillingClient.Api.ISkuDetailsResponseListenerImplementor, Xamarin.Android.Google.BillingClient, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mono.com.android.billingclient.api.SkuDetailsResponseListenerImplementor" java-key="mono.com.android.billingclient.api.SkuDetailsResponseListenerImplementor" managed-key="Android.BillingClient.Api.ISkuDetailsResponseListenerImplementor" partial-assembly-qualified-name="Android.BillingClient.Api.ISkuDetailsResponseListenerImplementor, Xamarin.Android.Google.BillingClient" />
+  </acw-types>
+</api>

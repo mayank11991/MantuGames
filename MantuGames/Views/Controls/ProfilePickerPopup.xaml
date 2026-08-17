@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="MantuGames.Views.Controls.ProfilePickerPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid x:Name="Overlay" BackgroundColor="#E60B0E14">
+        <Grid.GestureRecognizers>
+            <!-- Consume taps — selection is mandatory -->
+            <TapGestureRecognizer Tapped="OnOverlayTapped" />
+        </Grid.GestureRecognizers>
+
+        <!-- Bottom sheet -->
+        <Border x:Name="Sheet"
+                Background="#182136"
+                Stroke="#2EFFFFFF"
+                StrokeThickness="1"
+                Padding="20,20,20,28"
+                HorizontalOptions="Fill"
+                VerticalOptions="End"
+                Margin="0,0,0,0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="24,24,0,0" />
+            </Border.StrokeShape>
+            <Border.Shadow>
+                <Shadow Brush="#000000" Offset="0,-6" Radius="24" Opacity="0.45" />
+            </Border.Shadow>
+            <Border.GestureRecognizers>
+                <!-- Consume taps anywhere on the sheet that miss a tile -->
+                <TapGestureRecognizer Tapped="OnSheetTapped" />
+            </Border.GestureRecognizers>
+
+            <VerticalStackLayout Spacing="18">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                    <BoxView Grid.Column="0" WidthRequest="44" HeightRequest="4"
+                             CornerRadius="2" Color="#3A4A63"
+                             VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="Who's playing?"
+                           FontFamily="Orbitron"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#E7ECF5"
+                           VerticalOptions="Center" />
+                </Grid>
+
+                <Label x:Name="SubtitleLabel"
+                       Text="Select a profile to continue, or create a new one."
+                       FontFamily="Inter"
+                       FontSize="12"
+                       TextColor="#9AA7BD"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" />
+
+                <FlexLayout x:Name="ProfilesLayout"
+                            Wrap="Wrap"
+                            JustifyContent="Center"
+                            AlignItems="Center"
+                            AlignContent="Center" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentView>

@@ -1,3 +1,1 @@
--keep class * extends androidx.room.RoomDatabase { void <init>(); }
--dontwarn androidx.room.paging.**
--dontwarn androidx.lifecycle.LiveData
+# Intentionally empty proguard rules to indicate this library is safe to shrink

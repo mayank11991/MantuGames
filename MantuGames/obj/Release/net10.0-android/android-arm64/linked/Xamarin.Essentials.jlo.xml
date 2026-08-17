@@ -1,0 +1,234 @@
+<api>
+  <jcw-types>
+    <type name="AccelerometerListener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.AccelerometerListener, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.hardware.SensorEventListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AccelerometerListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAccuracyChanged" method="n_onAccuracyChanged:(Landroid/hardware/Sensor;I)V:GetOnAccuracyChanged_Landroid_hardware_Sensor_IHandler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/Sensor;I)V" params="android.hardware.Sensor p0, int p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onSensorChanged" method="n_onSensorChanged:(Landroid/hardware/SensorEvent;)V:GetOnSensorChanged_Landroid_hardware_SensorEvent_Handler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/SensorEvent;)V" params="android.hardware.SensorEvent p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="BarometerListener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.BarometerListener, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.hardware.SensorEventListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="BarometerListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAccuracyChanged" method="n_onAccuracyChanged:(Landroid/hardware/Sensor;I)V:GetOnAccuracyChanged_Landroid_hardware_Sensor_IHandler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/Sensor;I)V" params="android.hardware.Sensor p0, int p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onSensorChanged" method="n_onSensorChanged:(Landroid/hardware/SensorEvent;)V:GetOnSensorChanged_Landroid_hardware_SensorEvent_Handler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/SensorEvent;)V" params="android.hardware.SensorEvent p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="BatteryBroadcastReceiver" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.content.BroadcastReceiver" partial_assembly_qualified_name="Xamarin.Essentials.BatteryBroadcastReceiver, Xamarin.Essentials">
+      <constructors>
+        <constructor name="BatteryBroadcastReceiver" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onReceive" method="n_onReceive:(Landroid/content/Context;Landroid/content/Intent;)V:GetOnReceive_Landroid_content_Context_Landroid_content_Intent_Handler" jni_signature="(Landroid/content/Context;Landroid/content/Intent;)V" params="android.content.Context p0, android.content.Intent p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="EnergySaverBroadcastReceiver" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.content.BroadcastReceiver" partial_assembly_qualified_name="Xamarin.Essentials.EnergySaverBroadcastReceiver, Xamarin.Essentials">
+      <constructors>
+        <constructor name="EnergySaverBroadcastReceiver" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onReceive" method="n_onReceive:(Landroid/content/Context;Landroid/content/Intent;)V:GetOnReceive_Landroid_content_Context_Landroid_content_Intent_Handler" jni_signature="(Landroid/content/Context;Landroid/content/Intent;)V" params="android.content.Context p0, android.content.Intent p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="ClipboardChangeListener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.ClipboardChangeListener, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.content.ClipboardManager.OnPrimaryClipChangedListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="ClipboardChangeListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onPrimaryClipChanged" method="n_onPrimaryClipChanged:()V:GetOnPrimaryClipChangedHandler:Android.Content.ClipboardManager+IOnPrimaryClipChangedListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="()V" retval="void" />
+      </methods>
+    </type>
+    <type name="SensorListener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.SensorListener, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.hardware.SensorEventListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="SensorListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="SensorListener" method="n_.ctor:(Ljava/lang/String;Ljava/lang/String;IZ)V:" jni_signature="(Ljava/lang/String;Ljava/lang/String;IZ)V" managed_parameters="System.String, System.Private.CoreLib:System.String, System.Private.CoreLib:Android.Hardware.SensorDelay, Mono.Android:System.Boolean, System.Private.CoreLib" params="java.lang.String p0, java.lang.String p1, int p2, boolean p3" retval="void" is_dynamically_registered="True" super_call="" activate_call="p0, p1, p2, p3" />
+      </constructors>
+      <methods>
+        <method name="onAccuracyChanged" method="n_onAccuracyChanged:(Landroid/hardware/Sensor;I)V:GetOnAccuracyChanged_Landroid_hardware_Sensor_IHandler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/Sensor;I)V" params="android.hardware.Sensor p0, int p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onSensorChanged" method="n_onSensorChanged:(Landroid/hardware/SensorEvent;)V:GetOnSensorChanged_Landroid_hardware_SensorEvent_Handler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/SensorEvent;)V" params="android.hardware.SensorEvent p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="ConnectivityBroadcastReceiver" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.content.BroadcastReceiver" partial_assembly_qualified_name="Xamarin.Essentials.ConnectivityBroadcastReceiver, Xamarin.Essentials">
+      <constructors>
+        <constructor name="ConnectivityBroadcastReceiver" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onReceive" method="n_onReceive:(Landroid/content/Context;Landroid/content/Intent;)V:GetOnReceive_Landroid_content_Context_Landroid_content_Intent_Handler" jni_signature="(Landroid/content/Context;Landroid/content/Intent;)V" params="android.content.Context p0, android.content.Intent p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="Listener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.view.OrientationEventListener" partial_assembly_qualified_name="Xamarin.Essentials.Listener, Xamarin.Essentials">
+      <constructors>
+        <constructor name="Listener" method="n_.ctor:(Landroid/content/Context;)V:" jni_signature="(Landroid/content/Context;)V" managed_parameters="Android.Content.Context, Mono.Android" params="android.content.Context p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </constructors>
+      <methods>
+        <method name="onOrientationChanged" method="n_onOrientationChanged:(I)V:GetOnOrientationChanged_IHandler" jni_signature="(I)V" params="int p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="SingleLocationListener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.SingleLocationListener, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.location.LocationListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="SingleLocationListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onLocationChanged" method="n_onLocationChanged:(Landroid/location/Location;)V:GetOnLocationChanged_Landroid_location_Location_Handler:Android.Locations.ILocationListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/location/Location;)V" params="android.location.Location p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onProviderDisabled" method="n_onProviderDisabled:(Ljava/lang/String;)V:GetOnProviderDisabled_Ljava_lang_String_Handler:Android.Locations.ILocationListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Ljava/lang/String;)V" params="java.lang.String p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onProviderEnabled" method="n_onProviderEnabled:(Ljava/lang/String;)V:GetOnProviderEnabled_Ljava_lang_String_Handler:Android.Locations.ILocationListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Ljava/lang/String;)V" params="java.lang.String p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onStatusChanged" method="n_onStatusChanged:(Ljava/lang/String;ILandroid/os/Bundle;)V:GetOnStatusChanged_Ljava_lang_String_ILandroid_os_Bundle_Handler:Android.Locations.ILocationListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Ljava/lang/String;ILandroid/os/Bundle;)V" params="java.lang.String p0, int p1, android.os.Bundle p2" retval="void" super_call="p0, p1, p2" activate_call="p0, p1, p2" />
+        <method name="onFlushComplete" method="n_onFlushComplete:(I)V:GetOnFlushComplete_IHandler:Android.Locations.ILocationListener, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(I)V" params="int p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="GyroscopeListener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.GyroscopeListener, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.hardware.SensorEventListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="GyroscopeListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAccuracyChanged" method="n_onAccuracyChanged:(Landroid/hardware/Sensor;I)V:GetOnAccuracyChanged_Landroid_hardware_Sensor_IHandler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/Sensor;I)V" params="android.hardware.Sensor p0, int p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onSensorChanged" method="n_onSensorChanged:(Landroid/hardware/SensorEvent;)V:GetOnSensorChanged_Landroid_hardware_SensorEvent_Handler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/SensorEvent;)V" params="android.hardware.SensorEvent p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="MagnetometerListener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.MagnetometerListener, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.hardware.SensorEventListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="MagnetometerListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAccuracyChanged" method="n_onAccuracyChanged:(Landroid/hardware/Sensor;I)V:GetOnAccuracyChanged_Landroid_hardware_Sensor_IHandler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/Sensor;I)V" params="android.hardware.Sensor p0, int p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onSensorChanged" method="n_onSensorChanged:(Landroid/hardware/SensorEvent;)V:GetOnSensorChanged_Landroid_hardware_SensorEvent_Handler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/SensorEvent;)V" params="android.hardware.SensorEvent p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="OrientationSensorListener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.OrientationSensorListener, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.hardware.SensorEventListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="OrientationSensorListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAccuracyChanged" method="n_onAccuracyChanged:(Landroid/hardware/Sensor;I)V:GetOnAccuracyChanged_Landroid_hardware_Sensor_IHandler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/Sensor;I)V" params="android.hardware.Sensor p0, int p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onSensorChanged" method="n_onSensorChanged:(Landroid/hardware/SensorEvent;)V:GetOnSensorChanged_Landroid_hardware_SensorEvent_Handler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/SensorEvent;)V" params="android.hardware.SensorEvent p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="ActivityLifecycleContextListener" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.ActivityLifecycleContextListener, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.app.Application.ActivityLifecycleCallbacks" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="ActivityLifecycleContextListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onActivityCreated" method="n_onActivityCreated:(Landroid/app/Activity;Landroid/os/Bundle;)V:GetOnActivityCreated_Landroid_app_Activity_Landroid_os_Bundle_Handler:Android.App.Application+IActivityLifecycleCallbacksInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;Landroid/os/Bundle;)V" params="android.app.Activity p0, android.os.Bundle p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onActivityDestroyed" method="n_onActivityDestroyed:(Landroid/app/Activity;)V:GetOnActivityDestroyed_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacksInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPaused" method="n_onActivityPaused:(Landroid/app/Activity;)V:GetOnActivityPaused_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacksInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityResumed" method="n_onActivityResumed:(Landroid/app/Activity;)V:GetOnActivityResumed_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacksInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivitySaveInstanceState" method="n_onActivitySaveInstanceState:(Landroid/app/Activity;Landroid/os/Bundle;)V:GetOnActivitySaveInstanceState_Landroid_app_Activity_Landroid_os_Bundle_Handler:Android.App.Application+IActivityLifecycleCallbacksInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;Landroid/os/Bundle;)V" params="android.app.Activity p0, android.os.Bundle p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onActivityStarted" method="n_onActivityStarted:(Landroid/app/Activity;)V:GetOnActivityStarted_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacksInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityStopped" method="n_onActivityStopped:(Landroid/app/Activity;)V:GetOnActivityStopped_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacksInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPostCreated" method="n_onActivityPostCreated:(Landroid/app/Activity;Landroid/os/Bundle;)V:GetOnActivityPostCreated_Landroid_app_Activity_Landroid_os_Bundle_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;Landroid/os/Bundle;)V" params="android.app.Activity p0, android.os.Bundle p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onActivityPostDestroyed" method="n_onActivityPostDestroyed:(Landroid/app/Activity;)V:GetOnActivityPostDestroyed_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPostPaused" method="n_onActivityPostPaused:(Landroid/app/Activity;)V:GetOnActivityPostPaused_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPostResumed" method="n_onActivityPostResumed:(Landroid/app/Activity;)V:GetOnActivityPostResumed_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPostSaveInstanceState" method="n_onActivityPostSaveInstanceState:(Landroid/app/Activity;Landroid/os/Bundle;)V:GetOnActivityPostSaveInstanceState_Landroid_app_Activity_Landroid_os_Bundle_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;Landroid/os/Bundle;)V" params="android.app.Activity p0, android.os.Bundle p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onActivityPostStarted" method="n_onActivityPostStarted:(Landroid/app/Activity;)V:GetOnActivityPostStarted_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPostStopped" method="n_onActivityPostStopped:(Landroid/app/Activity;)V:GetOnActivityPostStopped_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPreCreated" method="n_onActivityPreCreated:(Landroid/app/Activity;Landroid/os/Bundle;)V:GetOnActivityPreCreated_Landroid_app_Activity_Landroid_os_Bundle_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;Landroid/os/Bundle;)V" params="android.app.Activity p0, android.os.Bundle p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onActivityPreDestroyed" method="n_onActivityPreDestroyed:(Landroid/app/Activity;)V:GetOnActivityPreDestroyed_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPrePaused" method="n_onActivityPrePaused:(Landroid/app/Activity;)V:GetOnActivityPrePaused_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPreResumed" method="n_onActivityPreResumed:(Landroid/app/Activity;)V:GetOnActivityPreResumed_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPreSaveInstanceState" method="n_onActivityPreSaveInstanceState:(Landroid/app/Activity;Landroid/os/Bundle;)V:GetOnActivityPreSaveInstanceState_Landroid_app_Activity_Landroid_os_Bundle_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;Landroid/os/Bundle;)V" params="android.app.Activity p0, android.os.Bundle p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onActivityPreStarted" method="n_onActivityPreStarted:(Landroid/app/Activity;)V:GetOnActivityPreStarted_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityPreStopped" method="n_onActivityPreStopped:(Landroid/app/Activity;)V:GetOnActivityPreStopped_Landroid_app_Activity_Handler:Android.App.Application+IActivityLifecycleCallbacks, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/app/Activity;)V" params="android.app.Activity p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="IntermediateActivity" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.app.Activity" partial_assembly_qualified_name="Xamarin.Essentials.IntermediateActivity, Xamarin.Essentials">
+      <constructors>
+        <constructor name="IntermediateActivity" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onCreate" method="n_onCreate:(Landroid/os/Bundle;)V:GetOnCreate_Landroid_os_Bundle_Handler" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onSaveInstanceState" method="n_onSaveInstanceState:(Landroid/os/Bundle;)V:GetOnSaveInstanceState_Landroid_os_Bundle_Handler" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onActivityResult" method="n_onActivityResult:(IILandroid/content/Intent;)V:GetOnActivityResult_IILandroid_content_Intent_Handler" jni_signature="(IILandroid/content/Intent;)V" params="int p0, int p1, android.content.Intent p2" retval="void" super_call="p0, p1, p2" activate_call="p0, p1, p2" />
+      </methods>
+    </type>
+    <type name="TextToSpeechImplementation" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Xamarin.Essentials.TextToSpeechImplementation, Xamarin.Essentials">
+      <implemented_interfaces>
+        <interface name="android.speech.tts.TextToSpeech.OnInitListener" />
+        <interface name="android.speech.tts.TextToSpeech.OnUtteranceCompletedListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="TextToSpeechImplementation" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onInit" method="n_onInit:(I)V:GetOnInit_IHandler:Android.Speech.Tts.TextToSpeech+IOnInitListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(I)V" params="int p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onUtteranceCompleted" method="n_onUtteranceCompleted:(Ljava/lang/String;)V:GetOnUtteranceCompleted_Ljava_lang_String_Handler:Android.Speech.Tts.TextToSpeech+IOnUtteranceCompletedListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Ljava/lang/String;)V" params="java.lang.String p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="fileProvider" package="xamarin.essentials" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="androidx.core.content.FileProvider" partial_assembly_qualified_name="Xamarin.Essentials.FileProvider, Xamarin.Essentials">
+      <constructors>
+        <constructor name="fileProvider" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="fileProvider" method="n_.ctor:(I)V:" jni_signature="(I)V" managed_parameters="System.Int32, System.Private.CoreLib" params="int p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </constructors>
+    </type>
+    <type name="WebAuthenticatorCallbackActivity" package="crc64a0e0a82d0db9a07d" is_abstract="True" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.app.Activity" partial_assembly_qualified_name="Xamarin.Essentials.WebAuthenticatorCallbackActivity, Xamarin.Essentials">
+      <constructors>
+        <constructor name="WebAuthenticatorCallbackActivity" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onCreate" method="n_onCreate:(Landroid/os/Bundle;)V:GetOnCreate_Landroid_os_Bundle_Handler" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="WebAuthenticatorIntermediateActivity" package="crc64a0e0a82d0db9a07d" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.app.Activity" partial_assembly_qualified_name="Xamarin.Essentials.WebAuthenticatorIntermediateActivity, Xamarin.Essentials">
+      <constructors>
+        <constructor name="WebAuthenticatorIntermediateActivity" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onCreate" method="n_onCreate:(Landroid/os/Bundle;)V:GetOnCreate_Landroid_os_Bundle_Handler" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onResume" method="n_onResume:()V:GetOnResumeHandler" jni_signature="()V" retval="void" />
+        <method name="onNewIntent" method="n_onNewIntent:(Landroid/content/Intent;)V:GetOnNewIntent_Landroid_content_Intent_Handler" jni_signature="(Landroid/content/Intent;)V" params="android.content.Intent p0" retval="void" super_call="p0" activate_call="p0" />
+        <method name="onSaveInstanceState" method="n_onSaveInstanceState:(Landroid/os/Bundle;)V:GetOnSaveInstanceState_Landroid_os_Bundle_Handler" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="Xamarin.Essentials" module-name="Xamarin.Essentials.dll">
+    <type assembly-qualified-name="Xamarin.Essentials.AccelerometerListener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.AccelerometerListener" java-key="crc64a0e0a82d0db9a07d.AccelerometerListener" managed-key="Xamarin.Essentials.AccelerometerListener" partial-assembly-qualified-name="Xamarin.Essentials.AccelerometerListener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.BarometerListener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.BarometerListener" java-key="crc64a0e0a82d0db9a07d.BarometerListener" managed-key="Xamarin.Essentials.BarometerListener" partial-assembly-qualified-name="Xamarin.Essentials.BarometerListener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.BatteryBroadcastReceiver, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.BatteryBroadcastReceiver" java-key="crc64a0e0a82d0db9a07d.BatteryBroadcastReceiver" managed-key="Xamarin.Essentials.BatteryBroadcastReceiver" partial-assembly-qualified-name="Xamarin.Essentials.BatteryBroadcastReceiver, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.EnergySaverBroadcastReceiver, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.EnergySaverBroadcastReceiver" java-key="crc64a0e0a82d0db9a07d.EnergySaverBroadcastReceiver" managed-key="Xamarin.Essentials.EnergySaverBroadcastReceiver" partial-assembly-qualified-name="Xamarin.Essentials.EnergySaverBroadcastReceiver, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.ClipboardChangeListener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.ClipboardChangeListener" java-key="crc64a0e0a82d0db9a07d.ClipboardChangeListener" managed-key="Xamarin.Essentials.ClipboardChangeListener" partial-assembly-qualified-name="Xamarin.Essentials.ClipboardChangeListener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.SensorListener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.SensorListener" java-key="crc64a0e0a82d0db9a07d.SensorListener" managed-key="Xamarin.Essentials.SensorListener" partial-assembly-qualified-name="Xamarin.Essentials.SensorListener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.ConnectivityBroadcastReceiver, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.ConnectivityBroadcastReceiver" java-key="crc64a0e0a82d0db9a07d.ConnectivityBroadcastReceiver" managed-key="Xamarin.Essentials.ConnectivityBroadcastReceiver" partial-assembly-qualified-name="Xamarin.Essentials.ConnectivityBroadcastReceiver, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.Listener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.Listener" java-key="crc64a0e0a82d0db9a07d.Listener" managed-key="Xamarin.Essentials.Listener" partial-assembly-qualified-name="Xamarin.Essentials.Listener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.SingleLocationListener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.SingleLocationListener" java-key="crc64a0e0a82d0db9a07d.SingleLocationListener" managed-key="Xamarin.Essentials.SingleLocationListener" partial-assembly-qualified-name="Xamarin.Essentials.SingleLocationListener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.GyroscopeListener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.GyroscopeListener" java-key="crc64a0e0a82d0db9a07d.GyroscopeListener" managed-key="Xamarin.Essentials.GyroscopeListener" partial-assembly-qualified-name="Xamarin.Essentials.GyroscopeListener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.MagnetometerListener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.MagnetometerListener" java-key="crc64a0e0a82d0db9a07d.MagnetometerListener" managed-key="Xamarin.Essentials.MagnetometerListener" partial-assembly-qualified-name="Xamarin.Essentials.MagnetometerListener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.OrientationSensorListener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.OrientationSensorListener" java-key="crc64a0e0a82d0db9a07d.OrientationSensorListener" managed-key="Xamarin.Essentials.OrientationSensorListener" partial-assembly-qualified-name="Xamarin.Essentials.OrientationSensorListener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.ActivityLifecycleContextListener, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.ActivityLifecycleContextListener" java-key="crc64a0e0a82d0db9a07d.ActivityLifecycleContextListener" managed-key="Xamarin.Essentials.ActivityLifecycleContextListener" partial-assembly-qualified-name="Xamarin.Essentials.ActivityLifecycleContextListener, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.IntermediateActivity, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.IntermediateActivity" java-key="crc64a0e0a82d0db9a07d.IntermediateActivity" managed-key="Xamarin.Essentials.IntermediateActivity" partial-assembly-qualified-name="Xamarin.Essentials.IntermediateActivity, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.TextToSpeechImplementation, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.TextToSpeechImplementation" java-key="crc64a0e0a82d0db9a07d.TextToSpeechImplementation" managed-key="Xamarin.Essentials.TextToSpeechImplementation" partial-assembly-qualified-name="Xamarin.Essentials.TextToSpeechImplementation, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.FileProvider, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.fileProvider" java-key="xamarin.essentials.fileProvider" managed-key="Xamarin.Essentials.FileProvider" partial-assembly-qualified-name="Xamarin.Essentials.FileProvider, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.WebAuthenticatorCallbackActivity, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.WebAuthenticatorCallbackActivity" java-key="crc64a0e0a82d0db9a07d.WebAuthenticatorCallbackActivity" managed-key="Xamarin.Essentials.WebAuthenticatorCallbackActivity" partial-assembly-qualified-name="Xamarin.Essentials.WebAuthenticatorCallbackActivity, Xamarin.Essentials" />
+    <type assembly-qualified-name="Xamarin.Essentials.WebAuthenticatorIntermediateActivity, Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="xamarin.essentials.WebAuthenticatorIntermediateActivity" java-key="crc64a0e0a82d0db9a07d.WebAuthenticatorIntermediateActivity" managed-key="Xamarin.Essentials.WebAuthenticatorIntermediateActivity" partial-assembly-qualified-name="Xamarin.Essentials.WebAuthenticatorIntermediateActivity, Xamarin.Essentials" />
+  </acw-types>
+</api>

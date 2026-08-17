@@ -16,8 +16,10 @@ obj/Release/net10.0-android/android-arm64/aot/Microsoft.Maui.Controls.Xaml.dll.s
 obj/Release/net10.0-android/android-arm64/aot/Microsoft.Maui.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Microsoft.Maui.Essentials.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Microsoft.Maui.Graphics.dll.so
+obj/Release/net10.0-android/android-arm64/aot/Plugin.InAppBilling.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Plugin.Maui.Audio.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Plugin.MauiMtAdmob.dll.so
+obj/Release/net10.0-android/android-arm64/aot/Xamarin.Android.Google.BillingClient.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Xamarin.AndroidX.Activity.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Xamarin.AndroidX.AppCompat.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Xamarin.AndroidX.AppCompat.AppCompatResources.dll.so
@@ -45,6 +47,7 @@ obj/Release/net10.0-android/android-arm64/aot/Xamarin.AndroidX.SavedState.SavedS
 obj/Release/net10.0-android/android-arm64/aot/Xamarin.AndroidX.SwipeRefreshLayout.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Xamarin.AndroidX.ViewPager.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Xamarin.AndroidX.ViewPager2.dll.so
+obj/Release/net10.0-android/android-arm64/aot/Xamarin.Essentials.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Xamarin.Google.Android.Material.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Xamarin.Google.UserMessagingPlatform.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Xamarin.GooglePlayServices.Ads.Lite.dll.so
@@ -60,6 +63,7 @@ obj/Release/net10.0-android/android-arm64/aot/System.ComponentModel.Primitives.d
 obj/Release/net10.0-android/android-arm64/aot/System.ComponentModel.TypeConverter.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.ComponentModel.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Console.dll.so
+obj/Release/net10.0-android/android-arm64/aot/System.Core.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Diagnostics.DiagnosticSource.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Diagnostics.TraceSource.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Drawing.Primitives.dll.so
@@ -75,6 +79,7 @@ obj/Release/net10.0-android/android-arm64/aot/System.Net.Http.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Net.Primitives.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Net.Requests.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Numerics.Vectors.dll.so
+obj/Release/net10.0-android/android-arm64/aot/System.Numerics.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.ObjectModel.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Private.Uri.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Private.Xml.dll.so
@@ -90,6 +95,7 @@ obj/Release/net10.0-android/android-arm64/aot/System.Threading.Thread.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Threading.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.Xml.ReaderWriter.dll.so
 obj/Release/net10.0-android/android-arm64/aot/System.dll.so
+obj/Release/net10.0-android/android-arm64/aot/mscorlib.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Java.Interop.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Mono.Android.Runtime.dll.so
 obj/Release/net10.0-android/android-arm64/aot/Mono.Android.dll.so

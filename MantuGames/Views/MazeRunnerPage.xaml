@@ -8,20 +8,20 @@
     Shell.NavBarIsVisible="False"
     >
     <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#FBF4ED" Dark="#1F1B1B" />
+        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
     </ContentPage.BackgroundColor>
 
     <AbsoluteLayout>
 
-        <Grid x:Name="MazeRootGrid" RowDefinitions="Auto,Auto,3*,Auto,2*"
+        <Grid x:Name="MazeRootGrid" RowDefinitions="Auto,Auto,Auto,3*,2*,Auto"
               AbsoluteLayout.LayoutFlags="All"
               AbsoluteLayout.LayoutBounds="0,0,1,1">
 
             <!-- ── Row 0 : header ─────────────────────────────────────────── -->
             <Grid Grid.Row="0"
-                  ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto"
+                  ColumnDefinitions="Auto,*,Auto"
                   ColumnSpacing="6"
-                  Padding="8,44,12,0">
+                  Padding="12,16,12,0">
 
                 <ImageButton Grid.Column="0"
                         Source="icon_back_round.svg"
@@ -30,44 +30,19 @@
                         Clicked="OnBackClicked"
                         VerticalOptions="Center" />
 
-                <Label Grid.Column="1"
-                       x:Name="LevelLabel"
-                       FontFamily="BrickSans"
-                       FontSize="15"
-                       TextColor="White"
-                       VerticalOptions="Center"
-                       Margin="4,0" />
+                <Frame Grid.Column="1"
+                       BackgroundColor="#182136" CornerRadius="20"
+                       Padding="12,6" HasShadow="False"
+                       HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label x:Name="LevelLabel"
+                           FontFamily="Orbitron"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#3B82F6"
+                           HorizontalOptions="Center" />
+                </Frame>
 
-                <Label Grid.Column="2"
-                       Text="🏆" BackgroundColor="Transparent"
-                       FontSize="26"
-                       VerticalOptions="Center"
-                       Margin="0,0,6,0" />
-
-                <!-- timer badge -->
-                <Border Grid.Column="3"
-                         BackgroundColor="#335A5670"
-                         StrokeThickness="0"
-                         VerticalOptions="Center">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <Label x:Name="TimerLabel"
-                           Text="⏱ 1:20"
-                           FontFamily="BrickSans"
-                           FontSize="13"
-                           TextColor="#F0E6D8"
-                           Padding="12,6" />
-                </Border>
-
-                <ImageButton Grid.Column="4" Source="information.png"
-                             HeightRequest="24" WidthRequest="24"
-                             BackgroundColor="Transparent" Padding="0"
-                             Margin="0,0,4,0"
-                             Clicked="OnRulesClicked"
-                             VerticalOptions="Center" />
-
-                <ImageButton Grid.Column="5" Source="pause.png"
+                <ImageButton Grid.Column="2" Source="pause.svg"
                              HeightRequest="24" WidthRequest="24"
                              BackgroundColor="Transparent" Padding="0"
                              Margin="4,0"
@@ -75,17 +50,25 @@
                              VerticalOptions="Center" />
             </Grid>
 
-            <!-- ── Row 1 : timer bar ──────────────────────────────────────── -->
-            <ProgressBar Grid.Row="1"
-                         x:Name="TimerBar"
-                         Progress="1"
-                         ProgressColor="#D4B896"
-                         Margin="20,6,20,4" />
+            <!-- ── Row 1 : timer ──────────────────────────────────────────── -->
+            <controls:GameTimerView x:Name="MazeTimer" Grid.Row="1" Margin="0,2,0,0" />
 
-            <!-- ── Row 2 : maze canvas ───────────────────────────────────── -->
-            <Border Grid.Row="2"
-                    BackgroundColor="{AppThemeBinding Light=#FFF8E1, Dark=#3E3020}"
-                    StrokeThickness="0"
+            <!-- ── Row 2 : moves label (below timer) ─────────────────────── -->
+            <Label Grid.Row="2"
+                   x:Name="MovesLabel"
+                   Text="Moves: 0"
+                   FontFamily="Orbitron"
+                   FontSize="13"
+                   TextColor="#9AA7BD"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="0,2,0,0" />
+
+            <!-- ── Row 3 : maze canvas ───────────────────────────────────── -->
+            <Border Grid.Row="3"
+                    BackgroundColor="#0F1420"
+                    StrokeThickness="1"
+                    Stroke="#2EFFFFFF"
                     Margin="12,4,12,4">
                 <Grid x:Name="MazeOverlay">
                     <GraphicsView x:Name="MazeCanvas"
@@ -110,82 +93,49 @@
                 </Grid>
             </Border>
 
-            <!-- ── Row 3 : moves label (merged with D-pad) ────────────────── -->
+            <!-- ── Row 4 : swipe pad (mouse-pad style) ──────────────────── -->
+            <Border Grid.Row="4"
+                    BackgroundColor="#182136"
+                    StrokeThickness="1"
+                    Stroke="#2EFFFFFF"
+                    Margin="16,4,16,8">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20" />
+                </Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <PanGestureRecognizer PanUpdated="OnPadPan" />
+                </Border.GestureRecognizers>
+                <Grid>
+                    <Label Text="Swipe to move"
+                           FontFamily="Inter"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           CharacterSpacing="2"
+                           TextColor="#3B82F6"
+                           Opacity="0.55"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Label x:Name="PadDirectionLabel"
+                           FontFamily="Orbitron"
+                           FontSize="11"
+                           TextColor="#9AA7BD"
+                           Opacity="0.5"
+                           HorizontalOptions="Center"
+                           VerticalOptions="End"
+                           Margin="0,0,0,8"
+                           InputTransparent="True" />
+                </Grid>
+            </Border>
 
-            <!-- ── Row 3 : moves label ────────────────────────────────────── -->
-            <Label Grid.Row="3"
-                   x:Name="MovesLabel"
-                   Text="Moves: 0"
-                   FontFamily="BrickSans"
-                   FontSize="13"
-                   TextColor="#F0E6D8"
-                   HorizontalOptions="Center"
-                   Margin="0,2" />
-
-            <!-- ── Row 4 : D-pad controls ──────────────────────────────── -->
-            <Grid Grid.Row="4"
-                  RowDefinitions="*,*,*"
-                  ColumnDefinitions="*,*"
-                  Margin="16,4,16,24"
-                  RowSpacing="8" ColumnSpacing="8">
-
-                <Border Grid.Row="0" Grid.ColumnSpan="2"
-                        BackgroundColor="#B0DCC8A8"
-                        StrokeThickness="0"
-                        HorizontalOptions="Fill" VerticalOptions="Fill">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnMoveUp" />
-                    </Border.GestureRecognizers>
-                    <Label Text="▲" FontSize="32" TextColor="#5D4037"
-                           HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
-
-                <Border Grid.Row="1" Grid.Column="0"
-                        BackgroundColor="#B0DCC8A8"
-                        StrokeThickness="0"
-                        HorizontalOptions="Fill" VerticalOptions="Fill">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnMoveLeft" />
-                    </Border.GestureRecognizers>
-                    <Label Text="◀" FontSize="32" TextColor="#5D4037"
-                           HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
-
-                <Border Grid.Row="1" Grid.Column="1"
-                        BackgroundColor="#B0DCC8A8"
-                        StrokeThickness="0"
-                        HorizontalOptions="Fill" VerticalOptions="Fill">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnMoveRight" />
-                    </Border.GestureRecognizers>
-                    <Label Text="▶" FontSize="32" TextColor="#5D4037"
-                           HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
-
-                <Border Grid.Row="2" Grid.ColumnSpan="2"
-                        BackgroundColor="#B0DCC8A8"
-                        StrokeThickness="0"
-                        HorizontalOptions="Fill" VerticalOptions="Fill">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnMoveDown" />
-                    </Border.GestureRecognizers>
-                    <Label Text="▼" FontSize="32" TextColor="#5D4037"
-                           HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
-
-            </Grid>
+            <!-- ── Row 5 : Show Solution (below finger pad) ──────────────── -->
+            <Button Grid.Row="5"
+                    x:Name="SolutionButton"
+                    Text="Show Solution"
+                    FontSize="13" FontAttributes="Bold"
+                    TextColor="#160D02" BackgroundColor="#FF9F1C"
+                    CornerRadius="20" HeightRequest="40"
+                    Margin="60,2,60,12"
+                    Clicked="OnShowSolutionClicked" />
 
         </Grid>
 
@@ -206,7 +156,7 @@
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 
-        <controls:RulesPopup x:Name="RulesPopup" IsVisible="False"
+        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False"
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 

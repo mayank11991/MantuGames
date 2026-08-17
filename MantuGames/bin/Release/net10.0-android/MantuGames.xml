@@ -13,13 +13,177 @@
         <member name="T:MantuGames.Converters.TimerColorConverter">
             <summary>Timer bar color — green → orange → red as time runs out.</summary>
         </member>
+        <member name="T:MantuGames.Converters.SecondsToTimeConverter">
+            <summary>Converts total seconds to "m:ss" display string.</summary>
+        </member>
         <member name="T:MantuGames.Converters.InverseBoolConverter">
             <summary>Bool to visibility (IsVisible).</summary>
+        </member>
+        <member name="M:MantuGames.Helpers.BannerHelper.RemoveBanner">
+            <summary>Removes all live banner ad containers (called after Remove Ads purchase).</summary>
+        </member>
+        <member name="T:MantuGames.Models.AnimalCrushPuzzle">
+            <summary>
+            Candy-Crush-style match-3 puzzle: swap adjacent tiles, match 3+ in a
+            row or column, clear them and let the board cascade. Board is generated
+            with no pre-existing matches but at least one valid move.
+            </summary>
+        </member>
+        <member name="P:MantuGames.Models.AnimalCrushPuzzle.Board">
+            <summary>Animal type index per cell; -1 = empty (should never persist).</summary>
+        </member>
+        <member name="P:MantuGames.Models.AnimalCrushPuzzle.AnimalCount">
+            <summary>Number of distinct animal types (5 easy, 6 hard).</summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.Generate(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a board for the given level. <paramref name="timerSec"/> and
+            <paramref name="targetScore"/> come from the caller (the game page),
+            so the model stays free of platform services.
+            </summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.HasPossibleMove">
+            <summary>True when at least one adjacent swap would create a match.</summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.FindHint">
+            <summary>First swap that creates a match, or null.</summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.TrySwap(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Swaps two adjacent tiles. Returns true (and resolves cascades,
+            filling <paramref name="scoreOut"/> with the gained points) when the
+            swap creates a match; otherwise swaps back.
+            </summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.ResolveCascades">
+            <summary>Clears matches, applies gravity, refills and cascades until stable.</summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.Reshuffle">
+            <summary>Re-seeds the board until a move exists (used when stuck).</summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.GetPowerUpCells(MantuGames.Models.AnimalCrushPuzzle.PowerUpKind,System.Int32,System.Int32)">
+            <summary>
+            Cells affected by a power-up placed at (r, c):
+            hammer = the tile itself; rocket = whole row + column;
+            bomb = the tile + up to 3 tiles in each direction (plus shape).
+            </summary>
+        </member>
+        <member name="M:MantuGames.Models.AnimalCrushPuzzle.UsePowerUp(MantuGames.Models.AnimalCrushPuzzle.PowerUpKind,System.Int32,System.Int32)">
+            <summary>
+            Applies a power-up at (r, c): clears its cells, lets gravity refill
+            and resolves any cascades. Returns the score gained.
+            </summary>
+        </member>
+        <member name="M:MantuGames.Models.HanoiPuzzle.Clone">
+            <summary>Deep copy of the puzzle state (used by the solver and tests).</summary>
         </member>
         <member name="M:MantuGames.Models.HanoiPuzzle.GetPileBottomToTop(System.Int32)">
             <summary>
             Returns discs bottom-to-top: index 0 = largest (bottom), last = smallest (top).
             Use this order for rendering — draw index 0 first (at bottom of pole visual).
+            </summary>
+        </member>
+        <member name="T:MantuGames.Models.HanoiSolver">
+            <summary>
+            Computes the exact move sequence that solves a Tower of Hanoi puzzle
+            from its current (possibly scattered) configuration onto the goal pole.
+            Pure logic — no UI, no state mutation of the caller's puzzle.
+            </summary>
+        </member>
+        <member name="M:MantuGames.Models.HanoiSolver.Solve(MantuGames.Models.HanoiPuzzle)">
+            <summary>Returns the ordered list of (from, to) moves that solves the puzzle.</summary>
+        </member>
+        <member name="T:MantuGames.Services.CoinService">
+            <summary>
+            Per-game coin wallets. Each game has its own independent coin balance,
+            used to pay for "Show Solution". Coins are bought via in-app purchase
+            and transferred to a game of the player's choice.
+            </summary>
+        </member>
+        <member name="T:MantuGames.Services.CrashGuardService">
+            <summary>
+            Catches unhandled exceptions (managed + native) and persists them to a
+            local crash log so the app can show a friendly recovery notice next launch.
+            </summary>
+        </member>
+        <member name="M:MantuGames.Services.CrashGuardService.TakePendingReport">
+            <summary>Returns any pending crash report and clears the log.</summary>
+        </member>
+        <member name="M:MantuGames.Services.IapService.PurchaseAsync(System.String)">
+            <summary>Purchases a product. Coins packs are consumed; remove_ads is non-consumable.</summary>
+        </member>
+        <member name="M:MantuGames.Services.IapService.RestoreOwnedAsync">
+            <summary>Restores previously bought non-consumables (e.g. after reinstall).</summary>
+        </member>
+        <member name="T:MantuGames.Services.ProfileService">
+            <summary>
+            Netflix-style profiles: each profile keeps its own game progress,
+            points and coins. The active profile prefixes every progress key so
+            profiles never share data.
+            </summary>
+        </member>
+        <member name="M:MantuGames.Services.ProfileService.Key(System.String)">
+            <summary>Namespace for a given storage key — keeps progress separate per profile.</summary>
+        </member>
+        <member name="T:MantuGames.Services.StatsService">
+            <summary>
+            Per-game lifetime statistics: games played, games won, best score.
+            </summary>
+        </member>
+        <member name="T:MantuGames.Services.UpdateService">
+            <summary>
+            Checks the app store release manifest (latest.json on the website) and
+            reports whether an update is available or required.
+            </summary>
+        </member>
+        <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.TrySwipeAsync(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Swipes a tile in direction (dr, dc) and swaps it with its neighbour.
+            </summary>
+        </member>
+        <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.TrySwapAsync(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Attempts a swap. Returns true when the swap was valid and scored.
+            </summary>
+        </member>
+        <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.UsePowerUpAsync(MantuGames.Models.AnimalCrushPuzzle.PowerUpKind,System.Int32,System.Int32)">
+            <summary>
+            Uses a power-up on a tile. Returns -1 when the power-up is not owned,
+            otherwise the score gained (0 is possible).
+            </summary>
+        </member>
+        <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.BuyPowerUp(MantuGames.Models.AnimalCrushPuzzle.PowerUpKind)">
+            <summary>Spends coins to buy one more power-up. Returns false when unaffordable.</summary>
+        </member>
+        <member name="M:MantuGames.ViewModels.AnimalCrushViewModel.FindHint">
+            <summary>Finds a swap that creates a match, or null.</summary>
+        </member>
+        <member name="P:MantuGames.ViewModels.BlockPuzzleViewModel.LevelTargetLines">
+            <summary>Level completes once this many lines are cleared.</summary>
+        </member>
+        <member name="F:MantuGames.ViewModels.BlockPuzzleViewModel.LevelTimerSeconds">
+            <summary>Level time budget in seconds (5 minutes — enough for a full level).</summary>
+        </member>
+        <member name="M:MantuGames.ViewModels.CardMemoryViewModel.RevealAll">
+            <summary>Flips every unmatched card face up (used by Show Solution).</summary>
+        </member>
+        <member name="M:MantuGames.ViewModels.CardMemoryViewModel.ForceEnd(System.Boolean)">
+            <summary>Forces the game to end (used by Show Solution).</summary>
+        </member>
+        <member name="E:MantuGames.Views.Controls.CoinShopPopup.CoinsChanged">
+            <summary>Raised whenever a coin purchase adds coins to any game.</summary>
+        </member>
+        <member name="M:MantuGames.Views.Controls.CoinShopPopup.Show">
+            <summary>Shop mode — buy a pack, then pick which game receives the coins.</summary>
+        </member>
+        <member name="M:MantuGames.Views.Controls.CoinShopPopup.ShowForGame(System.String)">
+            <summary>Insufficient-coins mode — used by "Show Solution". Purchase adds coins directly to the given game.</summary>
+        </member>
+        <member name="T:MantuGames.Views.Controls.ProfilePickerPopup">
+            <summary>
+            Netflix-style profile picker. Shown from the bottom of the screen;
+            the user must select an existing profile or create a new one —
+            there is no skip.
             </summary>
         </member>
         <member name="T:MantuGames.Resource">

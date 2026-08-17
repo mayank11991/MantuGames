@@ -97,9 +97,15 @@ public partial class TowerOfHanoiPage : ContentPage
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnRulesClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object sender, EventArgs e)
     {
-        RulesPopup.Show(GameRules.GetRules("hanoi"));
+        if (CoinService.GetCoins("towerofhanoi") < CoinService.SolutionCost)
+        {
+            CoinShopPopup.ShowForGame("towerofhanoi");
+            return;
+        }
+        CoinService.SpendCoins("towerofhanoi", CoinService.SolutionCost);
+        _vm?.ShowSolutionCommand.Execute(null);
     }
 
     // ── POLE SHELL ───────────────────────────────────────────────

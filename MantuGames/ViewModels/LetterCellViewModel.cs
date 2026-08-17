@@ -28,7 +28,7 @@ public class LetterCellViewModel : INotifyPropertyChanged
         public string Word     { get => _word;    set { _word = value;    OnPropertyChanged(); } }
         public bool   IsFound  { get => _isFound; set { _isFound = value; OnPropertyChanged(); OnPropertyChanged(nameof(DisplayWord)); } }
         private string _word;
-        public string DisplayWord => IsFound ? $"✅ {Word}" : Word;
+        public string DisplayWord => IsFound ? Word : Word;
  
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string n = null) =>

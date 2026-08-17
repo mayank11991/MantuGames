@@ -84,6 +84,16 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/AnimalCrushPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.AnimalCrushPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/AnimalCrushPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/AnimalCrushPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
 [/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/BlockPuzzlePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.BlockPuzzlePage.xaml
@@ -99,6 +109,16 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.CardMemoryPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views/CardMemoryPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views/CardMemoryPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/CoinShopPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.CoinShopPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/CoinShopPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/CoinShopPopup.xaml
 build_metadata.AdditionalFiles.Inflator = SourceGen
 build_metadata.AdditionalFiles.NoWarn = 
 build_metadata.AdditionalFiles.EnableDiagnostics = 
@@ -144,6 +164,16 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/ProfilePickerPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.ProfilePickerPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/ProfilePickerPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/ProfilePickerPopup.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
 [/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/ProfilePopup.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.ProfilePopup.xaml
@@ -169,6 +199,26 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.SettingsPopup.xaml
 build_metadata.AdditionalFiles.TargetPath = Views/Controls/SettingsPopup.xaml
 build_metadata.AdditionalFiles.RelativePath = Views/Controls/SettingsPopup.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/StatsPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.StatsPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/StatsPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/StatsPopup.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/Views/Controls/UpdatePopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MantuGames.Views.Controls.UpdatePopup.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/Controls/UpdatePopup.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/Controls/UpdatePopup.xaml
 build_metadata.AdditionalFiles.Inflator = SourceGen
 build_metadata.AdditionalFiles.NoWarn = 
 build_metadata.AdditionalFiles.EnableDiagnostics = 

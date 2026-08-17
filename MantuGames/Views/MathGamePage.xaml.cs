@@ -85,9 +85,15 @@ public partial class MathGamePage : ContentPage
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnRulesClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object sender, EventArgs e)
     {
-        RulesPopup.Show(GameRules.GetRules("mathgame"));
+        if (CoinService.GetCoins("mathchallenge") < CoinService.SolutionCost)
+        {
+            CoinShopPopup.ShowForGame("mathchallenge");
+            return;
+        }
+        CoinService.SpendCoins("mathchallenge", CoinService.SolutionCost);
+        _vm?.ShowSolutionCommand.Execute(null);
     }
 
     // ── PROGRESS BAR ────────────────────────────────────────────

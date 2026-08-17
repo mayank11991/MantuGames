@@ -7,7 +7,7 @@
              Shell.NavBarIsVisible="False"
              x:Class="MantuGames.Views.MathGamePage">
     <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#FBF4ED" Dark="#1F1B1B" />
+        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
     </ContentPage.BackgroundColor>
     <ContentPage.Resources>
         <converters:StringToColorConverter x:Key="StringToColor" />
@@ -23,24 +23,18 @@
               AbsoluteLayout.LayoutBounds="0,0,1,1">
 
             <!-- TOP BAR -->
-            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="6">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
                 <ImageButton Grid.Column="0" Source="icon_back_round.svg" Padding="0" HeightRequest="48" WidthRequest="48" 
                         BackgroundColor="Transparent"
                        
                         Clicked="OnBackClicked" VerticalOptions="Center" />
-                <Frame Grid.Column="1" BackgroundColor="#E8B4B4" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
                        Padding="12,6" HasShadow="False"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="White"
-                           FontSize="16" FontFamily="BrickSans" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#F59E0B"
+                           FontSize="16" FontFamily="Orbitron" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-                <ImageButton Grid.Column="2" Source="information.png"
-                             HeightRequest="24" WidthRequest="24"
-                             BackgroundColor="Transparent" Padding="0"
-                             Margin="0,0,4,0"
-                             Clicked="OnRulesClicked"
-                             VerticalOptions="Center" />
-                <ImageButton Grid.Column="3" Source="pause.png"
+                <ImageButton Grid.Column="2" Source="pause.svg"
                              HeightRequest="24" WidthRequest="24"
                              BackgroundColor="Transparent" Padding="0"
                              Margin="4,0"
@@ -66,16 +60,16 @@
                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="6">
                     <Label Grid.Row="0" Grid.Column="0"
                            Text="Questions"
-                           FontSize="14" FontFamily="BrickSans" FontAttributes="Bold"
-                           TextColor="#D4B896"
+                           FontSize="14" FontFamily="Inter" FontAttributes="Bold"
+                           TextColor="#9AA7BD"
                            VerticalOptions="Center" />
                     <Label Grid.Row="0" Grid.Column="1"
                            Text="{Binding ProgressText}"
-                           FontSize="12" FontFamily="BrickSans" FontAttributes="Bold"
-                           TextColor="#D4B896"
+                           FontSize="12" FontFamily="Inter" FontAttributes="Bold"
+                           TextColor="#9AA7BD"
                            VerticalOptions="Center" />
                     <Frame Grid.Row="1" Grid.ColumnSpan="2"
-                           BackgroundColor="#FFFFFF20" CornerRadius="8"
+                           BackgroundColor="#33FFFFFF" CornerRadius="8"
                            Padding="0" HeightRequest="10" HasShadow="False">
                          <BoxView x:Name="ProgressBar" BackgroundColor="Transparent"
                                   Color="{Binding ProgressBarColor}" HeightRequest="10"
@@ -88,13 +82,13 @@
             <StackLayout Grid.Row="4" Spacing="16" VerticalOptions="Center">
 
                 <!-- Question card -->
-                <Frame BackgroundColor="White" CornerRadius="24"
+                <Frame BackgroundColor="#182136" CornerRadius="24"
                        Padding="24,28" HasShadow="True"
                        HorizontalOptions="Center" WidthRequest="280">
                     <Label x:Name="QuestionLabel"
                            Text="{Binding QuestionText}"
-                           FontSize="36" FontFamily="BrickSans" FontAttributes="Bold"
-                           TextColor="#4A3728"
+                           FontSize="36" FontFamily="Orbitron" FontAttributes="Bold"
+                           TextColor="#E7ECF5"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center" />
                 </Frame>
@@ -112,12 +106,12 @@
 
             <!-- SHOW SOLUTION -->
             <Button Grid.Row="5"
-                    Text="💡 Show Answer"
+                    Text="Show Answer"
                     FontSize="15" FontAttributes="Bold"
-                    TextColor="White" BackgroundColor="#9C27B0"
+                    TextColor="#160D02" BackgroundColor="#FF9F1C"
                     CornerRadius="20" HeightRequest="44"
                     Margin="40,0"
-                    Command="{Binding ShowSolutionCommand}" />
+                    Clicked="OnShowSolutionClicked" />
 
         </Grid>
 
@@ -137,7 +131,7 @@
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 
-        <controls:RulesPopup x:Name="RulesPopup" IsVisible="False"
+        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False"
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 

@@ -7,16 +7,17 @@
 
     <Grid>
         <!-- Dim backdrop -->
-        <BoxView BackgroundColor="#882D2A3D" HorizontalOptions="Fill" VerticalOptions="Fill" />
+        <BoxView BackgroundColor="#CC0B0E14" HorizontalOptions="Fill" VerticalOptions="Fill" />
 
         <!-- Popup card -->
         <Border x:Name="PopupCard"
-                StrokeThickness="0"
+                StrokeThickness="1"
+                Stroke="#2EFFFFFF"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 WidthRequest="310">
             <Border.BackgroundColor>
-                <AppThemeBinding Light="#FFFFFF" Dark="#3A364A" />
+                <AppThemeBinding Light="#182136" Dark="#182136" />
             </Border.BackgroundColor>
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="32"/>
@@ -48,7 +49,7 @@
 
                 <!-- Title -->
                 <Label x:Name="TitleLabel"
-                       FontFamily="BrickSans"
+                       FontFamily="Orbitron"
                        FontSize="18"
                        FontAttributes="Bold"
                        HorizontalOptions="Center" HorizontalTextAlignment="Center"
@@ -56,7 +57,7 @@
 
                 <!-- Points badge -->
                 <Border x:Name="PointsBadge"
-                        BackgroundColor="#D4B896"
+                        BackgroundColor="#FF9F1C"
                         StrokeThickness="0"
                         HorizontalOptions="Center"
                         IsVisible="False"
@@ -65,17 +66,17 @@
                         <RoundRectangle CornerRadius="16"/>
                     </Border.StrokeShape>
                     <Label x:Name="PointsLabel"
-                           FontFamily="BrickSans"
+                           FontFamily="Orbitron"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="White"
+                           TextColor="#160D02"
                            Padding="14,5"/>
                 </Border>
 
                 <!-- Message -->
                 <Label x:Name="MessageLabel"
                        FontSize="14"
-                       TextColor="#8B7B6A"
+                       TextColor="#9AA7BD"
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
                        Margin="0,4,0,18"/>
@@ -103,10 +104,10 @@
                                Margin="10,0,0,0"/>
                         <!-- label centred -->
                         <Label x:Name="PrimaryLabel"
-                               FontFamily="BrickSans"
-                               FontSize="18"
+                               FontFamily="Orbitron"
+                               FontSize="16"
                                FontAttributes="Bold"
-                               TextColor="White"
+                               TextColor="#160D02"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"/>
                     </Grid>
@@ -114,9 +115,9 @@
 
                 <!-- Secondary action (Retry, win screen only) -->
                 <Border x:Name="SecondaryBorder"
-                        BackgroundColor="#E8B4B4"
-                        StrokeThickness="2"
-                        Stroke="#A8C4A0"
+                        BackgroundColor="#0FFFFFFF"
+                        StrokeThickness="1"
+                        Stroke="#2EFFFFFF"
                         HorizontalOptions="Fill"
                         IsVisible="False">
                     <Border.StrokeShape>
@@ -131,9 +132,9 @@
                                HorizontalOptions="Start"
                                VerticalOptions="Center"
                                Margin="10,0,0,0"/>
-                        <Label FontFamily="BrickSans"
-                               FontSize="16"
-                               TextColor="#4A3728"
+                        <Label FontFamily="Orbitron"
+                               FontSize="15"
+                               TextColor="#E7ECF5"
                                Text="Retry"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"/>

@@ -1,0 +1,42 @@
+<api type="debug" assembly-name="Xamarin.Essentials" mvid="a028d65ca3004ca0abe5728249d15b17">
+  <java-to-managed>
+    <entry java-name="crc64a0e0a82d0db9a07d/AccelerometerListener" managed-name="Xamarin.Essentials.AccelerometerListener, Xamarin.Essentials" managed-type-token-id="33554651" />
+    <entry java-name="crc64a0e0a82d0db9a07d/BarometerListener" managed-name="Xamarin.Essentials.BarometerListener, Xamarin.Essentials" managed-type-token-id="33554652" />
+    <entry java-name="crc64a0e0a82d0db9a07d/BatteryBroadcastReceiver" managed-name="Xamarin.Essentials.BatteryBroadcastReceiver, Xamarin.Essentials" managed-type-token-id="33554653" />
+    <entry java-name="crc64a0e0a82d0db9a07d/EnergySaverBroadcastReceiver" managed-name="Xamarin.Essentials.EnergySaverBroadcastReceiver, Xamarin.Essentials" managed-type-token-id="33554654" />
+    <entry java-name="crc64a0e0a82d0db9a07d/ClipboardChangeListener" managed-name="Xamarin.Essentials.ClipboardChangeListener, Xamarin.Essentials" managed-type-token-id="33554655" />
+    <entry java-name="crc64a0e0a82d0db9a07d/SensorListener" managed-name="Xamarin.Essentials.SensorListener, Xamarin.Essentials" managed-type-token-id="33554656" />
+    <entry java-name="crc64a0e0a82d0db9a07d/ConnectivityBroadcastReceiver" managed-name="Xamarin.Essentials.ConnectivityBroadcastReceiver, Xamarin.Essentials" managed-type-token-id="33554657" />
+    <entry java-name="crc64a0e0a82d0db9a07d/Listener" managed-name="Xamarin.Essentials.Listener, Xamarin.Essentials" managed-type-token-id="33554659" />
+    <entry java-name="crc64a0e0a82d0db9a07d/SingleLocationListener" managed-name="Xamarin.Essentials.SingleLocationListener, Xamarin.Essentials" managed-type-token-id="33554660" />
+    <entry java-name="crc64a0e0a82d0db9a07d/GyroscopeListener" managed-name="Xamarin.Essentials.GyroscopeListener, Xamarin.Essentials" managed-type-token-id="33554661" />
+    <entry java-name="crc64a0e0a82d0db9a07d/MagnetometerListener" managed-name="Xamarin.Essentials.MagnetometerListener, Xamarin.Essentials" managed-type-token-id="33554662" />
+    <entry java-name="crc64a0e0a82d0db9a07d/OrientationSensorListener" managed-name="Xamarin.Essentials.OrientationSensorListener, Xamarin.Essentials" managed-type-token-id="33554663" />
+    <entry java-name="crc64a0e0a82d0db9a07d/ActivityLifecycleContextListener" managed-name="Xamarin.Essentials.ActivityLifecycleContextListener, Xamarin.Essentials" managed-type-token-id="33554666" />
+    <entry java-name="crc64a0e0a82d0db9a07d/IntermediateActivity" managed-name="Xamarin.Essentials.IntermediateActivity, Xamarin.Essentials" managed-type-token-id="33554667" />
+    <entry java-name="crc64a0e0a82d0db9a07d/TextToSpeechImplementation" managed-name="Xamarin.Essentials.TextToSpeechImplementation, Xamarin.Essentials" managed-type-token-id="33554670" />
+    <entry java-name="xamarin/essentials/fileProvider" managed-name="Xamarin.Essentials.FileProvider, Xamarin.Essentials" managed-type-token-id="33554674" />
+    <entry java-name="crc64a0e0a82d0db9a07d/WebAuthenticatorCallbackActivity" managed-name="Xamarin.Essentials.WebAuthenticatorCallbackActivity, Xamarin.Essentials" managed-type-token-id="33554680" />
+    <entry java-name="crc64a0e0a82d0db9a07d/WebAuthenticatorIntermediateActivity" managed-name="Xamarin.Essentials.WebAuthenticatorIntermediateActivity, Xamarin.Essentials" managed-type-token-id="33554681" />
+  </java-to-managed>
+  <managed-to-java>
+    <entry java-name="crc64a0e0a82d0db9a07d/AccelerometerListener" managed-name="Xamarin.Essentials.AccelerometerListener, Xamarin.Essentials" managed-type-token-id="33554651" />
+    <entry java-name="crc64a0e0a82d0db9a07d/BarometerListener" managed-name="Xamarin.Essentials.BarometerListener, Xamarin.Essentials" managed-type-token-id="33554652" />
+    <entry java-name="crc64a0e0a82d0db9a07d/BatteryBroadcastReceiver" managed-name="Xamarin.Essentials.BatteryBroadcastReceiver, Xamarin.Essentials" managed-type-token-id="33554653" />
+    <entry java-name="crc64a0e0a82d0db9a07d/EnergySaverBroadcastReceiver" managed-name="Xamarin.Essentials.EnergySaverBroadcastReceiver, Xamarin.Essentials" managed-type-token-id="33554654" />
+    <entry java-name="crc64a0e0a82d0db9a07d/ClipboardChangeListener" managed-name="Xamarin.Essentials.ClipboardChangeListener, Xamarin.Essentials" managed-type-token-id="33554655" />
+    <entry java-name="crc64a0e0a82d0db9a07d/SensorListener" managed-name="Xamarin.Essentials.SensorListener, Xamarin.Essentials" managed-type-token-id="33554656" />
+    <entry java-name="crc64a0e0a82d0db9a07d/ConnectivityBroadcastReceiver" managed-name="Xamarin.Essentials.ConnectivityBroadcastReceiver, Xamarin.Essentials" managed-type-token-id="33554657" />
+    <entry java-name="crc64a0e0a82d0db9a07d/Listener" managed-name="Xamarin.Essentials.Listener, Xamarin.Essentials" managed-type-token-id="33554659" />
+    <entry java-name="crc64a0e0a82d0db9a07d/SingleLocationListener" managed-name="Xamarin.Essentials.SingleLocationListener, Xamarin.Essentials" managed-type-token-id="33554660" />
+    <entry java-name="crc64a0e0a82d0db9a07d/GyroscopeListener" managed-name="Xamarin.Essentials.GyroscopeListener, Xamarin.Essentials" managed-type-token-id="33554661" />
+    <entry java-name="crc64a0e0a82d0db9a07d/MagnetometerListener" managed-name="Xamarin.Essentials.MagnetometerListener, Xamarin.Essentials" managed-type-token-id="33554662" />
+    <entry java-name="crc64a0e0a82d0db9a07d/OrientationSensorListener" managed-name="Xamarin.Essentials.OrientationSensorListener, Xamarin.Essentials" managed-type-token-id="33554663" />
+    <entry java-name="crc64a0e0a82d0db9a07d/ActivityLifecycleContextListener" managed-name="Xamarin.Essentials.ActivityLifecycleContextListener, Xamarin.Essentials" managed-type-token-id="33554666" />
+    <entry java-name="crc64a0e0a82d0db9a07d/IntermediateActivity" managed-name="Xamarin.Essentials.IntermediateActivity, Xamarin.Essentials" managed-type-token-id="33554667" />
+    <entry java-name="crc64a0e0a82d0db9a07d/TextToSpeechImplementation" managed-name="Xamarin.Essentials.TextToSpeechImplementation, Xamarin.Essentials" managed-type-token-id="33554670" />
+    <entry java-name="xamarin/essentials/fileProvider" managed-name="Xamarin.Essentials.FileProvider, Xamarin.Essentials" managed-type-token-id="33554674" />
+    <entry java-name="crc64a0e0a82d0db9a07d/WebAuthenticatorCallbackActivity" managed-name="Xamarin.Essentials.WebAuthenticatorCallbackActivity, Xamarin.Essentials" managed-type-token-id="33554680" />
+    <entry java-name="crc64a0e0a82d0db9a07d/WebAuthenticatorIntermediateActivity" managed-name="Xamarin.Essentials.WebAuthenticatorIntermediateActivity, Xamarin.Essentials" managed-type-token-id="33554681" />
+  </managed-to-java>
+</api>

@@ -25,14 +25,6 @@ public partial class PuzzlePetsPage : ContentPage
     private double _pieceSize;
     private int _dragPieceId = -1;
 
-    private static readonly string[] PieceIcons =
-    {
-        "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼",
-        "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵", "🐔",
-        "🦄", "🐢", "🐍", "🐦", "🐧", "🐴", "🦉", "🐝",
-        "🐬", "🐢"
-    };
-
     private static readonly Color[] PiecePalette =
     {
         Color.FromArgb("#E91E63"), Color.FromArgb("#2196F3"),
@@ -86,8 +78,6 @@ public partial class PuzzlePetsPage : ContentPage
         _startTime = DateTime.Now;
 
         LevelLabel.Text = $"Level {_level}";
-        // AnimalEmojiLabel.Text = _puzzle.AnimalEmoji;
-        // AnimalNameLabel.Text = $"{_puzzle.AnimalName} Puzzle";
         StatusLabel.Text = "Drag pieces from the tray to their spots!";
 
         _gridCells.Clear();
@@ -296,7 +286,7 @@ public partial class PuzzlePetsPage : ContentPage
                 RebuildTray();
 
                 StatusLabel.Text =
-                    $"{_puzzle.Moves} / {_puzzle.TotalPieces} placed ✓";
+                    $"{_puzzle.Moves} / {_puzzle.TotalPieces} placed";
 
                 if (_puzzle.IsSolved)
                     TriggerWin();
@@ -347,7 +337,7 @@ public partial class PuzzlePetsPage : ContentPage
         }
 
         StatusLabel.Text = _puzzle.TrayPieces.Count == 0
-            ? "All pieces placed! ✓"
+            ? "All pieces placed!"
             : $"{_puzzle.TrayPieces.Count} piece{(_puzzle.TrayPieces.Count > 1 ? "s" : "")} left";
     }
 
@@ -380,11 +370,6 @@ public partial class PuzzlePetsPage : ContentPage
         _gameTimer?.Start();
     }
 
-    private void OnRulesClicked(object sender, EventArgs e)
-    {
-        RulesPopup.Show(GameRules.GetRules("puzzlepets"));
-    }
-
     // ── Timer ──────────────────────────────────────────────────────────────
     private void StartTimer()
     {
@@ -404,11 +389,8 @@ public partial class PuzzlePetsPage : ContentPage
 
     private void UpdateTimerUI()
     {
-        TimerLabel.Text = $"⏱ {_remainSec / 60}:{_remainSec % 60:D2}";
-        TimerBar.Progress = (double)_remainSec / _totalSec;
-        TimerLabel.TextColor = _remainSec <= 15
-            ? Color.FromArgb("#FF5252")
-            : Colors.White;
+        PuzzleTimer.TotalSeconds = _totalSec;
+        PuzzleTimer.SecondsRemaining = _remainSec;
     }
 
     // ── Win / Lose ─────────────────────────────────────────────────────────
@@ -430,7 +412,7 @@ public partial class PuzzlePetsPage : ContentPage
                 await cell.ScaleTo(1.0, 60, Easing.SpringIn);
             }
 
-            StatusLabel.Text = "Puzzle Complete! 🏆";
+            StatusLabel.Text = "Puzzle Complete!";
 
             _ = ResultPopup.Show(true, _level, elapsed, _totalSec, stars, pts, gameId: "puzzlepets");
         }
@@ -475,6 +457,13 @@ public partial class PuzzlePetsPage : ContentPage
     {
         try
         {
+            if (CoinService.GetCoins("puzzlepets") < CoinService.SolutionCost)
+            {
+                CoinShopPopup.ShowForGame("puzzlepets");
+                return;
+            }
+            CoinService.SpendCoins("puzzlepets", CoinService.SolutionCost);
+
             SolutionButton.IsEnabled = false;
             StatusLabel.Text = "Placing pieces...";
 
@@ -511,7 +500,7 @@ public partial class PuzzlePetsPage : ContentPage
 
             if (_puzzle.IsSolved)
             {
-                StatusLabel.Text = "All pieces placed! ✓";
+                StatusLabel.Text = "All pieces placed!";
                 TriggerWin();
             }
             else

@@ -94,7 +94,7 @@ public class ProgressService
         Preferences.Set(Key(gameId, level), (int)state);
     }
 
-    private static string Key(string gameId, int level)      => $"{gameId}_level_{level}_state";
-    private static string StarsKey(string gameId, int level) => $"{gameId}_level_{level}_stars";
-    private static string PointsKey(string gameId)           => $"{gameId}_total_points";
+    private static string Key(string gameId, int level)      => ProfileService.Key($"{gameId}_level_{level}_state");
+    private static string StarsKey(string gameId, int level) => ProfileService.Key($"{gameId}_level_{level}_stars");
+    private static string PointsKey(string gameId)           => ProfileService.Key($"{gameId}_total_points");
 }

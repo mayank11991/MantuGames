@@ -1,0 +1,10 @@
+<api type="debug" assembly-name="Xamarin.GooglePlayServices.Measurement.Sdk.Api" mvid="1ea49e3e8b1c4287bd6ee25103fb1674">
+  <java-to-managed>
+    <entry java-name="com/google/android/gms/measurement/api/AppMeasurementSdk" managed-name="Android.Gms.Measurement.Api.AppMeasurementSdk, Xamarin.GooglePlayServices.Measurement.Sdk.Api" managed-type-token-id="33554445" />
+    <entry java-name="com/google/android/gms/measurement/api/AppMeasurementSdk$ConditionalUserProperty" managed-name="Android.Gms.Measurement.Api.AppMeasurementSdk+ConditionalUserProperty, Xamarin.GooglePlayServices.Measurement.Sdk.Api" managed-type-token-id="33554447" />
+  </java-to-managed>
+  <managed-to-java>
+    <entry java-name="com/google/android/gms/measurement/api/AppMeasurementSdk" managed-name="Android.Gms.Measurement.Api.AppMeasurementSdk, Xamarin.GooglePlayServices.Measurement.Sdk.Api" managed-type-token-id="33554445" />
+    <entry java-name="com/google/android/gms/measurement/api/AppMeasurementSdk$ConditionalUserProperty" managed-name="Android.Gms.Measurement.Api.AppMeasurementSdk+ConditionalUserProperty, Xamarin.GooglePlayServices.Measurement.Sdk.Api" managed-type-token-id="33554447" />
+  </managed-to-java>
+</api>

@@ -68,6 +68,7 @@ public partial class BlockPuzzlePage : ContentPage
         _vm.PieceLocked  += OnPieceLocked;
         _vm.GameEnded    += OnGameEnded;
         _vm.LinesClearing += OnLinesClearing;
+        BlockTimer.TotalSeconds = BlockPuzzleViewModel.LevelTimerSeconds;
         BuildBoard();
         BuildNextPreview();
     }
@@ -307,6 +308,9 @@ public partial class BlockPuzzlePage : ContentPage
 
     private async void OnPieceLocked()
     {
+        if (SolutionButton != null)
+            SolutionButton.IsEnabled = true;
+
         AudioService.Instance.Play("slide");
         try
         {
@@ -322,9 +326,14 @@ public partial class BlockPuzzlePage : ContentPage
     {
         try
         {
+            if (SolutionButton != null)
+                SolutionButton.IsEnabled = true;
             int stars  = isWin ? 3 : 1;
             int points = _vm?.Score ?? 0;
-            await ResultPopup.Show(isWin, _vm?.Level ?? _startLevel, 0, 120, stars, points,
+            int elapsed = _vm != null
+                ? BlockPuzzleViewModel.LevelTimerSeconds - _vm.TimeRemainingSec
+                : 0;
+            await ResultPopup.Show(isWin, _vm?.Level ?? _startLevel, elapsed, BlockPuzzleViewModel.LevelTimerSeconds, stars, points,
                 isWin ? null : "Game Over!", "blockpuzzle");
         }
         catch (Exception ex)
@@ -345,9 +354,62 @@ public partial class BlockPuzzlePage : ContentPage
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnRulesClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object sender, EventArgs e)
     {
-        RulesPopup.Show(GameRules.GetRules("blockpuzzle"));
+        if (_vm == null || _vm.IsGameOver || _vm.CurrentPiece == null) return;
+
+        if (CoinService.GetCoins("blockpuzzle") < CoinService.SolutionCost)
+        {
+            CoinShopPopup.ShowForGame("blockpuzzle");
+            return;
+        }
+        CoinService.SpendCoins("blockpuzzle", CoinService.SolutionCost);
+
+        SolutionButton.IsEnabled = false;
+        _ = AutoPlaceBestAsync();
+    }
+
+    // Finds the lowest valid placement for the current piece and plays it.
+    private async Task AutoPlaceBestAsync()
+    {
+        try
+        {
+            var piece = _vm.CurrentPiece;
+            if (piece == null) return;
+
+            int bestX = _vm.CurrentX;
+            int bestY = -1;
+            for (int x = 0; x < BlockPuzzleViewModel.Cols; x++)
+            {
+                int y = _vm.CurrentY;
+                while (_vm.CanPlace(piece, x, y + 1)) y++;
+                if (y >= 0 && _vm.CanPlace(piece, x, y) && y > bestY)
+                {
+                    bestY = y;
+                    bestX = x;
+                }
+            }
+
+            if (bestY < 0) { SolutionButton.IsEnabled = true; return; }
+
+            while (_vm.CurrentX > bestX)
+            {
+                _vm.MoveLeftCommand.Execute(null);
+                await Task.Delay(90);
+            }
+            while (_vm.CurrentX < bestX)
+            {
+                _vm.MoveRightCommand.Execute(null);
+                await Task.Delay(90);
+            }
+
+            _vm.DropCommand.Execute(null);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in AutoPlaceBestAsync: {ex.Message}");
+            SolutionButton.IsEnabled = true;
+        }
     }
 
     // ── Navigation ────────────────────────────────────────────────────────────

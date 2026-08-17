@@ -32,8 +32,8 @@ public final class R {
 		public static final int androidx_core_secondary_text_default_material_light = 0x7f05001c;
 		public static final int call_notification_answer_color = 0x7f05002d;
 		public static final int call_notification_decline_color = 0x7f05002e;
-		public static final int notification_action_color_filter = 0x7f0502f6;
-		public static final int notification_icon_bg_color = 0x7f0502f7;
+		public static final int notification_action_color_filter = 0x7f0502f7;
+		public static final int notification_icon_bg_color = 0x7f0502f8;
 	}
 	public static final class dimen {
 		public static final int compat_button_inset_horizontal_material = 0x7f060058;
@@ -60,25 +60,25 @@ public final class R {
 		public static final int notification_top_pad_large_text = 0x7f06031c;
 	}
 	public static final class drawable {
-		public static final int ic_call_answer = 0x7f07008e;
-		public static final int ic_call_answer_low = 0x7f07008f;
-		public static final int ic_call_answer_video = 0x7f070090;
-		public static final int ic_call_answer_video_low = 0x7f070091;
-		public static final int ic_call_decline = 0x7f070092;
-		public static final int ic_call_decline_low = 0x7f070093;
-		public static final int notification_action_background = 0x7f0700e8;
-		public static final int notification_bg = 0x7f0700e9;
-		public static final int notification_bg_low = 0x7f0700ea;
-		public static final int notification_bg_low_normal = 0x7f0700eb;
-		public static final int notification_bg_low_pressed = 0x7f0700ec;
-		public static final int notification_bg_normal = 0x7f0700ed;
-		public static final int notification_bg_normal_pressed = 0x7f0700ee;
-		public static final int notification_icon_background = 0x7f0700ef;
-		public static final int notification_oversize_large_icon_bg = 0x7f0700f0;
-		public static final int notification_template_icon_bg = 0x7f0700f1;
-		public static final int notification_template_icon_low_bg = 0x7f0700f2;
-		public static final int notification_tile_bg = 0x7f0700f3;
-		public static final int notify_panel_notification_icon_bg = 0x7f0700f4;
+		public static final int ic_call_answer = 0x7f0700a1;
+		public static final int ic_call_answer_low = 0x7f0700a2;
+		public static final int ic_call_answer_video = 0x7f0700a3;
+		public static final int ic_call_answer_video_low = 0x7f0700a4;
+		public static final int ic_call_decline = 0x7f0700a5;
+		public static final int ic_call_decline_low = 0x7f0700a6;
+		public static final int notification_action_background = 0x7f0700ff;
+		public static final int notification_bg = 0x7f070100;
+		public static final int notification_bg_low = 0x7f070101;
+		public static final int notification_bg_low_normal = 0x7f070102;
+		public static final int notification_bg_low_pressed = 0x7f070103;
+		public static final int notification_bg_normal = 0x7f070104;
+		public static final int notification_bg_normal_pressed = 0x7f070105;
+		public static final int notification_icon_background = 0x7f070106;
+		public static final int notification_oversize_large_icon_bg = 0x7f070107;
+		public static final int notification_template_icon_bg = 0x7f070108;
+		public static final int notification_template_icon_low_bg = 0x7f070109;
+		public static final int notification_tile_bg = 0x7f07010a;
+		public static final int notify_panel_notification_icon_bg = 0x7f07010b;
 	}
 	public static final class id {
 		public static final int accessibility_action_clickable_span = 0x7f080010;

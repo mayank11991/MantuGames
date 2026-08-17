@@ -5,14 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid x:Name="Overlay"
-          BackgroundColor="{AppThemeBinding Light=#882D2A3D, Dark=#882D2A3D}"
+          BackgroundColor="#CC0B0E14"
           InputTransparent="False">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
 
-        <Border Background="{AppThemeBinding Light=#FBF4ED, Dark=#2D2A3D}"
-                Stroke="{AppThemeBinding Light=#DCC8A8, Dark=#5A5670}"
+        <Border Background="{AppThemeBinding Light=#182136, Dark=#182136}"
+                Stroke="{AppThemeBinding Light=#2EFFFFFF, Dark=#2EFFFFFF}"
                 StrokeThickness="1"
                 Padding="28"
                 WidthRequest="300"
@@ -22,46 +22,47 @@
                 <RoundRectangle CornerRadius="24" />
             </Border.StrokeShape>
             <Border.Shadow>
-                <Shadow Brush="{AppThemeBinding Light=#DCC8A8, Dark=#5A5670}" Offset="0,6" Radius="20" Opacity="0.3" />
+                <Shadow Brush="#000000" Offset="0,6" Radius="20" Opacity="0.3" />
             </Border.Shadow>
 
             <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
 
                 <Label x:Name="TitleLabel"
-                       FontFamily="BrickSans"
+                       FontFamily="Orbitron"
                        FontSize="20"
                        FontAttributes="Bold"
                        HorizontalOptions="Center">
                     <Label.TextColor>
-                        <AppThemeBinding Light="#4A3728" Dark="#F0E6D8" />
+                        <AppThemeBinding Light="#E7ECF5" Dark="#E7ECF5" />
                     </Label.TextColor>
                 </Label>
 
                 <Label x:Name="MessageLabel"
-                       FontFamily="BrickSans"
+                       FontFamily="Inter"
                        FontSize="14"
                        HorizontalTextAlignment="Center">
                     <Label.TextColor>
-                        <AppThemeBinding Light="#8B7B6A" Dark="#B0A696" />
+                        <AppThemeBinding Light="#9AA7BD" Dark="#9AA7BD" />
                     </Label.TextColor>
                 </Label>
 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12" HorizontalOptions="Center">
                     <Border x:Name="SecondaryBorder"
                             Grid.Column="0"
-                            BackgroundColor="#DCC8A8"
-                            StrokeThickness="0"
+                            BackgroundColor="#0FFFFFFF"
+                            StrokeThickness="1"
+                            Stroke="#2EFFFFFF"
                             Padding="20,10"
                             HorizontalOptions="Fill">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="12" />
                         </Border.StrokeShape>
                         <Label x:Name="CancelLabel"
-                               FontFamily="BrickSans"
+                               FontFamily="Orbitron"
                                FontSize="14"
                                FontAttributes="Bold"
                                HorizontalOptions="Center"
-                               TextColor="#4A3728">
+                               TextColor="#E7ECF5">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnCancel" />
                             </Label.GestureRecognizers>
@@ -69,7 +70,7 @@
                     </Border>
                     <Border x:Name="PrimaryBorder"
                             Grid.Column="1"
-                            BackgroundColor="#EF5350"
+                            BackgroundColor="#EF4444"
                             StrokeThickness="0"
                             Padding="20,10"
                             HorizontalOptions="Fill">
@@ -77,11 +78,11 @@
                             <RoundRectangle CornerRadius="12" />
                         </Border.StrokeShape>
                         <Label x:Name="ConfirmLabel"
-                               FontFamily="BrickSans"
+                               FontFamily="Orbitron"
                                FontSize="14"
                                FontAttributes="Bold"
                                HorizontalOptions="Center"
-                               TextColor="White">
+                               TextColor="#160D02">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnConfirm" />
                             </Label.GestureRecognizers>

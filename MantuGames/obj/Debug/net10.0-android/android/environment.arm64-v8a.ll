@@ -87,13 +87,15 @@ target triple = "aarch64-unknown-linux-android21"
 @mono_aot_mode_name = dso_local local_unnamed_addr constant ptr @.env.0, align 8
 
 ; Application environment variables array, name:value
-@app_environment_variables = dso_local local_unnamed_addr constant [6 x ptr] [
-	ptr @.env.var.0, ; 0 ('MONO_GC_PARAMS')
-	ptr @.env.var.1, ; 1 ('major=marksweep-conc')
-	ptr @.env.var.2, ; 2 ('MONO_LOG_LEVEL')
-	ptr @.env.var.3, ; 3 ('info')
-	ptr @.env.var.4, ; 4 ('XA_HTTP_CLIENT_HANDLER_TYPE')
-	ptr @.env.var.5 ; 5 ('Xamarin.Android.Net.AndroidMessageHandler')
+@app_environment_variables = dso_local local_unnamed_addr constant [8 x ptr] [
+	ptr @.env.var.0, ; 0 ('DOTNET_MODIFIABLE_ASSEMBLIES')
+	ptr @.env.var.1, ; 1 ('Debug')
+	ptr @.env.var.2, ; 2 ('MONO_GC_PARAMS')
+	ptr @.env.var.3, ; 3 ('major=marksweep-conc')
+	ptr @.env.var.4, ; 4 ('MONO_LOG_LEVEL')
+	ptr @.env.var.5, ; 5 ('info')
+	ptr @.env.var.6, ; 6 ('XA_HTTP_CLIENT_HANDLER_TYPE')
+	ptr @.env.var.7 ; 7 ('Xamarin.Android.Net.AndroidMessageHandler')
 ], align 8
 
 ; System properties defined by the application
@@ -112,9 +114,9 @@ target triple = "aarch64-unknown-linux-android21"
 	i1 false, ; bool ignore_split_configs
 	i8 0, ; uint8_t bound_stream_io_exception_type
 	i32 3, ; uint32_t package_naming_policy
-	i32 6, ; uint32_t environment_variable_count
+	i32 8, ; uint32_t environment_variable_count
 	i32 0, ; uint32_t system_property_count
-	i32 347, ; uint32_t number_of_assemblies_in_apk
+	i32 350, ; uint32_t number_of_assemblies_in_apk
 	i32 69, ; uint32_t bundled_assembly_name_width
 	i32 40, ; uint32_t number_of_dso_cache_entries
 	i32 0, ; uint32_t number_of_aot_cache_entries
@@ -1168,9 +1170,15 @@ target triple = "aarch64-unknown-linux-android21"
 @_XamarinAndroidBundledAssembly_name_159_159 = internal dso_local global [69 x i8] zeroinitializer, align 1
 @_XamarinAndroidBundledAssembly_file_name_15a_15a = internal dso_local global [77 x i8] zeroinitializer, align 1
 @_XamarinAndroidBundledAssembly_name_15a_15a = internal dso_local global [69 x i8] zeroinitializer, align 1
+@_XamarinAndroidBundledAssembly_file_name_15b_15b = internal dso_local global [77 x i8] zeroinitializer, align 1
+@_XamarinAndroidBundledAssembly_name_15b_15b = internal dso_local global [69 x i8] zeroinitializer, align 1
+@_XamarinAndroidBundledAssembly_file_name_15c_15c = internal dso_local global [77 x i8] zeroinitializer, align 1
+@_XamarinAndroidBundledAssembly_name_15c_15c = internal dso_local global [69 x i8] zeroinitializer, align 1
+@_XamarinAndroidBundledAssembly_file_name_15d_15d = internal dso_local global [77 x i8] zeroinitializer, align 1
+@_XamarinAndroidBundledAssembly_name_15d_15d = internal dso_local global [69 x i8] zeroinitializer, align 1
 
 ; Bundled assembly name buffers, all 69 bytes long
-@bundled_assemblies = dso_local local_unnamed_addr global [347 x %struct.XamarinAndroidBundledAssembly] [
+@bundled_assemblies = dso_local local_unnamed_addr global [350 x %struct.XamarinAndroidBundledAssembly] [
 	%struct.XamarinAndroidBundledAssembly {
 		i32 -1, ; int32_t file_fd
 		ptr @_XamarinAndroidBundledAssembly_file_name_0_0, ; char* file_name
@@ -4293,7 +4301,34 @@ target triple = "aarch64-unknown-linux-android21"
 		ptr null, ; uint8_t* data
 		i32 69, ; uint32_t name_length
 		ptr @_XamarinAndroidBundledAssembly_name_15a_15a; char* name
-	} ; 346
+	}, ; 346
+	%struct.XamarinAndroidBundledAssembly {
+		i32 -1, ; int32_t file_fd
+		ptr @_XamarinAndroidBundledAssembly_file_name_15b_15b, ; char* file_name
+		i32 0, ; uint32_t data_offset
+		i32 0, ; uint32_t data_size
+		ptr null, ; uint8_t* data
+		i32 69, ; uint32_t name_length
+		ptr @_XamarinAndroidBundledAssembly_name_15b_15b; char* name
+	}, ; 347
+	%struct.XamarinAndroidBundledAssembly {
+		i32 -1, ; int32_t file_fd
+		ptr @_XamarinAndroidBundledAssembly_file_name_15c_15c, ; char* file_name
+		i32 0, ; uint32_t data_offset
+		i32 0, ; uint32_t data_size
+		ptr null, ; uint8_t* data
+		i32 69, ; uint32_t name_length
+		ptr @_XamarinAndroidBundledAssembly_name_15c_15c; char* name
+	}, ; 348
+	%struct.XamarinAndroidBundledAssembly {
+		i32 -1, ; int32_t file_fd
+		ptr @_XamarinAndroidBundledAssembly_file_name_15d_15d, ; char* file_name
+		i32 0, ; uint32_t data_offset
+		i32 0, ; uint32_t data_size
+		ptr null, ; uint8_t* data
+		i32 69, ; uint32_t name_length
+		ptr @_XamarinAndroidBundledAssembly_name_15d_15d; char* name
+	} ; 349
 ], align 8
 
 @assembly_store_bundled_assemblies = dso_local local_unnamed_addr global [0 x %struct.AssemblyStoreSingleAssemblyRuntimeData] zeroinitializer, align 8
@@ -4309,12 +4344,14 @@ target triple = "aarch64-unknown-linux-android21"
 @.env.0 = private unnamed_addr constant [7 x i8] c"interp\00", align 1
 
 ; Application environment variables name:value pairs
-@.env.var.0 = private unnamed_addr constant [15 x i8] c"MONO_GC_PARAMS\00", align 1
-@.env.var.1 = private unnamed_addr constant [21 x i8] c"major=marksweep-conc\00", align 1
-@.env.var.2 = private unnamed_addr constant [15 x i8] c"MONO_LOG_LEVEL\00", align 1
-@.env.var.3 = private unnamed_addr constant [5 x i8] c"info\00", align 1
-@.env.var.4 = private unnamed_addr constant [28 x i8] c"XA_HTTP_CLIENT_HANDLER_TYPE\00", align 1
-@.env.var.5 = private unnamed_addr constant [42 x i8] c"Xamarin.Android.Net.AndroidMessageHandler\00", align 1
+@.env.var.0 = private unnamed_addr constant [29 x i8] c"DOTNET_MODIFIABLE_ASSEMBLIES\00", align 1
+@.env.var.1 = private unnamed_addr constant [6 x i8] c"Debug\00", align 1
+@.env.var.2 = private unnamed_addr constant [15 x i8] c"MONO_GC_PARAMS\00", align 1
+@.env.var.3 = private unnamed_addr constant [21 x i8] c"major=marksweep-conc\00", align 1
+@.env.var.4 = private unnamed_addr constant [15 x i8] c"MONO_LOG_LEVEL\00", align 1
+@.env.var.5 = private unnamed_addr constant [5 x i8] c"info\00", align 1
+@.env.var.6 = private unnamed_addr constant [28 x i8] c"XA_HTTP_CLIENT_HANDLER_TYPE\00", align 1
+@.env.var.7 = private unnamed_addr constant [42 x i8] c"Xamarin.Android.Net.AndroidMessageHandler\00", align 1
 
 ;ApplicationConfig
 @.ApplicationConfig.0_android_package_name = private unnamed_addr constant [19 x i8] c"com.mantugames.app\00", align 1

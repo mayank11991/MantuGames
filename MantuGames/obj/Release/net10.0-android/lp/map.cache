@@ -5,12 +5,14 @@ Microsoft.Maui.Controls.Xaml.dll
 Microsoft.Maui.dll
 Microsoft.Maui.Essentials.dll
 Microsoft.Maui.Graphics.dll
+Plugin.InAppBilling.dll
 Plugin.Maui.Audio.dll
 Plugin.MauiMtAdmob.dll
 Xamarin.Android.Glide.Annotations.dll
 Xamarin.Android.Glide.DiskLruCache.dll
 Xamarin.Android.Glide.dll
 Xamarin.Android.Glide.GifDecoder.dll
+Xamarin.Android.Google.BillingClient.dll
 Xamarin.AndroidX.Activity.dll
 Xamarin.AndroidX.Activity.Ktx.dll
 Xamarin.AndroidX.Annotation.dll
@@ -100,6 +102,7 @@ Xamarin.AndroidX.Window.dll
 Xamarin.AndroidX.Window.WindowCore.dll
 Xamarin.AndroidX.Window.WindowCore.Jvm.dll
 Xamarin.AndroidX.Work.Runtime.dll
+Xamarin.Essentials.dll
 Xamarin.Google.Android.Material.dll
 Xamarin.Google.Crypto.Tink.Android.dll
 Xamarin.Google.ErrorProne.Annotations.dll

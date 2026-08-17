@@ -1,14 +1,16 @@
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("MantuGames.Tests")]
+
 namespace MantuGames.Models;
 
 public class HanoiPuzzle
     {
         private static readonly Random _rng = new();
 
-        public int DiscCount { get; private set; }
-        public int StartPole { get; private set; }
-        public int GoalPole  { get; private set; }
+        public int DiscCount { get; internal set; }
+        public int StartPole { get; internal set; }
+        public int GoalPole  { get; internal set; }
         // Stack top = top of visual tower = smallest disc currently on pole
-        public List<Stack<int>> Poles { get; private set; }
+        public List<Stack<int>> Poles { get; internal set; }
         public int MinMoves  => (int)Math.Pow(2, DiscCount) - 1;
         public int MoveCount { get; private set; }
   
@@ -76,6 +78,20 @@ public class HanoiPuzzle
             for (int p = 0; p < 3; p++)
                 if (p == GoalPole && Poles[p].Count == DiscCount) return true;
             return false;
+        }
+
+        /// <summary>Deep copy of the puzzle state (used by the solver and tests).</summary>
+        public HanoiPuzzle Clone()
+        {
+            var copy = new HanoiPuzzle
+            {
+                DiscCount = DiscCount,
+                StartPole = StartPole,
+                GoalPole = GoalPole,
+                MoveCount = MoveCount,
+                Poles = new List<Stack<int>> { new(Poles[0].Reverse()), new(Poles[1].Reverse()), new(Poles[2].Reverse()) },
+            };
+            return copy;
         }
   
         public int? TopDisc(int pole) =>

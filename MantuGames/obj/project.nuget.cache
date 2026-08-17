@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tIiNTkOd7Ko=",
+  "dgSpecHash": "G6nBWkF9Kus=",
   "success": true,
   "projectFilePath": "/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/MantuGames.csproj",
   "expectedPackageFiles": [
@@ -26,12 +26,14 @@
     "/Users/mayankshrivastava/.nuget/packages/microsoft.maui.graphics/10.0.20/microsoft.maui.graphics.10.0.20.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/microsoft.maui.resizetizer/10.0.20/microsoft.maui.resizetizer.10.0.20.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/microsoft.net.illink.tasks/10.0.3/microsoft.net.illink.tasks.10.0.3.nupkg.sha512",
+    "/Users/mayankshrivastava/.nuget/packages/plugin.inappbilling/5.4.0/plugin.inappbilling.5.4.0.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/plugin.maui.audio/4.0.0/plugin.maui.audio.4.0.0.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/plugin.mauimtadmob/2.4.0/plugin.mauimtadmob.2.4.0.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.android.glide/4.16.0.14/xamarin.android.glide.4.16.0.14.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.android.glide.annotations/4.16.0.14/xamarin.android.glide.annotations.4.16.0.14.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.android.glide.disklrucache/4.16.0.14/xamarin.android.glide.disklrucache.4.16.0.14.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.android.glide.gifdecoder/4.16.0.14/xamarin.android.glide.gifdecoder.4.16.0.14.nupkg.sha512",
+    "/Users/mayankshrivastava/.nuget/packages/xamarin.android.google.billingclient/4.0.0/xamarin.android.google.billingclient.4.0.0.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.androidx.activity/1.12.4.1/xamarin.androidx.activity.1.12.4.1.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.androidx.activity.ktx/1.10.1.3/xamarin.androidx.activity.ktx.1.10.1.3.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.androidx.annotation/1.9.1.7/xamarin.androidx.annotation.1.9.1.7.nupkg.sha512",
@@ -124,6 +126,7 @@
     "/Users/mayankshrivastava/.nuget/packages/xamarin.androidx.window.windowcore.jvm/1.4.0.1/xamarin.androidx.window.windowcore.jvm.1.4.0.1.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.androidx.work.runtime/2.11.1.1/xamarin.androidx.work.runtime.2.11.1.1.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.build.download/0.11.4/xamarin.build.download.0.11.4.nupkg.sha512",
+    "/Users/mayankshrivastava/.nuget/packages/xamarin.essentials/1.6.1/xamarin.essentials.1.6.1.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.google.android.material/1.12.0.5/xamarin.google.android.material.1.12.0.5.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.google.code.findbugs.jsr305/3.0.2.21/xamarin.google.code.findbugs.jsr305.3.0.2.21.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.google.crypto.tink.android/1.18.0.1/xamarin.google.crypto.tink.android.1.18.0.1.nupkg.sha512",
@@ -145,9 +148,23 @@
     "/Users/mayankshrivastava/.nuget/packages/xamarin.kotlinx.coroutines.core.jvm/1.10.2.3/xamarin.kotlinx.coroutines.core.jvm.1.10.2.3.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.kotlinx.serialization.core/1.10.0.1/xamarin.kotlinx.serialization.core.1.10.0.1.nupkg.sha512",
     "/Users/mayankshrivastava/.nuget/packages/xamarin.kotlinx.serialization.core.jvm/1.10.0.1/xamarin.kotlinx.serialization.core.jvm.1.10.0.1.nupkg.sha512",
-    "/Users/mayankshrivastava/.nuget/packages/microsoft.netcore.app.ref/10.0.9/microsoft.netcore.app.ref.10.0.9.nupkg.sha512"
+    "/Users/mayankshrivastava/.nuget/packages/microsoft.netcore.app.ref/10.0.10/microsoft.netcore.app.ref.10.0.10.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "message": "MantuGames depends on Plugin.InAppBilling (>= 5.0.1) but Plugin.InAppBilling 5.0.1 was not found. Plugin.InAppBilling 5.4.0 was resolved instead.",
+      "projectPath": "/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/MantuGames.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/MantuGames.csproj",
+      "libraryId": "Plugin.InAppBilling",
+      "targetGraphs": [
+        "net10.0-android36.0",
+        "net10.0-android36.0/android-arm64",
+        "net10.0-android36.0/android-x64"
+      ]
+    },
     {
       "code": "NU1608",
       "level": "Warning",

@@ -494,6 +494,23 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Plugin.InAppBilling/5.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Android.Google.BillingClient": "4.0.0",
+          "Xamarin.Essentials": "1.6.1"
+        },
+        "compile": {
+          "lib/monoandroid10.0/Plugin.InAppBilling.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/monoandroid10.0/Plugin.InAppBilling.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Plugin.Maui.Audio/4.0.0": {
         "type": "package",
         "dependencies": {
@@ -588,6 +605,22 @@
         "runtime": {
           "lib/net10.0-android36.0/Xamarin.Android.Glide.GifDecoder.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Xamarin.Android.Google.BillingClient/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.AndroidX.Annotation": "1.1.0.1"
+        },
+        "compile": {
+          "lib/monoandroid90/Xamarin.Android.Google.BillingClient.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/monoandroid90/Xamarin.Android.Google.BillingClient.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -2658,6 +2691,22 @@
         "build": {
           "buildTransitive/Xamarin.Build.Download.props": {},
           "buildTransitive/Xamarin.Build.Download.targets": {}
+        }
+      },
+      "Xamarin.Essentials/1.6.1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.AndroidX.Browser": "1.3.0"
+        },
+        "compile": {
+          "lib/monoandroid10.0/Xamarin.Essentials.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/monoandroid10.0/Xamarin.Essentials.dll": {
+            "related": ".pdb;.xml"
+          }
         }
       },
       "Xamarin.Google.Android.Material/1.12.0.5": {
@@ -3535,6 +3584,23 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Plugin.InAppBilling/5.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Android.Google.BillingClient": "4.0.0",
+          "Xamarin.Essentials": "1.6.1"
+        },
+        "compile": {
+          "lib/monoandroid10.0/Plugin.InAppBilling.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/monoandroid10.0/Plugin.InAppBilling.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Plugin.Maui.Audio/4.0.0": {
         "type": "package",
         "dependencies": {
@@ -3629,6 +3695,22 @@
         "runtime": {
           "lib/net10.0-android36.0/Xamarin.Android.Glide.GifDecoder.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Xamarin.Android.Google.BillingClient/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.AndroidX.Annotation": "1.1.0.1"
+        },
+        "compile": {
+          "lib/monoandroid90/Xamarin.Android.Google.BillingClient.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/monoandroid90/Xamarin.Android.Google.BillingClient.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -5699,6 +5781,22 @@
         "build": {
           "buildTransitive/Xamarin.Build.Download.props": {},
           "buildTransitive/Xamarin.Build.Download.targets": {}
+        }
+      },
+      "Xamarin.Essentials/1.6.1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.AndroidX.Browser": "1.3.0"
+        },
+        "compile": {
+          "lib/monoandroid10.0/Xamarin.Essentials.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/monoandroid10.0/Xamarin.Essentials.dll": {
+            "related": ".pdb;.xml"
+          }
         }
       },
       "Xamarin.Google.Android.Material/1.12.0.5": {
@@ -6576,6 +6674,23 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Plugin.InAppBilling/5.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Android.Google.BillingClient": "4.0.0",
+          "Xamarin.Essentials": "1.6.1"
+        },
+        "compile": {
+          "lib/monoandroid10.0/Plugin.InAppBilling.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/monoandroid10.0/Plugin.InAppBilling.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Plugin.Maui.Audio/4.0.0": {
         "type": "package",
         "dependencies": {
@@ -6670,6 +6785,22 @@
         "runtime": {
           "lib/net10.0-android36.0/Xamarin.Android.Glide.GifDecoder.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Xamarin.Android.Google.BillingClient/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.AndroidX.Annotation": "1.1.0.1"
+        },
+        "compile": {
+          "lib/monoandroid90/Xamarin.Android.Google.BillingClient.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/monoandroid90/Xamarin.Android.Google.BillingClient.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -8740,6 +8871,22 @@
         "build": {
           "buildTransitive/Xamarin.Build.Download.props": {},
           "buildTransitive/Xamarin.Build.Download.targets": {}
+        }
+      },
+      "Xamarin.Essentials/1.6.1": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.AndroidX.Browser": "1.3.0"
+        },
+        "compile": {
+          "lib/monoandroid10.0/Xamarin.Essentials.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/monoandroid10.0/Xamarin.Essentials.dll": {
+            "related": ".pdb;.xml"
+          }
         }
       },
       "Xamarin.Google.Android.Material/1.12.0.5": {
@@ -10394,6 +10541,37 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Plugin.InAppBilling/5.4.0": {
+      "sha512": "XXUb1YS1oVWJ6WR8MHFtdxYG1G6J/NOCPmu0b+t59/ePaMCRQtUczaR+T94EB0CXYLUBc5muPrdv3AKBDE36hg==",
+      "type": "package",
+      "path": "plugin.inappbilling/5.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/monoandroid10.0/Plugin.InAppBilling.dll",
+        "lib/monoandroid10.0/Plugin.InAppBilling.pdb",
+        "lib/monoandroid10.0/Plugin.InAppBilling.xml",
+        "lib/netstandard2.0/Plugin.InAppBilling.dll",
+        "lib/netstandard2.0/Plugin.InAppBilling.pdb",
+        "lib/netstandard2.0/Plugin.InAppBilling.xml",
+        "lib/uap10.0.16299/Plugin.InAppBilling.dll",
+        "lib/uap10.0.16299/Plugin.InAppBilling.pdb",
+        "lib/uap10.0.16299/Plugin.InAppBilling.pri",
+        "lib/uap10.0.16299/Plugin.InAppBilling.xml",
+        "lib/xamarinios10/Plugin.InAppBilling.dll",
+        "lib/xamarinios10/Plugin.InAppBilling.pdb",
+        "lib/xamarinios10/Plugin.InAppBilling.xml",
+        "lib/xamarinmac20/Plugin.InAppBilling.dll",
+        "lib/xamarinmac20/Plugin.InAppBilling.pdb",
+        "lib/xamarinmac20/Plugin.InAppBilling.xml",
+        "lib/xamarintvos10/Plugin.InAppBilling.dll",
+        "lib/xamarintvos10/Plugin.InAppBilling.pdb",
+        "lib/xamarintvos10/Plugin.InAppBilling.xml",
+        "plugin.inappbilling.5.4.0.nupkg.sha512",
+        "plugin.inappbilling.nuspec",
+        "readme.txt"
+      ]
+    },
     "Plugin.Maui.Audio/4.0.0": {
       "sha512": "axet2WKKft9UAGTtCbflkMeWNmZHQJixIJxIbRzhRqoFifr5nFcZV0PWV/E0NPBUjkydBWVlRqXA1hQWMeY/0A==",
       "type": "package",
@@ -10540,6 +10718,21 @@
         "readme.md",
         "xamarin.android.glide.gifdecoder.4.16.0.14.nupkg.sha512",
         "xamarin.android.glide.gifdecoder.nuspec"
+      ]
+    },
+    "Xamarin.Android.Google.BillingClient/4.0.0": {
+      "sha512": "PigMcCKIASltgtxQGClfXhvV7DStQiqqnHDTvj8yFc7uPTYsKAlYWSgRLhTemh4WlZCMtO/LG048r2AEdRj/Yg==",
+      "type": "package",
+      "path": "xamarin.android.google.billingclient/4.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "THIRD-PARTY-NOTICES.txt",
+        "lib/monoandroid90/Xamarin.Android.Google.BillingClient.dll",
+        "lib/monoandroid90/Xamarin.Android.Google.BillingClient.xml",
+        "xamarin.android.google.billingclient.4.0.0.nupkg.sha512",
+        "xamarin.android.google.billingclient.nuspec"
       ]
     },
     "Xamarin.AndroidX.Activity/1.12.4.1": {
@@ -12964,6 +13157,57 @@
         "xamarin.build.download.nuspec"
       ]
     },
+    "Xamarin.Essentials/1.6.1": {
+      "sha512": "gG1Bp4j4bpJQ0dp9MeBJQJ9c8xULauIlhc7Cx5Qw4J2K1c+4Glq5n+gkb9Pm0UA/CevXVqLK5ZXmZkuYI52FgA==",
+      "type": "package",
+      "path": "xamarin.essentials/1.6.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "icon.png",
+        "lib/monoandroid10.0/Xamarin.Essentials.dll",
+        "lib/monoandroid10.0/Xamarin.Essentials.pdb",
+        "lib/monoandroid10.0/Xamarin.Essentials.xml",
+        "lib/monoandroid80/Xamarin.Essentials.dll",
+        "lib/monoandroid80/Xamarin.Essentials.pdb",
+        "lib/monoandroid80/Xamarin.Essentials.xml",
+        "lib/monoandroid81/Xamarin.Essentials.dll",
+        "lib/monoandroid81/Xamarin.Essentials.pdb",
+        "lib/monoandroid81/Xamarin.Essentials.xml",
+        "lib/monoandroid90/Xamarin.Essentials.dll",
+        "lib/monoandroid90/Xamarin.Essentials.pdb",
+        "lib/monoandroid90/Xamarin.Essentials.xml",
+        "lib/netstandard1.0/Xamarin.Essentials.dll",
+        "lib/netstandard1.0/Xamarin.Essentials.pdb",
+        "lib/netstandard1.0/Xamarin.Essentials.xml",
+        "lib/netstandard2.0/Xamarin.Essentials.dll",
+        "lib/netstandard2.0/Xamarin.Essentials.pdb",
+        "lib/netstandard2.0/Xamarin.Essentials.xml",
+        "lib/tizen40/Xamarin.Essentials.dll",
+        "lib/tizen40/Xamarin.Essentials.pdb",
+        "lib/tizen40/Xamarin.Essentials.xml",
+        "lib/uap10.0.16299/Xamarin.Essentials.dll",
+        "lib/uap10.0.16299/Xamarin.Essentials.pdb",
+        "lib/uap10.0.16299/Xamarin.Essentials.pri",
+        "lib/uap10.0.16299/Xamarin.Essentials.xml",
+        "lib/xamarinios10/Xamarin.Essentials.dll",
+        "lib/xamarinios10/Xamarin.Essentials.pdb",
+        "lib/xamarinios10/Xamarin.Essentials.xml",
+        "lib/xamarinmac20/Xamarin.Essentials.dll",
+        "lib/xamarinmac20/Xamarin.Essentials.pdb",
+        "lib/xamarinmac20/Xamarin.Essentials.xml",
+        "lib/xamarintvos10/Xamarin.Essentials.dll",
+        "lib/xamarintvos10/Xamarin.Essentials.pdb",
+        "lib/xamarintvos10/Xamarin.Essentials.xml",
+        "lib/xamarinwatchos10/Xamarin.Essentials.dll",
+        "lib/xamarinwatchos10/Xamarin.Essentials.pdb",
+        "lib/xamarinwatchos10/Xamarin.Essentials.xml",
+        "readme.txt",
+        "xamarin.essentials.1.6.1.nupkg.sha512",
+        "xamarin.essentials.nuspec"
+      ]
+    },
     "Xamarin.Google.Android.Material/1.12.0.5": {
       "sha512": "F3qEyoazFbkeN0xXckfcPtIibVYkF0RU0Dbxgp4NZemK4q88twGmyiqLUx/5DAdwEcVitTVyT5V040EN8c6SBg==",
       "type": "package",
@@ -13484,6 +13728,7 @@
       "Microsoft.Extensions.Logging.Debug >= 10.0.0",
       "Microsoft.Maui.Controls >= 10.0.20",
       "Microsoft.NET.ILLink.Tasks >= 10.0.3",
+      "Plugin.InAppBilling >= 5.0.1",
       "Plugin.Maui.Audio >= 4.0.0",
       "Plugin.MauiMTAdmob >= 2.4.0"
     ]
@@ -13549,6 +13794,10 @@
             "version": "[10.0.3, )",
             "autoReferenced": true
           },
+          "Plugin.InAppBilling": {
+            "target": "Package",
+            "version": "[5.0.1, )"
+          },
           "Plugin.Maui.Audio": {
             "target": "Package",
             "version": "[4.0.0, )"
@@ -13572,7 +13821,7 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[10.0.9, 10.0.9]"
+            "version": "[10.0.10, 10.0.10]"
           }
         ],
         "frameworkReferences": {
@@ -13873,6 +14122,18 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "MantuGames depends on Plugin.InAppBilling (>= 5.0.1) but Plugin.InAppBilling 5.0.1 was not found. Plugin.InAppBilling 5.4.0 was resolved instead.",
+      "libraryId": "Plugin.InAppBilling",
+      "targetGraphs": [
+        "net10.0-android36.0",
+        "net10.0-android36.0/android-arm64",
+        "net10.0-android36.0/android-x64"
+      ]
+    },
     {
       "code": "NU1608",
       "level": "Warning",

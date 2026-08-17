@@ -31,6 +31,8 @@ public partial class GameResultPopup : ContentView
         _completionStars = stars;
         _completionPoints = points;
 
+        StatsService.RecordGame(gameId, isWin, points);
+
         AudioService.Instance.Play(isWin ? "win" : "lose");
         if (isWin) VibrationHelper.LongPress();
         else VibrationHelper.Click();
@@ -45,7 +47,7 @@ public partial class GameResultPopup : ContentView
             StarImg3.Source = stars >= 3 ? "star_kawaii_filled" : "star_kawaii_empty";
 
             TitleLabel.Text      = "You Won!";
-            TitleLabel.TextColor = Color.FromArgb("#2E7D32");
+            TitleLabel.TextColor = Color.FromArgb("#34D399");
 
             if (points > 0)
             {
@@ -57,7 +59,7 @@ public partial class GameResultPopup : ContentView
 
             MessageLabel.Text = $"Level {levelNumber} solved in {elapsedSeconds / 60}:{elapsedSeconds % 60:D2}";
 
-            PrimaryBorder.BackgroundColor = Color.FromArgb("#66BB6A");
+            PrimaryBorder.BackgroundColor = Color.FromArgb("#34D399");
             PrimaryIcon.Source            = "icon_next";
             PrimaryLabel.Text             = "Next Level";
             SecondaryBorder.IsVisible     = true;
@@ -72,11 +74,11 @@ public partial class GameResultPopup : ContentView
             PointsBadge.IsVisible = false;
 
             TitleLabel.Text      = reason ?? "Time's Up!";
-            TitleLabel.TextColor = Color.FromArgb("#C62828");
+            TitleLabel.TextColor = Color.FromArgb("#EF4444");
 
             MessageLabel.Text = "Don't worry — you can do it!\nGive it another try!";
 
-            PrimaryBorder.BackgroundColor = Color.FromArgb("#EF5350");
+            PrimaryBorder.BackgroundColor = Color.FromArgb("#EF4444");
             PrimaryIcon.Source            = "icon_retry";
             PrimaryLabel.Text             = "Try Again";
             SecondaryBorder.IsVisible     = false;
@@ -92,14 +94,55 @@ public partial class GameResultPopup : ContentView
             PopupCard.ScaleTo(1.0, 380, Easing.SpringOut),
             PopupCard.FadeTo(1.0, 260)
         );
+
+        _ = MaybeRateNudgeAsync();
     }
 
     public void Hide() => IsVisible = false;
+
+    // ── RATE US NUDGE ─────────────────────────────────────────────
+    // Shown after every 5th completed game until the player rates or
+    // dismisses it twice. Never interrupts wins that award points.
+    private async System.Threading.Tasks.Task MaybeRateNudgeAsync()
+    {
+        try
+        {
+            if (!_isWin || _completionPoints == 0) return;
+            if (Preferences.Get("rate_done", false)) return;
+
+            int completed = Preferences.Get("games_completed", 0) + 1;
+            Preferences.Set("games_completed", completed);
+            if (completed % 5 != 0) return;
+
+            int dismissed = Preferences.Get("rate_dismissed", 0);
+            if (dismissed >= 2) { Preferences.Set("rate_done", true); return; }
+
+            bool rate = await Application.Current!.Windows[0].Page!.DisplayAlert(
+                "Enjoying Mantu Games?",
+                "Your rating helps other players discover the games. Rate us on Google Play!",
+                "Rate Now", "Not Now");
+
+            if (rate)
+            {
+                Preferences.Set("rate_done", true);
+                await Launcher.OpenAsync(AppConfig.PlayStoreUrl);
+            }
+            else
+            {
+                Preferences.Set("rate_dismissed", dismissed + 1);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in MaybeRateNudgeAsync: {ex.Message}");
+        }
+    }
 
     private void PreloadAd()
     {
         try
         {
+            if (IapService.RemoveAdsOwned) return;
             _adService ??= IPlatformApplication.Current!.Services.GetRequiredService<AdService>();
             _adService.PreloadRewarded();
             _adService.PreloadInterstitial();
@@ -129,6 +172,13 @@ public partial class GameResultPopup : ContentView
 
             if (_isWin)
             {
+                if (IapService.RemoveAdsOwned)
+                {
+                    CompleteLevelAndProceed();
+                    _isProcessing = false;
+                    return;
+                }
+
                 bool rewarded = await _adService.ShowRewardedAd();
                 if (!rewarded)
                 {
@@ -141,7 +191,8 @@ public partial class GameResultPopup : ContentView
             }
             else
             {
-                await _adService.ShowInterstitial();
+                if (!IapService.RemoveAdsOwned)
+                    await _adService.ShowInterstitial();
                 RetryRequested?.Invoke(this, EventArgs.Empty);
             }
 

@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MantuGames"
+             xmlns:converters="clr-namespace:MantuGames.Converters"
              x:Class="MantuGames.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,6 +10,14 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Global Converters -->
+            <converters:SecondsToTimeConverter x:Key="SecondsToTime" />
+            <converters:CellBackgroundConverter x:Key="CellBackgroundConverter" />
+            <converters:CellTextColorConverter x:Key="CellTextColorConverter" />
+            <converters:TimerColorConverter x:Key="TimerColorConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -5,8 +5,6 @@ public class PuzzlePetsPuzzle
     public int Rows { get; }
     public int Cols { get; }
     public int TotalPieces => Rows * Cols;
-    public string AnimalEmoji { get; }
-    public string AnimalName { get; }
     public int Moves { get; private set; }
 
     // pieceId → which grid position it belongs in (0..TotalPieces-1)
@@ -28,14 +26,6 @@ public class PuzzlePetsPuzzle
         }
     }
 
-    private static readonly (string emoji, string name)[] Animals =
-    {
-        ("🐱", "Cat"), ("🐶", "Dog"), ("🐰", "Rabbit"),
-        ("🦊", "Fox"), ("🐼", "Panda"), ("🐸", "Frog"),
-        ("🦁", "Lion"), ("🐯", "Tiger"), ("🐵", "Monkey"),
-        ("🐨", "Koala"), ("🐻", "Bear"), ("🦄", "Unicorn"),
-    };
-
     public PuzzlePetsPuzzle(int level)
     {
         (Rows, Cols) = level switch
@@ -46,10 +36,6 @@ public class PuzzlePetsPuzzle
             4 => (3, 4),
             _ => (4, 4)
         };
-
-        int animalIdx = (level - 1) % Animals.Length;
-        AnimalEmoji = Animals[animalIdx].emoji;
-        AnimalName = Animals[animalIdx].name;
 
         int n = TotalPieces;
         // Each piece i belongs at position i when solved

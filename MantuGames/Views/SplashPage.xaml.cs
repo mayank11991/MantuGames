@@ -74,6 +74,24 @@ public partial class SplashPage : ContentPage
         Loaded += OnLoaded;
     }
 
+    private async Task AnimateSlothAsync()
+    {
+        try
+        {
+            await Task.Delay(150);
+            SlothImage.Opacity = 1;
+            SlothImage.TranslationY = -Root.Height;
+            AudioService.Instance.Play("whoosh");
+            await Task.WhenAll(
+                SlothImage.TranslateTo(0, 0, 1500, Easing.BounceOut),
+                SlothImage.FadeTo(1, 400, Easing.CubicOut));
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in AnimateSlothAsync: {ex.Message}");
+        }
+    }
+
     private async void OnLoaded(object? sender, EventArgs e)
     {
         try
@@ -89,6 +107,9 @@ public partial class SplashPage : ContentPage
             _dustTimer.Tick += (s, args) => DustCanvas.Invalidate();
             _dustTimer.Start();
 
+            // Sloth scrolls down from the top of the screen to sit at the
+            // bottom of the GAMINGS text, AFTER the letter animations finish.
+
             string text = "MANTU";
             var charLabels = new List<Label>();
 
@@ -97,10 +118,10 @@ public partial class SplashPage : ContentPage
                 var lbl = new Label
                 {
                     Text = c.ToString(),
-                    FontFamily = "BrickSans",
+                    FontFamily = "Orbitron",
                     FontSize = 44,
                     FontAttributes = FontAttributes.Bold,
-                    TextColor = Color.FromArgb("#ffffff"),
+                    TextColor = Color.FromArgb("#E7ECF5"),
                     HorizontalTextAlignment = TextAlignment.Center,
                     VerticalTextAlignment = TextAlignment.Center,
                     TranslationY = -400,
@@ -131,6 +152,9 @@ public partial class SplashPage : ContentPage
             GamingsLabel.Opacity = 1;
             await GamingsLabel.TranslateTo(0, 0, 400, Easing.CubicOut);
 
+            // Sloth arrives only once the GAMINGS animation has finished.
+            await AnimateSlothAsync();
+
             // Wait for dust to settle
             while (!_dust.IsEmpty)
                 await Task.Delay(50);
@@ -140,6 +164,7 @@ public partial class SplashPage : ContentPage
 
             await MantuRow.FadeTo(0, 200, Easing.CubicIn);
             await GamingsLabel.FadeTo(0, 200, Easing.CubicIn);
+            await SlothImage.FadeTo(0, 200, Easing.CubicIn);
             Application.Current!.Windows[0].Page = new AppShell();
         }
         catch (Exception ex)

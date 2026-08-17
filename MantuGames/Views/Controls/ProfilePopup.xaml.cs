@@ -1,3 +1,4 @@
+using MantuGames.Models;
 using MantuGames.Services;
 
 namespace MantuGames.Views.Controls;
@@ -9,6 +10,8 @@ public partial class ProfilePopup : ContentView
     private int _month = 1;
     private int _year;
 
+    public event EventHandler<PlayerProfile>? ProfileCreated;
+
     private static readonly string[] Months =
         { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
@@ -16,28 +19,7 @@ public partial class ProfilePopup : ContentView
     public ProfilePopup()
     {
         InitializeComponent();
-        LoadSaved();
         UpdateLabels();
-    }
-
-    private void LoadSaved()
-    {
-        string dob = Preferences.Get("player_dob", "");
-        if (!string.IsNullOrEmpty(dob))
-        {
-            try
-            {
-                var dt = DateTime.Parse(dob);
-                _day = dt.Day;
-                _month = dt.Month;
-                _year = dt.Year;
-                return;
-            }
-            catch { }
-        }
-        _year = DateTime.Now.Year - 10;
-        _month = 1;
-        _day = 1;
     }
 
     private void UpdateLabels()
@@ -49,47 +31,69 @@ public partial class ProfilePopup : ContentView
 
     private int DaysInMonth() => DateTime.DaysInMonth(_year, _month);
 
-    // ── Day taps ──
-    private void OnDayUpTap(object sender, TappedEventArgs e)
+    // ── Swipe spinners: swipe up = increase, swipe down = decrease ──
+    private float _dayPanY, _monthPanY, _yearPanY;
+
+    private void OnDayPan(object sender, PanUpdatedEventArgs e)
     {
+        switch (e.StatusType)
+        {
+            case GestureStatus.Started: _dayPanY = 0; break;
+            case GestureStatus.Running: _dayPanY = (float)e.TotalY; break;
+            case GestureStatus.Completed:
+            case GestureStatus.Canceled:
+                StepDay((int)Math.Round(-_dayPanY / 60.0));
+                break;
+        }
+    }
+
+    private void OnMonthPan(object sender, PanUpdatedEventArgs e)
+    {
+        switch (e.StatusType)
+        {
+            case GestureStatus.Started: _monthPanY = 0; break;
+            case GestureStatus.Running: _monthPanY = (float)e.TotalY; break;
+            case GestureStatus.Completed:
+            case GestureStatus.Canceled:
+                StepMonth((int)Math.Round(-_monthPanY / 60.0));
+                break;
+        }
+    }
+
+    private void OnYearPan(object sender, PanUpdatedEventArgs e)
+    {
+        switch (e.StatusType)
+        {
+            case GestureStatus.Started: _yearPanY = 0; break;
+            case GestureStatus.Running: _yearPanY = (float)e.TotalY; break;
+            case GestureStatus.Completed:
+            case GestureStatus.Canceled:
+                StepYear((int)Math.Round(-_yearPanY / 60.0));
+                break;
+        }
+    }
+
+    private void StepDay(int delta)
+    {
+        if (delta == 0) return;
         int max = DaysInMonth();
-        _day = _day >= max ? 1 : _day + 1;
+        _day = ((_day - 1 + delta) % max + max) % max + 1;
         UpdateLabels();
     }
 
-    private void OnDayDownTap(object sender, TappedEventArgs e)
+    private void StepMonth(int delta)
     {
-        int max = DaysInMonth();
-        _day = _day <= 1 ? max : _day - 1;
-        UpdateLabels();
-    }
-
-    // ── Month taps ──
-    private void OnMonthUpTap(object sender, TappedEventArgs e)
-    {
-        _month = _month >= 12 ? 1 : _month + 1;
+        if (delta == 0) return;
+        _month = ((_month - 1 + delta) % 12 + 12) % 12 + 1;
         ClampDay();
         UpdateLabels();
     }
 
-    private void OnMonthDownTap(object sender, TappedEventArgs e)
+    private void StepYear(int delta)
     {
-        _month = _month <= 1 ? 12 : _month - 1;
-        ClampDay();
-        UpdateLabels();
-    }
-
-    // ── Year taps ──
-    private void OnYearUpTap(object sender, TappedEventArgs e)
-    {
-        _year = Math.Min(DateTime.Now.Year, _year + 1);
-        ClampDay();
-        UpdateLabels();
-    }
-
-    private void OnYearDownTap(object sender, TappedEventArgs e)
-    {
-        _year = Math.Max(DateTime.Now.Year - 80, _year - 1);
+        if (delta == 0) return;
+        _year = Math.Max(DateTime.Now.Year - 80,
+                         Math.Min(DateTime.Now.Year, _year + delta));
         ClampDay();
         UpdateLabels();
     }
@@ -103,8 +107,10 @@ public partial class ProfilePopup : ContentView
     public void Show()
     {
         _submitted = false;
-        LoadSaved();
-        NameEntry.Text = Preferences.Get("player_name", "");
+        _year = DateTime.Now.Year - 10;
+        _month = 1;
+        _day = 1;
+        NameEntry.Text = "";
         NameEntry.PlaceholderColor = Color.FromArgb("#DCC8A8");
         UpdateLabels();
         IsVisible = true;
@@ -133,13 +139,6 @@ public partial class ProfilePopup : ContentView
         // Consume tap to prevent passing through
     }
 
-    private void OnSkip(object sender, TappedEventArgs e)
-    {
-        _submitted = true;
-        Preferences.Set("profile_setup_done", true);
-        Hide();
-    }
-
     private void OnSubmit(object sender, TappedEventArgs e)
     {
         if (_submitted) return;
@@ -152,11 +151,10 @@ public partial class ProfilePopup : ContentView
 
         _submitted = true;
 
-        Preferences.Set("player_name", name);
-        Preferences.Set("player_dob", $"{Months[_month - 1]} {_day}, {_year}");
-        Preferences.Set("profile_setup_done", true);
+        var profile = ProfileService.AddProfile(name, $"{Months[_month - 1]} {_day}, {_year}");
 
         AudioService.Instance.Play("win");
         Hide();
+        ProfileCreated?.Invoke(this, profile);
     }
 }

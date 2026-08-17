@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid x:Name="Overlay"
-          BackgroundColor="{AppThemeBinding Light=#882D2A3D, Dark=#882D2A3D}"
+          BackgroundColor="#CC0B0E14"
           InputTransparent="False">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
@@ -14,16 +14,16 @@
                              HorizontalOptions="Center"
                              Spacing="24">
             <Label Text="PAUSED"
-                   FontFamily="BrickSans"
+                   FontFamily="Orbitron"
                    FontSize="36"
                    FontAttributes="Bold"
                    HorizontalOptions="Center">
                 <Label.TextColor>
-                    <AppThemeBinding Light="#F0E6D8" Dark="#F0E6D8" />
+                    <AppThemeBinding Light="#E7ECF5" Dark="#E7ECF5" />
                 </Label.TextColor>
             </Label>
 
-            <Border BackgroundColor="#D4B896"
+            <Border BackgroundColor="#FF9F1C"
                     StrokeThickness="0"
                     Padding="28,12"
                     HorizontalOptions="Center">
@@ -31,11 +31,11 @@
                     <RoundRectangle CornerRadius="14" />
                 </Border.StrokeShape>
                 <Label Text="RESUME"
-                       FontFamily="BrickSans"
+                       FontFamily="Orbitron"
                        FontSize="16"
                        FontAttributes="Bold"
                        HorizontalOptions="Center"
-                       TextColor="White">
+                       TextColor="#160D02">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnResume" />
                     </Label.GestureRecognizers>

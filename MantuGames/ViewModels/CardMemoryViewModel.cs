@@ -11,8 +11,9 @@ public class CardViewModel : INotifyPropertyChanged
     private bool _isFlipped;
     private bool _isMatched;
 
-    public int    Id    { get; set; }
-    public string Emoji { get; set; }
+    public int    Id     { get; set; }
+    public int    PairId { get; set; }
+    public string Image  { get; set; }
 
     public bool IsFlipped
     {
@@ -117,7 +118,8 @@ public class CardMemoryViewModel : INotifyPropertyChanged
             Cards.Add(new CardViewModel
             {
                 Id       = item.Id,
-                Emoji    = item.Emoji,
+                PairId   = item.PairId,
+                Image    = item.Image,
                 IsFlipped = false,
                 IsMatched = false
             });
@@ -146,7 +148,7 @@ public class CardMemoryViewModel : INotifyPropertyChanged
         var second = _flipped[1];
         _flipped.Clear();
 
-        if (first.Emoji == second.Emoji)
+        if (first.PairId == second.PairId)
         {
             first.IsMatched  = true;
             second.IsMatched = true;
@@ -183,6 +185,21 @@ public class CardMemoryViewModel : INotifyPropertyChanged
         StopTimer();
         IsGameOver = true;
         GameEnded?.Invoke(win);
+    }
+
+    /// <summary>Flips every unmatched card face up (used by Show Solution).</summary>
+    public void RevealAll()
+    {
+        foreach (var card in Cards)
+            if (!card.IsMatched)
+                card.IsFlipped = true;
+    }
+
+    /// <summary>Forces the game to end (used by Show Solution).</summary>
+    public void ForceEnd(bool win)
+    {
+        if (IsGameOver) return;
+        EndGame(win);
     }
 
     private void StopTimer() { _timer?.Dispose(); _timer = null; }

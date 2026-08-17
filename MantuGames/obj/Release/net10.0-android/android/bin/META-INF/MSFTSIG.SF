@@ -1,0 +1,73 @@
+Signature-Version: 1.0
+SHA-256-Digest-Manifest-Main-Attributes: LBh8HFg8zkun9cR1ZwUsqxtVQSESq
+ FeLm5n1xzAV42k=
+SHA-256-Digest-Manifest: eFo0vWqLUHii/D8Ml7sLHZMzstkkUBHkc51AzNc6CbI=
+Created-By: 1.8.0_112 (Oracle Corporation)
+
+Name: mono_android_Runtime.h
+SHA-256-Digest: FLzDjrhLFRihHE8aBJDhhCLw01o9MTGOqBg1O8YOH+Y=
+
+Name: net/dot/jni/GCUserPeerable.class
+SHA-256-Digest: dgRfinzqncS9C0KJXDjEWty7uJHgX1hf+EJhbiixem8=
+
+Name: net_dot_jni_ManagedPeer.h
+SHA-256-Digest: 29RMUrbrTv3hyhP9YMM+Z7s4IawwYTCJ9MPe5ilmGuc=
+
+Name: mono/android/app/NotifyTimeZoneChanges.class
+SHA-256-Digest: qh0ILAcVuZm/XmHJqEOGRJ55qPGnVdgZ4QIumsI/nOM=
+
+Name: net_dot_jni_internal_JavaProxyObject.h
+SHA-256-Digest: cquyVH1lBuZhEkm5Uh+c72Pkjo5SOYUAq9bDlKD5pYs=
+
+Name: mono/android/XamarinUncaughtExceptionHandler.class
+SHA-256-Digest: TtUjOgXeA2bIQz2AvEJLO37d7wgHXhc3EgxPwcs0Ioc=
+
+Name: mono/android/BuildConfig.class
+SHA-256-Digest: 6+jWU7pS89Ib4yC8R1t+u0SKefckTqlJzOBTGrh3aOs=
+
+Name: mono_android_DebugRuntime.h
+SHA-256-Digest: U7/15jmBvsPb9jll0KZhDlULBIZTP0hZGctOilxaXs8=
+
+Name: mono/android/GCUserPeer.class
+SHA-256-Digest: U0YKczq1uFEtqwWW9p2UOanGUcamRVKbfmoo+MGFT98=
+
+Name: mono/android/MultiDexLoader.class
+SHA-256-Digest: dlkC2Sd/KrjLDhnAeP97pFGm8aY7PaA5tjzAnP3Suho=
+
+Name: mono/MonoPackageManager.class
+SHA-256-Digest: JcuRqE9NUPqxGhyJXLUBlk3tPep0U4FsS+Ze+4voj4k=
+
+Name: mono/android/DebugRuntime.class
+SHA-256-Digest: PfOpObWMZEmtrXUsUdFJNtju7XzkPdZvDhbIjGAyIcY=
+
+Name: mono/android/app/DumpTimingData.class
+SHA-256-Digest: 4dRTVPgfB7egqs4hdwm3NupmcuOoPrX0DO6I+iq4xOg=
+
+Name: net/dot/jni/internal/JavaProxyThrowable.class
+SHA-256-Digest: 3997X4hhuXM493k6Tc4gf8w50NiM21lQvzmRR8rI7Dw=
+
+Name: mono/android/Runtime.class
+SHA-256-Digest: Mo9aXbSPA8HBKw8TZP6A7bp1+pR1/RuX5di/9oLwIeU=
+
+Name: mono/android/incrementaldeployment/IncrementalClassLoader.class
+SHA-256-Digest: coLQf/Lb/sR7xIpH0zy0uN4T3Gcl+BcaKKqnaTwEJwA=
+
+Name: mono/android/incrementaldeployment/IncrementalClassLoader$Delega
+ teClassLoader.class
+SHA-256-Digest: drZl+W75CtctFpbHzVd7WI1OAo2DmnwLaJlkngEpOHE=
+
+Name: mono/android/incrementaldeployment/Placeholder.class
+SHA-256-Digest: p3wJxaCvvfPDQ9XtQHa64ziH5LSiW8GqroA76YPrEBc=
+
+Name: net/dot/jni/ManagedPeer.class
+SHA-256-Digest: q4Qek9N83eRxKhie20t9vvHqlMZasi93b+dR5fUZckY=
+
+Name: mono/android/IGCUserPeer.class
+SHA-256-Digest: rMVZ8z1cqsLlHKH/JEAOYf+upUutJ3ePBTsZtACTdqk=
+
+Name: net/dot/jni/internal/JavaProxyObject.class
+SHA-256-Digest: Ueh534rUTBj+Sha41Tjg/LIKPa585JG1P12RIMwgcCs=
+
+Name: mono/android/app/IntentService.class
+SHA-256-Digest: qLY5OBWy8O4U1KHEX2TJE1E4cQmCDkDnVCEg+BVE0zc=
+

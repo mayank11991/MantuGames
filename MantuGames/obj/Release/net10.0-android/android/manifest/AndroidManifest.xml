@@ -5,12 +5,13 @@
     Changes to this file may cause incorrect behavior and will be lost if
     the contents are regenerated.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.mantugames.app" android:versionCode="2" android:versionName="1.0.1">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.mantugames.app" android:versionCode="3" android:versionName="1.0.2">
   <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="36" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+  <uses-permission android:name="com.android.vending.BILLING" />
   <permission android:name="com.mantugames.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="signature" />
   <uses-permission android:name="com.mantugames.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -48,7 +49,7 @@
     </intent>
     <!-- End of MRAID capabilities -->
   </queries>
-  <application android:name="crc6490a491547de00fc7.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:extractNativeLibs="true" android:icon="@mipmap/appicon" android:label="MantuGames" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" tools:replace="android:name">
+  <application android:name="crc6490a491547de00fc7.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:dataExtractionRules="@xml/data_extraction_rules" android:extractNativeLibs="true" android:fullBackupContent="@xml/backup_rules" android:icon="@mipmap/appicon" android:label="Mantu Games" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" tools:replace="android:name">
     <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-7489032711560079~7098519092" />
     <uses-library android:name="org.apache.http.legacy" android:required="false" />
     <activity android:name="crc6468b6408a11370c2f.WebAuthenticatorIntermediateActivity" android:configChanges="orientation|screenSize" android:exported="false" />
@@ -60,13 +61,23 @@
     <receiver android:name="crc640a8d9a12ddbf2cf2.BatteryBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Battery Broadcast Receiver" />
     <receiver android:name="crc640a8d9a12ddbf2cf2.EnergySaverBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Energy Saver Broadcast Receiver" />
     <service android:name="crc64396a3fe5f8138e3f.KeepAliveService" />
-    <activity android:name="crc6490a491547de00fc7.MainActivity" android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:exported="true" android:launchMode="singleTop" android:theme="@style/Maui.SplashTheme">
+    <receiver android:name="crc64a0e0a82d0db9a07d.BatteryBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Battery Broadcast Receiver" />
+    <receiver android:name="crc64a0e0a82d0db9a07d.EnergySaverBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Energy Saver Broadcast Receiver" />
+    <receiver android:name="crc64a0e0a82d0db9a07d.ConnectivityBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Connectivity Broadcast Receiver" />
+    <activity android:name="crc64a0e0a82d0db9a07d.IntermediateActivity" android:configChanges="orientation|screenSize" />
+    <provider android:name="xamarin.essentials.fileProvider" android:authorities="com.mantugames.app.fileProvider" android:exported="false" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/xamarin_essentials_fileprovider_file_paths" />
+    </provider>
+    <activity android:name="crc64a0e0a82d0db9a07d.WebAuthenticatorIntermediateActivity" android:configChanges="orientation|screenSize" />
+    <activity android:name="crc6490a491547de00fc7.MainActivity" android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:exported="true" android:launchMode="singleTop" android:screenOrientation="portrait" android:theme="@style/Maui.SplashTheme">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
     <provider android:name="mono.MonoRuntimeProvider" android:authorities="com.mantugames.app.mono.MonoRuntimeProvider.__mono_init__" android:exported="false" android:initOrder="1999999999" />
+    <meta-data android:name="com.google.android.play.billingclient.version" android:value="4.0.0" />
+    <activity android:name="com.android.billingclient.api.ProxyBillingActivity" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:exported="false" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     <provider android:name="androidx.startup.InitializationProvider" android:authorities="com.mantugames.app.androidx-startup" android:exported="false" tools:node="merge">
       <meta-data android:name="androidx.profileinstaller.ProfileInstallerInitializer" android:value="androidx.startup" />
       <meta-data android:name="androidx.work.WorkManagerInitializer" android:value="androidx.startup" />

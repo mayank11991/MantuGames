@@ -9,26 +9,26 @@ namespace MantuGames.Views;
 // ── Drawable ────────────────────────────────────────────────────────────────
 internal sealed class MazeDrawable : IDrawable
 {
-    public MazePuzzle? Maze      { get; set; }
-    public float       PlayerRow { get; set; }   // float for smooth animation
-    public float       PlayerCol { get; set; }
+    public MazePuzzle? Maze { get; set; }
+    public float PlayerRow { get; set; } // float for smooth animation
+    public float PlayerCol { get; set; }
     public HashSet<(int r, int c)> Trail { get; } = new();
-    public float       PlayerBob  { get; set; }  // subtle up-down oscillation
+    public float PlayerBob { get; set; } // subtle up-down oscillation
 
     public float CellSize { get; private set; }
-    public float OffsetX  { get; private set; }
-    public float OffsetY  { get; private set; }
+    public float OffsetX { get; private set; }
+    public float OffsetY { get; private set; }
 
     // Colors (amber/orange palette)
-    private static readonly Color WallColor  = Color.FromArgb("#E65100");
-    private static readonly Color FloorColor = ThemeHelper.IsDarkMode? Color.FromArgb("#1F1E1E"): Color.FromArgb("#FFF3E0");
+    private static readonly Color WallColor = Color.FromArgb("#E65100");
+    private static readonly Color FloorColor = Color.FromArgb("#0F1420");
     private static readonly Color TrailColor = Color.FromArgb("#FFB74D");
-    private static readonly Color ExitBg     = Color.FromArgb("#FF8F00");
+    private static readonly Color ExitBg = Color.FromArgb("#FF8F00");
 
     public void Draw(ICanvas canvas, RectF bounds)
     {
         if (Maze == null) return;
-       
+
         var (ox, oy, cs) = Layout(bounds);
 
         // ── Floor cells (rounded) ───────────────────────────────────
@@ -52,8 +52,8 @@ internal sealed class MazeDrawable : IDrawable
 
         // ── Walls ───────────────────────────────────────────────────
         float wt = Math.Max(3f, cs * 0.10f);
-        canvas.StrokeColor   = WallColor;
-        canvas.StrokeSize    = wt;
+        canvas.StrokeColor = WallColor;
+        canvas.StrokeSize = wt;
         canvas.StrokeLineCap = LineCap.Round;
 
         for (int r = 0; r < Maze.Rows; r++)
@@ -61,10 +61,10 @@ internal sealed class MazeDrawable : IDrawable
         {
             float x = ox + c * cs, y = oy + r * cs;
             var cell = Maze.Cells[r, c];
-            if (cell.WallTop)    canvas.DrawLine(x,      y,      x + cs, y);
-            if (cell.WallRight)  canvas.DrawLine(x + cs, y,      x + cs, y + cs);
-            if (cell.WallBottom) canvas.DrawLine(x,      y + cs, x + cs, y + cs);
-            if (cell.WallLeft)   canvas.DrawLine(x,      y,      x,      y + cs);
+            if (cell.WallTop) canvas.DrawLine(x, y, x + cs, y);
+            if (cell.WallRight) canvas.DrawLine(x + cs, y, x + cs, y + cs);
+            if (cell.WallBottom) canvas.DrawLine(x, y + cs, x + cs, y + cs);
+            if (cell.WallLeft) canvas.DrawLine(x, y, x, y + cs);
         }
 
         // ── Player highlight (image rendered on overlay) ─────────────
@@ -81,8 +81,8 @@ internal sealed class MazeDrawable : IDrawable
     {
         if (Maze == null) return (0, 0, 0);
         CellSize = Math.Min(bounds.Width / Maze.Cols, bounds.Height / Maze.Rows);
-        OffsetX  = (bounds.Width  - CellSize * Maze.Cols) / 2f;
-        OffsetY  = (bounds.Height - CellSize * Maze.Rows) / 2f;
+        OffsetX = (bounds.Width - CellSize * Maze.Cols) / 2f;
+        OffsetY = (bounds.Height - CellSize * Maze.Rows) / 2f;
         return (OffsetX, OffsetY, CellSize);
     }
 }
@@ -93,19 +93,19 @@ public partial class MazeRunnerPage : ContentPage
 {
     private int _level = 1;
 
-    private MazePuzzle?       _maze;
-    private MazeDrawable      _drawable = new();
-    private int               _playerRow;
-    private int               _playerCol;
-    private int               _moves;
-    private bool              _isMoving;
-    private bool              _gameEnded;
-    private int               _totalSec;
-    private int               _remainSec;
+    private MazePuzzle? _maze;
+    private MazeDrawable _drawable = new();
+    private int _playerRow;
+    private int _playerCol;
+    private int _moves;
+    private bool _isMoving;
+    private bool _gameEnded;
+    private int _totalSec;
+    private int _remainSec;
     private IDispatcherTimer? _gameTimer;
     private IDispatcherTimer? _animTimer;
-    private DateTime          _startTime;
-    private float             _bobPhase;
+    private DateTime _startTime;
+    private float _bobPhase;
 
     public string Level
     {
@@ -142,21 +142,24 @@ public partial class MazeRunnerPage : ContentPage
     // ── Level init ──────────────────────────────────────────────────────────
     private void StartLevel()
     {
-        _maze       = MazePuzzle.ForLevel(_level);
-        _playerRow  = 0;
-        _playerCol  = 0;
-        _moves      = 0;
-        _gameEnded  = false;
-        _totalSec   = ProgressService.GetTimerSeconds(_level);
-        _remainSec  = _totalSec;
-        _startTime  = DateTime.Now;
+        _maze = MazePuzzle.ForLevel(_level);
+        _playerRow = 0;
+        _playerCol = 0;
+        _moves = 0;
+        _gameEnded = false;
+        _totalSec = ProgressService.GetTimerSeconds(_level);
+        _remainSec = _totalSec;
+        _startTime = DateTime.Now;
+
+        if (SolutionButton != null)
+            SolutionButton.IsEnabled = true;
 
         LevelLabel.Text = $"Level {_level}  ({_maze.Rows}×{_maze.Cols})";
         MovesLabel.Text = "Moves: 0";
 
         _drawable = new MazeDrawable
         {
-            Maze      = _maze,
+            Maze = _maze,
             PlayerRow = 0f,
             PlayerCol = 0f,
         };
@@ -183,22 +186,110 @@ public partial class MazeRunnerPage : ContentPage
         _animTimer?.Start();
     }
 
-    private void OnRulesClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object sender, EventArgs e)
     {
-        RulesPopup.Show(GameRules.GetRules("mazerunner"));
+        if (_maze == null || _gameEnded) return;
+
+        if (CoinService.GetCoins("mazerunner") < CoinService.SolutionCost)
+        {
+            CoinShopPopup.ShowForGame("mazerunner");
+            return;
+        }
+
+        CoinService.SpendCoins("mazerunner", CoinService.SolutionCost);
+
+        SolutionButton.IsEnabled = false;
+        _ = RevealPathAsync();
+    }
+
+    // Shortest path (BFS) from start to exit, then auto-walk the player along it.
+    private async Task RevealPathAsync()
+    {
+        try
+        {
+            var path = SolvePath();
+            if (path == null || path.Count == 0) return;
+
+            _drawable.Trail.Clear();
+            foreach (var step in path)
+                _drawable.Trail.Add(step);
+            for (int i = 0; i < path.Count; i++)
+            {
+                _drawable.PlayerRow = path[i].r;
+                _drawable.PlayerCol = path[i].c;
+                UpdatePlayerImagePosition();
+                MazeCanvas.Invalidate();
+                await Task.Delay(90);
+                if (_gameEnded) return;
+            }
+
+            await Task.Delay(400);
+            if (!_gameEnded)
+                EndGame(win: false);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in RevealPathAsync: {ex.Message}");
+        }
+    }
+
+    private List<(int r, int c)>? SolvePath()
+    {
+        if (_maze == null) return null;
+
+        var prev = new Dictionary<(int r, int c), (int r, int c)>();
+        var queue = new Queue<(int r, int c)>();
+        prev[((0, 0))] = ((-1, -1));
+        queue.Enqueue(((0, 0)));
+
+        (int, int)[] dirs = { (-1, 0), (0, 1), (1, 0), (0, -1) };
+
+        while (queue.Count > 0)
+        {
+            var (r, c) = queue.Dequeue();
+            if ((r, c) == _maze.End) break;
+
+            foreach (var (dr, dc) in dirs)
+            {
+                int nr = r + dr, nc = c + dc;
+                if (nr < 0 || nr >= _maze.Rows || nc < 0 || nc >= _maze.Cols) continue;
+                if (prev.ContainsKey(((nr, nc)))) continue;
+
+                if (dr == -1 && _maze.Cells[r, c].WallTop) continue;
+                if (dr == 1 && _maze.Cells[r, c].WallBottom) continue;
+                if (dc == -1 && _maze.Cells[r, c].WallLeft) continue;
+                if (dc == 1 && _maze.Cells[r, c].WallRight) continue;
+
+                prev[((nr, nc))] = ((r, c));
+                queue.Enqueue(((nr, nc)));
+            }
+        }
+
+        if (!prev.ContainsKey(_maze.End)) return null;
+
+        var path = new List<(int r, int c)>();
+        var cur = _maze.End;
+        while (cur != ((-1, -1)))
+        {
+            path.Add(cur);
+            cur = prev[cur];
+        }
+
+        path.Reverse();
+        return path;
     }
 
     // ── Timers ──────────────────────────────────────────────────────────────
     private void StartTimers()
     {
-        _gameTimer          = Dispatcher.CreateTimer();
+        _gameTimer = Dispatcher.CreateTimer();
         _gameTimer.Interval = TimeSpan.FromSeconds(1);
-        _gameTimer.Tick    += OnGameTick;
+        _gameTimer.Tick += OnGameTick;
         _gameTimer.Start();
 
-        _animTimer          = Dispatcher.CreateTimer();
+        _animTimer = Dispatcher.CreateTimer();
         _animTimer.Interval = TimeSpan.FromMilliseconds(16);
-        _animTimer.Tick    += OnAnimTick;
+        _animTimer.Tick += OnAnimTick;
         _animTimer.Start();
     }
 
@@ -220,8 +311,8 @@ public partial class MazeRunnerPage : ContentPage
 
     private void OnAnimTick(object? s, EventArgs e)
     {
-        _bobPhase            += 0.07f;
-        _drawable.PlayerBob   = MathF.Sin(_bobPhase) * 2.5f;
+        _bobPhase += 0.07f;
+        _drawable.PlayerBob = MathF.Sin(_bobPhase) * 2.5f;
         MazeCanvas.Invalidate();
         UpdatePlayerImagePosition();
     }
@@ -238,28 +329,62 @@ public partial class MazeRunnerPage : ContentPage
         float py = oy + _drawable.PlayerRow * cs + cs / 2f + _drawable.PlayerBob;
 
         float imgHalf = cs * 0.38f;
-        PlayerImage.WidthRequest  = cs * 0.76f;
+        PlayerImage.WidthRequest = cs * 0.76f;
         PlayerImage.HeightRequest = cs * 0.76f;
-        PlayerImage.TranslationX  = px - imgHalf;
-        PlayerImage.TranslationY  = py - imgHalf;
+        PlayerImage.TranslationX = px - imgHalf;
+        PlayerImage.TranslationY = py - imgHalf;
 
         float dstHalf = cs * 0.44f;
         float dx = ox + (_maze.Cols - 1) * cs + cs / 2f;
         float dy = oy + (_maze.Rows - 1) * cs + cs / 2f;
-        DestinationImage.WidthRequest  = cs * 0.88f;
+        DestinationImage.WidthRequest = cs * 0.88f;
         DestinationImage.HeightRequest = cs * 0.88f;
-        DestinationImage.TranslationX  = dx - dstHalf;
-        DestinationImage.TranslationY  = dy - dstHalf;
+        DestinationImage.TranslationX = dx - dstHalf;
+        DestinationImage.TranslationY = dy - dstHalf;
     }
 
-    // ── D-pad handlers ──────────────────────────────────────────────────────
-    private void OnMoveUp   (object s, TappedEventArgs e) => _ = TryMove(-1,  0);
-    private void OnMoveDown (object s, TappedEventArgs e) => _ = TryMove( 1,  0);
-    private void OnMoveLeft (object s, TappedEventArgs e) => _ = TryMove( 0, -1);
-    private void OnMoveRight(object s, TappedEventArgs e) => _ = TryMove( 0,  1);
+    // ── Swipe pad handlers ──────────────────────────────────────────────────
+    private void OnPadPan(object s, PanUpdatedEventArgs e)
+    {
+        switch (e.StatusType)
+        {
+            case GestureStatus.Started:
+                _panTotalX = 0;
+                _panTotalY = 0;
+                break;
+            case GestureStatus.Running:
+                _panTotalX = e.TotalX;
+                _panTotalY = e.TotalY;
+
+                string dir = "";
+                double ax = Math.Abs(_panTotalX), ay = Math.Abs(_panTotalY);
+                if (Math.Max(ax, ay) > 14)
+                {
+                    if (ax > ay) dir = _panTotalX > 0 ? "RIGHT" : "LEFT";
+                    else dir = _panTotalY > 0 ? "DOWN" : "UP";
+                }
+
+                PadDirectionLabel.Text = dir;
+                break;
+            case GestureStatus.Completed:
+            case GestureStatus.Canceled:
+                PadDirectionLabel.Text = "";
+                if (_isMoving || _gameEnded || _maze == null) return;
+                double dx = _panTotalX;
+                double dy = _panTotalY;
+                if (Math.Abs(dx) < 20 && Math.Abs(dy) < 20) return;
+
+                int dr = 0, dc = 0;
+                if (Math.Abs(dx) >= Math.Abs(dy)) dc = dx > 0 ? 1 : -1;
+                else dr = dy > 0 ? 1 : -1;
+                _ = TryMove(dr, dc);
+                break;
+        }
+    }
 
     // ── Pan handler (distance-proportional movement) ───────────────────────
     private double _panTotalX, _panTotalY;
+
     private void OnPanMaze(object s, PanUpdatedEventArgs e)
     {
         switch (e.StatusType)
@@ -292,6 +417,7 @@ public partial class MazeRunnerPage : ContentPage
                     cells = (int)(Math.Abs(dy) / cs);
                     dr = dy > 0 ? 1 : -1;
                 }
+
                 cells = Math.Max(1, Math.Min(cells, 10));
                 _ = TryMoveMultiple(dr, dc, cells);
                 break;
@@ -323,9 +449,9 @@ public partial class MazeRunnerPage : ContentPage
 
         var cell = _maze.Cells[_playerRow, _playerCol];
         bool canMove = (dr == -1 && !cell.WallTop)
-                    || (dr ==  1 && !cell.WallBottom)
-                    || (dc == -1 && !cell.WallLeft)
-                    || (dc ==  1 && !cell.WallRight);
+                       || (dr == 1 && !cell.WallBottom)
+                       || (dc == -1 && !cell.WallLeft)
+                       || (dc == 1 && !cell.WallRight);
 
         if (!canMove)
         {
@@ -333,7 +459,7 @@ public partial class MazeRunnerPage : ContentPage
             _isMoving = true;
             AudioService.Instance.Play("bump");
             await MazeCanvas.TranslateTo(dc * 6, dr * 6, 60, Easing.CubicOut);
-            await MazeCanvas.TranslateTo(0,       0,     80, Easing.SpringOut);
+            await MazeCanvas.TranslateTo(0, 0, 80, Easing.SpringOut);
             _isMoving = false;
             return;
         }
@@ -384,11 +510,11 @@ public partial class MazeRunnerPage : ContentPage
         StopTimers();
 
         int elapsed = (int)(DateTime.Now - _startTime).TotalSeconds;
-        int stars   = ProgressService.CalcStars(elapsed, _totalSec);
-        int pts     = ProgressService.CalcPoints(stars, elapsed, _totalSec);
+        int stars = ProgressService.CalcStars(elapsed, _totalSec);
+        int pts = ProgressService.CalcPoints(stars, elapsed, _totalSec);
 
         await DoWinAnimation();
-        await Task.Delay(600);
+        await Task.Delay(100);
         _ = ResultPopup.Show(true, _level, elapsed, _totalSec, stars, pts, gameId: "mazerunner");
     }
 
@@ -396,16 +522,16 @@ public partial class MazeRunnerPage : ContentPage
     {
         try
         {
+            await Task.WhenAll(
+                DestinationImage.FadeTo(0, 350, Easing.CubicIn),
+                DestinationImage.ScaleTo(0.2, 350, Easing.CubicIn)
+            );
             for (int i = 0; i < 3; i++)
             {
                 await MazeCanvas.ScaleTo(1.06, 100, Easing.SpringOut);
                 await MazeCanvas.ScaleTo(1.00, 80, Easing.SpringIn);
             }
 
-            await Task.WhenAll(
-                DestinationImage.FadeTo(0, 350, Easing.CubicIn),
-                DestinationImage.ScaleTo(0.2, 350, Easing.CubicIn)
-            );
 
             CreateSparkles();
 
@@ -416,6 +542,7 @@ public partial class MazeRunnerPage : ContentPage
                 await PlayerImage.ScaleTo(1.5, 130, Easing.SpringOut);
                 await PlayerImage.ScaleTo(0.8, 130, Easing.SpringIn);
             }
+
             await PlayerImage.ScaleTo(1.0, 100, Easing.SpringOut);
         }
         catch (Exception ex)
@@ -428,7 +555,6 @@ public partial class MazeRunnerPage : ContentPage
     {
         try
         {
-            string[] icons = { "✨", "⭐", "🌟", "💫" };
             int count = 12;
             float px = (float)(PlayerImage.TranslationX + PlayerImage.WidthRequest / 2.0);
             float py = (float)(PlayerImage.TranslationY + PlayerImage.HeightRequest / 2.0);
@@ -436,14 +562,16 @@ public partial class MazeRunnerPage : ContentPage
 
             for (int i = 0; i < count; i++)
             {
-                var sparkle = new Label
+                var sparkle = new Image
                 {
-                    Text = icons[i % icons.Length],
-                    FontSize = 14 + i * 2,
+                    Source = "star_kawaii_filled.svg",
+                    WidthRequest = 16 + i * 2,
+                    HeightRequest = 16 + i * 2,
                     Opacity = 0,
                     InputTransparent = true,
                     HorizontalOptions = LayoutOptions.Start,
-                    VerticalOptions = LayoutOptions.Start
+                    VerticalOptions = LayoutOptions.Start,
+                    Rotation = rng.Next(0, 360)
                 };
 
                 double rx = rng.NextDouble() * 80 - 40;
@@ -470,7 +598,9 @@ public partial class MazeRunnerPage : ContentPage
                 });
             }
         }
-        catch { }
+        catch
+        {
+        }
     }
 
     private void EndGame(bool win)
@@ -484,11 +614,8 @@ public partial class MazeRunnerPage : ContentPage
     // ── UI helpers ──────────────────────────────────────────────────────────
     private void UpdateTimerUI()
     {
-        TimerLabel.Text   = $"⏱ {_remainSec / 60}:{_remainSec % 60:D2}";
-        TimerBar.Progress = (double)_remainSec / _totalSec;
-        TimerLabel.TextColor = _remainSec <= 15
-            ? Color.FromArgb("#FF5252")
-            : Colors.White;
+        MazeTimer.TotalSeconds = _totalSec;
+        MazeTimer.SecondsRemaining = _remainSec;
     }
 
     // ── Navigation ──────────────────────────────────────────────────────────
@@ -504,7 +631,8 @@ public partial class MazeRunnerPage : ContentPage
     {
         try
         {
-            bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave", "Stay");
+            bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave",
+                "Stay");
             if (!leave) return;
             await Shell.Current.GoToAsync("..");
         }

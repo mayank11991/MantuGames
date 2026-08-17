@@ -7,7 +7,7 @@
     Shell.NavBarIsVisible="False"
     >
     <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#FBF4ED" Dark="#1F1B1B" />
+        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
     </ContentPage.BackgroundColor>
 
     <AbsoluteLayout x:Name="RootLayout">
@@ -19,7 +19,7 @@
               AbsoluteLayout.LayoutBounds="0,0,1,1">
 
             <!-- Row 0: Top bar -->
-            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="6">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
                 <ImageButton Grid.Column="0"
                              Source="icon_back_round.svg"
                              Padding="0" HeightRequest="48" WidthRequest="48"
@@ -27,34 +27,14 @@
                              Clicked="OnBackClicked"
                              VerticalOptions="Center" />
                 <Frame Grid.Column="1"
-                       BackgroundColor="#C4A4D4" CornerRadius="20"
+                       BackgroundColor="#182136" CornerRadius="20"
                        Padding="12,6" HasShadow="False"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label x:Name="LevelLabel" Text="Level 1"
-                           FontSize="16" FontFamily="BrickSans" FontAttributes="Bold"
-                           TextColor="White" HorizontalOptions="Center" />
+                           FontSize="16" FontFamily="Orbitron" FontAttributes="Bold"
+                           TextColor="#F472B6" HorizontalOptions="Center" />
                 </Frame>
-                <Border Grid.Column="2"
-                        BackgroundColor="#33000000"
-                        StrokeThickness="0"
-                        VerticalOptions="Center">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <Label x:Name="TimerLabel"
-                           Text="⏱ 1:20"
-                           FontFamily="BrickSans"
-                           FontSize="13"
-                           TextColor="White"
-                           Padding="12,6" />
-                </Border>
-                <ImageButton Grid.Column="3" Source="information.png"
-                             HeightRequest="24" WidthRequest="24"
-                             BackgroundColor="Transparent" Padding="0"
-                             Margin="0,0,4,0"
-                             Clicked="OnRulesClicked"
-                             VerticalOptions="Center" />
-                <ImageButton Grid.Column="4" Source="pause.png"
+                <ImageButton Grid.Column="2" Source="pause.svg"
                              HeightRequest="24" WidthRequest="24"
                              BackgroundColor="Transparent" Padding="0"
                              Margin="4,0"
@@ -62,27 +42,11 @@
                              VerticalOptions="Center" />
             </Grid>
 
-            <!-- Row 1: Animal reference -->
-            <Border Grid.Row="1"
-                   
-                    StrokeThickness="0"
-                    Padding="12,8"
-                    HorizontalOptions="Center"
-                    Margin="8,2">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="18" />
-                </Border.StrokeShape>
-                <ProgressBar 
-                             x:Name="TimerBar"
-                             Progress="1"
-                             ProgressColor="#C4A4D4"
-                             Margin="14,0,14,4" />
-            </Border>
+            <!-- Row 1: Timer -->
+            <controls:GameTimerView x:Name="PuzzleTimer" Grid.Row="1" />
 
-            <!-- Row 2: Timer progress bar -->
-
-            <!-- Row 3: Puzzle grid -->
-            <ScrollView Grid.Row="3" Orientation="Vertical" VerticalScrollBarVisibility="Never">
+            <!-- Row 2: Puzzle grid -->
+            <ScrollView Grid.Row="2" Orientation="Vertical" VerticalScrollBarVisibility="Never">
                 <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
                     <Border 
                             StrokeThickness="0"
@@ -99,16 +63,16 @@
                     <!-- Status label between grid and tray -->
                     <Label x:Name="StatusLabel"
                            Text="Drag a piece to its spot!" HorizontalOptions="Center" HorizontalTextAlignment="Center"
-                           FontFamily="BrickSans"
+                           FontFamily="Inter"
                            FontSize="13"
                            FontAttributes="Bold"
-                           TextColor="#C4A4D4"/>
+                           TextColor="#F472B6"/>
                 </VerticalStackLayout>
             </ScrollView>
 
-            <!-- Row 4: Piece tray -->
-            <Border Grid.Row="4"
-                     
+            <!-- Row 3: Piece tray -->
+            <Border Grid.Row="3"
+                    
                     StrokeThickness="0"
                     Padding="8,8"
                     Margin="8,2,8,4">
@@ -122,12 +86,12 @@
                 </ScrollView>
             </Border>
 
-            <!-- Row 5: Solution button -->
-            <Button Grid.Row="5"
+            <!-- Row 4: Solution button -->
+            <Button Grid.Row="4"
                     x:Name="SolutionButton"
-                    Text="💡 Show Solution"
+                    Text="Show Solution"
                     FontSize="13" FontAttributes="Bold"
-                    TextColor="White" BackgroundColor="#7C4DFF"
+                    TextColor="#160D02" BackgroundColor="#FF9F1C"
                     CornerRadius="20" HeightRequest="40"
                     Margin="50,0,50,4"
                     Clicked="OnShowSolution" />
@@ -148,7 +112,7 @@
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 
-        <controls:RulesPopup x:Name="RulesPopup" IsVisible="False"
+        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False"
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 
