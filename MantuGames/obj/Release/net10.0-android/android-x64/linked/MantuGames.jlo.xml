@@ -12,7 +12,7 @@
     <type name="MainApplication" package="crc6490a491547de00fc7" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="crc6488302ad6e9e4df1a.MauiApplication" is_application="True" partial_assembly_qualified_name="MantuGames.MainApplication, MantuGames" application_constructor="MainApplication" />
   </jcw-types>
   <acw-types partial-assembly-name="MantuGames" module-name="MantuGames.dll">
-    <type assembly-qualified-name="MantuGames.MainActivity, MantuGames, Version=1.0.2.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mantugames.MainActivity" java-key="crc6490a491547de00fc7.MainActivity" managed-key="MantuGames.MainActivity" partial-assembly-qualified-name="MantuGames.MainActivity, MantuGames" />
-    <type assembly-qualified-name="MantuGames.MainApplication, MantuGames, Version=1.0.2.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mantugames.MainApplication" java-key="crc6490a491547de00fc7.MainApplication" managed-key="MantuGames.MainApplication" partial-assembly-qualified-name="MantuGames.MainApplication, MantuGames" />
+    <type assembly-qualified-name="MantuGames.MainActivity, MantuGames, Version=1.0.5.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mantugames.MainActivity" java-key="crc6490a491547de00fc7.MainActivity" managed-key="MantuGames.MainActivity" partial-assembly-qualified-name="MantuGames.MainActivity, MantuGames" />
+    <type assembly-qualified-name="MantuGames.MainApplication, MantuGames, Version=1.0.5.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="mantugames.MainApplication" java-key="crc6490a491547de00fc7.MainApplication" managed-key="MantuGames.MainApplication" partial-assembly-qualified-name="MantuGames.MainApplication, MantuGames" />
   </acw-types>
 </api>

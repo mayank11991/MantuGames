@@ -688,15 +688,15 @@ target triple = "aarch64-unknown-linux-android21"
 		i32 13680520; uint32_t buffer_offset
 	}, ; 134: Mono.Android.Runtime
 	%struct.CompressedAssemblyDescriptor {
-		i32 2281984, ; uint32_t uncompressed_file_size
+		i32 2282496, ; uint32_t uncompressed_file_size
 		i1 false, ; bool loaded
 		i32 13702888; uint32_t buffer_offset
 	} ; 135: Mono.Android
 ], align 4
 
-@uncompressed_assemblies_data_size = dso_local local_unnamed_addr constant i32 15984872, align 4
+@uncompressed_assemblies_data_size = dso_local local_unnamed_addr constant i32 15985384, align 4
 
-@uncompressed_assemblies_data_buffer = dso_local local_unnamed_addr global [15984872 x i8] zeroinitializer, align 1
+@uncompressed_assemblies_data_buffer = dso_local local_unnamed_addr global [15985384 x i8] zeroinitializer, align 1
 
 ; Metadata
 !llvm.module.flags = !{!0, !1, !7, !8, !9, !10}

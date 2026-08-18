@@ -4,7 +4,7 @@ public static class ThemeHelper
 {
     public static bool IsDarkMode
     {
-        get => Preferences.Get("dark_mode", false);
+        get => Preferences.Get("dark_mode", true);
         set
         {
             Preferences.Set("dark_mode", value);

@@ -3141,3 +3141,4 @@
 /Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/resizetizer/r/drawable/hammer.png
 /Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/resizetizer/r/drawable/rocket.png
 /Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/resizetizer/r/drawable/bomb.png
+/Users/mayankshrivastava/RiderProjects/MantuGames/MantuGames/obj/Debug/net10.0-android/res/values/styles.xml

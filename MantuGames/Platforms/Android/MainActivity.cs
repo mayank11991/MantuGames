@@ -13,14 +13,11 @@ public class MainActivity : MauiAppCompatActivity
 {
     protected override void OnCreate(Bundle savedInstanceState)
     {
-        base.OnCreate(savedInstanceState);
+        // Opt in to edge-to-edge before the base theme is applied
+        // (fixes Play Console edge-to-edge warnings; see styles.xml).
+        SetTheme(Resource.Style.MainThemeEdgeToEdge);
 
-        // Dark system bars matching the app theme
-        if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-        {
-            Window.SetStatusBarColor(Android.Graphics.Color.ParseColor("#0B0E14"));
-            Window.SetNavigationBarColor(Android.Graphics.Color.ParseColor("#0B0E14"));
-        }
+        base.OnCreate(savedInstanceState);
 
         CrossMauiMTAdmob.Current.Init(
             activity: this,

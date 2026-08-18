@@ -49,7 +49,7 @@
                      HorizontalOptions="Center"
                      VerticalOptions="Center"
                      Spacing="2"
-                     Margin="0,10,0,4">
+                     Margin="20,10,20,4">
             <Label x:Name="GameTitleLabel"
                    FontFamily="Inter"
                    FontSize="14"

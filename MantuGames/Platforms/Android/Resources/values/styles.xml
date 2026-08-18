@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Opt in to edge-to-edge (Android 15+ / API 35+).
+        MAUI defaults to opting OUT (maui_edgetoedge_optout=true), which makes
+        Play Console flag: "Edge-to-edge may not display for all users" and
+        "Your app uses deprecated APIs or parameters for edge-to-edge".
+        See dotnet/maui PR #25517 for the official opt-in pattern.
+    -->
+    <style name="MainThemeEdgeToEdge" parent="Maui.MainTheme.NoActionBar">
+        <item name="maui_edgetoedge_optout">false</item>
+        <!-- Dark system bars matching the app palette. On API 35+ these are
+             transparent and the dark window background shows through. -->
+        <item name="android:windowBackground">@color/statusBarColor</item>
+        <item name="android:statusBarColor">@color/statusBarColor</item>
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

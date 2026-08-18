@@ -1,5 +1,5 @@
-<api type="release" assembly-name="MantuGames" mvid="5f370334749f41d18702d9b1a6eee391">
-  <module assembly-name="MantuGames" mvid="5f370334749f41d18702d9b1a6eee391" mvid-bytes="NAM3X5900UGHAtmxpu7jkQ==">
+<api type="release" assembly-name="MantuGames" mvid="a2112dcb9af54616bbd0e69e319314c9">
+  <module assembly-name="MantuGames" mvid="a2112dcb9af54616bbd0e69e319314c9" mvid-bytes="yy0RovWaFka70OaeMZMUyQ==">
     <types-scratch>
       <entry key="crc6490a491547de00fc7/MainActivity" java-name="crc6490a491547de00fc7/MainActivity" managed-type-name="MantuGames.MainActivity" token="33554439" />
       <entry key="crc6490a491547de00fc7/MainApplication" java-name="crc6490a491547de00fc7/MainApplication" managed-type-name="MantuGames.MainApplication" token="33554440" />

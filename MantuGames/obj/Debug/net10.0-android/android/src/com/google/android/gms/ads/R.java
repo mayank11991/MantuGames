@@ -19,7 +19,7 @@ public final class R {
 		public static final int admob_empty_layout = 0x7f0b001c;
 	}
 	public static final class style {
-		public static final int Theme_IAPTheme = 0x7f100235;
+		public static final int Theme_IAPTheme = 0x7f100236;
 	}
 	public static final class styleable {
 		public static final int[] AdsAttrs = new int[] { 0x7f03002b, 0x7f03002c, 0x7f03002d };

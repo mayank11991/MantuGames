@@ -20,7 +20,7 @@ public class DashboardViewModel
         new GameInfo { Id = "puzzlepets",    Title = "Puzzle Pets",    ImageName = "puzzlegame.png",    CardColor = "#F472B6", Route = "puzzlepets",    Description = "Adorable pet puzzles that grow with you through every level." },
         new GameInfo { Id = "blockpuzzle",   Title = "Block Puzzle",   ImageName = "tetris.png",        CardColor = "#F97316", Route = "blockpuzzle",   Description = "Slide, stack and clear blocks in a fast-paced spatial challenge." },
         new GameInfo { Id = "mazerunner",    Title = "Maze Runner",    ImageName = "mazerunner.png",    CardColor = "#3B82F6", Route = "mazerunner",    Description = "Blaze through twisting mazes — speed, logic and precision." },
-        new GameInfo { Id = "animalcrush",   Title = "Animal Crush",   ImageName = "animalcrush.png",   CardColor = "#F43F5E", Route = "animalcrush",   Description = "Match adorable critters in a colorful, satisfying combo rush." },
+        // new GameInfo { Id = "animalcrush",   Title = "Animal Crush",   ImageName = "animalcrush.png",   CardColor = "#F43F5E", Route = "animalcrush",   Description = "Match adorable critters in a colorful, satisfying combo rush." }, // Paused: not in 8-game release
     };
 
     // Instance copy for binding
