@@ -75,7 +75,7 @@ public static class ProfileService
         {
             "sudoku", "wordfinder", "mathchallenge", "towerofhanoi",
             "cardmemory", "puzzlepets", "blockpuzzle", "mazerunner",
-            "animalcrush",
+            // "animalcrush", // Paused: not in 8-game release
         };
         bool hadProgress = false;
         foreach (var g in games)
