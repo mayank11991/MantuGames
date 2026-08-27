@@ -1,0 +1,28 @@
+# Build outputs
+MantuGames/bin/
+MantuGames/obj/
+
+# IDE
+.vs/
+.idea/
+*.swp
+*.suo
+*.user
+*.sln.docstates
+
+# Build outputs
+*.apk
+*.aab
+*.so
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rider
+.idea/
+*.sln.iml
+
+# NuGet
+packages/
+*.nupkg
