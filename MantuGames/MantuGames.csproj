@@ -26,8 +26,8 @@
         <ApplicationId>com.mantugames.app</ApplicationId>
 
         <!-- Versions -->
-        <ApplicationDisplayVersion>1.0.5</ApplicationDisplayVersion>
-        <ApplicationVersion>6</ApplicationVersion>
+        <ApplicationDisplayVersion>1.0.7</ApplicationDisplayVersion>
+        <ApplicationVersion>8</ApplicationVersion>
 
         <!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
         <WindowsPackageType>None</WindowsPackageType>
@@ -44,13 +44,15 @@
         <!-- R8 code shrinking + ProGuard keep rules for Release builds -->
         <AndroidLinkTool Condition="'$(Configuration)' == 'Release'">r8</AndroidLinkTool>
         <AndroidProguardFile>proguard.cfg</AndroidProguardFile>
+        <AndroidNativeDebugSymbols Condition="'$(Configuration)' == 'Release'">true</AndroidNativeDebugSymbols>
+        <AndroidIncludeDebugSymbols Condition="'$(Configuration)' == 'Release'">true</AndroidIncludeDebugSymbols>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     </PropertyGroup>
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.png" Resize="false" />
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" />
 
         <!-- Splash Screen -->
         <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#000000" BaseSize="128,128" />
@@ -82,7 +84,8 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
         <PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
         <PackageReference Include="Plugin.MauiMTAdmob" Version="2.4.0" />
-        <PackageReference Include="Plugin.InAppBilling" Version="5.0.1" />
+        <PackageReference Include="Plugin.InAppBilling" Version="7.0.0" />
+        <PackageReference Include="Xamarin.Android.Google.BillingClient" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>

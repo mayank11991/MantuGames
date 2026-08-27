@@ -1,30 +1,12 @@
-<svg width="456" height="456" viewBox="0 0 456 456" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 32 32" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#lg)"/>
   <defs>
-    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.75">
-      <stop offset="0" stop-color="#1A2337"/>
-      <stop offset="1" stop-color="#0B0E14"/>
-    </radialGradient>
-    <linearGradient id="mGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#22D3EE"/>
-      <stop offset="1" stop-color="#A855F7"/>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#a855f7"/>
     </linearGradient>
   </defs>
-
-  <rect width="456" height="456" fill="url(#glow)"/>
-
-  <!-- subtle grid plane -->
-  <g stroke="#22D3EE" stroke-opacity="0.07" stroke-width="2">
-    <path d="M0 114h456M0 228h456M0 342h456M114 0v456M228 0v456M342 0v456"/>
-  </g>
-
-  <!-- ring accent -->
-  <circle cx="228" cy="228" r="196" fill="none" stroke="#22D3EE" stroke-opacity="0.12" stroke-width="3"/>
-
-  <!-- sparkles -->
-  <g transform="translate(108,132) scale(0.8)">
-    <path d="M 0,-26 C 5,-8 8,-5 26,0 C 8,5 5,8 0,26 C -5,8 -8,5 -26,0 C -8,-5 -5,-8 0,-26 Z" fill="#22D3EE" opacity="0.9"/>
-  </g>
-  <g transform="translate(352,330) scale(0.65)">
-    <path d="M 0,-26 C 5,-8 8,-5 26,0 C 8,5 5,8 0,26 C -5,8 -8,5 -26,0 C -8,-5 -5,-8 0,-26 Z" fill="#A855F7" opacity="0.85"/>
-  </g>
+  <path d="M10 21.5 16 10l6 11.5h-3.2L16 16.4l-2.8 5.1H10Z" fill="#0b0e14"/>
+  <circle cx="11" cy="14" r="1.6" fill="#0b0e14"/>
+  <circle cx="21" cy="14" r="1.6" fill="#0b0e14"/>
 </svg>

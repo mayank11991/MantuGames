@@ -21,7 +21,7 @@ public partial class TowerOfHanoiPage : ContentPage
         Color.FromArgb("#42A5F5"), // size 5 largest = blue
     };
 
-    private readonly Grid[] _polePanels = new Grid[3];
+    private readonly Grid[] _polePanels = new Grid[5];
 
     // Tap-to-select state
     private int? _selectedPole = null;
@@ -71,9 +71,14 @@ public partial class TowerOfHanoiPage : ContentPage
         _selectedPole = null;
         _dragFromPole = null;
 
+        // Determine number of poles based on level
+        int poleCount = _startLevel <= 5 ? 3 : _startLevel <= 15 ? 4 : 5;
+
         BoardGrid.Children.Clear();
-        for (int p = 0; p < 3; p++)
+        BoardGrid.ColumnDefinitions.Clear();
+        for (int p = 0; p < poleCount; p++)
         {
+            BoardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
             _polePanels[p] = BuildPoleShell(p);
             Grid.SetColumn(_polePanels[p], p);
             BoardGrid.Children.Add(_polePanels[p]);
@@ -224,7 +229,8 @@ public partial class TowerOfHanoiPage : ContentPage
     // StackLayout renders top→bottom, so we add smallest first so it appears at visual top.
     private void RenderDiscs()
     {
-        for (int p = 0; p < 3; p++)
+        int poleCount = _startLevel <= 5 ? 3 : _startLevel <= 15 ? 4 : 5;
+        for (int p = 0; p < poleCount; p++)
         {
             StackLayout discStack = null;
             Border baseBar = null;

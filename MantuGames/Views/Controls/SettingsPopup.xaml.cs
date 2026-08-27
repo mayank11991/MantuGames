@@ -15,7 +15,6 @@ public partial class SettingsPopup : ContentView
         InitializeComponent();
         MusicSwitch.IsToggled = AudioService.Instance.MusicEnabled;
         SfxSwitch.IsToggled = AudioService.Instance.SfxEnabled;
-        DarkModeSwitch.IsToggled = ThemeHelper.IsDarkMode;
         VersionLabel.Text = $"Version {AppInfo.VersionString} ({AppInfo.BuildString})";
         UpdateRemoveAdsStatus();
     }
@@ -64,11 +63,6 @@ public partial class SettingsPopup : ContentView
     private void OnVibrationToggled(object sender, ToggledEventArgs e)
     {
         Preferences.Set("vibration_enabled", e.Value);
-    }
-
-    private void OnDarkModeToggled(object sender, ToggledEventArgs e)
-    {
-        ThemeHelper.IsDarkMode = e.Value;
     }
 
     private void OnOverlayTapped(object sender, TappedEventArgs e)

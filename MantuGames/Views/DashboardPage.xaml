@@ -16,6 +16,46 @@
 
     <Grid RowDefinitions="Auto,Auto,*">
 
+        <!-- Nebula background effect (similar to website) -->
+        <Grid x:Name="NebulaContainer" Grid.RowSpan="3" InputTransparent="True">
+            <Grid.Opacity>0.5</Grid.Opacity>
+            <Grid>
+                <Ellipse x:Name="Nebula1"
+                         WidthRequest="520" HeightRequest="520"
+                         HorizontalOptions="End" VerticalOptions="Start"
+                         Margin="-120,-120,0,0">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Offset="0" Color="#AA55F7" />
+                            <GradientStop Offset="0.65" Color="Transparent" />
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse x:Name="Nebula2"
+                         WidthRequest="460" HeightRequest="460"
+                         HorizontalOptions="Start" VerticalOptions="End"
+                         Margin="-160,0,0,-160">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Offset="0" Color="#22D3EE" />
+                            <GradientStop Offset="0.65" Color="Transparent" />
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse x:Name="Nebula3"
+                         WidthRequest="340" HeightRequest="340"
+                         HorizontalOptions="Center" VerticalOptions="Center"
+                         Margin="0,0,0,0">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Offset="0" Color="#FF9F1C" />
+                            <GradientStop Offset="0.65" Color="Transparent" />
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+            </Grid>
+        </Grid>
+
         <!-- ── TOP BAR ── -->
         <Grid Grid.Row="0" Padding="20,14,20,6" ColumnDefinitions="*,Auto,Auto,Auto,Auto">
             <Label x:Name="PlayerNameLabel"

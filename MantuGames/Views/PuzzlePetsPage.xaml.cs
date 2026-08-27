@@ -24,6 +24,7 @@ public partial class PuzzlePetsPage : ContentPage
     private readonly List<Border> _gridCells = new();
     private double _pieceSize;
     private int _dragPieceId = -1;
+    private int _trayCols;
 
     private static readonly Color[] PiecePalette =
     {
@@ -176,15 +177,36 @@ public partial class PuzzlePetsPage : ContentPage
         }
     }
 
-    // ── Build piece tray ───────────────────────────────────────────────────
+    // ── Build piece tray (NxN grid layout) ──────────────────────────────
     private void BuildTray()
     {
-        PieceTray.Children.Clear();
+        if (PieceTrayGrid == null) return;
+        PieceTrayGrid.Children.Clear();
+        PieceTrayGrid.RowDefinitions.Clear();
+        PieceTrayGrid.ColumnDefinitions.Clear();
 
-        foreach (int pieceId in _puzzle.TrayPieces)
+        var trayPieces = _puzzle.TrayPieces;
+        int pieceCount = trayPieces.Count;
+        if (pieceCount == 0) return;
+
+        // Calculate optimal grid dimensions (NxN or close to square)
+        _trayCols = (int)Math.Ceiling(Math.Sqrt(pieceCount));
+        int rows = (int)Math.Ceiling((double)pieceCount / _trayCols);
+
+        for (int r = 0; r < rows; r++)
+            PieceTrayGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        for (int c = 0; c < _trayCols; c++)
+            PieceTrayGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+        for (int i = 0; i < pieceCount; i++)
         {
+            int pieceId = trayPieces[i];
             var piece = CreatePieceView(pieceId);
-            PieceTray.Children.Add(piece);
+            int row = i / _trayCols;
+            int col = i % _trayCols;
+            Grid.SetRow(piece, row);
+            Grid.SetColumn(piece, col);
+            PieceTrayGrid.Children.Add(piece);
         }
     }
 
@@ -329,16 +351,34 @@ public partial class PuzzlePetsPage : ContentPage
 
     private void RebuildTray()
     {
-        PieceTray.Children.Clear();
-        foreach (int pieceId in _puzzle.TrayPieces)
-        {
-            var piece = CreatePieceView(pieceId);
-            PieceTray.Children.Add(piece);
-        }
+        if (PieceTrayGrid == null) return;
+        PieceTrayGrid.Children.Clear();
+        PieceTrayGrid.RowDefinitions.Clear();
+        PieceTrayGrid.ColumnDefinitions.Clear();
 
-        StatusLabel.Text = _puzzle.TrayPieces.Count == 0
-            ? "All pieces placed!"
-            : $"{_puzzle.TrayPieces.Count} piece{(_puzzle.TrayPieces.Count > 1 ? "s" : "")} left";
+        var trayPieces = _puzzle.TrayPieces;
+        int pieceCount = trayPieces.Count;
+        if (pieceCount == 0) return;
+
+        // Calculate optimal grid dimensions (NxN or close to square)
+        int cols = (int)Math.Ceiling(Math.Sqrt(pieceCount));
+        int rows = (int)Math.Ceiling((double)pieceCount / cols);
+
+        for (int r = 0; r < rows; r++)
+            PieceTrayGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        for (int c = 0; c < cols; c++)
+            PieceTrayGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+        for (int i = 0; i < pieceCount; i++)
+        {
+            int pieceId = trayPieces[i];
+            var piece = CreatePieceView(pieceId);
+            int row = i / cols;
+            int col = i % cols;
+            Grid.SetRow(piece, row);
+            Grid.SetColumn(piece, col);
+            PieceTrayGrid.Children.Add(piece);
+        }
     }
 
     // ── Visual helpers ────────────────────────────────────────────────────

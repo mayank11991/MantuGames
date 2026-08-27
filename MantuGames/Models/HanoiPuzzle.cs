@@ -21,41 +21,48 @@ public class HanoiPuzzle
             return p;
         }
   
-        private void Build(int level)
+private void Build(int level)
+    {
+        DiscCount = level <= 4 ? 3 : level <= 8 ? 4 : 5;
+        MoveCount = 0;
+
+        // Number of poles based on level
+        int poleCount = level <= 5 ? 3 : level <= 15 ? 4 : 5;
+
+        // Vary start and goal poles based on level and pole count
+        int[] arrangements = {
+            0, 2,  // level 1-3: pole 0 → pole 2 (3 poles)
+            1, 0,  // level 4-6: pole 1 → pole 0 (3/4 poles)
+            2, 1,  // level 7-9: pole 2 → pole 1 (3/4 poles)
+            0, 1,  // level 10-12: pole 0 → pole 1 (4 poles)
+            1, 2,  // level 13-15: pole 1 → pole 2 (4/5 poles)
+            2, 0,  // level 16-18: pole 2 → pole 0 (5 poles)
+            3, 1,  // level 19+: pole 3 → pole 1 (5 poles)
+        };
+        int idx = Math.Clamp((level - 1) / 3 * 2, 0, arrangements.Length - 2);
+        StartPole = Math.Min(arrangements[idx], 3);
+        GoalPole  = Math.Min(arrangements[idx + 1], 4);
+
+        // Randomly scatter disks across all poles while maintaining validity.
+        // Place disks largest → smallest: each subsequent disk is smaller than
+        // everything already placed, so it can safely go on any pole.
+        int maxAttempts = 20;
+        for (int attempt = 0; attempt < maxAttempts; attempt++)
         {
-            DiscCount = level <= 4 ? 3 : level <= 8 ? 4 : 5;
-            MoveCount = 0;
+            Poles = new List<Stack<int>>();
+            for (int p = 0; p < (level <= 5 ? 3 : level <= 15 ? 4 : 5); p++)
+                Poles.Add(new Stack<int>());
 
-            // Vary start and goal poles based on level
-            int[] arrangements = {
-                0, 2,  // level 1-3: pole 0 → pole 2
-                1, 0,  // level 4-6: pole 1 → pole 0
-                2, 1,  // level 7-9: pole 2 → pole 1
-                0, 1,  // level 10+: pole 0 → pole 1
-                1, 2,  // level 13-15: pole 1 → pole 2
-                2, 0,  // level 16+: pole 2 → pole 0
-            };
-            int idx = Math.Clamp((level - 1) / 3 * 2, 0, arrangements.Length - 2);
-            StartPole = arrangements[idx];
-            GoalPole  = arrangements[idx + 1];
-
-            // Randomly scatter disks across all 3 poles while maintaining validity.
-            // Place disks largest → smallest: each subsequent disk is smaller than
-            // everything already placed, so it can safely go on any pole.
-            int maxAttempts = 20;
-            for (int attempt = 0; attempt < maxAttempts; attempt++)
+            for (int d = DiscCount; d >= 1; d--)
             {
-                Poles = new List<Stack<int>> { new(), new(), new() };
-                for (int d = DiscCount; d >= 1; d--)
-                {
-                    int pole = _rng.Next(3);
-                    Poles[pole].Push(d);
-                }
-                // Ensure not already solved and at least 2 poles have disks
-                if (!IsSolved() && Poles.Count(p => p.Count > 0) >= 2)
-                    return;
+                int pole = _rng.Next(Poles.Count);
+                Poles[pole].Push(d);
             }
+            // Ensure not already solved and at least 2 poles have disks
+            if (!IsSolved() && Poles.Count(p => p.Count > 0) >= 2)
+                return;
         }
+    }
   
         public bool TryMove(int from, int to)
         {

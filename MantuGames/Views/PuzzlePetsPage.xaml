@@ -70,19 +70,20 @@
                 </VerticalStackLayout>
             </ScrollView>
 
-            <!-- Row 3: Piece tray -->
+<!-- Row 3: Piece tray - Grid layout for NxN arrangement -->
             <Border Grid.Row="3"
-                    
+                     
                     StrokeThickness="0"
                     Padding="8,8"
                     Margin="8,2,8,4">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="16" />
                 </Border.StrokeShape>
-                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
-                    <HorizontalStackLayout x:Name="PieceTray"
-                                           Spacing="10"
-                                           Padding="4,4" />
+                <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never">
+                    <Grid x:Name="PieceTrayGrid"
+                          ColumnSpacing="8" RowSpacing="8"
+                          Padding="4,4"
+                          HorizontalOptions="Center" />
                 </ScrollView>
             </Border>
 

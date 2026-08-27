@@ -60,17 +60,28 @@
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="8" VerticalItemSpacing="4" />
                         </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
+<CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame Padding="6,4" CornerRadius="8" HasShadow="False"
                                        BackgroundColor="#1E293B"
                                        HorizontalOptions="Fill"
                                        Margin="2">
-                                    <Label Text="{Binding DisplayWord}"
-                                           FontSize="13" FontFamily="Inter" FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           HorizontalTextAlignment="Center"
-                                            TextColor="#E7ECF5" />
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                                        <Label Text="{Binding DisplayWord}"
+                                               FontSize="13" FontFamily="Inter" FontAttributes="Bold"
+                                               HorizontalOptions="Start"
+                                               HorizontalTextAlignment="Start"
+                                                TextColor="#E7ECF5" VerticalOptions="Center" />
+                                        <!-- Green tick when word is found -->
+                                        <Label Grid.Column="1"
+                                               Text="✓"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="#4CAF50"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="End"
+                                               IsVisible="{Binding IsFound}" />
+                                    </Grid>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

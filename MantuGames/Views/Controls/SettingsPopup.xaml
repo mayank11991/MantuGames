@@ -69,21 +69,6 @@
                                 Toggled="OnSfxToggled" />
                     </Grid>
 
-                    <!-- Dark Mode Toggle -->
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0"
-                               Text="Dark Mode"
-                               FontFamily="Inter"
-                               FontSize="16"
-                               TextColor="#E7ECF5"
-                               VerticalOptions="Center" />
-                        <Switch x:Name="DarkModeSwitch"
-                                Grid.Column="1"
-                                OnColor="#22D3EE"
-                                ThumbColor="#E7ECF5"
-                                Toggled="OnDarkModeToggled" />
-                    </Grid>
-
                     <BoxView HeightRequest="1" Color="#2EFFFFFF" />
 
                     <!-- App Version -->

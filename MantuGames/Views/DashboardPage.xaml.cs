@@ -9,6 +9,9 @@ namespace MantuGames.Views;
 
 public partial class DashboardPage : ContentPage
 {
+    private bool _isNebulaAnimating = false;
+    private CancellationTokenSource _nebulaCts;
+
     public DashboardPage()
     {
         InitializeComponent();
@@ -61,6 +64,9 @@ public partial class DashboardPage : ContentPage
 
         // Start background music
         AudioService.Instance.StartMusic();
+
+        // Start nebula animation
+        StartNebulaAnimation();
     }
 
     protected override bool OnBackButtonPressed()
@@ -99,6 +105,60 @@ public partial class DashboardPage : ContentPage
         base.OnDisappearing();
         SettingsPopup.ProgressReset -= OnProgressReset;
         AudioService.Instance.StopMusic();
+        StopNebulaAnimation();
+    }
+
+    private void StartNebulaAnimation()
+    {
+        if (_isNebulaAnimating) return;
+        _isNebulaAnimating = true;
+        _nebulaCts = new CancellationTokenSource();
+        var token = _nebulaCts.Token;
+
+        // Start the three nebula animations with different speeds
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                double phase1 = 0, phase2 = 0, phase3 = 0;
+                while (!token.IsCancellationRequested)
+                {
+                    await MainThread.InvokeOnMainThreadAsync(() =>
+                    {
+                        if (Nebula1 != null && Nebula2 != null && Nebula3 != null)
+                        {
+                            Nebula1.TranslationX = 30 * Math.Sin(phase1);
+                            Nebula1.TranslationY = -20 * Math.Cos(phase1);
+                            Nebula1.Scale = 1 + 0.05 * Math.Sin(phase1);
+
+                            Nebula2.TranslationX = -20 * Math.Sin(phase2);
+                            Nebula2.TranslationY = 25 * Math.Cos(phase2);
+                            Nebula2.Scale = 1 + 0.05 * Math.Cos(phase2);
+
+                            Nebula3.TranslationX = -15 * Math.Sin(phase3);
+                            Nebula3.TranslationY = -30 * Math.Cos(phase3);
+                            Nebula3.Scale = 1 + 0.03 * Math.Sin(phase3);
+                        }
+                    });
+
+                    phase1 += 0.02;
+                    phase2 += 0.018;
+                    phase3 += 0.022;
+                    await Task.Delay(16, token);
+                }
+            }
+            catch (OperationCanceledException) { }
+            catch { }
+        }, token);
+    }
+
+    private void StopNebulaAnimation()
+    {
+        if (!_isNebulaAnimating) return;
+        _isNebulaAnimating = false;
+        _nebulaCts?.Cancel();
+        _nebulaCts?.Dispose();
+        _nebulaCts = null;
     }
 
     private void RefreshCoins()

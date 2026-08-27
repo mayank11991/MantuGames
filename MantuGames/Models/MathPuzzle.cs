@@ -35,11 +35,11 @@ public class MathPuzzle
         //
         // Level  1-2 : +  -          numbers  1–9
         // Level  3-5 : +  -          numbers  1–19  (intro double digits)
-        // Level  6-8 : +  -  ×       numbers  2–20, ×  up to 9×9
-        // Level  9-12: +  -  ×       numbers  5–50, ×  up to 12×12
-        // Level 13-16: +  -  ×  ÷   numbers  5–50, ÷  up to 12×12
-        // Level 17-20: +  -  ×  ÷   numbers 10–99, ÷  up to 15×15
-        // Level 21+  : +  -  ×  ÷   numbers 10–99, larger multipliers
+        // Level  6-7 : +  -  ×       numbers  2–20, ×  up to 9×9
+        // Level  8-10: +  -  ×       numbers  5–50, ×  up to 12×12
+        // Level 11-14: +  -  ×  ÷   numbers  5–50, ÷  up to 12×12
+        // Level 14-17: +  -  ×  ÷   numbers  10–99, ÷  up to 15×15
+        // Level 18+  : +  -  ×  ÷   numbers  10–99, larger multipliers
 
         string op;
         int a, b, answer;
@@ -58,7 +58,7 @@ public class MathPuzzle
             a = _rng.Next(2, max);
             b = op == "-" ? _rng.Next(1, a + 1) : _rng.Next(2, max);
         }
-        else if (level <= 8)
+        else if (level <= 7)
         {
             var ops = new[] { "+", "+", "-", "×" };
             op = ops[_rng.Next(ops.Length)];
@@ -67,7 +67,7 @@ public class MathPuzzle
                 : op == "-" ? _rng.Next(1, a + 1)
                 : _rng.Next(2, 21);
         }
-        else if (level <= 12)
+        else if (level <= 10)
         {
             var ops = new[] { "+", "-", "×", "×" };
             op = ops[_rng.Next(ops.Length)];
@@ -76,7 +76,7 @@ public class MathPuzzle
                 : op == "-" ? _rng.Next(1, a + 1)
                 : _rng.Next(5, 51);
         }
-        else if (level <= 16)
+        else if (level <= 14)
         {
             var ops = new[] { "+", "-", "×", "÷" };
             op = ops[_rng.Next(ops.Length)];
@@ -93,7 +93,7 @@ public class MathPuzzle
                 : op == "-" ? _rng.Next(1, a + 1)
                 : _rng.Next(5, 51);
         }
-        else if (level <= 20)
+        else if (level <= 18)
         {
             var ops = new[] { "+", "-", "×", "÷" };
             op = ops[_rng.Next(ops.Length)];
@@ -112,7 +112,7 @@ public class MathPuzzle
         }
         else
         {
-            // Level 21+ — fully double-digit everything
+            // Level 19+ — fully double-digit everything
             var ops = new[] { "+", "-", "×", "÷" };
             op = ops[_rng.Next(ops.Length)];
             if (op == "÷")
