@@ -83,17 +83,13 @@
                            HorizontalOptions="Start"
                            VerticalOptions="Start"
                            InputTransparent="True"
-                           Aspect="AspectFit"
-                           WidthRequest="28"
-                           HeightRequest="28" />
+                           Aspect="AspectFit" />
                     <Image x:Name="DestinationImage"
                            Source="destination.png"
                            HorizontalOptions="Start"
                            VerticalOptions="Start"
                            InputTransparent="True"
-                           Aspect="AspectFit"
-                           WidthRequest="28"
-                           HeightRequest="28" />
+                           Aspect="AspectFit" />
                 </Grid>
             </Border>
 

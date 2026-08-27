@@ -5,7 +5,7 @@ public static class AppConfig
     // ─── REPLACE with your real privacy policy URL before publishing ───
     public const string PrivacyUrl = "https://mayank11991.github.io/privacy.html";
     public const string PlayStoreUrl = "https://play.google.com/store/apps/details?id=com.mantugames.app";
-    public const string SupportEmail = "support@mantugames.com";
+    public const string SupportEmail = "infoatkhoj@gmail.com";
     public const string UpdateCheckUrl = "https://mayank11991.github.io/latest.json";
 
 #if DEBUG

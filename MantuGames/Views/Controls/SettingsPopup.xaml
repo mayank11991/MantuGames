@@ -8,10 +8,9 @@
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
-        <Grid VerticalOptions="Center"
-              HorizontalOptions="Center"
-              Padding="28"
-              WidthRequest="320"
+        <Grid VerticalOptions="Center" HeightRequest="500"
+              HorizontalOptions="Fill"
+              Margin="20"
               InputTransparent="False">
 
             <Border Background="#182136"
@@ -19,7 +18,7 @@
                     StrokeThickness="1"
                     Padding="0"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Fill">
+                    VerticalOptions="Center">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="24" />
                 </Border.StrokeShape>
@@ -28,9 +27,9 @@
                 </Border.Shadow>
 
                 <ScrollView VerticalScrollBarVisibility="Never">
-                    <VerticalStackLayout Spacing="16" Padding="24,20,24,20">
+                    <VerticalStackLayout Spacing="10" Padding="20,16,20,16">
 
-                    <Label Text="SETTINGS"
+<Label Text="SETTINGS"
                            FontFamily="Orbitron"
                            FontSize="22"
                            FontAttributes="Bold"
@@ -74,17 +73,17 @@
                     <!-- App Version -->
                     <Label x:Name="VersionLabel"
                            FontFamily="Inter"
-                           FontSize="13"
-                           TextColor="#9AA7BD"
+                           FontSize="16"
+                           TextColor="#ffffff"
                            HorizontalOptions="Center" />
 
                     <!-- Statistics -->
                     <Label Text="Statistics"
                            FontFamily="Inter"
-                           FontSize="13"
+                           FontSize="16"
                            HorizontalOptions="Center"
-                           TextColor="#9AA7BD"
-                           TextDecorations="Underline">
+                           TextColor="#ffffff"
+                           >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnStatistics" />
                         </Label.GestureRecognizers>
@@ -95,9 +94,9 @@
                         <Label Grid.Column="0"
                                Text="Check for Updates"
                                FontFamily="Inter"
-                               FontSize="13"
-                               TextColor="#9AA7BD"
-                               TextDecorations="Underline"
+                               FontSize="16"
+                               TextColor="#ffffff"
+                               
                                VerticalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnCheckForUpdates" />
@@ -115,10 +114,10 @@
                     <!-- Contact Support -->
                     <Label Text="Contact Support"
                            FontFamily="Inter"
-                           FontSize="13"
+                           FontSize="16"
                            HorizontalOptions="Start"
-                           TextColor="#9AA7BD"
-                           TextDecorations="Underline">
+                           TextColor="#ffffff"
+                           >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnContactSupport" />
                         </Label.GestureRecognizers>
@@ -127,10 +126,10 @@
                     <!-- Edit Profile -->
                     <Label Text="Edit Profile"
                            FontFamily="Inter"
-                           FontSize="13"
+                           FontSize="16"
                            HorizontalOptions="Start"
-                           TextColor="#9AA7BD"
-                           TextDecorations="Underline">
+                           TextColor="#ffffff"
+                           >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnEditProfile" />
                         </Label.GestureRecognizers>
@@ -139,10 +138,10 @@
                     <!-- Privacy Policy -->
                     <Label Text="Privacy Policy"
                            FontFamily="Inter"
-                           FontSize="13"
+                           FontSize="16"
                            HorizontalOptions="Start"
-                           TextColor="#9AA7BD"
-                           TextDecorations="Underline">
+                           TextColor="#ffffff"
+                           >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnPrivacyPolicy" />
                         </Label.GestureRecognizers>
@@ -151,10 +150,10 @@
                     <!-- Rate Us -->
                     <Label Text="Rate Us"
                            FontFamily="Inter"
-                           FontSize="13"
+                           FontSize="16"
                            HorizontalOptions="Start"
-                           TextColor="#9AA7BD"
-                           TextDecorations="Underline">
+                           TextColor="#ffffff"
+                           >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnRateUs" />
                         </Label.GestureRecognizers>
@@ -165,9 +164,9 @@
                         <Label Grid.Column="0"
                                Text="Remove Ads"
                                FontFamily="Inter"
-                               FontSize="13"
-                               TextColor="#9AA7BD"
-                               TextDecorations="Underline"
+                               FontSize="16"
+                               TextColor="#ffffff"
+                               
                                VerticalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnRemoveAds" />
@@ -185,10 +184,10 @@
                     <!-- Reset Progress -->
                     <Label Text="Reset All Progress"
                            FontFamily="Inter"
-                           FontSize="13"
+                           FontSize="16"
                            HorizontalOptions="Center"
                            TextColor="#EF4444"
-                           TextDecorations="Underline">
+                           >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnResetProgress" />
                         </Label.GestureRecognizers>
@@ -217,7 +216,6 @@
                 </VerticalStackLayout>
                 </ScrollView>
             </Border>
-
         </Grid>
     </Grid>
 

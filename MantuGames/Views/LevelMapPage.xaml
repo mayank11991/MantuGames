@@ -69,7 +69,7 @@
                         x:Name="LevelCollectionView"
                         ItemsSource="{Binding Levels}"
                         SelectionMode="None"
-                        Margin="20,4,20,24"
+                        Margin="10,4,10,24"
                         VerticalOptions="Fill">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
