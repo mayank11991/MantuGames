@@ -43,17 +43,16 @@
                          Clicked="OnRestartClicked" />
         </Grid>
 
-        <!-- Game Grid with overlay -->
+        <!-- Game Grid -->
         <Grid Grid.Row="1" Padding="4">
             <GraphicsView x:Name="GameCanvas"
                           BackgroundColor="Transparent"
                           HorizontalOptions="Fill"
-                          VerticalOptions="Fill" />
-            <BoxView x:Name="TouchOverlay"
-                     BackgroundColor="Transparent"
-                     InputTransparent="False"
-                     HorizontalOptions="Fill"
-                     VerticalOptions="Fill" />
+                          VerticalOptions="Fill">
+                <GraphicsView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCanvasTapped" />
+                </GraphicsView.GestureRecognizers>
+            </GraphicsView>
         </Grid>
 
         <!-- Bottom: Hints -->

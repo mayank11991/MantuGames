@@ -9,7 +9,7 @@ public partial class ConnectTheDotsPage : ContentPage
 {
     private CtdViewModel _vm;
     private int _startLevel = 1;
-    private bool _isDrawing;
+    private bool _isDragging;
     private (int r, int c) _lastCell = (-1, -1);
 
     public string Level
@@ -37,21 +37,19 @@ public partial class ConnectTheDotsPage : ContentPage
                 DifficultyLabel.Text = _vm.Difficulty;
         };
 
-        var drawable = new CtdDrawable(_vm);
-        GameCanvas.Drawable = drawable;
+        GameCanvas.Drawable = new CtdDrawable(_vm);
         LevelLabel.Text = _vm.LevelDisplay;
         DifficultyLabel.Text = _vm.Difficulty;
         AudioService.Instance.StartMusic();
 
-        // Setup touch handling on the overlay
-        var pointerGesture = new PointerGestureRecognizer();
-        pointerGesture.PointerMoved += OnPointerMoved;
-        TouchOverlay.GestureRecognizers.Add(pointerGesture);
+        _isDragging = false;
+        _lastCell = (-1, -1);
 
-        // Also handle tap for dot selection
-        var tapGesture = new TapGestureRecognizer();
-        tapGesture.Tapped += OnOverlayTapped;
-        TouchOverlay.GestureRecognizers.Add(tapGesture);
+        var pointerGesture = new PointerGestureRecognizer();
+        pointerGesture.PointerEntered += OnPointerEntered;
+        pointerGesture.PointerMoved += OnPointerMoved;
+        pointerGesture.PointerExited += OnPointerExited;
+        GameCanvas.GestureRecognizers.Add(pointerGesture);
     }
 
     protected override void OnDisappearing()
@@ -67,51 +65,52 @@ public partial class ConnectTheDotsPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() => GameCanvas.Invalidate());
     }
 
-    private (int r, int c) HitTest(float x, float y)
+    private (int r, int c) HitTest(PointF? position)
     {
+        if (position == null) return (-1, -1);
         var drawable = GameCanvas.Drawable as CtdDrawable;
-        if (drawable == null) return (-1, -1);
-        return drawable.HitTest(x, y);
+        return drawable?.HitTest(position.Value.X, position.Value.Y) ?? (-1, -1);
     }
 
-    private void OnOverlayTapped(object sender, TappedEventArgs e)
+    private void OnPointerEntered(object sender, PointerEventArgs e)
     {
-        if (_vm == null || _vm.IsGameOver) return;
+        var pos = e.GetPosition(GameCanvas);
+        var cell = HitTest(pos);
+        if (cell.r < 0) return;
 
-        var position = e.GetPosition(TouchOverlay);
-        if (position == null) return;
-
-        float canvasX = (float)position.Value.X;
-        float canvasY = (float)position.Value.Y;
-
-        Console.WriteLine($"[CTD-UI] Tap at overlay ({canvasX:F1},{canvasY:F1})");
-
-        var cell = HitTest(canvasX, canvasY);
-        Console.WriteLine($"[CTD-UI] Hit test result: ({cell.r},{cell.c})");
-
-        if (cell.r >= 0)
-        {
-            _vm.OnCellTapped(cell);
-        }
+        _isDragging = true;
+        _lastCell = cell;
+        _vm?.OnCellTapped(cell);
     }
 
     private void OnPointerMoved(object sender, PointerEventArgs e)
     {
-        if (_vm == null || _vm.IsGameOver) return;
+        if (!_isDragging || _vm == null || _vm.IsGameOver) return;
 
-        var position = e.GetPosition(TouchOverlay);
-        if (position == null) return;
+        var pos = e.GetPosition(GameCanvas);
+        var cell = HitTest(pos);
+        if (cell.r < 0) return;
 
-        float canvasX = (float)position.Value.X;
-        float canvasY = (float)position.Value.Y;
-
-        var cell = HitTest(canvasX, canvasY);
-        if (cell.r >= 0 && cell != _lastCell)
+        if (cell != _lastCell)
         {
-            Console.WriteLine($"[CTD-UI] Drag to ({cell.r},{cell.c})");
             _lastCell = cell;
             _vm.OnCellTapped(cell);
         }
+    }
+
+    private void OnPointerExited(object sender, PointerEventArgs e)
+    {
+        _isDragging = false;
+        _lastCell = (-1, -1);
+    }
+
+    private void OnCanvasTapped(object sender, TappedEventArgs e)
+    {
+        if (_vm == null || _vm.IsGameOver) return;
+        var pos = e.GetPosition(GameCanvas);
+        var cell = HitTest(pos);
+        if (cell.r >= 0)
+            _vm.OnCellTapped(cell);
     }
 
     private void OnRestartClicked(object sender, EventArgs e)
@@ -145,7 +144,11 @@ public partial class ConnectTheDotsPage : ContentPage
         await DisplayAlert(win ? "You Win!" : "Game Over",
             win ? $"Level {_startLevel} completed!" : "Try again!",
             "OK");
-        if (win) _vm.StartLevel(_startLevel + 1);
+        if (win)
+        {
+            _startLevel++;
+            _vm.StartLevel(_startLevel);
+        }
     }
 
     protected override bool OnBackButtonPressed()
