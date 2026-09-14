@@ -74,62 +74,77 @@ public class CtdViewModel : INotifyPropertyChanged
 
         if (pairIdx >= 0)
         {
-            Console.WriteLine($"[CTD] Tapped on dot pair {pairIdx}");
+            Console.WriteLine($"[CTD] Tapped on dot pair {pairIdx} active={_activePair} pathLen={_currentPath.Count}");
 
             if (_activePair == pairIdx)
             {
                 var p = _puzzle.Pairs[pairIdx];
+                bool isOnStartCell = (cell.r == _currentPath[0].r && cell.c == _currentPath[0].c);
 
-                // If path exists and last cell is adjacent to this dot, complete it
-                if (_currentPath.Count >= 1)
+                // Cancel if tapping the start cell again
+                if (isOnStartCell && _currentPath.Count <= 1)
                 {
-                    var last = _currentPath[^1];
-                    bool isEnd1 = (cell.r == p.R1 && cell.c == p.C1);
-                    bool isEnd2 = (cell.r == p.R2 && cell.c == p.C2);
-                    bool isAdjToLast = (Math.Abs(last.r - cell.r) + Math.Abs(last.c - cell.c) == 1);
-
-                    Console.WriteLine($"[CTD] Check complete: isEnd1={isEnd1} isEnd2={isEnd2} isAdj={isAdjToLast} pathLen={_currentPath.Count}");
-
-                    // Don't complete if we're still on the start cell
-                    bool isOnStartCell = (cell.r == _currentPath[0].r && cell.c == _currentPath[0].c);
-
-                    if (!isOnStartCell && isAdjToLast)
-                    {
-                        if (_currentPath.Count >= 2)
-                        {
-                            // Path has intermediate cells - check we're reaching the other end
-                            bool startedAtEnd1 = (_currentPath[0].r == p.R1 && _currentPath[0].c == p.C1);
-                            bool startedAtEnd2 = (_currentPath[0].r == p.R2 && _currentPath[0].c == p.C2);
-
-                            if ((startedAtEnd1 && isEnd2) || (startedAtEnd2 && isEnd1))
-                            {
-                                Console.WriteLine($"[CTD] COMPLETING PATH!");
-                                _currentPath.Add(cell);
-                                CompletePath(pairIdx);
-                                return;
-                            }
-                        }
-
-                        // Just extend path to this dot
-                        _currentPath.Add(cell);
-                        BoardChanged?.Invoke();
-                        return;
-                    }
-                }
-
-                // Cancel if tapping same start cell
-                if (_currentPath.Count == 1 && _currentPath[0] == cell)
-                {
-                    Console.WriteLine($"[CTD] Cancelling - same cell");
+                    Console.WriteLine($"[CTD] Cancelling");
                     _activePair = null;
                     _currentPath.Clear();
                     BoardChanged?.Invoke();
                     return;
                 }
+
+                // Check if path already has both endpoints
+                bool hasEnd1 = _currentPath.Any(c => c.r == p.R1 && c.c == p.C1);
+                bool hasEnd2 = _currentPath.Any(c => c.r == p.R2 && c.c == p.C2);
+
+                if (hasEnd1 && hasEnd2 && _currentPath.Count >= 2)
+                {
+                    Console.WriteLine($"[CTD] COMPLETING - path has both endpoints!");
+                    CompletePath(pairIdx);
+                    return;
+                }
+
+                // Add dot to path if adjacent and not already in path
+                var last = _currentPath[^1];
+                bool isAdj = (Math.Abs(last.r - cell.r) + Math.Abs(last.c - cell.c) == 1);
+                if (isAdj && !_currentPath.Contains(cell))
+                {
+                    _currentPath.Add(cell);
+                    Console.WriteLine($"[CTD] Added dot to path, now [{string.Join(" ", _currentPath.Select(p => $"({p.r},{p.c})"))}]");
+
+                    // Check again after adding
+                    hasEnd1 = _currentPath.Any(c => c.r == p.R1 && c.c == p.C1);
+                    hasEnd2 = _currentPath.Any(c => c.r == p.R2 && c.c == p.C2);
+                    if (hasEnd1 && hasEnd2)
+                    {
+                        Console.WriteLine($"[CTD] COMPLETING after add!");
+                        CompletePath(pairIdx);
+                        return;
+                    }
+
+                    BoardChanged?.Invoke();
+                    return;
+                }
+
+                // If not adjacent, just extend path to the dot anyway (skip obstacles)
+                if (!_currentPath.Contains(cell))
+                {
+                    _currentPath.Add(cell);
+                    Console.WriteLine($"[CTD] Force-added dot, path now [{string.Join(" ", _currentPath.Select(p => $"({p.r},{p.c})"))}]");
+
+                    hasEnd1 = _currentPath.Any(c => c.r == p.R1 && c.c == p.C1);
+                    hasEnd2 = _currentPath.Any(c => c.r == p.R2 && c.c == p.C2);
+                    if (hasEnd1 && hasEnd2)
+                    {
+                        Console.WriteLine($"[CTD] COMPLETING after force-add!");
+                        CompletePath(pairIdx);
+                        return;
+                    }
+
+                    BoardChanged?.Invoke();
+                }
             }
             else
             {
-                Console.WriteLine($"[CTD] Different pair, starting new path");
+                Console.WriteLine($"[CTD] Starting new path for pair {pairIdx}");
                 if (_completedPaths.ContainsKey(pairIdx) && _completedPaths[pairIdx].Count > 0)
                     _completedPaths[pairIdx].Clear();
 
@@ -141,7 +156,9 @@ public class CtdViewModel : INotifyPropertyChanged
         }
         else if (_activePair.HasValue)
         {
-            Console.WriteLine($"[CTD] Empty cell, extending path");
+            Console.WriteLine($"[CTD] Empty cell ({cell.r},{cell.c}), extending path");
+
+            // Cancel if tapping start cell
             if (_currentPath.Count == 1 && _currentPath[0] == cell)
             {
                 _activePair = null;
@@ -150,6 +167,7 @@ public class CtdViewModel : INotifyPropertyChanged
                 return;
             }
 
+            // Undo last cell if tapping previous
             if (_currentPath.Count >= 2 && _currentPath[^2] == cell)
             {
                 _currentPath.RemoveAt(_currentPath.Count - 1);
@@ -157,10 +175,11 @@ public class CtdViewModel : INotifyPropertyChanged
                 return;
             }
 
+            // Check adjacency
             var last = _currentPath[^1];
             if (Math.Abs(last.r - cell.r) + Math.Abs(last.c - cell.c) != 1)
             {
-                Console.WriteLine($"[CTD] Not adjacent: last=({last.r},{last.c}) cell=({cell.r},{cell.c})");
+                Console.WriteLine($"[CTD] Not adjacent, skipping");
                 return;
             }
 
@@ -171,12 +190,12 @@ public class CtdViewModel : INotifyPropertyChanged
             }
             if (_currentPath.Contains(cell))
             {
-                Console.WriteLine($"[CTD] Cell already in path");
+                Console.WriteLine($"[CTD] Already in path");
                 return;
             }
 
             _currentPath.Add(cell);
-            Console.WriteLine($"[CTD] Path now: [{string.Join(", ", _currentPath.Select(p => $"({p.r},{p.c})"))}]");
+            Console.WriteLine($"[CTD] Path: [{string.Join(" ", _currentPath.Select(p => $"({p.r},{p.c})"))}]");
             BoardChanged?.Invoke();
         }
     }
