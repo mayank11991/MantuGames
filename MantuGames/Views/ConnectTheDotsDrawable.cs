@@ -101,9 +101,11 @@ public class CtdDrawable : IDrawable
 
     public (int r, int c) HitTest(float x, float y)
     {
-        if (_cellSize <= 0) return (-1, -1);
+        if (_cellSize <= 0 || _vm.Rows <= 0 || _vm.Cols <= 0) return (-1, -1);
+
         int c = (int)((x - _offsetX) / _cellSize);
         int r = (int)((y - _offsetY) / _cellSize);
+
         if (r < 0 || r >= _vm.Rows || c < 0 || c >= _vm.Cols) return (-1, -1);
         return (r, c);
     }

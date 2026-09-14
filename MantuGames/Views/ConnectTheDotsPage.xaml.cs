@@ -9,6 +9,8 @@ public partial class ConnectTheDotsPage : ContentPage
 {
     private CtdViewModel _vm;
     private int _startLevel = 1;
+    private bool _isDrawing;
+    private (int r, int c) _lastCell = (-1, -1);
 
     public string Level
     {
@@ -41,12 +43,15 @@ public partial class ConnectTheDotsPage : ContentPage
         DifficultyLabel.Text = _vm.Difficulty;
         AudioService.Instance.StartMusic();
 
-        // Use pointer gesture for drag drawing
+        // Setup touch handling on the overlay
         var pointerGesture = new PointerGestureRecognizer();
-        pointerGesture.PointerEntered += OnPointerEntered;
         pointerGesture.PointerMoved += OnPointerMoved;
-        pointerGesture.PointerExited += OnPointerExited;
-        GameCanvas.GestureRecognizers.Add(pointerGesture);
+        TouchOverlay.GestureRecognizers.Add(pointerGesture);
+
+        // Also handle tap for dot selection
+        var tapGesture = new TapGestureRecognizer();
+        tapGesture.Tapped += OnOverlayTapped;
+        TouchOverlay.GestureRecognizers.Add(tapGesture);
     }
 
     protected override void OnDisappearing()
@@ -62,46 +67,45 @@ public partial class ConnectTheDotsPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() => GameCanvas.Invalidate());
     }
 
-    private void OnPointerEntered(object sender, PointerEventArgs e)
+    private (int r, int c) HitTest(float x, float y)
     {
-        // Touch started
+        var drawable = GameCanvas.Drawable as CtdDrawable;
+        if (drawable == null) return (-1, -1);
+        return drawable.HitTest(x, y);
     }
 
-    private void OnPointerMoved(object sender, PointerEventArgs e)
+    private void OnOverlayTapped(object sender, TappedEventArgs e)
     {
         if (_vm == null || _vm.IsGameOver) return;
 
-        var position = e.GetPosition(GameCanvas);
+        var position = e.GetPosition(TouchOverlay);
         if (position == null) return;
 
-        var drawable = GameCanvas.Drawable as CtdDrawable;
-        if (drawable == null) return;
+        // Convert overlay coordinates to canvas coordinates
+        float canvasX = (float)position.Value.X;
+        float canvasY = (float)position.Value.Y;
 
-        var cell = drawable.HitTest((float)position.Value.X, (float)position.Value.Y);
+        var cell = HitTest(canvasX, canvasY);
         if (cell.r >= 0)
         {
             _vm.OnCellTapped(cell);
         }
     }
 
-    private void OnPointerExited(object sender, PointerEventArgs e)
-    {
-        // Touch ended - complete path if on matching dot
-    }
-
-    private void OnCanvasTapped(object sender, TappedEventArgs e)
+    private void OnPointerMoved(object sender, PointerEventArgs e)
     {
         if (_vm == null || _vm.IsGameOver) return;
 
-        var position = e.GetPosition(GameCanvas);
+        var position = e.GetPosition(TouchOverlay);
         if (position == null) return;
 
-        var drawable = GameCanvas.Drawable as CtdDrawable;
-        if (drawable == null) return;
+        float canvasX = (float)position.Value.X;
+        float canvasY = (float)position.Value.Y;
 
-        var cell = drawable.HitTest((float)position.Value.X, (float)position.Value.Y);
-        if (cell.r >= 0)
+        var cell = HitTest(canvasX, canvasY);
+        if (cell.r >= 0 && cell != _lastCell)
         {
+            _lastCell = cell;
             _vm.OnCellTapped(cell);
         }
     }
@@ -109,6 +113,7 @@ public partial class ConnectTheDotsPage : ContentPage
     private void OnRestartClicked(object sender, EventArgs e)
     {
         AudioService.Instance.Play("tap");
+        _lastCell = (-1, -1);
         _vm?.Restart();
     }
 
