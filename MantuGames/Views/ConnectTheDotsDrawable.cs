@@ -96,42 +96,35 @@ public class CtdDrawable : IDrawable
     {
         canvas.StrokeLineCap = LineCap.Round;
 
-        canvas.StrokeColor = color.WithAlpha(0.08f);
-        canvas.StrokeSize = thickness * 4;
-        canvas.DrawLine(x1, y1, x2, y2);
-
-        canvas.StrokeColor = color.WithAlpha(0.15f);
-        canvas.StrokeSize = thickness * 2.8f;
-        canvas.DrawLine(x1, y1, x2, y2);
-
-        canvas.StrokeColor = color.WithAlpha(0.35f);
+        canvas.StrokeColor = color.WithAlpha(0.1f);
         canvas.StrokeSize = thickness * 1.8f;
+        canvas.DrawLine(x1, y1, x2, y2);
+
+        canvas.StrokeColor = color.WithAlpha(0.3f);
+        canvas.StrokeSize = thickness * 1.3f;
         canvas.DrawLine(x1, y1, x2, y2);
 
         canvas.StrokeColor = color;
         canvas.StrokeSize = thickness;
         canvas.DrawLine(x1, y1, x2, y2);
 
-        canvas.StrokeColor = Colors.White.WithAlpha(0.25f);
-        canvas.StrokeSize = thickness * 0.4f;
+        canvas.StrokeColor = Colors.White.WithAlpha(0.35f);
+        canvas.StrokeSize = thickness * 0.35f;
         canvas.DrawLine(x1, y1, x2, y2);
     }
 
     private void DrawGlowCircle(ICanvas canvas, float cx, float cy, float radius, Color color)
     {
-        canvas.FillColor = color.WithAlpha(0.06f);
-        canvas.FillCircle(cx, cy, radius * 3f);
+        canvas.FillColor = color.WithAlpha(0.15f);
+        canvas.FillCircle(cx, cy, radius * 1.6f);
 
-        canvas.FillColor = color.WithAlpha(0.12f);
-        canvas.FillCircle(cx, cy, radius * 2.2f);
-
-        canvas.FillColor = color.WithAlpha(0.3f);
-        canvas.FillCircle(cx, cy, radius * 1.5f);
+        canvas.FillColor = color.WithAlpha(0.35f);
+        canvas.FillCircle(cx, cy, radius * 1.3f);
 
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
 
-        canvas.FillColor = Colors.White.WithAlpha(0.45f);
+        canvas.FillColor = Colors.White.WithAlpha(0.5f);
         canvas.FillCircle(cx - radius * 0.15f, cy - radius * 0.15f, radius * 0.45f);
     }
 
@@ -150,14 +143,11 @@ public class CtdDrawable : IDrawable
         float cx = _offsetX + c * _cellSize + _cellSize / 2;
         float cy = _offsetY + r * _cellSize + _cellSize / 2;
 
-        canvas.FillColor = color.WithAlpha(0.04f);
-        canvas.FillCircle(cx, cy, radius * 3.5f);
-
-        canvas.FillColor = color.WithAlpha(0.1f);
-        canvas.FillCircle(cx, cy, radius * 2.5f);
-
-        canvas.FillColor = color.WithAlpha(0.25f);
+        canvas.FillColor = color.WithAlpha(0.12f);
         canvas.FillCircle(cx, cy, radius * 1.8f);
+
+        canvas.FillColor = color.WithAlpha(0.3f);
+        canvas.FillCircle(cx, cy, radius * 1.4f);
 
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
