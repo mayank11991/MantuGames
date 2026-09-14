@@ -96,36 +96,39 @@ public class CtdDrawable : IDrawable
     {
         canvas.StrokeLineCap = LineCap.Round;
 
-        canvas.StrokeColor = color.WithAlpha(0.1f);
-        canvas.StrokeSize = thickness * 1.8f;
-        canvas.DrawLine(x1, y1, x2, y2);
-
-        canvas.StrokeColor = color.WithAlpha(0.3f);
-        canvas.StrokeSize = thickness * 1.3f;
-        canvas.DrawLine(x1, y1, x2, y2);
+        for (int i = 6; i >= 1; i--)
+        {
+            float scale = 1f + (i * 0.18f);
+            float alpha = 0.04f + (0.03f * (7 - i));
+            canvas.StrokeColor = color.WithAlpha(alpha);
+            canvas.StrokeSize = thickness * scale;
+            canvas.DrawLine(x1, y1, x2, y2);
+        }
 
         canvas.StrokeColor = color;
         canvas.StrokeSize = thickness;
         canvas.DrawLine(x1, y1, x2, y2);
 
-        canvas.StrokeColor = Colors.White.WithAlpha(0.35f);
-        canvas.StrokeSize = thickness * 0.35f;
+        canvas.StrokeColor = Colors.White.WithAlpha(0.3f);
+        canvas.StrokeSize = thickness * 0.3f;
         canvas.DrawLine(x1, y1, x2, y2);
     }
 
     private void DrawGlowCircle(ICanvas canvas, float cx, float cy, float radius, Color color)
     {
-        canvas.FillColor = color.WithAlpha(0.15f);
-        canvas.FillCircle(cx, cy, radius * 1.6f);
-
-        canvas.FillColor = color.WithAlpha(0.35f);
-        canvas.FillCircle(cx, cy, radius * 1.3f);
+        for (int i = 6; i >= 1; i--)
+        {
+            float scale = 1f + (i * 0.15f);
+            float alpha = 0.03f + (0.035f * (7 - i));
+            canvas.FillColor = color.WithAlpha(alpha);
+            canvas.FillCircle(cx, cy, radius * scale);
+        }
 
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
 
         canvas.FillColor = Colors.White.WithAlpha(0.5f);
-        canvas.FillCircle(cx - radius * 0.15f, cy - radius * 0.15f, radius * 0.45f);
+        canvas.FillCircle(cx - radius * 0.12f, cy - radius * 0.15f, radius * 0.4f);
     }
 
     private void DrawDots(ICanvas canvas, int rows, int cols)
@@ -143,20 +146,22 @@ public class CtdDrawable : IDrawable
         float cx = _offsetX + c * _cellSize + _cellSize / 2;
         float cy = _offsetY + r * _cellSize + _cellSize / 2;
 
-        canvas.FillColor = color.WithAlpha(0.12f);
-        canvas.FillCircle(cx, cy, radius * 1.8f);
-
-        canvas.FillColor = color.WithAlpha(0.3f);
-        canvas.FillCircle(cx, cy, radius * 1.4f);
+        for (int i = 6; i >= 1; i--)
+        {
+            float scale = 1f + (i * 0.15f);
+            float alpha = 0.03f + (0.035f * (7 - i));
+            canvas.FillColor = color.WithAlpha(alpha);
+            canvas.FillCircle(cx, cy, radius * scale);
+        }
 
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
 
-        canvas.FillColor = Colors.White.WithAlpha(0.5f);
-        canvas.FillCircle(cx - radius * 0.2f, cy - radius * 0.2f, radius * 0.35f);
+        canvas.FillColor = Colors.White.WithAlpha(0.55f);
+        canvas.FillCircle(cx - radius * 0.15f, cy - radius * 0.2f, radius * 0.3f);
 
-        canvas.FillColor = Colors.White.WithAlpha(0.8f);
-        canvas.FillCircle(cx - radius * 0.15f, cy - radius * 0.25f, radius * 0.15f);
+        canvas.FillColor = Colors.White.WithAlpha(0.9f);
+        canvas.FillCircle(cx - radius * 0.1f, cy - radius * 0.25f, radius * 0.12f);
     }
 
     public (int r, int c) HitTest(float x, float y)
