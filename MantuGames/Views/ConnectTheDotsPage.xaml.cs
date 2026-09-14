@@ -26,21 +26,28 @@ public partial class ConnectTheDotsPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _vm = new CtdViewModel(_startLevel);
+        AudioService.Instance.StartMusic();
+        InitGame(_startLevel);
+        PauseOverlay.Resumed += OnResumeGame;
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        PauseOverlay.Resumed -= OnResumeGame;
+        Cleanup();
+    }
+
+    private void InitGame(int level)
+    {
+        _vm = new CtdViewModel(level);
         _vm.BoardChanged += OnBoardChanged;
         _vm.GameEnded += OnGameEnded;
-        _vm.PropertyChanged += (_, e) =>
-        {
-            if (e.PropertyName == nameof(CtdViewModel.LevelDisplay))
-                LevelLabel.Text = _vm.LevelDisplay;
-            if (e.PropertyName == nameof(CtdViewModel.Difficulty))
-                DifficultyLabel.Text = _vm.Difficulty;
-        };
 
         GameCanvas.Drawable = new CtdDrawable(_vm);
-        LevelLabel.Text = _vm.LevelDisplay;
+        LevelBadge.Text = _vm.LevelDisplay;
         DifficultyLabel.Text = _vm.Difficulty;
-        AudioService.Instance.StartMusic();
+        CtdTimer.TotalSeconds = ProgressService.GetTimerSeconds(level);
 
         _isDragging = false;
         _lastCell = (-1, -1);
@@ -48,12 +55,15 @@ public partial class ConnectTheDotsPage : ContentPage
         AttachNativeTouch();
     }
 
-    protected override void OnDisappearing()
+    private void Cleanup()
     {
-        base.OnDisappearing();
+        GameCanvas.HandlerChanged -= OnCanvasHandlerChanged;
         _vm?.Cleanup();
-        _vm.BoardChanged -= OnBoardChanged;
-        _vm.GameEnded -= OnGameEnded;
+        if (_vm != null)
+        {
+            _vm.BoardChanged -= OnBoardChanged;
+            _vm.GameEnded -= OnGameEnded;
+        }
     }
 
     private void AttachNativeTouch()
@@ -61,20 +71,21 @@ public partial class ConnectTheDotsPage : ContentPage
 #if ANDROID
         if (GameCanvas.Handler?.PlatformView is Android.Views.View nativeView)
         {
-            Console.WriteLine($"[CTD] Attaching native touch to {nativeView.GetType().Name}");
             nativeView.SetOnTouchListener(new Platforms.Android.CtdNativeTouchListener(nativeView, OnNativeTouch));
         }
         else
         {
-            Console.WriteLine($"[CTD] Handler={GameCanvas.Handler} PlatformView={GameCanvas.Handler?.PlatformView?.GetType().Name}");
-            GameCanvas.HandlerChanged += (s, e) =>
-            {
-                if (GameCanvas.Handler?.PlatformView is Android.Views.View nv)
-                {
-                    Console.WriteLine($"[CTD] Late attach native touch to {nv.GetType().Name}");
-                    nv.SetOnTouchListener(new Platforms.Android.CtdNativeTouchListener(nv, OnNativeTouch));
-                }
-            };
+            GameCanvas.HandlerChanged += OnCanvasHandlerChanged;
+        }
+#endif
+    }
+
+    private void OnCanvasHandlerChanged(object sender, EventArgs e)
+    {
+#if ANDROID
+        if (GameCanvas.Handler?.PlatformView is Android.Views.View nv)
+        {
+            nv.SetOnTouchListener(new Platforms.Android.CtdNativeTouchListener(nv, OnNativeTouch));
         }
 #endif
     }
@@ -122,43 +133,52 @@ public partial class ConnectTheDotsPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() => GameCanvas.Invalidate());
     }
 
-    private void OnRestartClicked(object sender, EventArgs e)
+    private async void OnGameEnded(bool isWin)
     {
-        AudioService.Instance.Play("tap");
-        _lastCell = (-1, -1);
-        _isDragging = false;
-        _vm?.Restart();
+        _vm?.StopTimer();
+        int total = ProgressService.GetTimerSeconds(_startLevel);
+        int elapsed = total - _vm.TimeRemainingSec;
+
+        int stars = isWin ? ProgressService.CalcStars(elapsed, total) : 0;
+        int coins = isWin ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
+
+        await ResultPopup.Show(isWin, _startLevel, elapsed, total, stars, coins,
+            isWin ? null : "Time's Up!", "connectthedots");
+    }
+
+    private void OnNextLevel(object sender, EventArgs e)
+    {
+        _startLevel++;
+        Cleanup();
+        InitGame(_startLevel);
+    }
+
+    private void OnRetry(object sender, EventArgs e)
+    {
+        Cleanup();
+        InitGame(_startLevel);
+    }
+
+    private void OnPause(object sender, EventArgs e)
+    {
+        try { _vm?.PauseTimer(); } catch { }
+        PauseOverlay.Show();
+    }
+
+    private void OnResumeGame(object sender, EventArgs e)
+    {
+        try { _vm?.ResumeTimer(); } catch { }
     }
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
         AudioService.Instance.Play("tap");
-        await Shell.Current.GoToAsync("..");
-    }
-
-    private async void OnGameEnded(bool win)
-    {
-        AudioService.Instance.Play(win ? "win" : "lose");
-        if (win)
-        {
-            int coins = _vm.Difficulty switch
-            {
-                "EASY" => 5,
-                "MEDIUM" => 10,
-                "HARD" => 15,
-                _ => 20
-            };
-            CoinService.AddCoins("connectthedots", coins);
-            ProgressService.Instance.CompleteLevel("connectthedots", _startLevel, 3);
-        }
-        await DisplayAlert(win ? "You Win!" : "Game Over",
-            win ? $"Level {_startLevel} completed!" : "Try again!",
-            "OK");
-        if (win)
-        {
-            _startLevel++;
-            _vm.StartLevel(_startLevel);
-        }
+        _vm?.PauseTimer();
+        bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave", "Stay");
+        if (leave)
+            await Shell.Current.GoToAsync("..");
+        else
+            try { _vm?.ResumeTimer(); } catch { }
     }
 
     protected override bool OnBackButtonPressed()

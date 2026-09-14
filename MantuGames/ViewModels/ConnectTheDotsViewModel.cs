@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MantuGames.Models;
+using MantuGames.Services;
 
 namespace MantuGames.ViewModels;
 
@@ -11,6 +12,7 @@ public class CtdViewModel : INotifyPropertyChanged
     private int? _activePair;
     private readonly List<(int r, int c)> _currentPath = new();
     private readonly Dictionary<int, List<(int r, int c)>> _completedPaths = new();
+    private System.Threading.Timer _timer;
 
     public int Rows => _puzzle?.Rows ?? 5;
     public int Cols => _puzzle?.Cols ?? 5;
@@ -18,6 +20,7 @@ public class CtdViewModel : INotifyPropertyChanged
     public Dictionary<int, List<(int r, int c)>> CompletedPaths => _completedPaths;
     public int? ActivePair => _activePair;
     public List<(int r, int c)> CurrentPath => _currentPath;
+    public int CurrentLevel => _level;
 
     private string _levelDisplay = "Level 1";
     public string LevelDisplay { get => _levelDisplay; set { _levelDisplay = value; OnPropertyChanged(); } }
@@ -27,6 +30,13 @@ public class CtdViewModel : INotifyPropertyChanged
 
     private bool _isGameOver;
     public bool IsGameOver { get => _isGameOver; set { _isGameOver = value; OnPropertyChanged(); } }
+
+    private int _timeRemainingSec;
+    public int TimeRemainingSec
+    {
+        get => _timeRemainingSec;
+        set { _timeRemainingSec = value; OnPropertyChanged(); }
+    }
 
     public event Action BoardChanged;
     public event Action<bool> GameEnded;
@@ -44,6 +54,7 @@ public class CtdViewModel : INotifyPropertyChanged
         _activePair = null;
         _currentPath.Clear();
         _completedPaths.Clear();
+        StopTimer();
 
         for (int i = 0; i < _puzzle.Pairs.Count; i++)
             _completedPaths[i] = new List<(int, int)>();
@@ -58,13 +69,48 @@ public class CtdViewModel : INotifyPropertyChanged
         };
 
         IsGameOver = false;
+        TimeRemainingSec = ProgressService.GetTimerSeconds(level);
         BoardChanged?.Invoke();
+        StartTimer();
+    }
+
+    private void StartTimer()
+    {
+        StopTimer();
+        _timer = new System.Threading.Timer(_ =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                if (IsGameOver) return;
+                if (TimeRemainingSec > 0) TimeRemainingSec--;
+                else
+                {
+                    IsGameOver = true;
+                    StopTimer();
+                    GameEnded?.Invoke(false);
+                }
+            });
+        }, null, 1000, 1000);
+    }
+
+    public void StopTimer()
+    {
+        _timer?.Dispose();
+        _timer = null;
+    }
+
+    public void PauseTimer() => StopTimer();
+
+    public void ResumeTimer()
+    {
+        if (!IsGameOver) StartTimer();
     }
 
     public void Restart() => StartLevel(_level);
 
     public void Cleanup()
     {
+        StopTimer();
         BoardChanged = null;
         GameEnded = null;
     }
@@ -179,6 +225,7 @@ public class CtdViewModel : INotifyPropertyChanged
         if (filled.Count < total * 0.7f) return;
 
         IsGameOver = true;
+        StopTimer();
         GameEnded?.Invoke(true);
     }
 

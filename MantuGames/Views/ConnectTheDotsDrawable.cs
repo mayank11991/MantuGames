@@ -95,11 +95,13 @@ public class CtdDrawable : IDrawable
     private void DrawGlowLine(ICanvas canvas, float x1, float y1, float x2, float y2, float thickness, Color color)
     {
         canvas.StrokeLineCap = LineCap.Round;
+        float maxScale = (_cellSize * 0.30f) / (thickness * 0.5f);
 
-        for (int i = 6; i >= 1; i--)
+        for (int i = 12; i >= 1; i--)
         {
-            float scale = 1f + (i * 0.18f);
-            float alpha = 0.04f + (0.03f * (7 - i));
+            float t = i / 12f;
+            float scale = 1f + t * (maxScale - 1f);
+            float alpha = 0.02f + (1f - t) * 0.18f;
             canvas.StrokeColor = color.WithAlpha(alpha);
             canvas.StrokeSize = thickness * scale;
             canvas.DrawLine(x1, y1, x2, y2);
