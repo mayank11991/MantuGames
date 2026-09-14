@@ -135,7 +135,7 @@ public class CtdDrawable : IDrawable
     {
         foreach (var pair in _vm.Pairs)
         {
-            float radius = _cellSize * 0.32f;
+            float radius = _cellSize * 0.10f;
             DrawDot(canvas, pair.R1, pair.C1, pair.Color, radius);
             DrawDot(canvas, pair.R2, pair.C2, pair.Color, radius);
         }
@@ -145,11 +145,14 @@ public class CtdDrawable : IDrawable
     {
         float cx = _offsetX + c * _cellSize + _cellSize / 2;
         float cy = _offsetY + r * _cellSize + _cellSize / 2;
+        float maxGlowRadius = _cellSize * 0.30f;
+        float maxScale = maxGlowRadius / radius;
 
-        for (int i = 6; i >= 1; i--)
+        for (int i = 12; i >= 1; i--)
         {
-            float scale = 1f + (i * 0.15f);
-            float alpha = 0.03f + (0.035f * (7 - i));
+            float t = i / 12f;
+            float scale = 1f + t * (maxScale - 1f);
+            float alpha = 0.02f + (1f - t) * 0.18f;
             canvas.FillColor = color.WithAlpha(alpha);
             canvas.FillCircle(cx, cy, radius * scale);
         }
@@ -157,10 +160,10 @@ public class CtdDrawable : IDrawable
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
 
-        canvas.FillColor = Colors.White.WithAlpha(0.55f);
+        canvas.FillColor = Colors.White.WithAlpha(0.6f);
         canvas.FillCircle(cx - radius * 0.15f, cy - radius * 0.2f, radius * 0.3f);
 
-        canvas.FillColor = Colors.White.WithAlpha(0.9f);
+        canvas.FillColor = Colors.White.WithAlpha(0.95f);
         canvas.FillCircle(cx - radius * 0.1f, cy - radius * 0.25f, radius * 0.12f);
     }
 
