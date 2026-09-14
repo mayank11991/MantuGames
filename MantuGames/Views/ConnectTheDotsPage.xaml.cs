@@ -21,6 +21,10 @@ public partial class ConnectTheDotsPage : ContentPage
     {
         InitializeComponent();
         this.AddBannerAd();
+
+        CtdTouchBridge.OnPointerPressed = HandlePressed;
+        CtdTouchBridge.OnPointerMoved = HandleMoved;
+        CtdTouchBridge.OnPointerReleased = HandleReleased;
     }
 
     protected override void OnAppearing()
@@ -59,60 +63,58 @@ public partial class ConnectTheDotsPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() => GameCanvas.Invalidate());
     }
 
-    private (int r, int c) CellFromTouchOverlay(PointF? overlayPos)
+    private (int r, int c) CellFromNativeTouch(float nativeX, float nativeY)
     {
-        if (overlayPos == null || _vm == null) return (-1, -1);
-
         var drawable = GameCanvas.Drawable as CtdDrawable;
-        if (drawable == null) return (-1, -1);
+        if (drawable == null || _vm == null) return (-1, -1);
 
-        var overlayBounds = TouchOverlay.Bounds;
         var canvasBounds = GameCanvas.Bounds;
-
-        float scaleX = (float)(canvasBounds.Width / overlayBounds.Width);
-        float scaleY = (float)(canvasBounds.Height / overlayBounds.Height);
-
-        float canvasX = overlayPos.Value.X * scaleX;
-        float canvasY = overlayPos.Value.Y * scaleY;
-
+        float canvasX = (float)canvasBounds.X + nativeX;
+        float canvasY = (float)canvasBounds.Y + nativeY;
         return drawable.HitTest(canvasX, canvasY);
     }
 
-    private void OnPointerPressed(object sender, PointerEventArgs e)
+    private void HandlePressed(float x, float y)
     {
-        if (_vm == null || _vm.IsGameOver) return;
-        var pos = e.GetPosition(TouchOverlay);
-        var cell = CellFromTouchOverlay(pos);
-        Console.WriteLine($"[CTD] DOWN ({pos?.X:F1},{pos?.Y:F1}) cell=({cell.r},{cell.c})");
-        if (cell.r >= 0)
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            _isDragging = true;
+            if (_vm == null || _vm.IsGameOver) return;
+            var cell = CellFromNativeTouch(x, y);
+            Console.WriteLine($"[CTD] DOWN native=({x:F1},{y:F1}) cell=({cell.r},{cell.c})");
+            if (cell.r >= 0)
+            {
+                _isDragging = true;
+                _lastCell = cell;
+                _vm.OnPointerDown(cell);
+            }
+        });
+    }
+
+    private void HandleMoved(float x, float y)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            if (!_isDragging || _vm == null || _vm.IsGameOver) return;
+            var cell = CellFromNativeTouch(x, y);
+            if (cell.r < 0 || cell == _lastCell) return;
+            Console.WriteLine($"[CTD] MOVE native=({x:F1},{y:F1}) cell=({cell.r},{cell.c})");
             _lastCell = cell;
-            _vm.OnPointerDown(cell);
-        }
+            _vm.OnPointerDrag(cell);
+        });
     }
 
-    private void OnPointerMoved(object sender, PointerEventArgs e)
+    private void HandleReleased(float x, float y)
     {
-        if (!_isDragging || _vm == null || _vm.IsGameOver) return;
-        var pos = e.GetPosition(TouchOverlay);
-        var cell = CellFromTouchOverlay(pos);
-        if (cell.r < 0 || cell == _lastCell) return;
-        Console.WriteLine($"[CTD] MOVE cell=({cell.r},{cell.c})");
-        _lastCell = cell;
-        _vm.OnPointerDrag(cell);
-    }
-
-    private void OnPointerReleased(object sender, PointerEventArgs e)
-    {
-        if (_vm == null) return;
-        var pos = e.GetPosition(TouchOverlay);
-        var cell = CellFromTouchOverlay(pos);
-        Console.WriteLine($"[CTD] UP cell=({cell.r},{cell.c}) dragging={_isDragging}");
-        if (_isDragging && cell.r >= 0)
-            _vm.OnPointerUp(cell);
-        _isDragging = false;
-        _lastCell = (-1, -1);
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            if (_vm == null) return;
+            var cell = CellFromNativeTouch(x, y);
+            Console.WriteLine($"[CTD] UP native=({x:F1},{y:F1}) cell=({cell.r},{cell.c}) dragging={_isDragging}");
+            if (_isDragging && cell.r >= 0)
+                _vm.OnPointerUp(cell);
+            _isDragging = false;
+            _lastCell = (-1, -1);
+        });
     }
 
     private void OnRestartClicked(object sender, EventArgs e)

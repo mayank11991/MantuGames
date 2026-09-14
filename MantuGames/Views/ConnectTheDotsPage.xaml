@@ -44,23 +44,11 @@
         </Grid>
 
         <!-- Game Canvas -->
-        <Grid Grid.Row="1">
-            <GraphicsView x:Name="GameCanvas"
-                          BackgroundColor="Transparent"
-                          HorizontalOptions="Fill"
-                          VerticalOptions="Fill" />
-            <ContentView x:Name="TouchOverlay"
-                         BackgroundColor="Transparent"
-                         HorizontalOptions="Fill"
-                         VerticalOptions="Fill">
-                <ContentView.GestureRecognizers>
-                    <PointerGestureRecognizer PointerPressed="OnPointerPressed"
-                                              PointerMoved="OnPointerMoved"
-                                              PointerReleased="OnPointerReleased"
-                                              PointerExited="OnPointerReleased" />
-                </ContentView.GestureRecognizers>
-            </ContentView>
-        </Grid>
+        <GraphicsView x:Name="GameCanvas"
+                      Grid.Row="1"
+                      BackgroundColor="Transparent"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill" />
 
         <!-- Bottom -->
         <HorizontalStackLayout Grid.Row="2"
