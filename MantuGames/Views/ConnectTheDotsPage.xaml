@@ -6,7 +6,7 @@
     BackgroundColor="#1B2838"
     Shell.NavBarIsVisible="False">
 
-    <Grid x:Name="RootGrid" RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*,Auto">
 
         <!-- Header -->
         <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,48,16,12">
@@ -44,11 +44,23 @@
         </Grid>
 
         <!-- Game Canvas -->
-        <GraphicsView x:Name="GameCanvas"
-                      Grid.Row="1"
-                      BackgroundColor="Transparent"
-                      HorizontalOptions="Fill"
-                      VerticalOptions="Fill" />
+        <Grid Grid.Row="1">
+            <GraphicsView x:Name="GameCanvas"
+                          BackgroundColor="Transparent"
+                          HorizontalOptions="Fill"
+                          VerticalOptions="Fill" />
+            <ContentView x:Name="TouchOverlay"
+                         BackgroundColor="Transparent"
+                         HorizontalOptions="Fill"
+                         VerticalOptions="Fill">
+                <ContentView.GestureRecognizers>
+                    <PointerGestureRecognizer PointerPressed="OnPointerPressed"
+                                              PointerMoved="OnPointerMoved"
+                                              PointerReleased="OnPointerReleased"
+                                              PointerExited="OnPointerReleased" />
+                </ContentView.GestureRecognizers>
+            </ContentView>
+        </Grid>
 
         <!-- Bottom -->
         <HorizontalStackLayout Grid.Row="2"

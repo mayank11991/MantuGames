@@ -44,14 +44,6 @@ public partial class ConnectTheDotsPage : ContentPage
 
         _isDragging = false;
         _lastCell = (-1, -1);
-
-        // Add pointer gestures to the page itself
-        var pointer = new PointerGestureRecognizer();
-        pointer.PointerPressed += OnPointerPressed;
-        pointer.PointerMoved += OnPointerMoved;
-        pointer.PointerReleased += OnPointerReleased;
-        pointer.PointerExited += OnPointerReleased;
-        RootGrid.GestureRecognizers.Add(pointer);
     }
 
     protected override void OnDisappearing()
@@ -67,29 +59,31 @@ public partial class ConnectTheDotsPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() => GameCanvas.Invalidate());
     }
 
-    private (int r, int c) CellFromScreenPosition(PointF? screenPos)
+    private (int r, int c) CellFromTouchOverlay(PointF? overlayPos)
     {
-        if (screenPos == null || _vm == null) return (-1, -1);
+        if (overlayPos == null || _vm == null) return (-1, -1);
 
         var drawable = GameCanvas.Drawable as CtdDrawable;
         if (drawable == null) return (-1, -1);
 
-        // Convert screen coordinates to canvas-local coordinates
+        var overlayBounds = TouchOverlay.Bounds;
         var canvasBounds = GameCanvas.Bounds;
-        float localX = (float)(screenPos.Value.X - canvasBounds.X);
-        float localY = (float)(screenPos.Value.Y - canvasBounds.Y);
 
-        return drawable.HitTest(localX, localY);
+        float scaleX = (float)(canvasBounds.Width / overlayBounds.Width);
+        float scaleY = (float)(canvasBounds.Height / overlayBounds.Height);
+
+        float canvasX = overlayPos.Value.X * scaleX;
+        float canvasY = overlayPos.Value.Y * scaleY;
+
+        return drawable.HitTest(canvasX, canvasY);
     }
 
     private void OnPointerPressed(object sender, PointerEventArgs e)
     {
         if (_vm == null || _vm.IsGameOver) return;
-
-        var pos = e.GetPosition(RootGrid);
-        var cell = CellFromScreenPosition(pos);
-        Console.WriteLine($"[CTD] PointerPressed screen=({pos?.X:F1},{pos?.Y:F1}) cell=({cell.r},{cell.c})");
-
+        var pos = e.GetPosition(TouchOverlay);
+        var cell = CellFromTouchOverlay(pos);
+        Console.WriteLine($"[CTD] DOWN ({pos?.X:F1},{pos?.Y:F1}) cell=({cell.r},{cell.c})");
         if (cell.r >= 0)
         {
             _isDragging = true;
@@ -101,12 +95,10 @@ public partial class ConnectTheDotsPage : ContentPage
     private void OnPointerMoved(object sender, PointerEventArgs e)
     {
         if (!_isDragging || _vm == null || _vm.IsGameOver) return;
-
-        var pos = e.GetPosition(RootGrid);
-        var cell = CellFromScreenPosition(pos);
+        var pos = e.GetPosition(TouchOverlay);
+        var cell = CellFromTouchOverlay(pos);
         if (cell.r < 0 || cell == _lastCell) return;
-
-        Console.WriteLine($"[CTD] PointerMoved cell=({cell.r},{cell.c})");
+        Console.WriteLine($"[CTD] MOVE cell=({cell.r},{cell.c})");
         _lastCell = cell;
         _vm.OnPointerDrag(cell);
     }
@@ -114,17 +106,11 @@ public partial class ConnectTheDotsPage : ContentPage
     private void OnPointerReleased(object sender, PointerEventArgs e)
     {
         if (_vm == null) return;
-
-        var pos = e.GetPosition(RootGrid);
-        var cell = CellFromScreenPosition(pos);
-
-        Console.WriteLine($"[CTD] PointerReleased cell=({cell.r},{cell.c}) isDragging={_isDragging}");
-
+        var pos = e.GetPosition(TouchOverlay);
+        var cell = CellFromTouchOverlay(pos);
+        Console.WriteLine($"[CTD] UP cell=({cell.r},{cell.c}) dragging={_isDragging}");
         if (_isDragging && cell.r >= 0)
-        {
             _vm.OnPointerUp(cell);
-        }
-
         _isDragging = false;
         _lastCell = (-1, -1);
     }

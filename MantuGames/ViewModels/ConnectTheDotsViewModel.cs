@@ -11,7 +11,6 @@ public class CtdViewModel : INotifyPropertyChanged
     private int? _activePair;
     private readonly List<(int r, int c)> _currentPath = new();
     private readonly Dictionary<int, List<(int r, int c)>> _completedPaths = new();
-    private (int r, int c) _startDot;
 
     public int Rows => _puzzle?.Rows ?? 5;
     public int Cols => _puzzle?.Cols ?? 5;
@@ -43,7 +42,6 @@ public class CtdViewModel : INotifyPropertyChanged
         _level = level;
         _puzzle = CtdPuzzle.Generate(level);
         _activePair = null;
-        _startDot = (-1, -1);
         _currentPath.Clear();
         _completedPaths.Clear();
 
@@ -71,106 +69,68 @@ public class CtdViewModel : INotifyPropertyChanged
         GameEnded = null;
     }
 
-    // Called when finger touches the screen
     public void OnPointerDown((int r, int c) cell)
     {
         if (IsGameOver) return;
 
-        int pairIdx = FindPairAt(cell.r, cell.c);
-        Console.WriteLine($"[CTD] PointerDown ({cell.r},{cell.c}) pairIdx={pairIdx}");
+        int pair = FindPairAt(cell.r, cell.c);
 
-        if (pairIdx >= 0)
+        if (pair >= 0)
         {
-            // Touching a dot - start a new path
-            if (_completedPaths.ContainsKey(pairIdx) && _completedPaths[pairIdx].Count > 0)
-                _completedPaths[pairIdx].Clear();
+            if (_completedPaths.ContainsKey(pair) && _completedPaths[pair].Count > 0)
+                _completedPaths[pair].Clear();
 
-            _activePair = pairIdx;
-            _startDot = cell;
+            _activePair = pair;
             _currentPath.Clear();
             _currentPath.Add(cell);
             BoardChanged?.Invoke();
-        }
-    }
-
-    // Called while finger moves across cells
-    public void OnPointerDrag((int r, int c) cell)
-    {
-        if (IsGameOver || !_activePair.HasValue) return;
-
-        int pairIdx = _activePair.Value;
-
-        // Dragging onto a dot
-        int tappedPair = FindPairAt(cell.r, cell.c);
-        if (tappedPair >= 0)
-        {
-            // Same pair dot - try to complete
-            if (tappedPair == pairIdx)
-            {
-                var p = _puzzle.Pairs[pairIdx];
-                bool isEnd1 = (cell.r == p.R1 && cell.c == p.C1);
-                bool isEnd2 = (cell.r == p.R2 && cell.c == p.C2);
-                bool startedAtEnd1 = (_startDot.r == p.R1 && _startDot.c == p.C1);
-
-                // Must be the OTHER dot (not the start)
-                if ((startedAtEnd1 && isEnd2) || (!startedAtEnd1 && isEnd1))
-                {
-                    if (!_currentPath.Contains(cell))
-                        _currentPath.Add(cell);
-
-                    Console.WriteLine($"[CTD] COMPLETING via drag! Path has {(_currentPath.Count)} cells");
-                    CompletePath(pairIdx);
-                    return;
-                }
-            }
-            // Different pair - skip
             return;
         }
 
-        // Empty cell - add to path if adjacent and not already in path
-        if (_currentPath.Count > 0)
-        {
-            var last = _currentPath[^1];
-            if (Math.Abs(last.r - cell.r) + Math.Abs(last.c - cell.c) == 1)
-            {
-                if (!_currentPath.Contains(cell))
-                {
-                    _currentPath.Add(cell);
-                    BoardChanged?.Invoke();
-                }
-            }
-        }
+        _activePair = null;
+        _currentPath.Clear();
     }
 
-    // Called when finger lifts off
+    public void OnPointerDrag((int r, int c) cell)
+    {
+        if (IsGameOver || !_activePair.HasValue) return;
+        if (_currentPath.Contains(cell)) return;
+        if (IsCellOwnedByOther(cell, _activePair.Value)) return;
+
+        var last = _currentPath[^1];
+        if (Math.Abs(last.r - cell.r) + Math.Abs(last.c - cell.c) != 1) return;
+
+        int tappedPair = FindPairAt(cell.r, cell.c);
+
+        if (tappedPair >= 0 && tappedPair != _activePair.Value)
+            return;
+
+        if (tappedPair == _activePair.Value)
+        {
+            var p = _puzzle.Pairs[_activePair.Value];
+            bool isStart = (_currentPath[0].r == p.R1 && _currentPath[0].c == p.C1);
+            bool isEnd = (_currentPath[0].r == p.R2 && _currentPath[0].c == p.C2);
+
+            bool reachedEnd = (isStart && cell.r == p.R2 && cell.c == p.C2);
+            bool reachedStart = (isEnd && cell.r == p.R1 && cell.c == p.C1);
+
+            if ((reachedEnd || reachedStart) && _currentPath.Count >= 2)
+            {
+                _currentPath.Add(cell);
+                CompletePath(_activePair.Value);
+                return;
+            }
+            return;
+        }
+
+        _currentPath.Add(cell);
+        BoardChanged?.Invoke();
+    }
+
     public void OnPointerUp((int r, int c) cell)
     {
         if (IsGameOver || !_activePair.HasValue) return;
-
-        int pairIdx = _activePair.Value;
-        var p = _puzzle.Pairs[pairIdx];
-
-        Console.WriteLine($"[CTD] PointerUp ({cell.r},{cell.c}) pathLen={_currentPath.Count}");
-
-        // Check if we ended on the matching dot
-        bool isEnd1 = (cell.r == p.R1 && cell.c == p.C1);
-        bool isEnd2 = (cell.r == p.R2 && cell.c == p.C2);
-        bool startedAtEnd1 = (_startDot.r == p.R1 && _startDot.c == p.C1);
-
-        bool reachedOtherEnd = (startedAtEnd1 && isEnd2) || (!startedAtEnd1 && isEnd1);
-
-        if (reachedOtherEnd && _currentPath.Count >= 2)
-        {
-            if (!_currentPath.Contains(cell))
-                _currentPath.Add(cell);
-
-            Console.WriteLine($"[CTD] COMPLETING via release!");
-            CompletePath(pairIdx);
-        }
-        else
-        {
-            Console.WriteLine($"[CTD] Path not complete - startedAtEnd1={startedAtEnd1} isEnd1={isEnd1} isEnd2={isEnd2} pathLen={_currentPath.Count}");
-        }
+        BoardChanged?.Invoke();
     }
 
     private int FindPairAt(int r, int c)
@@ -184,11 +144,20 @@ public class CtdViewModel : INotifyPropertyChanged
         return -1;
     }
 
+    private bool IsCellOwnedByOther((int r, int c) cell, int excludePair)
+    {
+        foreach (var kvp in _completedPaths)
+        {
+            if (kvp.Key == excludePair) continue;
+            if (kvp.Value.Contains(cell)) return true;
+        }
+        return false;
+    }
+
     private void CompletePath(int pairIdx)
     {
         _completedPaths[pairIdx] = new List<(int, int)>(_currentPath);
         _activePair = null;
-        _startDot = (-1, -1);
         _currentPath.Clear();
         BoardChanged?.Invoke();
         CheckWin();
