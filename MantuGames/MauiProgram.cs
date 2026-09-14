@@ -53,13 +53,6 @@ public static class MauiProgram
 #endif
         });
 
-        Microsoft.Maui.Handlers.GraphicsViewHandler.Mapper.AppendToMapping("NativeTouch", (handler, view) =>
-        {
-#if ANDROID
-            handler.PlatformView.SetOnTouchListener(new MantuGames.Platforms.Android.GraphicsTouchListener(view as Microsoft.Maui.Controls.GraphicsView));
-#endif
-        });
-
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

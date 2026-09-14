@@ -48,7 +48,14 @@
                       Grid.Row="1"
                       BackgroundColor="Transparent"
                       HorizontalOptions="Fill"
-                      VerticalOptions="Fill" />
+                      VerticalOptions="Fill">
+            <GraphicsView.GestureRecognizers>
+                <PointerGestureRecognizer PointerPressed="OnPointerPressed"
+                                          PointerMoved="OnPointerMoved"
+                                          PointerReleased="OnPointerReleased"
+                                          PointerExited="OnPointerReleased" />
+            </GraphicsView.GestureRecognizers>
+        </GraphicsView>
 
         <!-- Bottom -->
         <HorizontalStackLayout Grid.Row="2"

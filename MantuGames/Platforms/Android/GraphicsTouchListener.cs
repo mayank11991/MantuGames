@@ -1,36 +1,34 @@
 using Android.Views;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Compatibility.Platform.Android;
-using Microsoft.Maui.Graphics;
 
 namespace MantuGames.Platforms.Android;
 
 public class GraphicsTouchListener : Java.Lang.Object, global::Android.Views.View.IOnTouchListener
 {
-    private readonly GraphicsView _graphicsView;
+    private readonly global::Android.Views.View _nativeView;
+    private readonly Action<float, float, bool, bool, bool> _callback;
 
-    public GraphicsTouchListener(GraphicsView gv) => _graphicsView = gv;
+    public GraphicsTouchListener(global::Android.Views.View view, Action<float, float, bool, bool, bool> callback)
+    {
+        _nativeView = view;
+        _callback = callback;
+    }
 
     public bool OnTouch(global::Android.Views.View v, MotionEvent e)
     {
-        if (_graphicsView == null) return false;
-
         float x = e.GetX();
         float y = e.GetY();
-
-        Console.WriteLine($"[CTD-NATIVE] Action={e.ActionMasked} ({x:F1},{y:F1})");
 
         switch (e.ActionMasked)
         {
             case MotionEventActions.Down:
-                MantuGames.Helpers.CtdTouchBridge.OnPointerPressed?.Invoke(x, y);
+                _callback?.Invoke(x, y, true, false, false);
                 return true;
             case MotionEventActions.Move:
-                MantuGames.Helpers.CtdTouchBridge.OnPointerMoved?.Invoke(x, y);
+                _callback?.Invoke(x, y, false, true, false);
                 return true;
             case MotionEventActions.Up:
             case MotionEventActions.Cancel:
-                MantuGames.Helpers.CtdTouchBridge.OnPointerReleased?.Invoke(x, y);
+                _callback?.Invoke(x, y, false, false, true);
                 return true;
         }
         return false;
