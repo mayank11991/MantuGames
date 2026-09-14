@@ -45,11 +45,12 @@ public partial class ConnectTheDotsPage : ContentPage
         _isDragging = false;
         _lastCell = (-1, -1);
 
-        var pointerGesture = new PointerGestureRecognizer();
-        pointerGesture.PointerEntered += OnPointerEntered;
-        pointerGesture.PointerMoved += OnPointerMoved;
-        pointerGesture.PointerExited += OnPointerExited;
-        GameCanvas.GestureRecognizers.Add(pointerGesture);
+        var pointer = new PointerGestureRecognizer();
+        pointer.PointerPressed += OnPointerPressed;
+        pointer.PointerMoved += OnPointerMoved;
+        pointer.PointerReleased += OnPointerReleased;
+        pointer.PointerExited += OnPointerReleased;
+        TouchSurface.GestureRecognizers.Add(pointer);
     }
 
     protected override void OnDisappearing()
@@ -65,58 +66,65 @@ public partial class ConnectTheDotsPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() => GameCanvas.Invalidate());
     }
 
-    private (int r, int c) HitTest(PointF? position)
+    private (int r, int c) CellFromPosition(PointF? pos)
     {
-        if (position == null) return (-1, -1);
+        if (pos == null || _vm == null) return (-1, -1);
         var drawable = GameCanvas.Drawable as CtdDrawable;
-        return drawable?.HitTest(position.Value.X, position.Value.Y) ?? (-1, -1);
+        return drawable?.HitTest(pos.Value.X, pos.Value.Y) ?? (-1, -1);
     }
 
-    private void OnPointerEntered(object sender, PointerEventArgs e)
+    private void OnPointerPressed(object sender, PointerEventArgs e)
     {
-        var pos = e.GetPosition(GameCanvas);
-        var cell = HitTest(pos);
-        if (cell.r < 0) return;
+        if (_vm == null || _vm.IsGameOver) return;
 
-        _isDragging = true;
-        _lastCell = cell;
-        _vm?.OnCellTapped(cell);
+        var pos = e.GetPosition(TouchSurface);
+        var cell = CellFromPosition(pos);
+        Console.WriteLine($"[CTD] PointerPressed cell=({cell.r},{cell.c})");
+
+        if (cell.r >= 0)
+        {
+            _isDragging = true;
+            _lastCell = cell;
+            _vm.OnPointerDown(cell);
+        }
     }
 
     private void OnPointerMoved(object sender, PointerEventArgs e)
     {
         if (!_isDragging || _vm == null || _vm.IsGameOver) return;
 
-        var pos = e.GetPosition(GameCanvas);
-        var cell = HitTest(pos);
-        if (cell.r < 0) return;
+        var pos = e.GetPosition(TouchSurface);
+        var cell = CellFromPosition(pos);
+        if (cell.r < 0 || cell == _lastCell) return;
 
-        if (cell != _lastCell)
-        {
-            _lastCell = cell;
-            _vm.OnCellTapped(cell);
-        }
+        Console.WriteLine($"[CTD] PointerMoved cell=({cell.r},{cell.c})");
+        _lastCell = cell;
+        _vm.OnPointerDrag(cell);
     }
 
-    private void OnPointerExited(object sender, PointerEventArgs e)
+    private void OnPointerReleased(object sender, PointerEventArgs e)
     {
+        if (_vm == null) return;
+
+        var pos = e.GetPosition(TouchSurface);
+        var cell = CellFromPosition(pos);
+
+        Console.WriteLine($"[CTD] PointerReleased cell=({cell.r},{cell.c}) isDragging={_isDragging}");
+
+        if (_isDragging && cell.r >= 0)
+        {
+            _vm.OnPointerUp(cell);
+        }
+
         _isDragging = false;
         _lastCell = (-1, -1);
-    }
-
-    private void OnCanvasTapped(object sender, TappedEventArgs e)
-    {
-        if (_vm == null || _vm.IsGameOver) return;
-        var pos = e.GetPosition(GameCanvas);
-        var cell = HitTest(pos);
-        if (cell.r >= 0)
-            _vm.OnCellTapped(cell);
     }
 
     private void OnRestartClicked(object sender, EventArgs e)
     {
         AudioService.Instance.Play("tap");
         _lastCell = (-1, -1);
+        _isDragging = false;
         _vm?.Restart();
     }
 

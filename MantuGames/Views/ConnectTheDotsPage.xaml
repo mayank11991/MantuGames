@@ -43,23 +43,23 @@
                          Clicked="OnRestartClicked" />
         </Grid>
 
-        <!-- Game Grid -->
+        <!-- Game: Canvas + touch overlay stacked -->
         <Grid Grid.Row="1" Padding="4">
             <GraphicsView x:Name="GameCanvas"
                           BackgroundColor="Transparent"
                           HorizontalOptions="Fill"
-                          VerticalOptions="Fill">
-                <GraphicsView.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnCanvasTapped" />
-                </GraphicsView.GestureRecognizers>
-            </GraphicsView>
+                          VerticalOptions="Fill" />
+            <BoxView x:Name="TouchSurface"
+                     BackgroundColor="Transparent"
+                     InputTransparent="False"
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Fill" />
         </Grid>
 
-        <!-- Bottom: Hints -->
+        <!-- Bottom -->
         <HorizontalStackLayout Grid.Row="2"
                                HorizontalOptions="End"
-                               Padding="16,8,24,32"
-                               Spacing="4">
+                               Padding="16,8,24,32">
             <Border BackgroundColor="#FF9F1C"
                     StrokeThickness="0"
                     Padding="12"
@@ -68,17 +68,13 @@
                     <RoundRectangle CornerRadius="26" />
                 </Border.StrokeShape>
                 <Grid>
-                    <Label Text="💡"
-                           FontSize="22"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center" />
-                    <Label x:Name="HintsLabel"
-                           Text="2"
+                    <Label Text="💡" FontSize="22"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label x:Name="HintsLabel" Text="2"
                            FontFamily="MomoTrustDisplay"
                            FontSize="10" FontAttributes="Bold"
                            TextColor="#1B2838"
-                           HorizontalOptions="End"
-                           VerticalOptions="Start"
+                           HorizontalOptions="End" VerticalOptions="Start"
                            Margin="0,-2,-2,0" />
                 </Grid>
             </Border>
