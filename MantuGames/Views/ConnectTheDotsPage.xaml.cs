@@ -45,33 +45,41 @@ public partial class ConnectTheDotsPage : ContentPage
         _isDragging = false;
         _lastCell = (-1, -1);
 
-        GameCanvas.HandlerChanged += OnCanvasHandlerChanged;
+        AttachNativeTouch();
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        GameCanvas.HandlerChanged -= OnCanvasHandlerChanged;
         _vm?.Cleanup();
         _vm.BoardChanged -= OnBoardChanged;
         _vm.GameEnded -= OnGameEnded;
     }
 
-    private void OnCanvasHandlerChanged(object sender, EventArgs e)
+    private void AttachNativeTouch()
     {
-        if (GameCanvas.Handler?.PlatformView == null) return;
-
 #if ANDROID
-        var platformView = GameCanvas.Handler.PlatformView as Android.Views.View;
-        if (platformView != null)
+        if (GameCanvas.Handler?.PlatformView is Android.Views.View nativeView)
         {
-            Console.WriteLine($"[CTD] Handler attached: {platformView.GetType().Name}");
-            platformView.SetOnTouchListener(new MantuGames.Platforms.Android.GraphicsTouchListener(platformView, OnNativeTouch));
+            Console.WriteLine($"[CTD] Attaching native touch to {nativeView.GetType().Name}");
+            nativeView.SetOnTouchListener(new Platforms.Android.CtdNativeTouchListener(nativeView, OnNativeTouch));
+        }
+        else
+        {
+            Console.WriteLine($"[CTD] Handler={GameCanvas.Handler} PlatformView={GameCanvas.Handler?.PlatformView?.GetType().Name}");
+            GameCanvas.HandlerChanged += (s, e) =>
+            {
+                if (GameCanvas.Handler?.PlatformView is Android.Views.View nv)
+                {
+                    Console.WriteLine($"[CTD] Late attach native touch to {nv.GetType().Name}");
+                    nv.SetOnTouchListener(new Platforms.Android.CtdNativeTouchListener(nv, OnNativeTouch));
+                }
+            };
         }
 #endif
     }
 
-    private void OnNativeTouch(float x, float y, bool down, bool move, bool up)
+    private void OnNativeTouch(float x, float y, bool isDown, bool isMove, bool isUp)
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
@@ -80,27 +88,25 @@ public partial class ConnectTheDotsPage : ContentPage
             var drawable = GameCanvas.Drawable as CtdDrawable;
             if (drawable == null) return;
 
-            var canvasBounds = GameCanvas.Bounds;
-            float canvasX = (float)canvasBounds.X + x;
-            float canvasY = (float)canvasBounds.Y + y;
-            var cell = drawable.HitTest(canvasX, canvasY);
+            var cell = drawable.HitTest(x, y);
 
-            if (down)
+            if (isDown)
             {
-                Console.WriteLine($"[CTD] DOWN native=({x:F1},{y:F1}) canvas=({canvasX:F1},{canvasY:F1}) cell=({cell.r},{cell.c})");
+                Console.WriteLine($"[CTD] DOWN native=({x:F1},{y:F1}) cell=({cell.r},{cell.c})");
                 if (_vm.IsGameOver || cell.r < 0) return;
                 _isDragging = true;
                 _lastCell = cell;
                 _vm.OnPointerDown(cell);
             }
-            else if (move && _isDragging)
+            else if (isMove)
             {
-                if (_vm.IsGameOver || cell.r < 0 || cell == _lastCell) return;
+                if (!_isDragging || _vm.IsGameOver) return;
+                if (cell.r < 0 || cell == _lastCell) return;
                 Console.WriteLine($"[CTD] MOVE native=({x:F1},{y:F1}) cell=({cell.r},{cell.c})");
                 _lastCell = cell;
                 _vm.OnPointerDrag(cell);
             }
-            else if (up)
+            else if (isUp)
             {
                 Console.WriteLine($"[CTD] UP native=({x:F1},{y:F1}) cell=({cell.r},{cell.c}) dragging={_isDragging}");
                 if (_isDragging && cell.r >= 0)

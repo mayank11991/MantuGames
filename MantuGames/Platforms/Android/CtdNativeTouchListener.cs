@@ -1,22 +1,28 @@
 using Android.Views;
+using Android.Util;
 
 namespace MantuGames.Platforms.Android;
 
-public class GraphicsTouchListener : Java.Lang.Object, global::Android.Views.View.IOnTouchListener
+public class CtdNativeTouchListener : Java.Lang.Object, global::Android.Views.View.IOnTouchListener
 {
-    private readonly global::Android.Views.View _nativeView;
     private readonly Action<float, float, bool, bool, bool> _callback;
+    private readonly float _density;
 
-    public GraphicsTouchListener(global::Android.Views.View view, Action<float, float, bool, bool, bool> callback)
+    public CtdNativeTouchListener(Action<float, float, bool, bool, bool> callback)
     {
-        _nativeView = view;
         _callback = callback;
+    }
+
+    public CtdNativeTouchListener(global::Android.Views.View hostView, Action<float, float, bool, bool, bool> callback)
+    {
+        _callback = callback;
+        _density = hostView.Resources.DisplayMetrics.Density;
     }
 
     public bool OnTouch(global::Android.Views.View v, MotionEvent e)
     {
-        float x = e.GetX();
-        float y = e.GetY();
+        float x = e.GetX() / _density;
+        float y = e.GetY() / _density;
 
         switch (e.ActionMasked)
         {

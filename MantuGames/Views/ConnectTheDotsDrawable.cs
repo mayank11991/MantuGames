@@ -48,32 +48,49 @@ public class CtdDrawable : IDrawable
 
     private void DrawPaths(ICanvas canvas, int rows, int cols)
     {
-        float radius = _cellSize * 0.16f;
+        float lineRadius = _cellSize * 0.22f;
 
         foreach (var kvp in _vm.CompletedPaths)
         {
             if (kvp.Value.Count < 1) continue;
-            var color = _vm.GetPairColor(kvp.Key);
-
-            foreach (var (r, c) in kvp.Value)
-            {
-                float x = _offsetX + c * _cellSize;
-                float y = _offsetY + r * _cellSize;
-                canvas.FillColor = color;
-                canvas.FillRoundedRectangle(x + 2, y + 2, _cellSize - 4, _cellSize - 4, radius);
-            }
+            DrawPathLine(canvas, kvp.Value, _vm.GetPairColor(kvp.Key), lineRadius);
         }
 
         if (_vm.ActivePair.HasValue && _vm.CurrentPath.Count >= 1)
         {
-            var color = _vm.GetPairColor(_vm.ActivePair.Value);
-            foreach (var (r, c) in _vm.CurrentPath)
-            {
-                float x = _offsetX + c * _cellSize;
-                float y = _offsetY + r * _cellSize;
-                canvas.FillColor = color;
-                canvas.FillRoundedRectangle(x + 2, y + 2, _cellSize - 4, _cellSize - 4, radius);
-            }
+            DrawPathLine(canvas, _vm.CurrentPath, _vm.GetPairColor(_vm.ActivePair.Value), lineRadius);
+        }
+    }
+
+    private void DrawPathLine(ICanvas canvas, List<(int r, int c)> path, Color color, float radius)
+    {
+        canvas.FillColor = color;
+        canvas.StrokeColor = color;
+        canvas.StrokeSize = radius * 2;
+        canvas.StrokeLineCap = LineCap.Round;
+
+        if (path.Count == 1)
+        {
+            float cx = _offsetX + path[0].c * _cellSize + _cellSize / 2;
+            float cy = _offsetY + path[0].r * _cellSize + _cellSize / 2;
+            canvas.FillCircle(cx, cy, radius);
+            return;
+        }
+
+        for (int i = 0; i < path.Count - 1; i++)
+        {
+            float x1 = _offsetX + path[i].c * _cellSize + _cellSize / 2;
+            float y1 = _offsetY + path[i].r * _cellSize + _cellSize / 2;
+            float x2 = _offsetX + path[i + 1].c * _cellSize + _cellSize / 2;
+            float y2 = _offsetY + path[i + 1].r * _cellSize + _cellSize / 2;
+            canvas.DrawLine(x1, y1, x2, y2);
+        }
+
+        foreach (var (r, c) in path)
+        {
+            float cx = _offsetX + c * _cellSize + _cellSize / 2;
+            float cy = _offsetY + r * _cellSize + _cellSize / 2;
+            canvas.FillCircle(cx, cy, radius);
         }
     }
 

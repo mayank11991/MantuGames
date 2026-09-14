@@ -43,19 +43,12 @@
                          Clicked="OnRestartClicked" />
         </Grid>
 
-        <!-- Game Canvas -->
+        <!-- Game Canvas — touch handled natively via Handler -->
         <GraphicsView x:Name="GameCanvas"
                       Grid.Row="1"
                       BackgroundColor="Transparent"
                       HorizontalOptions="Fill"
-                      VerticalOptions="Fill">
-            <GraphicsView.GestureRecognizers>
-                <PointerGestureRecognizer PointerPressed="OnPointerPressed"
-                                          PointerMoved="OnPointerMoved"
-                                          PointerReleased="OnPointerReleased"
-                                          PointerExited="OnPointerReleased" />
-            </GraphicsView.GestureRecognizers>
-        </GraphicsView>
+                      VerticalOptions="Fill" />
 
         <!-- Bottom -->
         <HorizontalStackLayout Grid.Row="2"
