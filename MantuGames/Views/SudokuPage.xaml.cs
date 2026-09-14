@@ -94,7 +94,7 @@ namespace MantuGames.Views
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
+                Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
             }
         }
 
@@ -227,7 +227,7 @@ namespace MantuGames.Views
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error in OnGameEnded: {ex.Message}");
+                Console.WriteLine($"Error in OnGameEnded: {ex.Message}");
             }
         }
 

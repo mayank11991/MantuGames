@@ -84,7 +84,7 @@ public partial class CardMemoryPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in RevealThenEndAsync: {ex.Message}");
+            Console.WriteLine($"Error in RevealThenEndAsync: {ex.Message}");
         }
     }
 
@@ -100,7 +100,7 @@ public partial class CardMemoryPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
         }
     }
 
@@ -301,7 +301,7 @@ public partial class CardMemoryPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnGameEnded: {ex.Message}");
+            Console.WriteLine($"Error in OnGameEnded: {ex.Message}");
         }
     }
 

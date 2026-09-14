@@ -338,7 +338,7 @@ public partial class BlockPuzzlePage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnGameEnded: {ex.Message}");
+            Console.WriteLine($"Error in OnGameEnded: {ex.Message}");
         }
     }
 
@@ -407,7 +407,7 @@ public partial class BlockPuzzlePage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in AutoPlaceBestAsync: {ex.Message}");
+            Console.WriteLine($"Error in AutoPlaceBestAsync: {ex.Message}");
             SolutionButton.IsEnabled = true;
         }
     }
@@ -424,7 +424,7 @@ public partial class BlockPuzzlePage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
         }
     }
 

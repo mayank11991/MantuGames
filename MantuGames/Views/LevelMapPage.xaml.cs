@@ -110,13 +110,13 @@ public partial class LevelMapPage : ContentPage
         {
             AudioService.Instance.Play("tap");
             VibrationHelper.Click();
-            System.Diagnostics.Debug.WriteLine($"Navigating to {_gameRoute}?level={vm.LevelNumber}");
+            Console.WriteLine($"Navigating to {_gameRoute}?level={vm.LevelNumber}");
             await Shell.Current.GoToAsync($"{_gameRoute}?level={vm.LevelNumber}");
-            System.Diagnostics.Debug.WriteLine($"Navigation completed");
+            Console.WriteLine($"Navigation completed");
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            Console.WriteLine($"Navigation error: {ex.Message}");
         }
         finally
         {
@@ -141,7 +141,7 @@ public partial class LevelMapPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
         }
     }
 }

@@ -88,7 +88,7 @@ public partial class SplashPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in AnimateSlothAsync: {ex.Message}");
+            Console.WriteLine($"Error in AnimateSlothAsync: {ex.Message}");
         }
     }
 
@@ -169,7 +169,7 @@ public partial class SplashPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnLoaded: {ex.Message}");
+            Console.WriteLine($"Error in OnLoaded: {ex.Message}");
         }
     }
 }

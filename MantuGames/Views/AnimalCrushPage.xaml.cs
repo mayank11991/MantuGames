@@ -24,7 +24,7 @@ public partial class AnimalCrushPage : ContentPage
     {
         InitializeComponent();
         this.AddBannerAd();
-        System.Diagnostics.Debug.WriteLine("[AnimalCrush] Constructor");
+        Console.WriteLine("[AnimalCrush] Constructor");
     }
 
     protected override void OnAppearing()
@@ -75,7 +75,7 @@ public partial class AnimalCrushPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
         }
     }
 
@@ -649,7 +649,7 @@ public partial class AnimalCrushPage : ContentPage
     }
     private async Task ApplyPowerUp(AnimalCrushPuzzle.PowerUpKind kind, int r, int c, Border border)
     {
-        System.Diagnostics.Debug.WriteLine($"[AnimalCrush] ApplyPowerUp: {kind} at ({r},{c})");
+        Console.WriteLine($"[AnimalCrush] ApplyPowerUp: {kind} at ({r},{c})");
         
         int gained = await _vm.UsePowerUpAsync(kind, r, c);
         if (gained < 0) return;
@@ -830,7 +830,7 @@ public partial class AnimalCrushPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnGameEnded: {ex.Message}");
+            Console.WriteLine($"Error in OnGameEnded: {ex.Message}");
         }
     }
 

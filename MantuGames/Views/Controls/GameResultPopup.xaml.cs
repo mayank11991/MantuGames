@@ -134,7 +134,7 @@ public partial class GameResultPopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in MaybeRateNudgeAsync: {ex.Message}");
+            Console.WriteLine($"Error in MaybeRateNudgeAsync: {ex.Message}");
         }
     }
 
@@ -200,7 +200,7 @@ public partial class GameResultPopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnPrimaryClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnPrimaryClicked: {ex.Message}");
             _isProcessing = false;
         }
     }
@@ -223,7 +223,7 @@ public partial class GameResultPopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnSecondaryClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnSecondaryClicked: {ex.Message}");
             _isProcessing = false;
         }
     }

@@ -107,7 +107,7 @@ public partial class SettingsPopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnCheckForUpdates: {ex.Message}");
+            Console.WriteLine($"Error in OnCheckForUpdates: {ex.Message}");
             UpdateStatusLabel.Text = "Error";
         }
     }
@@ -120,7 +120,7 @@ public partial class SettingsPopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error opening support mail: {ex.Message}");
+            Console.WriteLine($"Error opening support mail: {ex.Message}");
         }
     }
 
@@ -132,7 +132,7 @@ public partial class SettingsPopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error opening privacy policy: {ex.Message}");
+            Console.WriteLine($"Error opening privacy policy: {ex.Message}");
         }
     }
 
@@ -144,7 +144,7 @@ public partial class SettingsPopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error opening Play Store: {ex.Message}");
+            Console.WriteLine($"Error opening Play Store: {ex.Message}");
         }
     }
 
@@ -168,7 +168,7 @@ public partial class SettingsPopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnRemoveAds: {ex.Message}");
+            Console.WriteLine($"Error in OnRemoveAds: {ex.Message}");
         }
     }
 
@@ -193,7 +193,7 @@ public partial class SettingsPopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnResetProgress: {ex.Message}");
+            Console.WriteLine($"Error in OnResetProgress: {ex.Message}");
         }
     }
 

@@ -339,7 +339,7 @@ public partial class TowerOfHanoiPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnPoleTapped: {ex.Message}");
+            Console.WriteLine($"Error in OnPoleTapped: {ex.Message}");
         }
     }
 
@@ -355,7 +355,7 @@ public partial class TowerOfHanoiPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnDrop: {ex.Message}");
+            Console.WriteLine($"Error in OnDrop: {ex.Message}");
         }
     }
 
@@ -406,7 +406,7 @@ public partial class TowerOfHanoiPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnGameEnded: {ex.Message}");
+            Console.WriteLine($"Error in OnGameEnded: {ex.Message}");
         }
     }
 
@@ -429,7 +429,7 @@ public partial class TowerOfHanoiPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
         }
     }
 }

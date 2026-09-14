@@ -81,11 +81,14 @@ public partial class ConnectTheDotsPage : ContentPage
         var position = e.GetPosition(TouchOverlay);
         if (position == null) return;
 
-        // Convert overlay coordinates to canvas coordinates
         float canvasX = (float)position.Value.X;
         float canvasY = (float)position.Value.Y;
 
+        Console.WriteLine($"[CTD-UI] Tap at overlay ({canvasX:F1},{canvasY:F1})");
+
         var cell = HitTest(canvasX, canvasY);
+        Console.WriteLine($"[CTD-UI] Hit test result: ({cell.r},{cell.c})");
+
         if (cell.r >= 0)
         {
             _vm.OnCellTapped(cell);
@@ -105,6 +108,7 @@ public partial class ConnectTheDotsPage : ContentPage
         var cell = HitTest(canvasX, canvasY);
         if (cell.r >= 0 && cell != _lastCell)
         {
+            Console.WriteLine($"[CTD-UI] Drag to ({cell.r},{cell.c})");
             _lastCell = cell;
             _vm.OnCellTapped(cell);
         }

@@ -229,7 +229,7 @@ public partial class MazeRunnerPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in RevealPathAsync: {ex.Message}");
+            Console.WriteLine($"Error in RevealPathAsync: {ex.Message}");
         }
     }
 
@@ -547,7 +547,7 @@ public partial class MazeRunnerPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in DoWinAnimation: {ex.Message}");
+            Console.WriteLine($"Error in DoWinAnimation: {ex.Message}");
         }
     }
 
@@ -638,7 +638,7 @@ public partial class MazeRunnerPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
         }
     }
 }

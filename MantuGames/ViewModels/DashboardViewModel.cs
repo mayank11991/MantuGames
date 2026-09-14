@@ -37,11 +37,11 @@ public class DashboardViewModel
         {
             if (_isNavigating || g == null) return;
             _isNavigating = true;
-            System.Diagnostics.Debug.WriteLine($"NavigateCommand: {g.Id} -> {g.Route}");
+            Console.WriteLine($"NavigateCommand: {g.Id} -> {g.Route}");
             AudioService.Instance.Play("tap");
             VibrationHelper.Click();
             await Shell.Current.GoToAsync($"levelmap?gameId={g.Id}");
-            System.Diagnostics.Debug.WriteLine($"NavigateCommand completed");
+            Console.WriteLine($"NavigateCommand completed");
             _isNavigating = false;
         });
     }

@@ -324,7 +324,7 @@ public partial class PuzzlePetsPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnDropOnCell: {ex.Message}");
+            Console.WriteLine($"Error in OnDropOnCell: {ex.Message}");
         }
     }
 
@@ -458,7 +458,7 @@ public partial class PuzzlePetsPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in TriggerWin: {ex.Message}");
+            Console.WriteLine($"Error in TriggerWin: {ex.Message}");
         }
     }
 
@@ -489,7 +489,7 @@ public partial class PuzzlePetsPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
         }
     }
 
@@ -551,7 +551,7 @@ public partial class PuzzlePetsPage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnShowSolution: {ex.Message}");
+            Console.WriteLine($"Error in OnShowSolution: {ex.Message}");
         }
     }
 }

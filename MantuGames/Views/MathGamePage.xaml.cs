@@ -69,7 +69,7 @@ public partial class MathGamePage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
+            Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
         }
     }
 
@@ -197,7 +197,7 @@ public partial class MathGamePage : ContentPage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error in OnGameEnded: {ex.Message}");
+            Console.WriteLine($"Error in OnGameEnded: {ex.Message}");
         }
     }
 

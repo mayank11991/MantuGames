@@ -54,7 +54,7 @@ public partial class UpdatePopup : ContentView
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error opening update link: {ex.Message}");
+            Console.WriteLine($"Error opening update link: {ex.Message}");
         }
     }
 
