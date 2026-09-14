@@ -64,18 +64,15 @@ public class CtdDrawable : IDrawable
 
     private void DrawPathLine(ICanvas canvas, List<(int r, int c)> path, Color color, float radius)
     {
-        canvas.FillColor = color;
-        canvas.StrokeColor = color;
-        canvas.StrokeSize = radius * 2;
-        canvas.StrokeLineCap = LineCap.Round;
-
         if (path.Count == 1)
         {
             float cx = _offsetX + path[0].c * _cellSize + _cellSize / 2;
             float cy = _offsetY + path[0].r * _cellSize + _cellSize / 2;
-            canvas.FillCircle(cx, cy, radius);
+            DrawGlowCircle(canvas, cx, cy, radius, color);
             return;
         }
+
+        float lineThickness = radius * 2;
 
         for (int i = 0; i < path.Count - 1; i++)
         {
@@ -83,15 +80,59 @@ public class CtdDrawable : IDrawable
             float y1 = _offsetY + path[i].r * _cellSize + _cellSize / 2;
             float x2 = _offsetX + path[i + 1].c * _cellSize + _cellSize / 2;
             float y2 = _offsetY + path[i + 1].r * _cellSize + _cellSize / 2;
-            canvas.DrawLine(x1, y1, x2, y2);
+
+            DrawGlowLine(canvas, x1, y1, x2, y2, lineThickness, color);
         }
 
         foreach (var (r, c) in path)
         {
             float cx = _offsetX + c * _cellSize + _cellSize / 2;
             float cy = _offsetY + r * _cellSize + _cellSize / 2;
-            canvas.FillCircle(cx, cy, radius);
+            DrawGlowCircle(canvas, cx, cy, radius, color);
         }
+    }
+
+    private void DrawGlowLine(ICanvas canvas, float x1, float y1, float x2, float y2, float thickness, Color color)
+    {
+        canvas.StrokeLineCap = LineCap.Round;
+
+        canvas.StrokeColor = color.WithAlpha(0.08f);
+        canvas.StrokeSize = thickness * 4;
+        canvas.DrawLine(x1, y1, x2, y2);
+
+        canvas.StrokeColor = color.WithAlpha(0.15f);
+        canvas.StrokeSize = thickness * 2.8f;
+        canvas.DrawLine(x1, y1, x2, y2);
+
+        canvas.StrokeColor = color.WithAlpha(0.35f);
+        canvas.StrokeSize = thickness * 1.8f;
+        canvas.DrawLine(x1, y1, x2, y2);
+
+        canvas.StrokeColor = color;
+        canvas.StrokeSize = thickness;
+        canvas.DrawLine(x1, y1, x2, y2);
+
+        canvas.StrokeColor = Colors.White.WithAlpha(0.25f);
+        canvas.StrokeSize = thickness * 0.4f;
+        canvas.DrawLine(x1, y1, x2, y2);
+    }
+
+    private void DrawGlowCircle(ICanvas canvas, float cx, float cy, float radius, Color color)
+    {
+        canvas.FillColor = color.WithAlpha(0.06f);
+        canvas.FillCircle(cx, cy, radius * 3f);
+
+        canvas.FillColor = color.WithAlpha(0.12f);
+        canvas.FillCircle(cx, cy, radius * 2.2f);
+
+        canvas.FillColor = color.WithAlpha(0.3f);
+        canvas.FillCircle(cx, cy, radius * 1.5f);
+
+        canvas.FillColor = color;
+        canvas.FillCircle(cx, cy, radius);
+
+        canvas.FillColor = Colors.White.WithAlpha(0.45f);
+        canvas.FillCircle(cx - radius * 0.15f, cy - radius * 0.15f, radius * 0.45f);
     }
 
     private void DrawDots(ICanvas canvas, int rows, int cols)
@@ -109,11 +150,23 @@ public class CtdDrawable : IDrawable
         float cx = _offsetX + c * _cellSize + _cellSize / 2;
         float cy = _offsetY + r * _cellSize + _cellSize / 2;
 
+        canvas.FillColor = color.WithAlpha(0.04f);
+        canvas.FillCircle(cx, cy, radius * 3.5f);
+
+        canvas.FillColor = color.WithAlpha(0.1f);
+        canvas.FillCircle(cx, cy, radius * 2.5f);
+
+        canvas.FillColor = color.WithAlpha(0.25f);
+        canvas.FillCircle(cx, cy, radius * 1.8f);
+
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
 
-        canvas.FillColor = Colors.White.WithAlpha(0.3f);
-        canvas.FillCircle(cx - radius * 0.2f, cy - radius * 0.2f, radius * 0.3f);
+        canvas.FillColor = Colors.White.WithAlpha(0.5f);
+        canvas.FillCircle(cx - radius * 0.2f, cy - radius * 0.2f, radius * 0.35f);
+
+        canvas.FillColor = Colors.White.WithAlpha(0.8f);
+        canvas.FillCircle(cx - radius * 0.15f, cy - radius * 0.25f, radius * 0.15f);
     }
 
     public (int r, int c) HitTest(float x, float y)
