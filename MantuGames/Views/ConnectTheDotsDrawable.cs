@@ -1,213 +1,110 @@
-using System.Collections.Generic;
 using MantuGames.ViewModels;
 using Microsoft.Maui.Graphics;
 
 namespace MantuGames.Views;
 
-public class ConnectTheDotsDrawable : IDrawable
+public class CtdDrawable : IDrawable
 {
-    private readonly ConnectTheDotsViewModel _vm;
+    private readonly CtdViewModel _vm;
     private float _cellSize;
-    private float _gridOffsetX;
-    private float _gridOffsetY;
+    private float _offsetX;
+    private float _offsetY;
 
-    public ConnectTheDotsDrawable(ConnectTheDotsViewModel vm)
-    {
-        _vm = vm;
-    }
+    public CtdDrawable(CtdViewModel vm) => _vm = vm;
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
-        try
-        {
-            if (_vm.Pairs.Count == 0 || dirtyRect.Width <= 0 || dirtyRect.Height <= 0) return;
+        if (_vm.Pairs.Count == 0 || dirtyRect.Width <= 0 || dirtyRect.Height <= 0) return;
 
-            int size = _vm.GridSize;
-            if (size <= 0) return;
+        int rows = _vm.Rows, cols = _vm.Cols;
+        float padding = 12f;
+        float availW = dirtyRect.Width - padding * 2;
+        float availH = dirtyRect.Height - padding * 2;
+        _cellSize = Math.Min(availW / cols, availH / rows);
+        if (_cellSize <= 0) return;
 
-            float padding = 8f;
-            float availableWidth = dirtyRect.Width - padding * 2;
-            float availableHeight = dirtyRect.Height - padding * 2;
-            _cellSize = Math.Min(availableWidth, availableHeight) / size;
+        _offsetX = (dirtyRect.Width - _cellSize * cols) / 2;
+        _offsetY = (dirtyRect.Height - _cellSize * rows) / 2;
 
-            if (_cellSize <= 0) return;
-
-            float gridWidth = _cellSize * size;
-            float gridHeight = _cellSize * size;
-            _gridOffsetX = (dirtyRect.Width - gridWidth) / 2;
-            _gridOffsetY = (dirtyRect.Height - gridHeight) / 2;
-
-            DrawBackground(canvas, dirtyRect);
-            DrawGridCells(canvas, size);
-            DrawCompletedPaths(canvas, size);
-            DrawActivePath(canvas, size);
-            DrawDots(canvas, size);
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"[CTD-Draw] ERROR: {ex.Message}\n{ex.StackTrace}");
-        }
+        DrawCells(canvas, rows, cols);
+        DrawPaths(canvas, rows, cols);
+        DrawDots(canvas, rows, cols);
     }
 
-    private void DrawBackground(ICanvas canvas, RectF rect)
+    private void DrawCells(ICanvas canvas, int rows, int cols)
     {
-        canvas.FillColor = Color.FromArgb("#0D1117");
-        canvas.FillRectangle(rect);
-    }
-
-    private void DrawGridCells(ICanvas canvas, int size)
-    {
-        float cornerRadius = _cellSize * 0.18f;
-
-        for (int r = 0; r < size; r++)
+        float radius = _cellSize * 0.16f;
+        for (int r = 0; r < rows; r++)
         {
-            for (int c = 0; c < size; c++)
+            for (int c = 0; c < cols; c++)
             {
-                float x = _gridOffsetX + c * _cellSize;
-                float y = _gridOffsetY + r * _cellSize;
-
-                // Dark cell with rounded corners
+                float x = _offsetX + c * _cellSize;
+                float y = _offsetY + r * _cellSize;
                 canvas.FillColor = Color.FromArgb("#1A2332");
-                canvas.FillRoundedRectangle(x + 1, y + 1, _cellSize - 2, _cellSize - 2, cornerRadius);
+                canvas.FillRoundedRectangle(x + 2, y + 2, _cellSize - 4, _cellSize - 4, radius);
             }
         }
     }
 
-    private void DrawCompletedPaths(ICanvas canvas, int size)
+    private void DrawPaths(ICanvas canvas, int rows, int cols)
     {
-        float cornerRadius = _cellSize * 0.18f;
+        float radius = _cellSize * 0.16f;
 
         foreach (var kvp in _vm.CompletedPaths)
         {
-            if (kvp.Value.Count < 2) continue;
-
+            if (kvp.Value.Count < 1) continue;
             var color = _vm.GetPairColor(kvp.Key);
 
-            // Fill each cell in the path with the color
-            foreach (int cell in kvp.Value)
+            foreach (var (r, c) in kvp.Value)
             {
-                int row = cell / size, col = cell % size;
-                float x = _gridOffsetX + col * _cellSize;
-                float y = _gridOffsetY + row * _cellSize;
-
+                float x = _offsetX + c * _cellSize;
+                float y = _offsetY + r * _cellSize;
                 canvas.FillColor = color;
-                canvas.FillRoundedRectangle(x + 1, y + 1, _cellSize - 2, _cellSize - 2, cornerRadius);
+                canvas.FillRoundedRectangle(x + 2, y + 2, _cellSize - 4, _cellSize - 4, radius);
             }
+        }
 
-            // Draw connecting lines between cells
-            var points = CellIndicesToPoints(kvp.Value, size);
-            DrawSmoothPath(canvas, points, color, _cellSize * 0.5f);
+        if (_vm.ActivePair.HasValue && _vm.CurrentPath.Count >= 1)
+        {
+            var color = _vm.GetPairColor(_vm.ActivePair.Value);
+            foreach (var (r, c) in _vm.CurrentPath)
+            {
+                float x = _offsetX + c * _cellSize;
+                float y = _offsetY + r * _cellSize;
+                canvas.FillColor = color;
+                canvas.FillRoundedRectangle(x + 2, y + 2, _cellSize - 4, _cellSize - 4, radius);
+            }
         }
     }
 
-    private void DrawActivePath(ICanvas canvas, int size)
-    {
-        if (!_vm.ActivePairId.HasValue || _vm.CurrentPath.Count < 1) return;
-
-        var color = _vm.GetPairColor(_vm.ActivePairId.Value);
-        float cornerRadius = _cellSize * 0.18f;
-
-        // Fill each cell in the current path
-        foreach (int cell in _vm.CurrentPath)
-        {
-            int row = cell / size, col = cell % size;
-            float x = _gridOffsetX + col * _cellSize;
-            float y = _gridOffsetY + row * _cellSize;
-
-            canvas.FillColor = color;
-            canvas.FillRoundedRectangle(x + 1, y + 1, _cellSize - 2, _cellSize - 2, cornerRadius);
-        }
-
-        // Draw connecting lines
-        if (_vm.CurrentPath.Count >= 2)
-        {
-            var points = CellIndicesToPoints(_vm.CurrentPath, size);
-            DrawSmoothPath(canvas, points, color, _cellSize * 0.5f);
-        }
-
-        // Head indicator
-        int headCell = _vm.CurrentPath[^1];
-        int hr = headCell / size, hc = headCell % size;
-        float hx = CellCenterX(hc);
-        float hy = CellCenterY(hr);
-        canvas.FillColor = Colors.White.WithAlpha(0.5f);
-        canvas.FillCircle(hx, hy, _cellSize * 0.15f);
-    }
-
-    private void DrawDots(ICanvas canvas, int size)
+    private void DrawDots(ICanvas canvas, int rows, int cols)
     {
         foreach (var pair in _vm.Pairs)
         {
-            var color = pair.Color;
             float radius = _cellSize * 0.32f;
-
-            DrawEndpoint(canvas, pair.StartRow, pair.StartCol, color, radius);
-            DrawEndpoint(canvas, pair.EndRow, pair.EndCol, color, radius);
+            DrawDot(canvas, pair.R1, pair.C1, pair.Color, radius);
+            DrawDot(canvas, pair.R2, pair.C2, pair.Color, radius);
         }
     }
 
-    private void DrawEndpoint(ICanvas canvas, int row, int col, Color color, float radius)
+    private void DrawDot(ICanvas canvas, int r, int c, Color color, float radius)
     {
-        float cx = CellCenterX(col);
-        float cy = CellCenterY(row);
+        float cx = _offsetX + c * _cellSize + _cellSize / 2;
+        float cy = _offsetY + r * _cellSize + _cellSize / 2;
 
-        // Outer glow
-        canvas.FillColor = color.WithAlpha(0.3f);
-        canvas.FillCircle(cx, cy, radius * 1.4f);
-
-        // Main dot
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
 
-        // Inner highlight
-        canvas.FillColor = Colors.White.WithAlpha(0.4f);
+        canvas.FillColor = Colors.White.WithAlpha(0.3f);
         canvas.FillCircle(cx - radius * 0.2f, cy - radius * 0.2f, radius * 0.3f);
     }
 
-    private void DrawSmoothPath(ICanvas canvas, List<PointF> points, Color color, float strokeSize)
+    public (int r, int c) HitTest(float x, float y)
     {
-        if (points.Count < 2) return;
-
-        canvas.StrokeColor = color;
-        canvas.StrokeSize = strokeSize;
-        canvas.StrokeLineCap = LineCap.Round;
-        canvas.StrokeLineJoin = LineJoin.Round;
-
-        var path = new PathF();
-        path.MoveTo(points[0].X, points[0].Y);
-
-        for (int i = 1; i < points.Count; i++)
-        {
-            path.LineTo(points[i].X, points[i].Y);
-        }
-
-        canvas.DrawPath(path);
-    }
-
-    private float CellCenterX(int col) => _gridOffsetX + col * _cellSize + _cellSize / 2;
-    private float CellCenterY(int row) => _gridOffsetY + row * _cellSize + _cellSize / 2;
-
-    public int HitTest(float tapX, float tapY, int gridSize)
-    {
-        if (_cellSize <= 0) return -1;
-
-        int col = (int)((tapX - _gridOffsetX) / _cellSize);
-        int row = (int)((tapY - _gridOffsetY) / _cellSize);
-
-        if (col < 0 || col >= gridSize || row < 0 || row >= gridSize)
-            return -1;
-
-        return row * gridSize + col;
-    }
-
-    private List<PointF> CellIndicesToPoints(IReadOnlyList<int> cells, int size)
-    {
-        var points = new List<PointF>(cells.Count);
-        foreach (int cell in cells)
-        {
-            int row = cell / size, col = cell % size;
-            points.Add(new PointF(CellCenterX(col), CellCenterY(row)));
-        }
-        return points;
+        if (_cellSize <= 0) return (-1, -1);
+        int c = (int)((x - _offsetX) / _cellSize);
+        int r = (int)((y - _offsetY) / _cellSize);
+        if (r < 0 || r >= _vm.Rows || c < 0 || c >= _vm.Cols) return (-1, -1);
+        return (r, c);
     }
 }

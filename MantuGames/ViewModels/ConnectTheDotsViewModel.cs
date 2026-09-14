@@ -1,408 +1,234 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using MantuGames.Models;
-using MantuGames.Services;
-using MantuGames.Views;
 
 namespace MantuGames.ViewModels;
 
-public class ConnectTheDotsViewModel : INotifyPropertyChanged
+public class CtdViewModel : INotifyPropertyChanged
 {
-    private ConnectTheDotsPuzzle _puzzle;
-    private System.Threading.Timer _timer;
-    private bool _isGameOver, _isWin;
-    private int _timeRemainingSec;
-    private int _currentLevel;
-    private int _score;
-    private int? _activePairId = null;
-    private readonly List<int> _currentPath = new();
-    private readonly Dictionary<int, List<int>> _completedPaths = new();
-    private bool _solutionWasShown = false;
-    private IDrawable _drawable;
+    private CtdPuzzle _puzzle;
+    private int _level;
+    private int? _activePair;
+    private readonly List<(int r, int c)> _currentPath = new();
+    private readonly Dictionary<int, List<(int r, int c)>> _completedPaths = new();
 
-    public IDrawable Drawable => _drawable ??= new ConnectTheDotsDrawable(this);
+    public int Rows => _puzzle?.Rows ?? 5;
+    public int Cols => _puzzle?.Cols ?? 5;
+    public List<CtdPair> Pairs => _puzzle?.Pairs ?? new();
+    public Dictionary<int, List<(int r, int c)>> CompletedPaths => _completedPaths;
+    public int? ActivePair => _activePair;
+    public List<(int r, int c)> CurrentPath => _currentPath;
 
-    public bool SolutionWasShown => _solutionWasShown;
+    private string _levelDisplay = "Level 1";
+    public string LevelDisplay { get => _levelDisplay; set { _levelDisplay = value; OnPropertyChanged(); } }
 
-    private string _timerDisplay;
-    public string TimerDisplay
-    {
-        get => _timerDisplay;
-        private set { _timerDisplay = value; OnPropertyChanged(); }
-    }
+    private string _difficulty = "EASY";
+    public string Difficulty { get => _difficulty; set { _difficulty = value; OnPropertyChanged(); } }
 
-    private double _timerProgress;
-    public double TimerProgress
-    {
-        get => _timerProgress;
-        private set { _timerProgress = value; OnPropertyChanged(); }
-    }
+    private bool _isGameOver;
+    public bool IsGameOver { get => _isGameOver; set { _isGameOver = value; OnPropertyChanged(); } }
 
-    public int GridSize => _puzzle?.GridSize ?? 5;
-
-    public int TotalTimerSeconds => _puzzle?.TimerSeconds ?? 120;
-
-    public int PuzzleTimerSeconds => _puzzle?.TimerSeconds ?? 120;
-
-    public IReadOnlyList<DotPair> Pairs => _puzzle?.Pairs ?? new List<DotPair>();
-
-    public IReadOnlySet<int> Obstacles => _puzzle?.Obstacles ?? new HashSet<int>();
-
-    public IReadOnlyDictionary<int, List<int>> SolutionPaths => _puzzle?.SolutionPaths ?? new Dictionary<int, List<int>>();
-
-    public IReadOnlyDictionary<int, List<int>> CompletedPaths => _completedPaths;
-
-    public int? ActivePairId => _activePairId;
-
-    public IReadOnlyList<int> CurrentPath => _currentPath;
-
-    public int TimeRemainingSec
-    {
-        get => _timeRemainingSec;
-        private set
-        {
-            _timeRemainingSec = value;
-            OnPropertyChanged();
-            UpdateTimerDisplay();
-        }
-    }
-
-    public bool IsGameOver
-    {
-        get => _isGameOver;
-        private set { _isGameOver = value; OnPropertyChanged(); }
-    }
-
-    public bool IsWin
-    {
-        get => _isWin;
-        private set { _isWin = value; OnPropertyChanged(); }
-    }
-
-    public int CurrentLevel
-    {
-        get => _currentLevel;
-        private set { _currentLevel = value; OnPropertyChanged(); OnPropertyChanged(nameof(LevelDisplay)); }
-    }
-
-    public string LevelDisplay => $"Level {CurrentLevel}";
-
-    public int Score
-    {
-        get => _score;
-        set { _score = value; OnPropertyChanged(); }
-    }
+    public event Action BoardChanged;
+    public event Action<bool> GameEnded;
 
     public ICommand CellTappedCommand { get; }
-    public ICommand ShowSolutionCommand { get; }
 
-    public event Action<bool> GameEnded;
-    public event Action BoardChanged;
-    public event Action<int, int> CellTouched;
-
-    public ConnectTheDotsViewModel(int level = 1)
+    public CtdViewModel(int level = 1)
     {
-        CellTappedCommand = new Command<int>(OnCellTapped);
-        ShowSolutionCommand = new Command(ShowSolution);
+        _level = level;
+        CellTappedCommand = new Command<(int r, int c)>(OnCellTapped);
         StartLevel(level);
     }
 
-    private void StartLevel(int level)
+    public void StartLevel(int level)
     {
-        CurrentLevel = level;
-        _puzzle = ConnectTheDotsPuzzle.Generate(level);
-        TimeRemainingSec = _puzzle.TimerSeconds;
-        IsGameOver = false;
-        IsWin = false;
-        _solutionWasShown = false;
-        Score = 0;
-        _activePairId = null;
+        _level = level;
+        _puzzle = CtdPuzzle.Generate(level);
+        _activePair = null;
         _currentPath.Clear();
         _completedPaths.Clear();
 
-        foreach (var pair in _puzzle.Pairs)
-            _completedPaths[pair.Id] = new List<int>();
+        for (int i = 0; i < _puzzle.Pairs.Count; i++)
+            _completedPaths[i] = new List<(int, int)>();
 
-        StopTimer();
-        StartTimer();
+        LevelDisplay = $"Level {level}";
+        Difficulty = level switch
+        {
+            <= 5 => "EASY",
+            <= 15 => "MEDIUM",
+            <= 25 => "HARD",
+            _ => "EXPERT"
+        };
+
+        IsGameOver = false;
         BoardChanged?.Invoke();
     }
 
-    private void UpdateTimerDisplay()
+    public void OnCellTapped((int r, int c) cell)
     {
-        TimerDisplay = $"{TimeRemainingSec / 60}:{TimeRemainingSec % 60:D2}";
-        TimerProgress = _puzzle != null ? (double)TimeRemainingSec / _puzzle.TimerSeconds : 1.0;
-    }
+        if (IsGameOver) return;
 
-    private void StartTimer()
-    {
-        _timer = new System.Threading.Timer(_ =>
+        int pairIdx = FindPairAt(cell.r, cell.c);
+
+        if (pairIdx >= 0)
         {
-            MainThread.BeginInvokeOnMainThread(() =>
+            if (_activePair == pairIdx)
             {
-                if (TimeRemainingSec > 0)
-                    TimeRemainingSec--;
-                else
-                    EndGame(false);
-            });
-        }, null, 1000, 1000);
-    }
-
-    public void Cleanup() => StopTimer();
-    public void PauseTimer() => StopTimer();
-    public void ResumeTimer() => StartTimer();
-
-    private void StopTimer()
-    {
-        _timer?.Dispose();
-        _timer = null;
-    }
-
-    private void OnCellTapped(int cellIndex)
-    {
-        if (IsGameOver || _puzzle == null) return;
-
-        int size = _puzzle.GridSize;
-        if (_puzzle.Obstacles.Contains(cellIndex)) return;
-
-        int row = cellIndex / size;
-        int col = cellIndex % size;
-        CellTouched?.Invoke(row, col);
-
-        // Check if this cell is a dot (start/end of a pair)
-        var pairAtCell = FindPairAtCell(row, col);
-
-        if (pairAtCell != null)
-        {
-            // Tapping on a dot
-            if (_activePairId == null)
-            {
-                // No active pair — start drawing this one
-                // If this pair was already completed, clear it first
-                if (_completedPaths[pairAtCell.Id].Count > 0)
-                    ClearCompletedPath(pairAtCell.Id);
-
-                _activePairId = pairAtCell.Id;
-                _currentPath.Clear();
-                _currentPath.Add(cellIndex);
-                BoardChanged?.Invoke();
-            }
-            else if (_activePairId == pairAtCell.Id)
-            {
-                // Tapping on same pair — if we have a path, complete it
-                if (_currentPath.Count > 1 && IsLastInCurrentPath(cellIndex))
+                if (_currentPath.Count >= 2)
                 {
-                    // Only complete if we're at the OTHER end of the pair
-                    int startIdx = pairAtCell.StartIndex(size);
-                    int endIdx = pairAtCell.EndIndex(size);
-                    if (cellIndex == startIdx || cellIndex == endIdx)
+                    var p = _puzzle.Pairs[pairIdx];
+                    var last = _currentPath[^1];
+                    var first = _currentPath[0];
+                    bool atEnd1 = (last.r == p.R1 && last.c == p.C1) && (first.r == p.R2 && first.c == p.C2);
+                    bool atEnd2 = (last.r == p.R2 && last.c == p.C2) && (first.r == p.R1 && first.c == p.C1);
+
+                    if (atEnd1 || atEnd2)
                     {
-                        if (_currentPath[0] == startIdx || _currentPath[0] == endIdx)
-                        {
-                            CompletePath(pairAtCell.Id);
-                            return;
-                        }
+                        CompletePath(pairIdx);
+                        return;
                     }
                 }
-                // Tapping on the first cell — cancel
-                if (_currentPath.Count == 1 && _currentPath[0] == cellIndex)
+                if (_currentPath.Count == 1 && _currentPath[0] == cell)
                 {
-                    _activePairId = null;
+                    _activePair = null;
                     _currentPath.Clear();
                     BoardChanged?.Invoke();
+                    return;
                 }
             }
             else
             {
-                // Tapping on a different pair — switch to it
-                if (_completedPaths[pairAtCell.Id].Count > 0)
-                    ClearCompletedPath(pairAtCell.Id);
+                if (_completedPaths.ContainsKey(pairIdx) && _completedPaths[pairIdx].Count > 0)
+                    _completedPaths[pairIdx].Clear();
 
-                _activePairId = pairAtCell.Id;
+                _activePair = pairIdx;
                 _currentPath.Clear();
-                _currentPath.Add(cellIndex);
+                _currentPath.Add(cell);
                 BoardChanged?.Invoke();
             }
         }
-        else if (_activePairId.HasValue)
+        else if (_activePair.HasValue)
         {
-            // Tapping on an empty cell while drawing
-            if (_currentPath.Count > 0)
+            if (_currentPath.Count == 1 && _currentPath[0] == cell)
             {
-                int lastCell = _currentPath[^1];
-
-                // Check if tapping the previous cell — erase last step
-                if (_currentPath.Count >= 2 && cellIndex == _currentPath[^2])
-                {
-                    _currentPath.RemoveAt(_currentPath.Count - 1);
-                    BoardChanged?.Invoke();
-                    return;
-                }
-
-                // Must be adjacent
-                if (!IsAdjacent(lastCell, cellIndex)) return;
-
-                // Must not be in any completed path (except our own)
-                if (IsCellOwnedByOtherCompletedPath(cellIndex, _activePairId.Value)) return;
-
-                // Must not be in current path (no loops)
-                if (_currentPath.Contains(cellIndex)) return;
-
-                _currentPath.Add(cellIndex);
+                _activePair = null;
+                _currentPath.Clear();
                 BoardChanged?.Invoke();
-            }
-        }
-    }
-
-    private bool IsLastInCurrentPath(int cellIndex)
-    {
-        return _currentPath.Count > 0 && _currentPath[^1] == cellIndex;
-    }
-
-    private bool IsCellOwnedByOtherCompletedPath(int cellIndex, int excludePairId)
-    {
-        foreach (var kvp in _completedPaths)
-        {
-            if (kvp.Key == excludePairId) continue;
-            if (kvp.Value.Contains(cellIndex)) return true;
-        }
-        return false;
-    }
-
-    private void ClearCompletedPath(int pairId)
-    {
-        _completedPaths[pairId].Clear();
-        BoardChanged?.Invoke();
-    }
-
-    private DotPair FindPairAtCell(int row, int col)
-    {
-        foreach (var pair in _puzzle.Pairs)
-        {
-            if ((pair.StartRow == row && pair.StartCol == col) ||
-                (pair.EndRow == row && pair.EndCol == col))
-                return pair;
-        }
-        return null;
-    }
-
-    private bool IsAdjacent(int cell1, int cell2)
-    {
-        int size = _puzzle.GridSize;
-        int r1 = cell1 / size, c1 = cell1 % size;
-        int r2 = cell2 / size, c2 = cell2 % size;
-        return Math.Abs(r1 - r2) + Math.Abs(c1 - c2) == 1;
-    }
-
-    private void CompletePath(int pairId)
-    {
-        // Commit the current path to completed paths
-        _completedPaths[pairId] = new List<int>(_currentPath);
-        _activePairId = null;
-        _currentPath.Clear();
-        Score += 100 * CurrentLevel;
-
-        AudioService.Instance.Play("correct");
-        BoardChanged?.Invoke();
-
-        CheckWinCondition();
-    }
-
-    private void CheckWinCondition()
-    {
-        int size = _puzzle.GridSize;
-        int totalCells = size * size;
-
-        // Check all pairs are completed
-        foreach (var pair in _puzzle.Pairs)
-        {
-            if (_completedPaths[pair.Id].Count == 0)
                 return;
-        }
+            }
 
-        // Check the entire board is filled (all non-obstacle cells are in some path)
-        var allFilled = new HashSet<int>();
-        foreach (var kvp in _completedPaths)
-        {
-            foreach (int cell in kvp.Value)
-                allFilled.Add(cell);
-        }
+            if (_currentPath.Count >= 2 && _currentPath[^2] == cell)
+            {
+                _currentPath.RemoveAt(_currentPath.Count - 1);
+                BoardChanged?.Invoke();
+                return;
+            }
 
-        for (int i = 0; i < totalCells; i++)
-        {
-            if (_puzzle.Obstacles.Contains(i)) continue;
-            if (!allFilled.Contains(i)) return;
-        }
+            var last = _currentPath[^1];
+            if (Math.Abs(last.r - cell.r) + Math.Abs(last.c - cell.c) != 1) return;
 
-        EndGame(true);
+            if (IsCellOwnedByOther(cell, _activePair.Value)) return;
+            if (_currentPath.Contains(cell)) return;
+
+            _currentPath.Add(cell);
+            BoardChanged?.Invoke();
+        }
     }
 
-    private void ShowSolution()
+    private int FindPairAt(int r, int c)
     {
-        if (IsGameOver) return;
-        StopTimer();
-        IsGameOver = true;
-        _solutionWasShown = true;
-
-        _completedPaths.Clear();
-        foreach (var pair in _puzzle.Pairs)
-            _completedPaths[pair.Id] = new List<int>(_puzzle.SolutionPaths[pair.Id]);
-
-        IsWin = false;
-        BoardChanged?.Invoke();
-        GameEnded?.Invoke(false);
-    }
-
-    private void EndGame(bool win)
-    {
-        StopTimer();
-        IsWin = win;
-        IsGameOver = true;
-        GameEnded?.Invoke(win);
-    }
-
-    public int GetCellOwner(int cellIndex)
-    {
-        if (_puzzle == null) return -1;
-        if (_puzzle.Obstacles.Contains(cellIndex)) return -2;
-
-        // Check if cell is in the active (drawing) path
-        if (_activePairId.HasValue && _currentPath.Contains(cellIndex))
-            return _activePairId.Value;
-
-        // Check completed paths
-        foreach (var kvp in _completedPaths)
+        for (int i = 0; i < _puzzle.Pairs.Count; i++)
         {
-            if (kvp.Value.Contains(cellIndex))
-                return kvp.Key;
+            var p = _puzzle.Pairs[i];
+            if ((p.R1 == r && p.C1 == c) || (p.R2 == r && p.C2 == c))
+                return i;
         }
-
         return -1;
     }
 
-    public bool IsCellInActivePath(int cellIndex) => _activePairId.HasValue && _currentPath.Contains(cellIndex);
-
-    public bool IsCellCompleted(int cellIndex)
+    private bool IsCellOwnedByOther((int r, int c) cell, int excludePair)
     {
         foreach (var kvp in _completedPaths)
         {
-            if (kvp.Value.Contains(cellIndex))
-                return true;
+            if (kvp.Key == excludePair) continue;
+            if (kvp.Value.Contains(cell)) return true;
         }
         return false;
     }
 
-    public Color GetPairColor(int pairId)
+    private void CompletePath(int pairIdx)
     {
-        var pair = _puzzle?.Pairs.FirstOrDefault(p => p.Id == pairId);
-        return pair?.Color ?? Colors.Transparent;
+        _completedPaths[pairIdx] = new List<(int, int)>(_currentPath);
+        _activePair = null;
+        _currentPath.Clear();
+        BoardChanged?.Invoke();
+        CheckWin();
+    }
+
+    private void CheckWin()
+    {
+        for (int i = 0; i < _puzzle.Pairs.Count; i++)
+        {
+            if (_completedPaths[i].Count == 0) return;
+        }
+
+        var filled = new HashSet<(int, int)>();
+        foreach (var kvp in _completedPaths)
+            foreach (var cell in kvp.Value)
+                filled.Add(cell);
+
+        int total = _puzzle.Rows * _puzzle.Cols;
+        if (filled.Count < total * 0.8f) return;
+
+        IsGameOver = true;
+        GameEnded?.Invoke(true);
+    }
+
+    public int GetCellColor(int r, int c)
+    {
+        int val = _puzzle.Grid[r, c];
+        if (val > 0) return val;
+
+        if (_activePair.HasValue)
+        {
+            if (_currentPath.Contains((r, c)))
+                return _activePair.Value + 1;
+        }
+
+        foreach (var kvp in _completedPaths)
+        {
+            if (kvp.Value.Contains((r, c)))
+                return kvp.Key + 1;
+        }
+
+        return 0;
+    }
+
+    public bool IsDot(int r, int c)
+    {
+        return _puzzle.Grid[r, c] > 0;
+    }
+
+    public Color GetPairColor(int pairIdx)
+    {
+        if (pairIdx >= 0 && pairIdx < _puzzle.Pairs.Count)
+            return _puzzle.Pairs[pairIdx].Color;
+        return Colors.Transparent;
+    }
+
+    public void Restart()
+    {
+        StartLevel(_level);
+    }
+
+    public void Cleanup()
+    {
+        BoardChanged = null;
+        GameEnded = null;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
-
-    protected void OnPropertyChanged([CallerMemberName] string n = null) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
+    protected void OnPropertyChanged([CallerMemberName] string n = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }
