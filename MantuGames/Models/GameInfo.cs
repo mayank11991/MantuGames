@@ -9,5 +9,4 @@ public class GameInfo
     public string Description { get; init; } // short tagline
     public string CardColor { get; init; } // hex background for card
     public string Route      { get; init; } // Shell navigation route
-    public bool IsHidden { get; init; } // if true, game is not shown in the list
 }

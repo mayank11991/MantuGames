@@ -10,7 +10,7 @@ public partial class ConnectTheDotsPage : ContentPage
 {
     private ConnectTheDotsViewModel _vm;
     private int _startLevel = 1;
-    private bool _hasDrawn = false;
+    private bool _isDragging = false;
 
     public string Level
     {
@@ -29,13 +29,10 @@ public partial class ConnectTheDotsPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        System.Diagnostics.Debug.WriteLine("[CTD] OnAppearing start");
         try
         {
             AudioService.Instance.StartMusic();
-            System.Diagnostics.Debug.WriteLine("[CTD] Audio started");
             _vm = new ConnectTheDotsViewModel(_startLevel);
-            System.Diagnostics.Debug.WriteLine($"[CTD] VM created, pairs={_vm.Pairs.Count}, size={_vm.GridSize}");
             BindingContext = _vm;
             GameCanvas.Drawable = _vm.Drawable;
             _vm.GameEnded += OnGameEnded;
@@ -43,28 +40,19 @@ public partial class ConnectTheDotsPage : ContentPage
             _vm.CellTouched += OnCellTouched;
             _vm.PropertyChanged += OnViewModelPropertyChanged;
             GameCanvas.SizeChanged += OnCanvasSizeChanged;
-            this.Opacity = 0;
-            this.FadeTo(1, 400);
-            PauseOverlay.Resumed += OnResumeGame;
 
-            Dispatcher.StartTimer(TimeSpan.FromMilliseconds(200), () =>
-            {
-                GameCanvas.Invalidate();
-                return false;
-            });
-            System.Diagnostics.Debug.WriteLine("[CTD] OnAppearing done");
+            UpdateLevelInfo();
+            UpdateCoins();
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"[CTD] OnAppearing ERROR: {ex.Message}\n{ex.StackTrace}");
-            TestBox.IsVisible = true;
+            System.Diagnostics.Debug.WriteLine($"[CTD] OnAppearing ERROR: {ex.Message}");
         }
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        PauseOverlay.Resumed -= OnResumeGame;
         GameCanvas.SizeChanged -= OnCanvasSizeChanged;
         if (_vm != null)
         {
@@ -78,21 +66,19 @@ public partial class ConnectTheDotsPage : ContentPage
 
     private void OnCanvasSizeChanged(object sender, EventArgs e)
     {
-        System.Diagnostics.Debug.WriteLine($"[CTD] SizeChanged: {GameCanvas.Width}x{GameCanvas.Height}");
         if (GameCanvas.Width > 0 && GameCanvas.Height > 0)
         {
-            UpdateLevelBadge();
-            UpdateScore();
+            UpdateLevelInfo();
             GameCanvas.Invalidate();
         }
     }
 
     private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(ConnectTheDotsViewModel.Score))
-            UpdateScore();
-        else if (e.PropertyName == nameof(ConnectTheDotsViewModel.IsGameOver))
-            UpdateButtonsVisibility();
+        if (e.PropertyName == nameof(ConnectTheDotsViewModel.IsGameOver))
+        {
+            // Update UI if needed
+        }
     }
 
     private void OnBoardChanged()
@@ -110,7 +96,6 @@ public partial class ConnectTheDotsPage : ContentPage
         float tapX = (float)position.Value.X;
         float tapY = (float)position.Value.Y;
 
-        // Use the drawable's layout info to convert to grid cell
         var drawable = _vm.Drawable as ConnectTheDotsDrawable;
         if (drawable == null) return;
 
@@ -119,29 +104,52 @@ public partial class ConnectTheDotsPage : ContentPage
             _vm.CellTappedCommand.Execute(cellIndex);
     }
 
-    private void OnCellTouched(int row, int col)
+    private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
     {
-        if (!_hasDrawn)
+        if (_vm == null || _vm.IsGameOver) return;
+
+        switch (e.StatusType)
         {
-            _hasDrawn = true;
+            case GestureStatus.Started:
+                _isDragging = true;
+                break;
+
+            case GestureStatus.Running:
+                break;
+
+            case GestureStatus.Completed:
+            case GestureStatus.Canceled:
+                _isDragging = false;
+                break;
         }
     }
 
-    private void UpdateLevelBadge()
+    private void OnCellTouched(int row, int col)
     {
-        if (_vm != null)
-            LevelBadge.Text = _vm.LevelDisplay;
+        // Cell touched - handled by ViewModel
     }
 
-    private void UpdateScore()
+    private void UpdateLevelInfo()
     {
-        if (_vm != null)
-            ScoreLabel.Text = $"Score: {_vm.Score}";
+        if (_vm == null) return;
+
+        LevelLabel.Text = _vm.LevelDisplay;
+
+        int level = _vm.CurrentLevel;
+        string difficulty = level switch
+        {
+            <= 3 => "EASY",
+            <= 10 => "MEDIUM",
+            <= 20 => "HARD",
+            _ => "EXPERT"
+        };
+        DifficultyLabel.Text = difficulty;
     }
 
-    private void UpdateButtonsVisibility()
+    private void UpdateCoins()
     {
-        OnPropertyChanged(nameof(ConnectTheDotsViewModel.IsGameOver));
+        int coins = CoinService.GetCoins("connectthedots");
+        CoinsLabel.Text = $"💰 {coins}";
     }
 
     private async void OnBackClicked(object sender, EventArgs e)
@@ -159,30 +167,10 @@ public partial class ConnectTheDotsPage : ContentPage
         }
     }
 
-    private void OnPauseClicked(object sender, EventArgs e)
-    {
-        try { _vm?.PauseTimer(); } catch { }
-        PauseOverlay.Show();
-    }
-
-    private void OnResumeGame(object sender, EventArgs e)
-    {
-        try { _vm?.ResumeTimer(); } catch { }
-    }
-
-    private void OnShowSolutionClicked(object sender, EventArgs e)
-    {
-        if (CoinService.GetCoins("connectthedots") < CoinService.SolutionCost)
-        {
-            CoinShopPopup.ShowForGame("connectthedots");
-            return;
-        }
-        CoinService.SpendCoins("connectthedots", CoinService.SolutionCost);
-        _vm?.ShowSolutionCommand.Execute(null);
-    }
-
     private void OnRestartClicked(object sender, EventArgs e)
     {
+        AudioService.Instance.Play("tap");
+        VibrationHelper.Click();
         _vm?.Cleanup();
         _vm = new ConnectTheDotsViewModel(_startLevel);
         BindingContext = _vm;
@@ -191,10 +179,16 @@ public partial class ConnectTheDotsPage : ContentPage
         _vm.BoardChanged += OnBoardChanged;
         _vm.CellTouched += OnCellTouched;
         _vm.PropertyChanged += OnViewModelPropertyChanged;
-        _hasDrawn = false;
         GameCanvas.Invalidate();
-        UpdateLevelBadge();
-        UpdateScore();
+        UpdateLevelInfo();
+        UpdateCoins();
+    }
+
+    private void OnRulesClicked(object sender, EventArgs e)
+    {
+        AudioService.Instance.Play("tap");
+        VibrationHelper.Click();
+        RulesPopup.Show(GameRules.GetRules("connectthedots"));
     }
 
     private async void OnGameEnded(bool win)
@@ -220,9 +214,9 @@ public partial class ConnectTheDotsPage : ContentPage
                 timeBonus = _vm.TimeRemainingSec * 2;
                 elapsedSeconds = _vm.PuzzleTimerSeconds - _vm.TimeRemainingSec;
                 _vm.Score += timeBonus;
-                UpdateScore();
 
                 ProgressService.Instance.CompleteLevel("connectthedots", _startLevel, stars);
+                CoinService.AddCoins("connectthedots", coinsEarned);
             }
             else
             {
@@ -239,9 +233,11 @@ public partial class ConnectTheDotsPage : ContentPage
                 _vm?.PuzzleTimerSeconds ?? 120,
                 stars,
                 coinsEarned,
-                _vm?.SolutionWasShown ?? false ? "Solution shown" : null,
+                null,
                 "connectthedots"
             );
+
+            UpdateCoins();
         }
         catch (Exception ex)
         {

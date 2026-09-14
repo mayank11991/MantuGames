@@ -216,14 +216,14 @@ public partial class DashboardPage : ContentPage
         string q = e.NewTextValue?.Trim() ?? "";
         if (string.IsNullOrEmpty(q))
         {
-            GamesCollectionView.ItemsSource = DashboardViewModel.Games.Where(g => !g.IsHidden);
+            GamesCollectionView.ItemsSource = DashboardViewModel.Games;
             return;
         }
 
         GamesCollectionView.ItemsSource = new ObservableCollection<GameInfo>(
-            DashboardViewModel.Games.Where(g => !g.IsHidden && (
+            DashboardViewModel.Games.Where(g =>
                 g.Title.Contains(q, StringComparison.OrdinalIgnoreCase) ||
-                g.Id.Contains(q, StringComparison.OrdinalIgnoreCase))));
+                g.Id.Contains(q, StringComparison.OrdinalIgnoreCase)));
     }
 
     }

@@ -40,12 +40,13 @@ public class ConnectTheDotsPuzzle
     {
         return level switch
         {
-            <= 4 => new LevelConfig { GridSize = 5, PairCount = 2, TimerSeconds = 120, MaxObstacles = 0 },
-            <= 9 => new LevelConfig { GridSize = 6, PairCount = 3, TimerSeconds = 100, MaxObstacles = 2 },
-            <= 14 => new LevelConfig { GridSize = 7, PairCount = 4, TimerSeconds = 90, MaxObstacles = 4 },
-            <= 20 => new LevelConfig { GridSize = 8, PairCount = 5, TimerSeconds = 75, MaxObstacles = 6 },
-            <= 25 => new LevelConfig { GridSize = 9, PairCount = 6, TimerSeconds = 60, MaxObstacles = 8 },
-            _ => new LevelConfig { GridSize = 10, PairCount = 7, TimerSeconds = 50, MaxObstacles = 10 }
+            <= 3 => new LevelConfig { GridSize = 5, PairCount = 3, TimerSeconds = 150, MaxObstacles = 0 },
+            <= 6 => new LevelConfig { GridSize = 6, PairCount = 4, TimerSeconds = 120, MaxObstacles = 0 },
+            <= 10 => new LevelConfig { GridSize = 6, PairCount = 6, TimerSeconds = 100, MaxObstacles = 0 },
+            <= 15 => new LevelConfig { GridSize = 7, PairCount = 7, TimerSeconds = 90, MaxObstacles = 2 },
+            <= 20 => new LevelConfig { GridSize = 7, PairCount = 8, TimerSeconds = 80, MaxObstacles = 3 },
+            <= 25 => new LevelConfig { GridSize = 8, PairCount = 9, TimerSeconds = 70, MaxObstacles = 4 },
+            _ => new LevelConfig { GridSize = 8, PairCount = 10, TimerSeconds = 60, MaxObstacles = 5 }
         };
     }
 
@@ -229,14 +230,16 @@ public class ConnectTheDotsPuzzle
     {
         var baseColors = new[]
         {
-            Color.FromArgb("#FF00BCD4"), // Teal
-            Color.FromArgb("#FFFF6B35"), // Orange
-            Color.FromArgb("#FF4ECDC4"), // Green
-            Color.FromArgb("#FFA855F7"), // Purple
-            Color.FromArgb("#FFF59E0B"), // Amber
-            Color.FromArgb("#FFEF4444"), // Red
-            Color.FromArgb("#FFEC4899"), // Pink
-            Color.FromArgb("#FF14B8A6"), // Emerald
+            Color.FromArgb("#FF9C27B0"), // Purple/Magenta
+            Color.FromArgb("#FF4CAF50"), // Green
+            Color.FromArgb("#FF00BCD4"), // Cyan
+            Color.FromArgb("#FFFF9800"), // Orange
+            Color.FromArgb("#FFE91E63"), // Pink
+            Color.FromArgb("#FF2196F3"), // Blue
+            Color.FromArgb("#FFFFEB3B"), // Yellow
+            Color.FromArgb("#FFF44336"), // Red
+            Color.FromArgb("#FF9E9E9E"), // Gray
+            Color.FromArgb("#FF795548"), // Brown
         };
 
         var result = new Color[count];

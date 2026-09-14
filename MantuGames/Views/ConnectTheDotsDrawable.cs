@@ -20,7 +20,6 @@ public class ConnectTheDotsDrawable : IDrawable
     {
         try
         {
-            System.Diagnostics.Debug.WriteLine($"[CTD-Draw] Draw called: {dirtyRect.Width}x{dirtyRect.Height}, pairs={_vm.Pairs.Count}");
             if (_vm.Pairs.Count == 0 || dirtyRect.Width <= 0 || dirtyRect.Height <= 0) return;
 
             int size = _vm.GridSize;
@@ -58,6 +57,8 @@ public class ConnectTheDotsDrawable : IDrawable
 
     private void DrawGridCells(ICanvas canvas, int size)
     {
+        float cornerRadius = _cellSize * 0.18f;
+
         for (int r = 0; r < size; r++)
         {
             for (int c = 0; c < size; c++)
@@ -65,48 +66,37 @@ public class ConnectTheDotsDrawable : IDrawable
                 float x = _gridOffsetX + c * _cellSize;
                 float y = _gridOffsetY + r * _cellSize;
 
-                // Subtle cell background
-                canvas.FillColor = Color.FromArgb("#161B22");
-                canvas.FillRectangle(x + 0.5f, y + 0.5f, _cellSize - 1, _cellSize - 1);
+                // Dark cell with rounded corners
+                canvas.FillColor = Color.FromArgb("#1A2332");
+                canvas.FillRoundedRectangle(x + 1, y + 1, _cellSize - 2, _cellSize - 2, cornerRadius);
             }
-        }
-
-        // Subtle grid lines
-        canvas.StrokeColor = Color.FromArgb("#21262D");
-        canvas.StrokeSize = 0.5f;
-
-        for (int i = 0; i <= size; i++)
-        {
-            float x = _gridOffsetX + i * _cellSize;
-            canvas.DrawLine(x, _gridOffsetY, x, _gridOffsetY + gridHeight(size));
-        }
-        for (int i = 0; i <= size; i++)
-        {
-            float y = _gridOffsetY + i * _cellSize;
-            canvas.DrawLine(_gridOffsetX, y, _gridOffsetX + gridWidth(size), y);
         }
     }
 
-    private float gridWidth(int size) => _cellSize * size;
-    private float gridHeight(int size) => _cellSize * size;
-
     private void DrawCompletedPaths(ICanvas canvas, int size)
     {
+        float cornerRadius = _cellSize * 0.18f;
+
         foreach (var kvp in _vm.CompletedPaths)
         {
             if (kvp.Value.Count < 2) continue;
 
             var color = _vm.GetPairColor(kvp.Key);
+
+            // Fill each cell in the path with the color
+            foreach (int cell in kvp.Value)
+            {
+                int row = cell / size, col = cell % size;
+                float x = _gridOffsetX + col * _cellSize;
+                float y = _gridOffsetY + row * _cellSize;
+
+                canvas.FillColor = color;
+                canvas.FillRoundedRectangle(x + 1, y + 1, _cellSize - 2, _cellSize - 2, cornerRadius);
+            }
+
+            // Draw connecting lines between cells
             var points = CellIndicesToPoints(kvp.Value, size);
-
-            // Glow layer
-            DrawSmoothPath(canvas, points, color.WithAlpha(0.25f), _cellSize * 0.6f);
-
-            // Main path
-            DrawSmoothPath(canvas, points, color, _cellSize * 0.32f);
-
-            // Highlight center
-            DrawSmoothPath(canvas, points, color.WithAlpha(0.4f), _cellSize * 0.12f);
+            DrawSmoothPath(canvas, points, color, _cellSize * 0.5f);
         }
     }
 
@@ -115,19 +105,24 @@ public class ConnectTheDotsDrawable : IDrawable
         if (!_vm.ActivePairId.HasValue || _vm.CurrentPath.Count < 1) return;
 
         var color = _vm.GetPairColor(_vm.ActivePairId.Value);
+        float cornerRadius = _cellSize * 0.18f;
 
+        // Fill each cell in the current path
+        foreach (int cell in _vm.CurrentPath)
+        {
+            int row = cell / size, col = cell % size;
+            float x = _gridOffsetX + col * _cellSize;
+            float y = _gridOffsetY + row * _cellSize;
+
+            canvas.FillColor = color;
+            canvas.FillRoundedRectangle(x + 1, y + 1, _cellSize - 2, _cellSize - 2, cornerRadius);
+        }
+
+        // Draw connecting lines
         if (_vm.CurrentPath.Count >= 2)
         {
             var points = CellIndicesToPoints(_vm.CurrentPath, size);
-
-            // Glow
-            DrawSmoothPath(canvas, points, color.WithAlpha(0.3f), _cellSize * 0.7f);
-
-            // Main path
-            DrawSmoothPath(canvas, points, color, _cellSize * 0.38f);
-
-            // Highlight
-            DrawSmoothPath(canvas, points, Colors.White.WithAlpha(0.2f), _cellSize * 0.1f);
+            DrawSmoothPath(canvas, points, color, _cellSize * 0.5f);
         }
 
         // Head indicator
@@ -135,8 +130,8 @@ public class ConnectTheDotsDrawable : IDrawable
         int hr = headCell / size, hc = headCell % size;
         float hx = CellCenterX(hc);
         float hy = CellCenterY(hr);
-        canvas.FillColor = color.WithAlpha(0.6f);
-        canvas.FillCircle(hx, hy, _cellSize * 0.18f);
+        canvas.FillColor = Colors.White.WithAlpha(0.5f);
+        canvas.FillCircle(hx, hy, _cellSize * 0.15f);
     }
 
     private void DrawDots(ICanvas canvas, int size)
@@ -144,7 +139,7 @@ public class ConnectTheDotsDrawable : IDrawable
         foreach (var pair in _vm.Pairs)
         {
             var color = pair.Color;
-            float radius = _cellSize * 0.28f;
+            float radius = _cellSize * 0.32f;
 
             DrawEndpoint(canvas, pair.StartRow, pair.StartCol, color, radius);
             DrawEndpoint(canvas, pair.EndRow, pair.EndCol, color, radius);
@@ -157,21 +152,16 @@ public class ConnectTheDotsDrawable : IDrawable
         float cy = CellCenterY(row);
 
         // Outer glow
-        canvas.FillColor = color.WithAlpha(0.2f);
-        canvas.FillCircle(cx, cy, radius * 1.6f);
+        canvas.FillColor = color.WithAlpha(0.3f);
+        canvas.FillCircle(cx, cy, radius * 1.4f);
 
         // Main dot
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
 
         // Inner highlight
-        canvas.FillColor = Colors.White.WithAlpha(0.35f);
-        canvas.FillCircle(cx - radius * 0.25f, cy - radius * 0.25f, radius * 0.35f);
-
-        // White ring
-        canvas.StrokeColor = Colors.White;
-        canvas.StrokeSize = 2f;
-        canvas.DrawCircle(cx, cy, radius + 1);
+        canvas.FillColor = Colors.White.WithAlpha(0.4f);
+        canvas.FillCircle(cx - radius * 0.2f, cy - radius * 0.2f, radius * 0.3f);
     }
 
     private void DrawSmoothPath(ICanvas canvas, List<PointF> points, Color color, float strokeSize)
@@ -186,21 +176,9 @@ public class ConnectTheDotsDrawable : IDrawable
         var path = new PathF();
         path.MoveTo(points[0].X, points[0].Y);
 
-        if (points.Count == 2)
+        for (int i = 1; i < points.Count; i++)
         {
-            path.LineTo(points[1].X, points[1].Y);
-        }
-        else
-        {
-            // Use quadratic curves for smoother corners
-            for (int i = 1; i < points.Count - 1; i++)
-            {
-                float midX = (points[i].X + points[i + 1].X) / 2;
-                float midY = (points[i].Y + points[i + 1].Y) / 2;
-                path.QuadTo(points[i].X, points[i].Y, midX, midY);
-            }
-            // Line to the last point
-            path.LineTo(points[^1].X, points[^1].Y);
+            path.LineTo(points[i].X, points[i].Y);
         }
 
         canvas.DrawPath(path);
