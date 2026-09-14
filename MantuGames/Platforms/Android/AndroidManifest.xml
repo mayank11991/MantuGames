@@ -10,6 +10,8 @@
 	             tools:replace="android:name">
 		<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
 		           android:value="ca-app-pub-7489032711560079~7098519092" />
+		<meta-data android:name="com.google.android.play.billingclient.version"
+		           android:value="8.1.0" />
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />

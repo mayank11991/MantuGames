@@ -26,7 +26,7 @@
                        Padding="12,6" HasShadow="False"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding LevelDisplay}" TextColor="#A855F7"
-                           FontSize="16" FontFamily="Orbitron" FontAttributes="Bold" HorizontalOptions="Center" />
+                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
                 <ImageButton Grid.Column="2" Source="pause.svg"
                              HeightRequest="24" WidthRequest="24"
@@ -54,7 +54,7 @@
                    Padding="10,8" HasShadow="True"
                    HorizontalOptions="Fill">
                 <StackLayout Spacing="4">
-                    <Label Text="Find these words:" FontSize="13" FontFamily="Orbitron" FontAttributes="Bold"
+                    <Label Text="Find these words:" FontSize="13" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
                            TextColor="#A855F7" HorizontalOptions="Center" />
                     <CollectionView ItemsSource="{Binding Words}" SelectionMode="None">
                         <CollectionView.ItemsLayout>
@@ -68,7 +68,7 @@
                                        Margin="2">
                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
                                         <Label Text="{Binding DisplayWord}"
-                                               FontSize="13" FontFamily="Inter" FontAttributes="Bold"
+                                               FontSize="13" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
                                                HorizontalOptions="Start"
                                                HorizontalTextAlignment="Start"
                                                 TextColor="#E7ECF5" VerticalOptions="Center" />

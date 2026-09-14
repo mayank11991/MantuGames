@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    x:Class="MantuGames.Views.ConnectTheDotsPage"
+    x:Name="PageRoot"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls"
+    BackgroundColor="#0D1117"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="0">
+
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto" Padding="12,8" BackgroundColor="#0D1117">
+            <Button
+                Grid.Column="0"
+                Text="&#xE5C4;"
+                FontFamily="MaterialIcons"
+                FontSize="22"
+                TextColor="#E7ECF5"
+                BackgroundColor="Transparent"
+                WidthRequest="40" HeightRequest="40"
+                CornerRadius="20"
+                Padding="0"
+                Clicked="OnBackClicked" />
+
+            <Label
+                Grid.Column="1"
+                Text="Connect the Dots"
+                FontFamily="MomoTrustDisplay"
+                FontSize="15"
+                FontAttributes="Bold"
+                TextColor="#E7ECF5"
+                VerticalOptions="Center"
+                Padding="8,0,0,0" />
+
+            <Border
+                Grid.Column="2"
+                BackgroundColor="#1A2332"
+                Stroke="#2E3A4A"
+                StrokeThickness="1"
+                Padding="12,5"
+                VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Label
+                    x:Name="LevelBadge"
+                    Text="Level 1"
+                    FontFamily="MomoTrustDisplay"
+                    FontSize="11"
+                    FontAttributes="Bold"
+                    TextColor="#22D3EE"
+                    VerticalOptions="Center" />
+            </Border>
+
+            <Border
+                Grid.Column="3"
+                BackgroundColor="#1A2332"
+                Stroke="#2E3A4A"
+                StrokeThickness="1"
+                Padding="12,5"
+                VerticalOptions="Center"
+                Margin="8,0,0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Label
+                    x:Name="ScoreLabel"
+                    Text="0"
+                    FontFamily="MomoTrustDisplay"
+                    FontSize="11"
+                    FontAttributes="Bold"
+                    TextColor="#FF9F1C"
+                    VerticalOptions="Center" />
+            </Border>
+        </Grid>
+
+        <!-- Game Grid — takes all remaining space -->
+        <Grid Grid.Row="1" x:Name="GameAreaGrid" Padding="4">
+            <BoxView x:Name="TestBox" BackgroundColor="#FF0000" IsVisible="False" />
+            <GraphicsView
+                x:Name="GameCanvas"
+                Drawable="{Binding Drawable}"
+                BackgroundColor="#1A2332"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+                <GraphicsView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCanvasTapped" NumberOfTapsRequired="1" />
+                </GraphicsView.GestureRecognizers>
+            </GraphicsView>
+        </Grid>
+
+        <!-- Bottom bar -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto,*,Auto,*,Auto" ColumnSpacing="0" Padding="12,6,12,12" BackgroundColor="#0D1117">
+            <Button
+                Grid.Column="0"
+                Text="HINT"
+                FontFamily="MomoTrustDisplay"
+                FontSize="11"
+                FontAttributes="Bold"
+                TextColor="#E7ECF5"
+                BackgroundColor="#1A2332"
+                CornerRadius="10"
+                HeightRequest="40"
+                Padding="8,0"
+                Clicked="OnShowSolutionClicked"
+                IsVisible="{Binding IsGameOver, Converter={StaticResource InverseBoolConverter}}" />
+
+            <Button
+                Grid.Column="2"
+                Text="PAUSE"
+                FontFamily="MomoTrustDisplay"
+                FontSize="11"
+                FontAttributes="Bold"
+                TextColor="#0D1117"
+                BackgroundColor="#22D3EE"
+                CornerRadius="10"
+                HeightRequest="40"
+                Padding="8,0"
+                Clicked="OnPauseClicked"
+                IsVisible="{Binding IsGameOver, Converter={StaticResource InverseBoolConverter}}" />
+
+            <Button
+                Grid.Column="4"
+                Text="RESTART"
+                FontFamily="MomoTrustDisplay"
+                FontSize="11"
+                FontAttributes="Bold"
+                TextColor="#E7ECF5"
+                BackgroundColor="#1A2332"
+                CornerRadius="10"
+                HeightRequest="40"
+                Padding="8,0"
+                Clicked="OnRestartClicked"
+                IsVisible="{Binding IsGameOver, Converter={StaticResource InverseBoolConverter}}" />
+        </Grid>
+    </Grid>
+
+    <controls:GameResultPopup x:Name="ResultPopup" IsVisible="False" />
+    <controls:PauseOverlay x:Name="PauseOverlay" IsVisible="False" />
+    <controls:ConfirmPopup x:Name="ConfirmPopup" IsVisible="False" />
+    <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False" />
+
+</ContentPage>

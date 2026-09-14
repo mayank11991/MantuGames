@@ -29,7 +29,7 @@
                 <VerticalStackLayout Spacing="16">
 
                     <Label Text="STATISTICS"
-                           FontFamily="Orbitron"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="20"
                            FontAttributes="Bold"
                            TextColor="#E7ECF5"
@@ -37,17 +37,17 @@
 
                     <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">
                         <Label x:Name="TotalPlayedLabel"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="14"
                                TextColor="#22D3EE" />
                         <Label x:Name="TotalWonLabel"
                                Grid.Column="1"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="14"
                                TextColor="#34D399" />
                         <Label x:Name="TotalRateLabel"
                                Grid.Column="2"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="14"
                                TextColor="#E7ECF5" />
                     </Grid>
@@ -73,7 +73,7 @@
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Label Text="CLOSE"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="16"
                                FontAttributes="Bold"
                                TextColor="#160D02"

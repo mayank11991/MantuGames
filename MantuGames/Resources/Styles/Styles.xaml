@@ -6,7 +6,7 @@
 
     <!-- ══════════════════════════════════════════════════════════════
          Mantu Games — website design system styles
-         Fonts: Orbitron (display) + Inter (body), registered in MauiProgram
+         Font: MomoTrustDisplay (all screens), registered in MauiProgram
          ══════════════════════════════════════════════════════════════ -->
 
     <Style TargetType="Page" ApplyToDerivedTypes="True">
@@ -31,17 +31,17 @@
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="Inter" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style TargetType="Label" x:Key="DisplayLabel">
-        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
     </Style>
 
     <Style TargetType="Label" x:Key="Headline">
-        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="30" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
@@ -51,7 +51,7 @@
     </Style>
 
     <Style TargetType="Label" x:Key="SubHeadline">
-        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
         <Setter Property="HorizontalOptions" Value="Center" />
@@ -59,7 +59,7 @@
     </Style>
 
     <Style TargetType="Label" x:Key="KickerLabel">
-        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="11" />
         <Setter Property="TextColor" Value="{StaticResource ColorAccent}" />
         <Setter Property="CharacterSpacing" Value="3" />
@@ -67,14 +67,14 @@
 
     <Style TargetType="Label" x:Key="MutedLabel">
         <Setter Property="TextColor" Value="{StaticResource ColorMuted}" />
-        <Setter Property="FontFamily" Value="Inter" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
     </Style>
 
     <!-- ── Buttons ───────────────────────────────────────────────── -->
     <Style TargetType="Button">
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
         <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel2}" />
-        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="BorderWidth" Value="0" />
@@ -101,7 +101,7 @@
     <!-- Orange gradient CTA (matches .btn-accent) -->
     <Style TargetType="Button" x:Key="AccentButton">
         <Setter Property="TextColor" Value="{StaticResource ColorOnDark}" />
-        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="BackgroundColor" Value="{StaticResource ColorCta}" />
@@ -115,7 +115,7 @@
     <!-- Ghost pill (matches .btn-ghost) -->
     <Style TargetType="Button" x:Key="GhostButton">
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
-        <Setter Property="FontFamily" Value="Orbitron" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="BackgroundColor" Value="#0FFFFFFF" />
@@ -148,7 +148,7 @@
     <Style TargetType="Entry">
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
         <Setter Property="BackgroundColor" Value="{StaticResource ColorBg2}" />
-        <Setter Property="FontFamily" Value="Inter" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="PlaceholderColor" Value="{StaticResource Gray400}" />
         <Setter Property="MinimumHeightRequest" Value="48" />
@@ -157,7 +157,7 @@
     <Style TargetType="Editor">
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="Inter" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="PlaceholderColor" Value="{StaticResource Gray400}" />
         <Setter Property="MinimumHeightRequest" Value="44" />
@@ -167,7 +167,7 @@
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
         <Setter Property="TitleColor" Value="{StaticResource Gray300}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="Inter" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="MinimumHeightRequest" Value="44" />
     </Style>
@@ -177,28 +177,28 @@
         <Setter Property="PlaceholderColor" Value="{StaticResource Gray400}" />
         <Setter Property="CancelButtonColor" Value="{StaticResource Gray400}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="Inter" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style TargetType="DatePicker">
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="Inter" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style TargetType="TimePicker">
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="Inter" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style TargetType="RadioButton">
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{StaticResource ColorText}" />
-        <Setter Property="FontFamily" Value="Inter" />
+        <Setter Property="FontFamily" Value="MomoTrustDisplay" />
         <Setter Property="FontSize" Value="14" />
     </Style>
 

@@ -42,7 +42,7 @@ public partial class StatsPopup : ContentView
                     new Label
                     {
                         Text = g.Title,
-                        FontFamily = "Inter",
+                        FontFamily = "MomoTrustDisplay",
                         FontSize = 13,
                         FontAttributes = FontAttributes.Bold,
                         TextColor = Color.FromArgb("#E7ECF5"),
@@ -56,7 +56,7 @@ public partial class StatsPopup : ContentView
             StatsGrid.Children.Add(new Label
             {
                 Text = $"{s.Won}/{s.Played}",
-                FontFamily = "Orbitron",
+                FontFamily = "MomoTrustDisplay",
                 FontSize = 12,
                 TextColor = Color.FromArgb("#9AA7BD"),
                 VerticalOptions = LayoutOptions.Center,
@@ -67,7 +67,7 @@ public partial class StatsPopup : ContentView
             StatsGrid.Children.Add(new Label
             {
                 Text = StatsService.WinRate(s.Played, s.Won) > 0 ? $"{StatsService.WinRate(s.Played, s.Won):0}%" : "—",
-                FontFamily = "Orbitron",
+                FontFamily = "MomoTrustDisplay",
                 FontSize = 12,
                 TextColor = Color.FromArgb("#34D399"),
                 VerticalOptions = LayoutOptions.Center,

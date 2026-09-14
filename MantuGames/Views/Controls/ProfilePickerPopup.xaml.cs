@@ -82,7 +82,7 @@ public partial class ProfilePickerPopup : ContentView
         avatar.Content = new Label
         {
             Text = p.Initial,
-            FontFamily = "Orbitron",
+            FontFamily = "MomoTrustDisplay",
             FontSize = 30,
             FontAttributes = FontAttributes.Bold,
             TextColor = Color.FromArgb("#0B0E14"),
@@ -93,7 +93,7 @@ public partial class ProfilePickerPopup : ContentView
         var name = new Label
         {
             Text = p.Name,
-            FontFamily = "Inter",
+            FontFamily = "MomoTrustDisplay",
             FontSize = 13,
             FontAttributes = FontAttributes.Bold,
             TextColor = Color.FromArgb("#E7ECF5"),
@@ -133,7 +133,7 @@ public partial class ProfilePickerPopup : ContentView
         avatar.Content = new Label
         {
             Text = "+",
-            FontFamily = "Inter",
+            FontFamily = "MomoTrustDisplay",
             FontSize = 36,
             FontAttributes = FontAttributes.Bold,
             TextColor = Color.FromArgb("#9AA7BD"),
@@ -144,7 +144,7 @@ public partial class ProfilePickerPopup : ContentView
         var name = new Label
         {
             Text = "Add profile",
-            FontFamily = "Inter",
+            FontFamily = "MomoTrustDisplay",
             FontSize = 13,
             FontAttributes = FontAttributes.Bold,
             TextColor = Color.FromArgb("#9AA7BD"),

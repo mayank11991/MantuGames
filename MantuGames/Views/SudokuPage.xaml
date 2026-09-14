@@ -40,7 +40,7 @@
                        Padding="12,6" HasShadow="False"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding LevelDisplay}" TextColor="#22D3EE"
-                           FontSize="16" FontFamily="Orbitron" FontAttributes="Bold" HorizontalOptions="Center" />
+                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
 
                 <ImageButton Grid.Column="2" Source="pause.svg"

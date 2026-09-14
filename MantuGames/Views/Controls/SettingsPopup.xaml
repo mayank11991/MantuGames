@@ -30,7 +30,7 @@
                     <VerticalStackLayout Spacing="10" Padding="20,16,20,16">
 
 <Label Text="SETTINGS"
-                           FontFamily="Orbitron"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="22"
                            FontAttributes="Bold"
                            TextColor="#E7ECF5"
@@ -42,7 +42,7 @@
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Grid.Column="0"
                                Text="Background Music"
-                               FontFamily="Inter"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="16"
                                TextColor="#E7ECF5"
                                VerticalOptions="Center" />
@@ -57,7 +57,7 @@
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Grid.Column="0"
                                Text="Sound Effects"
-                               FontFamily="Inter"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="16"
                                TextColor="#E7ECF5"
                                VerticalOptions="Center" />
@@ -72,14 +72,14 @@
 
                     <!-- App Version -->
                     <Label x:Name="VersionLabel"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="16"
                            TextColor="#ffffff"
                            HorizontalOptions="Center" />
 
                     <!-- Statistics -->
                     <Label Text="Statistics"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="16"
                            HorizontalOptions="Center"
                            TextColor="#ffffff"
@@ -93,7 +93,7 @@
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Grid.Column="0"
                                Text="Check for Updates"
-                               FontFamily="Inter"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="16"
                                TextColor="#ffffff"
                                
@@ -104,7 +104,7 @@
                         </Label>
                         <Label x:Name="UpdateStatusLabel"
                                Grid.Column="1"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="11"
                                FontAttributes="Bold"
                                TextColor="#22D3EE"
@@ -113,7 +113,7 @@
 
                     <!-- Contact Support -->
                     <Label Text="Contact Support"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="16"
                            HorizontalOptions="Start"
                            TextColor="#ffffff"
@@ -125,7 +125,7 @@
 
                     <!-- Edit Profile -->
                     <Label Text="Edit Profile"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="16"
                            HorizontalOptions="Start"
                            TextColor="#ffffff"
@@ -137,7 +137,7 @@
 
                     <!-- Privacy Policy -->
                     <Label Text="Privacy Policy"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="16"
                            HorizontalOptions="Start"
                            TextColor="#ffffff"
@@ -149,7 +149,7 @@
 
                     <!-- Rate Us -->
                     <Label Text="Rate Us"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="16"
                            HorizontalOptions="Start"
                            TextColor="#ffffff"
@@ -163,7 +163,7 @@
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Grid.Column="0"
                                Text="Remove Ads"
-                               FontFamily="Inter"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="16"
                                TextColor="#ffffff"
                                
@@ -174,7 +174,7 @@
                         </Label>
                         <Label x:Name="RemoveAdsStatus"
                                Grid.Column="1"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="11"
                                FontAttributes="Bold"
                                TextColor="#22D3EE"
@@ -183,7 +183,7 @@
 
                     <!-- Reset Progress -->
                     <Label Text="Reset All Progress"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="16"
                            HorizontalOptions="Center"
                            TextColor="#EF4444"
@@ -202,7 +202,7 @@
                             <RoundRectangle CornerRadius="12" />
                         </Border.StrokeShape>
                         <Label Text="CLOSE"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="14"
                                FontAttributes="Bold"
                                TextColor="#160D02"

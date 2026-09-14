@@ -11,6 +11,8 @@ public class AudioService
     private IAudioPlayer _bgPlayer;
     private bool _musicEnabled = true;
     private bool _sfxEnabled = true;
+    private bool _wasPlayingBeforeSleep;
+    private bool _isAppInBackground;
 
     public AudioService(IAudioManager audio)
     {
@@ -58,6 +60,7 @@ public class AudioService
 
     private void OnBgPlaybackEnded(object sender, EventArgs e)
     {
+        if (_isAppInBackground) return;
         if (_musicEnabled && _bgPlayer != null)
         {
             try
@@ -139,5 +142,19 @@ public class AudioService
             try { kv.Value?.Stop(); }
             catch { }
         }
+    }
+
+    public void PauseForBackground()
+    {
+        _isAppInBackground = true;
+        _wasPlayingBeforeSleep = _bgPlayer != null && _bgPlayer.IsPlaying;
+        StopAll();
+    }
+
+    public void ResumeFromBackground()
+    {
+        _isAppInBackground = false;
+        if (_wasPlayingBeforeSleep)
+            StartMusic();
     }
 }

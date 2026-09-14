@@ -15,27 +15,29 @@ public static class MauiProgram
             .UseMauiMTAdmob()
             .ConfigureFonts(fonts =>
             {
-                // Primary fonts matching website: Orbitron (display) + Inter (body)
-                fonts.AddFont("Orbitron.ttf", "Orbitron");
-                fonts.AddFont("Inter.ttf", "Inter");
-                fonts.AddFont("Inter.ttf", "InterMedium");
-                fonts.AddFont("Inter.ttf", "InterSemiBold");
-                fonts.AddFont("Inter.ttf", "InterBold");
+                // Primary font: MomoTrustDisplay for all screens
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "MomoTrustDisplay");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Milkyway");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Orbitron");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Inter");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "InterMedium");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "InterSemiBold");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "InterBold");
 
-                // Legacy aliases mapped to basenji for backward compatibility
-                fonts.AddFont("basenji_semibold.otf", "OpenSansRegular");
-                fonts.AddFont("basenji_semibold.otf", "OpenSansSemibold");
-                fonts.AddFont("basenji_semibold.otf", "PressStart2P");
-                fonts.AddFont("basenji_semibold.otf", "Baloo2");
-                fonts.AddFont("basenji_semibold.otf", "Baloo2SemiBold");
-                fonts.AddFont("basenji_semibold.otf", "Baloo2Bold");
-                fonts.AddFont("basenji_semibold.otf", "Fredoka");
-                fonts.AddFont("basenji_semibold.otf", "FredokaSemiBold");
-                fonts.AddFont("basenji_semibold.otf", "Nunito");
-                fonts.AddFont("basenji_semibold.otf", "NunitoBold");
-                fonts.AddFont("basenji_semibold.otf", "NunitoExtraBold");
-                fonts.AddFont("basenji_semibold.otf", "BrickSans");
-                fonts.AddFont("basenji_semibold.otf", "SagoMini");
+                // Legacy aliases mapped to MomoTrustDisplay for backward compatibility
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "OpenSansSemibold");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "PressStart2P");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Baloo2");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Baloo2SemiBold");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Baloo2Bold");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Fredoka");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "FredokaSemiBold");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Nunito");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "NunitoBold");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "NunitoExtraBold");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "BrickSans");
+                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "SagoMini");
             });
 
         builder.AddAudio();

@@ -118,7 +118,7 @@ public partial class SplashPage : ContentPage
                 var lbl = new Label
                 {
                     Text = c.ToString(),
-                    FontFamily = "Orbitron",
+                    FontFamily = "MomoTrustDisplay",
                     FontSize = 44,
                     FontAttributes = FontAttributes.Bold,
                     TextColor = Color.FromArgb("#E7ECF5"),

@@ -50,10 +50,15 @@ public partial class LevelMapPage : ContentPage
             _gameAccentColor = Color.FromArgb(info.CardColor);
         }
 
+        // Set game title
         GameTitleLabel.Text = info?.Title ?? _gameId;
 
+        // Set instructions
+        InstructionsLabel.Text = GameRules.GetRules(_gameId);
+
+        // Set coins for this game
         int coins = CoinService.GetCoins(_gameId);
-        CoinsLabel.Text = $"{coins} coins";
+        CoinsLabel.Text = $"{coins}";
 
         Levels.Clear();
 
@@ -62,7 +67,10 @@ public partial class LevelMapPage : ContentPage
 
         var levels = ProgressService.Instance.GetLevels(_gameId, show);
         foreach (var lp in levels)
-            Levels.Add(CreateLevelTileViewModel(lp));
+        {
+            var vm = CreateLevelTileViewModel(lp);
+            Levels.Add(vm);
+        }
     }
 
     private LevelTileViewModel CreateLevelTileViewModel(LevelProgress lp)
@@ -136,11 +144,6 @@ public partial class LevelMapPage : ContentPage
             System.Diagnostics.Debug.WriteLine($"Error in OnBackClicked: {ex.Message}");
         }
     }
-
-    private void OnRulesClicked(object sender, EventArgs e)
-    {
-        RulesPopup.Show(GameRules.GetRules(_gameId));
-    }
 }
 
 public class LevelTileViewModel : INotifyPropertyChanged
@@ -171,16 +174,16 @@ public class LevelTileViewModel : INotifyPropertyChanged
         ? new Image
         {
             Source = "lock",
-            HeightRequest = 34,
-            WidthRequest = 34,
+            HeightRequest = 30,
+            WidthRequest = 30,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         }
         : new Label
         {
             Text = LevelText,
-            FontFamily = "Orbitron",
-            FontSize = 34,
+            FontFamily = "MomoTrustDisplay",
+            FontSize = 28,
             FontAttributes = FontAttributes.Bold,
             TextColor = Color.FromArgb("#160D02"),
             HorizontalOptions = LayoutOptions.Center,

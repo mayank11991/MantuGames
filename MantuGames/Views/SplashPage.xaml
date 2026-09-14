@@ -20,7 +20,7 @@
                                    Spacing="4" />
             <Label x:Name="GamingsLabel"
                    Text="GAMINGS"
-                   FontFamily="Orbitron"
+                   FontFamily="MomoTrustDisplay"
                    FontSize="14"
                    TextColor="#22D3EE"
                    HorizontalOptions="Center"

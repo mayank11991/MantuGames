@@ -21,14 +21,14 @@
             <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
                 <Label x:Name="TitleLabel"
                        Text="How to Play"
-                       FontFamily="Orbitron"
+                       FontFamily="MomoTrustDisplay"
                        FontSize="22"
                        FontAttributes="Bold"
                        TextColor="#E7ECF5"
                        HorizontalOptions="Center" />
                 <ScrollView MaximumHeightRequest="320">
                     <Label x:Name="BodyLabel"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="15"
                            LineHeight="1.5"
                            TextColor="#9AA7BD"
@@ -43,7 +43,7 @@
                         <RoundRectangle CornerRadius="14" />
                     </Border.StrokeShape>
                     <Label Text="Got it!"
-                           FontFamily="Orbitron"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="16"
                            FontAttributes="Bold"
                            TextColor="#160D02"

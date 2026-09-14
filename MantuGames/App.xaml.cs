@@ -17,4 +17,16 @@ public partial class App : Application
     {
         return new Window(new Views.SplashPage());
     }
+
+    protected override void OnSleep()
+    {
+        base.OnSleep();
+        try { AudioService.Instance.PauseForBackground(); } catch { }
+    }
+
+    protected override void OnResume()
+    {
+        base.OnResume();
+        try { AudioService.Instance.ResumeFromBackground(); } catch { }
+    }
 }

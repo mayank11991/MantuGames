@@ -60,14 +60,14 @@
         <Grid Grid.Row="0" Padding="20,14,20,6" ColumnDefinitions="*,Auto,Auto,Auto,Auto">
             <Label x:Name="PlayerNameLabel"
                    Grid.Column="0"
-                   FontFamily="Orbitron"
+                   FontFamily="MomoTrustDisplay"
                    FontSize="13"
                    CharacterSpacing="1"
                    TextColor="{StaticResource ColorText}"
                    VerticalOptions="Center" />
             <Label x:Name="PointsLabel"
                    Grid.Column="1"
-                   FontFamily="Inter"
+                   FontFamily="MomoTrustDisplay"
                    FontSize="12"
                    FontAttributes="Bold"
                    TextColor="{StaticResource ColorCta}"
@@ -75,7 +75,7 @@
                    Margin="0,0,10,0" />
             <Label x:Name="CoinBalanceLabel"
                    Grid.Column="2"
-                   FontFamily="Orbitron"
+                   FontFamily="MomoTrustDisplay"
                    FontSize="11"
                    FontAttributes="Bold"
                    TextColor="{StaticResource ColorAccent}"
@@ -101,7 +101,7 @@
         <!-- ── HERO (matches website .hero-content) ── -->
         <VerticalStackLayout Grid.Row="1" Spacing="8" Padding="24,8,24,18">
             <Label Text="MANTU GAMES STUDIO"
-                   FontFamily="Orbitron"
+                   FontFamily="MomoTrustDisplay"
                    FontSize="10"
                    CharacterSpacing="4"
                    TextColor="{StaticResource ColorAccent}"
@@ -112,7 +112,7 @@
                     <Color>#1422D3EE</Color>
                 </Label.BackgroundColor>
             </Label>
-            <Label FontFamily="Orbitron" FontSize="26" FontAttributes="Bold"
+            <Label FontFamily="MomoTrustDisplay" FontSize="26" FontAttributes="Bold"
                    HorizontalOptions="Center" HorizontalTextAlignment="Center"
                    CharacterSpacing="1" TextColor="{StaticResource ColorText}">
                 <Label.FormattedText>
@@ -123,7 +123,7 @@
                 </Label.FormattedText>
             </Label>
             <Label Text="Fun games that make learning exciting!"
-                   FontFamily="Inter"
+                   FontFamily="MomoTrustDisplay"
                    FontSize="13"
                    TextColor="{StaticResource ColorMuted}"
                    HorizontalOptions="Center"
@@ -140,7 +140,7 @@
                        Placeholder="Search games by name or ID"
                        PlaceholderColor="{StaticResource ColorMuted}"
                        TextColor="{StaticResource ColorText}"
-                       FontFamily="Inter"
+                       FontFamily="MomoTrustDisplay"
                        FontSize="13"
                        BackgroundColor="Transparent"
                        SemanticProperties.Description="Search games by name or ID"
@@ -193,7 +193,7 @@
                             </Border>
                             <Label Grid.Row="1"
                                    Text="{Binding Title}"
-                                   FontFamily="Orbitron"
+                                   FontFamily="MomoTrustDisplay"
                                    FontSize="14"
                                    FontAttributes="Bold"
                                    TextColor="{StaticResource ColorText}"
@@ -202,7 +202,7 @@
                                    HorizontalTextAlignment="Center" />
                             <Label Grid.Row="2"
                                    Text="{Binding Description}"
-                                   FontFamily="Inter"
+                                   FontFamily="MomoTrustDisplay"
                                    FontSize="11"
                                    TextColor="{StaticResource ColorMuted}"
                                    LineBreakMode="TailTruncation"

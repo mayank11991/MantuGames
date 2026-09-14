@@ -84,8 +84,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
         <PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
         <PackageReference Include="Plugin.MauiMTAdmob" Version="2.4.0" />
-        <PackageReference Include="Plugin.InAppBilling" Version="7.0.0" />
-        <PackageReference Include="Xamarin.Android.Google.BillingClient" Version="8.0.0" />
+        <PackageReference Include="Plugin.InAppBilling" Version="10.0.0" />
     </ItemGroup>
 
     <ItemGroup>

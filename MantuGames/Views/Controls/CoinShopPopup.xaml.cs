@@ -101,7 +101,7 @@ public partial class CoinShopPopup : ContentView
             var coinLabel = new Label
             {
                 Text = $"{coins} Coins",
-                FontFamily = "Orbitron",
+                FontFamily = "MomoTrustDisplay",
                 FontSize = 15,
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromArgb("#E7ECF5"),
@@ -121,7 +121,7 @@ public partial class CoinShopPopup : ContentView
             buy.Content = new Label
             {
                 Text = "BUY",
-                FontFamily = "Orbitron",
+                FontFamily = "MomoTrustDisplay",
                 FontSize = 12,
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromArgb("#160D02"),
@@ -201,7 +201,7 @@ public partial class CoinShopPopup : ContentView
             stack.Children.Add(new Label
             {
                 Text = g.Title,
-                FontFamily = "Inter",
+                FontFamily = "MomoTrustDisplay",
                 FontSize = 12,
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromArgb("#E7ECF5"),
@@ -224,7 +224,7 @@ public partial class CoinShopPopup : ContentView
                     new Label
                     {
                         Text = CoinService.GetCoins(g.Id).ToString(),
-                        FontFamily = "Orbitron",
+                        FontFamily = "MomoTrustDisplay",
                         FontSize = 11,
                         TextColor = Color.FromArgb("#22D3EE"),
                         HorizontalOptions = LayoutOptions.Center,

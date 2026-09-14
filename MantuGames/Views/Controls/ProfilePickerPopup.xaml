@@ -36,7 +36,7 @@
                              CornerRadius="2" Color="#3A4A63"
                              VerticalOptions="Center" />
                     <Label Grid.Column="1" Text="Who's playing?"
-                           FontFamily="Orbitron"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="20"
                            FontAttributes="Bold"
                            TextColor="#E7ECF5"
@@ -45,7 +45,7 @@
 
                 <Label x:Name="SubtitleLabel"
                        Text="Select a profile to continue, or create a new one."
-                       FontFamily="Inter"
+                       FontFamily="MomoTrustDisplay"
                        FontSize="12"
                        TextColor="#9AA7BD"
                        HorizontalOptions="Center"

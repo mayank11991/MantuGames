@@ -28,7 +28,7 @@
             <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
 
                 <Label x:Name="TitleLabel"
-                       FontFamily="Orbitron"
+                       FontFamily="MomoTrustDisplay"
                        FontSize="20"
                        FontAttributes="Bold"
                        HorizontalOptions="Center">
@@ -38,7 +38,7 @@
                 </Label>
 
                 <Label x:Name="MessageLabel"
-                       FontFamily="Inter"
+                       FontFamily="MomoTrustDisplay"
                        FontSize="14"
                        HorizontalTextAlignment="Center">
                     <Label.TextColor>
@@ -58,7 +58,7 @@
                             <RoundRectangle CornerRadius="12" />
                         </Border.StrokeShape>
                         <Label x:Name="CancelLabel"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="14"
                                FontAttributes="Bold"
                                HorizontalOptions="Center"
@@ -78,7 +78,7 @@
                             <RoundRectangle CornerRadius="12" />
                         </Border.StrokeShape>
                         <Label x:Name="ConfirmLabel"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="14"
                                FontAttributes="Bold"
                                HorizontalOptions="Center"

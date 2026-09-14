@@ -38,6 +38,7 @@
     <Color x:Key="ColorGamePuzzlePets">#F472B6</Color>
     <Color x:Key="ColorGameBlockPuzzle">#F97316</Color>
     <Color x:Key="ColorGameMazeRunner">#3B82F6</Color>
+    <Color x:Key="ColorGameConnectTheDots">#06B6D4</Color>
 
     <!-- ══════════════════════════════════════════════════════════════
          Legacy keys kept so existing pages keep working. Values are

@@ -14,7 +14,7 @@
                              HorizontalOptions="Center"
                              Spacing="24">
             <Label Text="PAUSED"
-                   FontFamily="Orbitron"
+                   FontFamily="MomoTrustDisplay"
                    FontSize="36"
                    FontAttributes="Bold"
                    HorizontalOptions="Center">
@@ -31,7 +31,7 @@
                     <RoundRectangle CornerRadius="14" />
                 </Border.StrokeShape>
                 <Label Text="RESUME"
-                       FontFamily="Orbitron"
+                       FontFamily="MomoTrustDisplay"
                        FontSize="16"
                        FontAttributes="Bold"
                        HorizontalOptions="Center"

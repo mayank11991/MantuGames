@@ -7,7 +7,7 @@
 
     <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4" Padding="0,4,0,0">
         <Label x:Name="TimerLabel" Grid.Row="0" TextColor="#E7ECF5"
-               FontSize="20" FontAttributes="Bold" FontFamily="Orbitron"
+               FontSize="20" FontAttributes="Bold" FontFamily="MomoTrustDisplay"
                HorizontalOptions="Center" Text="3:30"
                CharacterSpacing="1"/>
         <Border Grid.Row="1" x:Name="BarTrack"

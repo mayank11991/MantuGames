@@ -28,21 +28,21 @@
 
                     <Label x:Name="TitleLabel"
                            Text="Update Available"
-                           FontFamily="Orbitron"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="20"
                            FontAttributes="Bold"
                            TextColor="#E7ECF5"
                            HorizontalOptions="Center" />
 
                     <Label x:Name="VersionLabel"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="13"
                            TextColor="#9AA7BD"
                            HorizontalOptions="Center" />
 
                     <ScrollView MaximumHeightRequest="140">
                         <Label x:Name="NotesLabel"
-                               FontFamily="Inter"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="14"
                                LineHeight="1.4"
                                TextColor="#9AA7BD" />
@@ -58,7 +58,7 @@
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Label Text="UPDATE NOW"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="16"
                                FontAttributes="Bold"
                                TextColor="#160D02"
@@ -71,7 +71,7 @@
 
                     <Label x:Name="LaterLabel"
                            Text="Not now"
-                           FontFamily="Inter"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="13"
                            TextColor="#9AA7BD"
                            TextDecorations="Underline"

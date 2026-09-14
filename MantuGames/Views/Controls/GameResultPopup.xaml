@@ -49,7 +49,7 @@
 
                 <!-- Title -->
                 <Label x:Name="TitleLabel"
-                       FontFamily="Orbitron"
+                       FontFamily="MomoTrustDisplay"
                        FontSize="18"
                        FontAttributes="Bold"
                        HorizontalOptions="Center" HorizontalTextAlignment="Center"
@@ -66,7 +66,7 @@
                         <RoundRectangle CornerRadius="16"/>
                     </Border.StrokeShape>
                     <Label x:Name="PointsLabel"
-                           FontFamily="Orbitron"
+                           FontFamily="MomoTrustDisplay"
                            FontSize="16"
                            FontAttributes="Bold"
                            TextColor="#160D02"
@@ -104,7 +104,7 @@
                                Margin="10,0,0,0"/>
                         <!-- label centred -->
                         <Label x:Name="PrimaryLabel"
-                               FontFamily="Orbitron"
+                               FontFamily="MomoTrustDisplay"
                                FontSize="16"
                                FontAttributes="Bold"
                                TextColor="#160D02"
@@ -132,7 +132,7 @@
                                HorizontalOptions="Start"
                                VerticalOptions="Center"
                                Margin="10,0,0,0"/>
-                        <Label FontFamily="Orbitron"
+                        <Label FontFamily="MomoTrustDisplay"
                                FontSize="15"
                                TextColor="#E7ECF5"
                                Text="Retry"

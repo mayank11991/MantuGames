@@ -36,12 +36,15 @@ public static class IapService
             var purchase = await billing.PurchaseAsync(productId, ItemType.InAppPurchase,
                 obfuscatedAccountId: "mantugames", obfuscatedProfileId: "");
 
-            if (purchase != null && purchase.State == PurchaseState.Purchased)
+            if (purchase == null) return false;
+
+            // v7: check for Purchased state; also handle Pending (e.g. parental approval)
+            if (purchase.State == PurchaseState.Purchased)
             {
                 if (consumable)
                     await billing.ConsumePurchaseAsync(purchase.PurchaseToken, "mantugames");
                 else
-                    await billing.FinalizePurchaseAsync(purchase.PurchaseToken);
+                    await billing.FinalizePurchaseAsync(new[] { purchase.PurchaseToken });
 
                 if (!consumable)
                     SetRemoveAdsOwned(true);

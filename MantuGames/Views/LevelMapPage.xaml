@@ -10,140 +10,147 @@
 
     <Grid RowDefinitions="Auto,Auto,*">
 
-        <!-- Row 0: Back + Points + Rules -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="8,44,12,0">
+        <!-- Row 0: Header - Back | Title -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,48,16,8">
             <ImageButton Grid.Column="0"
                     Source="icon_back_round"
-                    HeightRequest="48" WidthRequest="48"
+                    HeightRequest="40" WidthRequest="40"
                     BackgroundColor="Transparent" Padding="0"
                     Clicked="OnBackClicked"
                     VerticalOptions="Center" />
 
-            <Border Grid.Column="1"
-                    BackgroundColor="#26182136"
-                    StrokeThickness="0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="20"/>
-                </Border.StrokeShape>
-                <Label x:Name="CoinsLabel"
-                       Text="0 coins"
-                       FontFamily="Orbitron"
-                       FontSize="13"
-                       TextColor="#FF9F1C"
-                       Padding="14,6" />
-            </Border>
-
-            <ImageButton Grid.Column="2"
-                         Source="info.svg"
-                         HeightRequest="24" WidthRequest="24"
-                         BackgroundColor="Transparent" Padding="0"
-                         Margin="10,0,0,0"
-                         Clicked="OnRulesClicked"
-                         VerticalOptions="Center" />
+            <Label x:Name="GameTitleLabel"
+                   Grid.Column="1"
+                   FontFamily="MomoTrustDisplay"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource ColorText}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
         </Grid>
 
-        <!-- Row 1: Game name + SELECT LEVEL -->
-        <StackLayout Grid.Row="1"
-                     HorizontalOptions="Center"
-                     VerticalOptions="Center"
-                     Spacing="2"
-                     Margin="20,10,20,4">
-            <Label x:Name="GameTitleLabel"
-                   FontFamily="Inter"
-                   FontSize="14"
-                   TextColor="#9AA7BD"
-                   Opacity="0.7"
-                   HorizontalOptions="Center" />
-            <Label Text="Select Level"
-                   FontFamily="Orbitron"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   TextColor="#E7ECF5"
-                   HorizontalOptions="Center" />
-        </StackLayout>
+        <!-- Row 1: Instructions (center-aligned) + Coins (right-aligned) -->
+        <Border Grid.Row="1" 
+                BackgroundColor="#FF1A1F2E"
+                StrokeThickness="0"
+                Padding="20,12,20,8">
+            <Grid RowDefinitions="Auto,Auto">
+                <!-- Instructions text -->
+                <Label x:Name="InstructionsLabel"
+                       Grid.Row="0"
+                       FontFamily="MomoTrustDisplay"
+                       FontSize="20"
+                       TextColor="{StaticResource ColorText}"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center" />
 
-        <!-- Row 2: Level grid -->
-        <CollectionView Grid.Row="2"
-                        x:Name="LevelCollectionView"
-                        ItemsSource="{Binding Levels}"
-                        SelectionMode="None"
-                        Margin="10,4,10,24"
-                        VerticalOptions="Fill">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical"
-                                 Span="5"
-                                 HorizontalItemSpacing="4"
-                                 VerticalItemSpacing="8" />
-            </CollectionView.ItemsLayout>
+                <!-- Coins (right-aligned) -->
+                <HorizontalStackLayout Grid.Row="1"
+                                       HorizontalOptions="End"
+                                       Spacing="4"
+                                       Margin="0,8,0,0">
+                    <Image Source="coin.png"
+                           WidthRequest="16" HeightRequest="16" />
+                    <Label x:Name="CoinsLabel"
+                           FontFamily="MomoTrustDisplay"
+                           FontSize="11"
+                           TextColor="#FF9F1C"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border BackgroundColor="Transparent"
-                            Padding="0"
-                            StrokeThickness="0">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.LevelTappedCommand}"
-                                CommandParameter="{Binding .}" />
-                        </Border.GestureRecognizers>
-                        <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
-                            <Border x:Name="LevelBg"
-                                    BackgroundColor="{Binding BgColor}"
-                                    Stroke="{Binding StrokeColor}"
-                                    StrokeThickness="2"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    WidthRequest="62"
-                                    HeightRequest="62">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="14" />
-                                </Border.StrokeShape>
-                                <Border.Shadow>
-                                    <Shadow
-                                        Brush="{Binding ShadowBrush}"
-                                        Offset="0,4"
-                                        Radius="8"
-                                        Opacity="0.45" />
-                                </Border.Shadow>
-                                <Border Content="{Binding FaceContent}"
-                                        BackgroundColor="{Binding FaceColor}"
-                                        StrokeThickness="0"
-                                        Opacity="{Binding FaceOpacity}"
-                                        Margin="3"
-                                        HorizontalOptions="Fill"
-                                        VerticalOptions="Fill">
+        <!-- Row 1: Dark gray card with level grid -->
+        <Border Grid.Row="2"
+                BackgroundColor="#FF1A1F2E"
+                StrokeThickness="0"
+                Padding="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0" />
+            </Border.StrokeShape>
+
+            <!-- Level Grid (scrollable) -->
+            <CollectionView Grid.Row="2"
+                            x:Name="LevelCollectionView"
+                            ItemsSource="{Binding Levels}"
+                            SelectionMode="None"
+                            Margin="16,24,16,24"
+                            VerticalOptions="Fill">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="5"
+                                     HorizontalItemSpacing="8"
+                                     VerticalItemSpacing="12" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="Transparent"
+                                Padding="0"
+                                StrokeThickness="0">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.LevelTappedCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
+                                <Border x:Name="LevelBg"
+                                        BackgroundColor="{Binding BgColor}"
+                                        Stroke="{Binding StrokeColor}"
+                                        StrokeThickness="2"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        WidthRequest="56"
+                                        HeightRequest="56">
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10" />
+                                        <RoundRectangle CornerRadius="14" />
                                     </Border.StrokeShape>
+                                    <Border.Shadow>
+                                        <Shadow
+                                            Brush="{Binding ShadowBrush}"
+                                            Offset="0,4"
+                                            Radius="8"
+                                            Opacity="0.45" />
+                                    </Border.Shadow>
+                                    <Border Content="{Binding FaceContent}"
+                                            BackgroundColor="{Binding FaceColor}"
+                                            StrokeThickness="0"
+                                            Opacity="{Binding FaceOpacity}"
+                                            Margin="3"
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="Fill">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10" />
+                                        </Border.StrokeShape>
+                                    </Border>
                                 </Border>
-                            </Border>
-                            <HorizontalStackLayout Grid.Row="1"
-                                                   HorizontalOptions="Center"
-                                                   Spacing="1"
-                                                   IsVisible="{Binding ShowStars}">
-                                <Image Source="star_kawaii_filled.svg"
-                                       WidthRequest="16" HeightRequest="16"
-                                       Opacity="1" IsVisible="{Binding Star1}" />
-                                <Image Source="star_kawaii_filled.svg"
-                                       WidthRequest="16" HeightRequest="16"
-                                       Opacity="1" IsVisible="{Binding Star2}" />
-                                <Image Source="star_kawaii_filled.svg"
-                                       WidthRequest="16" HeightRequest="16"
-                                       Opacity="1" IsVisible="{Binding Star3}" />
-                                <Image Source="star_kawaii_empty.svg"
-                                       WidthRequest="16" HeightRequest="16"
-                                       Opacity="0.45" IsVisible="{Binding Star4}" />
-                                <Image Source="star_kawaii_empty.svg"
-                                       WidthRequest="16" HeightRequest="16"
-                                       Opacity="0.45" IsVisible="{Binding Star5}" />
-                            </HorizontalStackLayout>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                <HorizontalStackLayout Grid.Row="1"
+                                                       HorizontalOptions="Center"
+                                                       Spacing="2"
+                                                       IsVisible="{Binding ShowStars}">
+                                    <Image Source="star_kawaii_filled.svg"
+                                           WidthRequest="12" HeightRequest="12"
+                                           Opacity="1" IsVisible="{Binding Star1}" />
+                                    <Image Source="star_kawaii_filled.svg"
+                                           WidthRequest="12" HeightRequest="12"
+                                           Opacity="1" IsVisible="{Binding Star2}" />
+                                    <Image Source="star_kawaii_filled.svg"
+                                           WidthRequest="12" HeightRequest="12"
+                                           Opacity="1" IsVisible="{Binding Star3}" />
+                                    <Image Source="star_kawaii_empty.svg"
+                                           WidthRequest="12" HeightRequest="12"
+                                           Opacity="0.45" IsVisible="{Binding Star4}" />
+                                    <Image Source="star_kawaii_empty.svg"
+                                           WidthRequest="12" HeightRequest="12"
+                                           Opacity="0.45" IsVisible="{Binding Star5}" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Border>
 
         <controls:RulesPopup x:Name="RulesPopup" IsVisible="False"
             Grid.RowSpan="3"

@@ -19,12 +19,13 @@ public class DashboardViewModel
         new GameInfo { Id = "cardmemory",    Title = "Card Memory",    ImageName = "cardmemory.png",    CardColor = "#34D399", Route = "cardmemory",    Description = "Flip, match and train your memory one card at a time." },
         new GameInfo { Id = "puzzlepets",    Title = "Puzzle Pets",    ImageName = "puzzlegame.png",    CardColor = "#F472B6", Route = "puzzlepets",    Description = "Adorable pet puzzles that grow with you through every level." },
         new GameInfo { Id = "blockpuzzle",   Title = "Block Puzzle",   ImageName = "tetris.png",        CardColor = "#F97316", Route = "blockpuzzle",   Description = "Slide, stack and clear blocks in a fast-paced spatial challenge." },
-        new GameInfo { Id = "mazerunner",    Title = "Maze Runner",    ImageName = "mazerunner.png",    CardColor = "#3B82F6", Route = "mazerunner",    Description = "Blaze through twisting mazes — speed, logic and precision." },
+        new GameInfo { Id = "mazerunner",       Title = "Maze Runner",       ImageName = "mazerunner.png",    CardColor = "#3B82F6", Route = "mazerunner",       Description = "Blaze through twisting mazes — speed, logic and precision." },
+        new GameInfo { Id = "connectthedots",  Title = "Connect the Dots",  ImageName = "connectthedots.png", CardColor = "#06B6D4", Route = "connectthedots",  Description = "Draw paths to connect matching pairs — fill the grid, don't cross lines!", IsHidden = true },
         // new GameInfo { Id = "animalcrush",   Title = "Animal Crush",   ImageName = "animalcrush.png",   CardColor = "#F43F5E", Route = "animalcrush",   Description = "Match adorable critters in a colorful, satisfying combo rush." }, // Paused: not in 8-game release
     };
 
-    // Instance copy for binding
-    public ObservableCollection<GameInfo> GamesList => Games;
+    // Instance copy for binding (excludes hidden games)
+    public ObservableCollection<GameInfo> GamesList => new(Games.Where(g => !g.IsHidden));
 
     private bool _isNavigating;
 
