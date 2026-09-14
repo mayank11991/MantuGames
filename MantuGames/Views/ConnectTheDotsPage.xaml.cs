@@ -9,8 +9,6 @@ public partial class ConnectTheDotsPage : ContentPage
 {
     private CtdViewModel _vm;
     private int _startLevel = 1;
-    private bool _isDragging;
-    private (int r, int c) _lastCell = (-1, -1);
 
     public string Level
     {
@@ -37,10 +35,18 @@ public partial class ConnectTheDotsPage : ContentPage
                 DifficultyLabel.Text = _vm.Difficulty;
         };
 
-        GameCanvas.Drawable = new CtdDrawable(_vm);
+        var drawable = new CtdDrawable(_vm);
+        GameCanvas.Drawable = drawable;
         LevelLabel.Text = _vm.LevelDisplay;
         DifficultyLabel.Text = _vm.Difficulty;
         AudioService.Instance.StartMusic();
+
+        // Use pointer gesture for drag drawing
+        var pointerGesture = new PointerGestureRecognizer();
+        pointerGesture.PointerEntered += OnPointerEntered;
+        pointerGesture.PointerMoved += OnPointerMoved;
+        pointerGesture.PointerExited += OnPointerExited;
+        GameCanvas.GestureRecognizers.Add(pointerGesture);
     }
 
     protected override void OnDisappearing()
@@ -56,36 +62,47 @@ public partial class ConnectTheDotsPage : ContentPage
         MainThread.BeginInvokeOnMainThread(() => GameCanvas.Invalidate());
     }
 
-    private void OnCanvasTapped(object sender, TappedEventArgs e)
+    private void OnPointerEntered(object sender, PointerEventArgs e)
     {
-        var pos = e.GetPosition(GameCanvas);
-        if (pos == null || _vm == null) return;
-
-        var drawable = GameCanvas.Drawable as CtdDrawable;
-        var cell = drawable.HitTest((float)pos.Value.X, (float)pos.Value.Y);
-        if (cell.r >= 0)
-            _vm.CellTappedCommand.Execute(cell);
+        // Touch started
     }
 
-    private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
+    private void OnPointerMoved(object sender, PointerEventArgs e)
     {
         if (_vm == null || _vm.IsGameOver) return;
-        if (sender is not GraphicsView) return;
 
-        switch (e.StatusType)
+        var position = e.GetPosition(GameCanvas);
+        if (position == null) return;
+
+        var drawable = GameCanvas.Drawable as CtdDrawable;
+        if (drawable == null) return;
+
+        var cell = drawable.HitTest((float)position.Value.X, (float)position.Value.Y);
+        if (cell.r >= 0)
         {
-            case GestureStatus.Started:
-                _isDragging = true;
-                break;
+            _vm.OnCellTapped(cell);
+        }
+    }
 
-            case GestureStatus.Running:
-                break;
+    private void OnPointerExited(object sender, PointerEventArgs e)
+    {
+        // Touch ended - complete path if on matching dot
+    }
 
-            case GestureStatus.Completed:
-            case GestureStatus.Canceled:
-                _isDragging = false;
-                _lastCell = (-1, -1);
-                break;
+    private void OnCanvasTapped(object sender, TappedEventArgs e)
+    {
+        if (_vm == null || _vm.IsGameOver) return;
+
+        var position = e.GetPosition(GameCanvas);
+        if (position == null) return;
+
+        var drawable = GameCanvas.Drawable as CtdDrawable;
+        if (drawable == null) return;
+
+        var cell = drawable.HitTest((float)position.Value.X, (float)position.Value.Y);
+        if (cell.r >= 0)
+        {
+            _vm.OnCellTapped(cell);
         }
     }
 

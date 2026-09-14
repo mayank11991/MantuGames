@@ -50,7 +50,6 @@
                           HorizontalOptions="Fill"
                           VerticalOptions="Fill">
                 <GraphicsView.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="OnPanUpdated" />
                     <TapGestureRecognizer Tapped="OnCanvasTapped" />
                 </GraphicsView.GestureRecognizers>
             </GraphicsView>
