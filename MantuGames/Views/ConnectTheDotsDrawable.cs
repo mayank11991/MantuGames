@@ -64,6 +64,8 @@ public class CtdDrawable : IDrawable
 
     private void DrawPathLine(ICanvas canvas, List<(int r, int c)> path, Color color, float radius)
     {
+        float lineThickness = radius * 2f;
+
         if (path.Count == 1)
         {
             float cx = _offsetX + path[0].c * _cellSize + _cellSize / 2;
@@ -71,8 +73,6 @@ public class CtdDrawable : IDrawable
             DrawGlowCircle(canvas, cx, cy, radius, color);
             return;
         }
-
-        float lineThickness = radius * 2;
 
         for (int i = 0; i < path.Count - 1; i++)
         {
@@ -95,13 +95,12 @@ public class CtdDrawable : IDrawable
     private void DrawGlowLine(ICanvas canvas, float x1, float y1, float x2, float y2, float thickness, Color color)
     {
         canvas.StrokeLineCap = LineCap.Round;
-        float maxScale = (_cellSize * 0.30f) / (thickness * 0.5f);
 
         for (int i = 12; i >= 1; i--)
         {
             float t = i / 12f;
-            float scale = 1f + t * (maxScale - 1f);
-            float alpha = 0.02f + (1f - t) * 0.18f;
+            float scale = 1f + t * 1.2f;
+            float alpha = 0.06f + (1f - t) * 0.30f;
             canvas.StrokeColor = color.WithAlpha(alpha);
             canvas.StrokeSize = thickness * scale;
             canvas.DrawLine(x1, y1, x2, y2);
@@ -111,17 +110,18 @@ public class CtdDrawable : IDrawable
         canvas.StrokeSize = thickness;
         canvas.DrawLine(x1, y1, x2, y2);
 
-        canvas.StrokeColor = Colors.White.WithAlpha(0.3f);
-        canvas.StrokeSize = thickness * 0.3f;
+        canvas.StrokeColor = Colors.White.WithAlpha(0.4f);
+        canvas.StrokeSize = thickness * 0.35f;
         canvas.DrawLine(x1, y1, x2, y2);
     }
 
     private void DrawGlowCircle(ICanvas canvas, float cx, float cy, float radius, Color color)
     {
-        for (int i = 6; i >= 1; i--)
+        for (int i = 12; i >= 1; i--)
         {
-            float scale = 1f + (i * 0.15f);
-            float alpha = 0.03f + (0.035f * (7 - i));
+            float t = i / 12f;
+            float scale = 1f + t * 1.8f;
+            float alpha = 0.04f + (1f - t) * 0.25f;
             canvas.FillColor = color.WithAlpha(alpha);
             canvas.FillCircle(cx, cy, radius * scale);
         }
@@ -129,7 +129,7 @@ public class CtdDrawable : IDrawable
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
 
-        canvas.FillColor = Colors.White.WithAlpha(0.5f);
+        canvas.FillColor = Colors.White.WithAlpha(0.6f);
         canvas.FillCircle(cx - radius * 0.12f, cy - radius * 0.15f, radius * 0.4f);
     }
 
