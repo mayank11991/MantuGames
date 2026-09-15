@@ -29,41 +29,35 @@ public partial class ConnectTheDotsPage : ContentPage
         AudioService.Instance.StartMusic();
         InitGame(_startLevel);
         PauseOverlay.Resumed += OnResumeGame;
+
+        this.Opacity = 0;
+        this.FadeTo(1, 400);
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
         PauseOverlay.Resumed -= OnResumeGame;
-        Cleanup();
+        if (_vm != null)
+        {
+            _vm.GameEnded -= OnGameEnded;
+            _vm.Cleanup();
+        }
     }
 
     private void InitGame(int level)
     {
         _vm = new CtdViewModel(level);
-        _vm.BoardChanged += OnBoardChanged;
+        TimerView.TotalSeconds = ProgressService.GetTimerSeconds(level);
+        BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
 
         GameCanvas.Drawable = new CtdDrawable(_vm);
-        LevelBadge.Text = _vm.LevelDisplay;
-        DifficultyLabel.Text = _vm.Difficulty;
-        CtdTimer.TotalSeconds = ProgressService.GetTimerSeconds(level);
 
         _isDragging = false;
         _lastCell = (-1, -1);
 
         AttachNativeTouch();
-    }
-
-    private void Cleanup()
-    {
-        GameCanvas.HandlerChanged -= OnCanvasHandlerChanged;
-        _vm?.Cleanup();
-        if (_vm != null)
-        {
-            _vm.BoardChanged -= OnBoardChanged;
-            _vm.GameEnded -= OnGameEnded;
-        }
     }
 
     private void AttachNativeTouch()
@@ -103,7 +97,6 @@ public partial class ConnectTheDotsPage : ContentPage
 
             if (isDown)
             {
-                Console.WriteLine($"[CTD] DOWN native=({x:F1},{y:F1}) cell=({cell.r},{cell.c})");
                 if (_vm.IsGameOver || cell.r < 0) return;
                 _isDragging = true;
                 _lastCell = cell;
@@ -113,13 +106,11 @@ public partial class ConnectTheDotsPage : ContentPage
             {
                 if (!_isDragging || _vm.IsGameOver) return;
                 if (cell.r < 0 || cell == _lastCell) return;
-                Console.WriteLine($"[CTD] MOVE native=({x:F1},{y:F1}) cell=({cell.r},{cell.c})");
                 _lastCell = cell;
                 _vm.OnPointerDrag(cell);
             }
             else if (isUp)
             {
-                Console.WriteLine($"[CTD] UP native=({x:F1},{y:F1}) cell=({cell.r},{cell.c}) dragging={_isDragging}");
                 if (_isDragging && cell.r >= 0)
                     _vm.OnPointerUp(cell);
                 _isDragging = false;
@@ -128,37 +119,7 @@ public partial class ConnectTheDotsPage : ContentPage
         });
     }
 
-    private void OnBoardChanged()
-    {
-        MainThread.BeginInvokeOnMainThread(() => GameCanvas.Invalidate());
-    }
-
-    private async void OnGameEnded(bool isWin)
-    {
-        _vm?.StopTimer();
-        int total = ProgressService.GetTimerSeconds(_startLevel);
-        int elapsed = total - _vm.TimeRemainingSec;
-
-        int stars = isWin ? ProgressService.CalcStars(elapsed, total) : 0;
-        int coins = isWin ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
-
-        await ResultPopup.Show(isWin, _startLevel, elapsed, total, stars, coins,
-            isWin ? null : "Time's Up!", "connectthedots");
-    }
-
-    private void OnNextLevel(object sender, EventArgs e)
-    {
-        _startLevel++;
-        Cleanup();
-        InitGame(_startLevel);
-    }
-
-    private void OnRetry(object sender, EventArgs e)
-    {
-        Cleanup();
-        InitGame(_startLevel);
-    }
-
+    // ── Pause / Resume ──────────────────────────────────────────
     private void OnPause(object sender, EventArgs e)
     {
         try { _vm?.PauseTimer(); } catch { }
@@ -170,15 +131,72 @@ public partial class ConnectTheDotsPage : ContentPage
         try { _vm?.ResumeTimer(); } catch { }
     }
 
+    // ── BACK ────────────────────────────────────────────────────
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        AudioService.Instance.Play("tap");
-        _vm?.PauseTimer();
-        bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave", "Stay");
-        if (leave)
+        try
+        {
+            AudioService.Instance.Play("tap");
+            _vm?.PauseTimer();
+            bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave", "Stay");
+            if (!leave)
+            {
+                try { _vm?.ResumeTimer(); } catch { }
+                return;
+            }
+            _vm?.Cleanup();
             await Shell.Current.GoToAsync("..");
-        else
-            try { _vm?.ResumeTimer(); } catch { }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in OnBackClicked: {ex.Message}");
+        }
+    }
+
+    // ── GAME EVENTS ─────────────────────────────────────────────
+    private async void OnGameEnded(bool isWin)
+    {
+        try
+        {
+            int total = ProgressService.GetTimerSeconds(_startLevel);
+            int elapsed = total - _vm.TimeRemainingSec;
+            int stars = isWin ? ProgressService.CalcStars(elapsed, total) : 0;
+            int coins = isWin ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
+
+            await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, total, stars, coins,
+                isWin ? null : "Time's Up!", "connectthedots");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in OnGameEnded: {ex.Message}");
+        }
+    }
+
+    private void OnNextLevel(object sender, EventArgs e)
+    {
+        _startLevel = _vm.CurrentLevel + 1;
+        _vm.GameEnded -= OnGameEnded;
+        _vm = new CtdViewModel(_startLevel);
+        TimerView.TotalSeconds = ProgressService.GetTimerSeconds(_startLevel);
+        BindingContext = _vm;
+        _vm.GameEnded += OnGameEnded;
+        GameCanvas.Drawable = new CtdDrawable(_vm);
+        _isDragging = false;
+        _lastCell = (-1, -1);
+        AttachNativeTouch();
+    }
+
+    private void OnRetry(object sender, EventArgs e)
+    {
+        _vm.GameEnded -= OnGameEnded;
+        _vm = new CtdViewModel(_startLevel);
+        TimerView.TotalSeconds = ProgressService.GetTimerSeconds(_startLevel);
+        BindingContext = _vm;
+        _vm.GameEnded += OnGameEnded;
+        GameCanvas.Drawable = new CtdDrawable(_vm);
+        _isDragging = false;
+        _lastCell = (-1, -1);
+        AttachNativeTouch();
     }
 
     protected override bool OnBackButtonPressed()
