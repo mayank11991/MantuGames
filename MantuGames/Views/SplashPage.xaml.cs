@@ -147,7 +147,7 @@ public partial class SplashPage : ContentPage
             await Task.Delay(300);
 
             GamingsLabel.TranslationX = 0;
-            AudioService.Instance.Play("whoosh");
+            AudioService.Instance.Play("thud");
             GamingsLabel.TranslationY = 80;
             GamingsLabel.Opacity = 1;
             await GamingsLabel.TranslateTo(0, 0, 400, Easing.CubicOut);

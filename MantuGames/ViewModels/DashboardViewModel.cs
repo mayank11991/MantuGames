@@ -22,7 +22,7 @@ public class DashboardViewModel
         new GameInfo { Id = "mazerunner",       Title = "Maze Runner",       ImageName = "mazerunner.png",    CardColor = "#EC6C28", Route = "mazerunner",       Description = "Blaze through twisting mazes" },
         new GameInfo { Id = "connectthedots",  Title = "Connect the Dots",  ImageName = "connectthedots.png", CardColor = "#188C8A", Route = "connectthedots",  Description = "Draw paths to connect matching pairs" },
         new GameInfo { Id = "numbermatch",     Title = "Number Match",     ImageName = "numbermatch.png",    CardColor = "#B3DA5D", Route = "numbermatch",     Description = "Match identical numbers or pairs that add up to 10" },
-        new GameInfo { Id = "arrowlines",      Title = "Arrow Lines",      ImageName = "arrowlines.png",     CardColor = "#3B82F6", Route = "arrowlines",      Description = "Clear the board by tapping arrows in their direction" },
+        new GameInfo { Id = "arrowlines",      Title = "Arrow Lines",      ImageName = "arrow_lines.png",     CardColor = "#3B82F6", Route = "arrowlines",      Description = "Clear the board by tapping arrows in their direction" },
         // new GameInfo { Id = "animalcrush",   Title = "Animal Crush",   ImageName = "animalcrush.png",   CardColor = "#F43F5E", Route = "animalcrush",   Description = "Match adorable critters in a colorful, satisfying combo rush." }, // Paused: not in 8-game release
     };
 

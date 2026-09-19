@@ -36,7 +36,7 @@ public class ArrowLinesViewModel : INotifyPropertyChanged
         set { _arrowsCleared = value; OnPropertyChanged(); OnPropertyChanged(nameof(RemainingText)); }
     }
 
-    public int TotalArrows => _puzzle?.TargetArrows ?? 0;
+    public int TotalArrows => _puzzle?.Arrows.Count ?? 0;
 
     public string RemainingText => _puzzle == null ? "" : $"{_puzzle.RemainingCount} arrows left";
 

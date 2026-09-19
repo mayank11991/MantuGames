@@ -28,7 +28,7 @@
                    Opacity="0"
                    Padding="10,0,10,10" />
             <Image x:Name="SlothImage"
-                   Source="sloth.png"
+                   Source="hammer.png"
                    HeightRequest="120"
                    WidthRequest="120"
                    HorizontalOptions="Center"

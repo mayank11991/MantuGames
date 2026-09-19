@@ -192,12 +192,12 @@
                                 <Label Text="{Binding Title}"
                                        FontFamily="MomoTrustDisplay"
                                        FontSize="15"
-                                       FontAttributes="Bold"
+                                       FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="Center"
                                        TextColor="White"
                                        CharacterSpacing="0.5" />
                                 <Label Text="{Binding Description}"
                                        FontFamily="MomoTrustDisplay"
-                                       FontSize="11"
+                                       FontSize="11" HorizontalTextAlignment="Center" HorizontalOptions="Center"
                                        TextColor="#CCFFFFFF"
                                        LineBreakMode="TailTruncation"
                                        MaxLines="2" />
