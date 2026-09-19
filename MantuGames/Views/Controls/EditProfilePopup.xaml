@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MantuGames.Views.Controls.EditProfilePopup"
+             IsVisible="False">
+
+    <Grid RowDefinitions="*">
+        <!-- Dark overlay -->
+        <BoxView x:Name="Overlay" Color="#99000000" IsVisible="False">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnOverlayTapped" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <!-- Bottom sheet -->
+        <Border x:Name="Sheet"
+                BackgroundColor="#160D02"
+                StrokeThickness="0"
+                VerticalOptions="End"
+                Padding="24,20"
+                IsVisible="False">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20,20,0,0" />
+            </Border.StrokeShape>
+
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="16">
+
+                <Label Grid.Row="0"
+                       Text="EDIT PROFILE"
+                       FontFamily="MomoTrustDisplay"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="#E7ECF5"
+                       HorizontalOptions="Center" />
+
+                <!-- Avatar preview -->
+                <Border x:Name="AvatarPreview"
+                        Grid.Row="1"
+                        WidthRequest="72"
+                        HeightRequest="72"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 36"
+                        HorizontalOptions="Center">
+                    <Label x:Name="InitialLabel"
+                           FontFamily="MomoTrustDisplay"
+                           FontSize="30"
+                           FontAttributes="Bold"
+                           TextColor="#0B0E14"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <!-- Name entry -->
+                <Entry x:Name="NameEntry"
+                       Grid.Row="2"
+                       Placeholder="Enter name"
+                       PlaceholderColor="#6B7280"
+                       FontFamily="MomoTrustDisplay"
+                       FontSize="16"
+                       TextColor="#E7ECF5"
+                       BackgroundColor="#1E293B"
+                       MaxLength="20" />
+
+                <!-- Color palette -->
+                <VerticalStackLayout Grid.Row="3" Spacing="8">
+                    <Label Text="Choose color"
+                           FontFamily="MomoTrustDisplay"
+                           FontSize="14"
+                           TextColor="#9AA7BD" />
+                    <HorizontalStackLayout x:Name="ColorPalette"
+                                           Spacing="10"
+                                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Save button -->
+                <Border Grid.Row="4"
+                        BackgroundColor="#22D3EE"
+                        StrokeThickness="0"
+                        Padding="12,12"
+                        HorizontalOptions="Fill">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+                    <Label Text="SAVE"
+                           FontFamily="MomoTrustDisplay"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#0B0E14"
+                           HorizontalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSave" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Border>
+
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

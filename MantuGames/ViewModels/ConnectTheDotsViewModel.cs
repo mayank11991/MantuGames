@@ -120,6 +120,7 @@ public class CtdViewModel : INotifyPropertyChanged
         if (IsGameOver) return;
 
         int pair = FindPairAt(cell.r, cell.c);
+        Console.WriteLine($"[CTD-VM] Down cell=({cell.r},{cell.c}) pair={pair}");
 
         if (pair >= 0)
         {
@@ -129,6 +130,7 @@ public class CtdViewModel : INotifyPropertyChanged
             _activePair = pair;
             _currentPath.Clear();
             _currentPath.Add(cell);
+            Console.WriteLine($"[CTD-VM] Started path pair={pair}");
             BoardChanged?.Invoke();
             return;
         }
@@ -144,9 +146,14 @@ public class CtdViewModel : INotifyPropertyChanged
         if (IsCellOwnedByOther(cell, _activePair.Value)) return;
 
         var last = _currentPath[^1];
-        if (Math.Abs(last.r - cell.r) + Math.Abs(last.c - cell.c) != 1) return;
+        if (Math.Abs(last.r - cell.r) + Math.Abs(last.c - cell.c) != 1)
+        {
+            Console.WriteLine($"[CTD-VM] Drag not adjacent: last=({last.r},{last.c}) cell=({cell.r},{cell.c})");
+            return;
+        }
 
         int tappedPair = FindPairAt(cell.r, cell.c);
+        Console.WriteLine($"[CTD-VM] Drag cell=({cell.r},{cell.c}) tappedPair={tappedPair} activePair={_activePair.Value} pathLen={_currentPath.Count}");
 
         if (tappedPair >= 0 && tappedPair != _activePair.Value)
             return;
@@ -170,6 +177,7 @@ public class CtdViewModel : INotifyPropertyChanged
         }
 
         _currentPath.Add(cell);
+        Console.WriteLine($"[CTD-VM] Added to path, path now={_currentPath.Count}");
         BoardChanged?.Invoke();
     }
 

@@ -842,6 +842,8 @@ public partial class AnimalCrushPage : ContentPage
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
         SolutionButton.IsEnabled = true;
+        int coins = CoinService.GetCoins("animalcrush");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildBoard();
     }
 

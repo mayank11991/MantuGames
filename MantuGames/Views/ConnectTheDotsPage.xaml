@@ -6,7 +6,7 @@
     xmlns:controls="clr-namespace:MantuGames.Views.Controls"
     Shell.NavBarIsVisible="False">
     <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
+        <AppThemeBinding Light="#1A1F2E" Dark="#1A1F2E" />
     </ContentPage.BackgroundColor>
 
     <AbsoluteLayout>

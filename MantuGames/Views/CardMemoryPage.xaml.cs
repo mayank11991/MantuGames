@@ -30,6 +30,10 @@ public partial class CardMemoryPage : ContentPage
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
         this.Loaded += (s, e) => BuildCards();
+
+        int coins = CoinService.GetCoins("cardmemory");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+
         this.Opacity = 0;
         this.FadeTo(1, 400);
         PauseOverlay.Resumed += OnResumeGame;
@@ -313,6 +317,8 @@ public partial class CardMemoryPage : ContentPage
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
         SolutionButton.IsEnabled = true;
+        int coins = CoinService.GetCoins("cardmemory");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildCards();
     }
 
@@ -323,6 +329,8 @@ public partial class CardMemoryPage : ContentPage
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
         SolutionButton.IsEnabled = true;
+        int coins = CoinService.GetCoins("cardmemory");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildCards();
     }
 }

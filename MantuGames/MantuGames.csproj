@@ -26,13 +26,13 @@
         <ApplicationId>com.mantugames.app</ApplicationId>
 
         <!-- Versions -->
-        <ApplicationDisplayVersion>1.0.8</ApplicationDisplayVersion>
-        <ApplicationVersion>9</ApplicationVersion>
+        <ApplicationDisplayVersion>1.1.0</ApplicationDisplayVersion>
+        <ApplicationVersion>11</ApplicationVersion>
 
         <!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
         <WindowsPackageType>None</WindowsPackageType>
 
-            <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
+            <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
         <AndroidKeyStore>True</AndroidKeyStore>
         <AndroidSigningKeyStore>mantugames.keystore</AndroidSigningKeyStore>
         <AndroidSigningKeyAlias>mantugames</AndroidSigningKeyAlias>
@@ -52,7 +52,8 @@
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" />
+        <MauiIcon Include="Resources\AppIcon\appicon_t.png"
+                   ForegroundFile="Resources\AppIcon\appicon_t.png" />
 
         <!-- Splash Screen -->
         <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#000000" BaseSize="128,128" />

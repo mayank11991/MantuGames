@@ -69,6 +69,8 @@ public partial class BlockPuzzlePage : ContentPage
         _vm.GameEnded    += OnGameEnded;
         _vm.LinesClearing += OnLinesClearing;
         BlockTimer.TotalSeconds = BlockPuzzleViewModel.LevelTimerSeconds;
+        int coins = CoinService.GetCoins("blockpuzzle");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildBoard();
         BuildNextPreview();
     }

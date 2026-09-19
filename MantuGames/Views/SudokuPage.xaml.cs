@@ -41,6 +41,9 @@ namespace MantuGames.Views
             BindingContext = _vm;
             _vm.GameEnded += OnGameEnded;
 
+            int coins = CoinService.GetCoins("sudoku");
+            SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+
             this.Loaded += (s, e) => BuildSudokuGrid();
 
             this.Opacity = 0;

@@ -61,7 +61,7 @@
             <Label x:Name="PlayerNameLabel"
                    Grid.Column="0"
                    FontFamily="MomoTrustDisplay"
-                   FontSize="13"
+                   FontSize="15"
                    CharacterSpacing="1"
                    TextColor="{StaticResource ColorText}"
                    VerticalOptions="Center" />
@@ -76,7 +76,7 @@
             <Label x:Name="CoinBalanceLabel"
                    Grid.Column="2"
                    FontFamily="MomoTrustDisplay"
-                   FontSize="11"
+                   FontSize="15"
                    FontAttributes="Bold"
                    TextColor="{StaticResource ColorAccent}"
                    VerticalOptions="Center"
@@ -149,12 +149,12 @@
         </VerticalStackLayout>
 
         <!-- ── GAME GRID (matches website .game-grid) ── -->
-<CollectionView Grid.Row="2"
-                         x:Name="GamesCollectionView"
-                         ItemsSource="{Binding GamesList}"
-                         SelectionMode="None"
-                         Margin="12,0,12,8"
-                         VerticalOptions="Fill">
+        <CollectionView Grid.Row="2"
+                        x:Name="GamesCollectionView"
+                        ItemsSource="{Binding GamesList}"
+                        SelectionMode="None"
+                        Margin="12,0,12,8"
+                        VerticalOptions="Fill">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                                  Span="2"
@@ -165,48 +165,43 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Style="{StaticResource PanelCard}"
-                           Padding="14"
-                           BackgroundColor="{StaticResource ColorPanel}"
+                           Padding="0"
                            HasShadow="False"
-                           BorderColor="{Binding CardColor, Converter={StaticResource StringToColor}, ConverterParameter=0x59}"
-                           CornerRadius="12">
+                           BorderColor="Transparent"
+                           CornerRadius="16"
+                           HeightRequest="160">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.NavigateCommand}"
                                 CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
-                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
-                            <Border Grid.Row="0"
-                                    WidthRequest="44" HeightRequest="44"
-                                    HorizontalOptions="Center"
-                                    BackgroundColor="{Binding CardColor, Converter={StaticResource StringToColor}, ConverterParameter=0x2E}"
-                                    StrokeThickness="1"
-                                    Stroke="{Binding CardColor, Converter={StaticResource StringToColor}}"
-                                    Margin="0,0,0,8">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="12" />
-                                </Border.StrokeShape>
-                                <Image Source="{Binding ImageName}"
-                                       Aspect="AspectFill"
-                                       HorizontalOptions="Fill"
-                                       VerticalOptions="Fill" />
-                            </Border>
-                            <Label Grid.Row="1"
-                                   Text="{Binding Title}"
-                                   FontFamily="MomoTrustDisplay"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource ColorText}"
-                                   CharacterSpacing="0.5"
-                                   HorizontalOptions="Center"
-                                   HorizontalTextAlignment="Center" />
-                            <Label Grid.Row="2"
-                                   Text="{Binding Description}"
-                                   FontFamily="MomoTrustDisplay"
-                                   FontSize="11"
-                                   TextColor="{StaticResource ColorMuted}"
-                                   LineBreakMode="TailTruncation"
-                                   MaxLines="2" />
+                        <Grid>
+                            <!-- Full-bleed game icon as background -->
+                            <Image Source="{Binding ImageName}"
+                                   Aspect="AspectFill"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill" />
+                            <!-- Dark gradient overlay for readability -->
+                            <BoxView Background="{StaticResource CardOverlayGradient}"
+                                     HorizontalOptions="Fill"
+                                     VerticalOptions="Fill" />
+                            <!-- Title + Description -->
+                            <VerticalStackLayout VerticalOptions="End"
+                                                 Padding="14,0,14,14"
+                                                 Spacing="2">
+                                <Label Text="{Binding Title}"
+                                       FontFamily="MomoTrustDisplay"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       CharacterSpacing="0.5" />
+                                <Label Text="{Binding Description}"
+                                       FontFamily="MomoTrustDisplay"
+                                       FontSize="11"
+                                       TextColor="#CCFFFFFF"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2" />
+                            </VerticalStackLayout>
                         </Grid>
                     </Frame>
                 </DataTemplate>
@@ -216,6 +211,7 @@
         <controls:SettingsPopup x:Name="SettingsPopup" IsVisible="False" Grid.RowSpan="3" />
         <controls:ProfilePopup x:Name="ProfilePopup" IsVisible="False" Grid.RowSpan="3" />
         <controls:ProfilePickerPopup x:Name="ProfilePicker" IsVisible="False" Grid.RowSpan="3" />
+        <controls:EditProfilePopup x:Name="EditProfilePopup" IsVisible="False" Grid.RowSpan="3" />
         <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False" Grid.RowSpan="3" />
         <controls:StatsPopup x:Name="StatsPopup" IsVisible="False" Grid.RowSpan="3" />
         <controls:UpdatePopup x:Name="UpdatePopup" IsVisible="False" Grid.RowSpan="3" />

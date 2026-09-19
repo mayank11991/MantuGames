@@ -68,7 +68,7 @@ public partial class GameResultPopup : ContentView
         }
         else
         {
-            HeroIcon.Source = reason != null ? "icon_trophy" : "icon_timeout";
+            HeroIcon.Source = "icon_retry";
 
             StarsRow.IsVisible    = false;
             PointsBadge.IsVisible = false;
@@ -98,7 +98,10 @@ public partial class GameResultPopup : ContentView
         _ = MaybeRateNudgeAsync();
     }
 
-    public void Hide() => IsVisible = false;
+    public void Hide()
+    {
+        IsVisible = false;
+    }
 
     // ── RATE US NUDGE ─────────────────────────────────────────────
     // Shown after every 5th completed game until the player rates or

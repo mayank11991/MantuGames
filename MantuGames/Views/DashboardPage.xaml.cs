@@ -24,6 +24,7 @@ public partial class DashboardPage : ContentPage
         ProfilePicker.ProfileSelected += OnProfileSelected;
         ProfilePicker.AddProfileRequested += (s, e) => ProfilePopup.Show();
         ProfilePopup.ProfileCreated += (s, p) => ProfilePicker.Show();
+        EditProfilePopup.ProfileUpdated += OnProfileUpdated;
 
         // Restore any previously purchased non-consumables (e.g. remove_ads after reinstall)
         _ = IapService.RestoreOwnedAsync();
@@ -182,9 +183,15 @@ public partial class DashboardPage : ContentPage
         RefreshCoins();
     }
 
+    private void OnProfileUpdated(object? sender, EventArgs e)
+    {
+        PlayerNameLabel.Text = ProfileService.Active?.Name ?? "";
+    }
+
     private void OnEditProfile(object sender, EventArgs e)
     {
-        ProfilePicker.Show();
+        if (ProfileService.Active != null)
+            EditProfilePopup.Show(ProfileService.Active);
     }
 
     private void OnStatisticsRequested(object sender, EventArgs e)

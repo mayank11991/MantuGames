@@ -71,6 +71,9 @@ public partial class TowerOfHanoiPage : ContentPage
         _selectedPole = null;
         _dragFromPole = null;
 
+        int coins = CoinService.GetCoins("towerofhanoi");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+
         // Determine number of poles based on level
         int poleCount = _startLevel <= 5 ? 3 : _startLevel <= 15 ? 4 : 5;
 

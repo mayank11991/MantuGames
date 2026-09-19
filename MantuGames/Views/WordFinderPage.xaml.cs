@@ -37,6 +37,9 @@ public partial class WordFinderPage : ContentPage
         WordFinderTimer.TotalSeconds = ProgressService.GetTimerSeconds(_startLevel);
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
+
+        int coins = CoinService.GetCoins("wordfinder");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         this.Loaded += (s, e) => BuildGrid();
         this.Opacity = 0;
         this.FadeTo(1, 400);

@@ -4,21 +4,27 @@ public static class GameRules
 {
     public static string GetRules(string gameId) => gameId switch
     {
-        "mazerunner" => "Navigate the cat through the maze to reach the destination! Use the arrow buttons or swipe on the maze to move. Avoid walls — you cannot walk through them. Reach the golden exit to complete the level. Move fast to earn more stars!",
+        "mazerunner" => "Guide the cat to the exit. Swipe or use arrows to move. Avoid walls and reach the golden door!",
 
-        "sudoku" => "Fill the 5×5 grid so each row, column, and bold region contains every animal exactly once. Tap an animal button, then tap an empty cell to place it. Use ⌫ to erase a placed animal. Each animal can appear only once per row, column, and region. Complete the puzzle to earn stars!",
+        "sudoku" => "Fill the 5x5 grid so each row, column and region has every animal once. Tap to place, tap again to remove.",
 
-        "blockpuzzle" => "Arrange falling blocks to complete horizontal lines. Swipe left/right to move the falling piece. Tap to rotate the piece. Swipe down to drop it faster. Complete a row to clear it and earn coins. The game ends when blocks reach the top!",
+        "blockpuzzle" => "Place falling blocks to complete full rows. Swipe to move, tap to rotate. Clear rows to score!",
 
-        "cardmemory" => "Flip cards to find matching animal pairs! Tap a card to flip it and reveal the animal. Tap another card to find its match. Matching pairs stay revealed. Mismatched cards flip back face-down. Find all pairs to complete the level!",
+        "cardmemory" => "Flip cards to find matching pairs. Tap two cards — if they match, they stay. Find all pairs to win!",
 
-        "wordfinder" => "Find all the hidden words in the letter grid! Drag your finger across letters to form words. Words can be horizontal, vertical, or diagonal. Find every word in the list to complete the level. Words must be at least 3 letters long. Use hints if you get stuck!",
+        "wordfinder" => "Swipe across letters to form hidden words. Words can be horizontal, vertical or diagonal. Find them all!",
 
-        "towerofhanoi" => "Move all discs from the left peg to the right peg. Tap a peg to pick up the top disc. Tap another peg to place it. You can only place a disc on a larger disc or empty peg. Move all discs to the right peg in the fewest moves! Minimum moves for 3 discs = 7, 4 discs = 15, 5 discs = 31.",
+        "towerofhanoi" => "Move all discs from left peg to right. Tap to pick, tap to place. Only smaller discs go on larger ones.",
 
-        "puzzlepets" => "Drag the animal pieces to their matching positions on the grid. Each piece has a unique animal and color. Look at the hint outlines to see where each piece belongs. Match all pieces correctly to complete the puzzle. Faster completion earns more stars!",
+        "puzzlepets" => "Drag each animal piece to its matching spot on the grid. Match all pieces to complete the puzzle!",
 
-        "mathchallenge" => "Solve math equations as fast as you can! An equation with a missing number will appear. Choose the correct answer from the four choices. Answer quickly — you have a limited time per level. Each correct answer earns coins. See how many you can get right!",
+        "mathchallenge" => "Solve math equations before time runs out. Pick the correct answer from four choices. Answer fast for more coins!",
+
+        "connectthedots" => "Connect matching colored dots by swiping between them. Paths cannot cross. Fill the whole board to win!",
+
+        "numbermatch" => "Tap two matching numbers (same value or sum to 10). They must be adjacent or connected through empty spaces. Add new numbers if stuck!",
+
+        "arrowlines" => "Tap arrows to launch them in their direction. They fly until they exit the board or hit another arrow. Clear all arrows to win!",
 
         _ => "Welcome to this game! Tap a level to start playing. Complete each level to earn stars and unlock new challenges. Have fun!"
     };

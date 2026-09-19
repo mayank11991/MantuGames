@@ -56,13 +56,19 @@
                    TextColor="#9AA7BD" HorizontalOptions="Center" />
 
             <!-- SHOW SOLUTION -->
-            <Button Grid.Row="4"
-                    Text="Show Solution"
-                    FontSize="15" FontAttributes="Bold"
-                    TextColor="#160D02" BackgroundColor="#FF9F1C"
-                    CornerRadius="20" HeightRequest="44"
-                    Margin="40,0"
-                    Clicked="OnShowSolutionClicked" />
+            <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="40,0">
+                <Button x:Name="SolutionButton"
+                        Text="Show Solution"
+                        FontSize="15" FontAttributes="Bold"
+                        TextColor="#160D02" BackgroundColor="#FF9F1C"
+                        CornerRadius="20" HeightRequest="44"
+                        Clicked="OnShowSolutionClicked" />
+                <Label x:Name="SolutionCoinLabel"
+                       FontFamily="MomoTrustDisplay"
+                       FontSize="10"
+                       TextColor="#6B7280"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
         </Grid>
 
         <controls:GameResultPopup

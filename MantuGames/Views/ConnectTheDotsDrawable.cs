@@ -26,118 +26,99 @@ public class CtdDrawable : IDrawable
         _offsetX = (dirtyRect.Width - _cellSize * cols) / 2;
         _offsetY = (dirtyRect.Height - _cellSize * rows) / 2;
 
+        DrawGrid(rows, cols, canvas);
         DrawCells(canvas, rows, cols);
         DrawPaths(canvas, rows, cols);
         DrawDots(canvas, rows, cols);
     }
 
+    private void DrawGrid(int rows, int cols, ICanvas canvas)
+    {
+        // Black background
+        canvas.FillColor = Colors.Black;
+        canvas.FillRectangle(_offsetX, _offsetY, _cellSize * cols, _cellSize * rows);
+
+        // Grid lines in #68696D
+        canvas.StrokeColor = Color.FromArgb("#68696D");
+        canvas.StrokeSize = 1f;
+
+        for (int r = 0; r <= rows; r++)
+            canvas.DrawLine(_offsetX, _offsetY + r * _cellSize, _offsetX + cols * _cellSize, _offsetY + r * _cellSize);
+        for (int c = 0; c <= cols; c++)
+            canvas.DrawLine(_offsetX + c * _cellSize, _offsetY, _offsetX + c * _cellSize, _offsetY + rows * _cellSize);
+    }
+
     private void DrawCells(ICanvas canvas, int rows, int cols)
     {
-        float radius = _cellSize * 0.16f;
         for (int r = 0; r < rows; r++)
         {
             for (int c = 0; c < cols; c++)
             {
                 float x = _offsetX + c * _cellSize;
                 float y = _offsetY + r * _cellSize;
-                canvas.FillColor = Color.FromArgb("#1A2332");
-                canvas.FillRoundedRectangle(x + 2, y + 2, _cellSize - 4, _cellSize - 4, radius);
+                canvas.FillColor = Colors.Black;
+                canvas.FillRectangle(x + 1, y + 1, _cellSize - 2, _cellSize - 2);
             }
         }
     }
 
     private void DrawPaths(ICanvas canvas, int rows, int cols)
     {
-        float lineRadius = _cellSize * 0.22f;
+        float lineThickness = _cellSize * 0.24f;
 
         foreach (var kvp in _vm.CompletedPaths)
         {
             if (kvp.Value.Count < 1) continue;
-            DrawPathLine(canvas, kvp.Value, _vm.GetPairColor(kvp.Key), lineRadius);
+            DrawPathLine(canvas, kvp.Value, _vm.GetPairColor(kvp.Key), lineThickness);
         }
 
         if (_vm.ActivePair.HasValue && _vm.CurrentPath.Count >= 1)
         {
-            DrawPathLine(canvas, _vm.CurrentPath, _vm.GetPairColor(_vm.ActivePair.Value), lineRadius);
+            DrawPathLine(canvas, _vm.CurrentPath, _vm.GetPairColor(_vm.ActivePair.Value), lineThickness);
         }
     }
 
-    private void DrawPathLine(ICanvas canvas, List<(int r, int c)> path, Color color, float radius)
+    private void DrawPathLine(ICanvas canvas, List<(int r, int c)> path, Color color, float thickness)
     {
-        float lineThickness = radius * 2f;
+        canvas.StrokeColor = color;
+        canvas.StrokeSize = thickness;
+        canvas.StrokeLineCap = LineCap.Round;
+        canvas.StrokeLineJoin = LineJoin.Round;
 
         if (path.Count == 1)
         {
             float cx = _offsetX + path[0].c * _cellSize + _cellSize / 2;
             float cy = _offsetY + path[0].r * _cellSize + _cellSize / 2;
-            DrawGlowCircle(canvas, cx, cy, radius, color);
+            canvas.FillColor = color;
+            canvas.FillCircle(cx, cy, thickness / 2);
             return;
         }
 
+        // Draw solid line segments
         for (int i = 0; i < path.Count - 1; i++)
         {
             float x1 = _offsetX + path[i].c * _cellSize + _cellSize / 2;
             float y1 = _offsetY + path[i].r * _cellSize + _cellSize / 2;
             float x2 = _offsetX + path[i + 1].c * _cellSize + _cellSize / 2;
             float y2 = _offsetY + path[i + 1].r * _cellSize + _cellSize / 2;
-
-            DrawGlowLine(canvas, x1, y1, x2, y2, lineThickness, color);
-        }
-
-        foreach (var (r, c) in path)
-        {
-            float cx = _offsetX + c * _cellSize + _cellSize / 2;
-            float cy = _offsetY + r * _cellSize + _cellSize / 2;
-            DrawGlowCircle(canvas, cx, cy, radius, color);
-        }
-    }
-
-    private void DrawGlowLine(ICanvas canvas, float x1, float y1, float x2, float y2, float thickness, Color color)
-    {
-        canvas.StrokeLineCap = LineCap.Round;
-
-        for (int i = 12; i >= 1; i--)
-        {
-            float t = i / 12f;
-            float scale = 1f + t * 1.2f;
-            float alpha = 0.06f + (1f - t) * 0.30f;
-            canvas.StrokeColor = color.WithAlpha(alpha);
-            canvas.StrokeSize = thickness * scale;
             canvas.DrawLine(x1, y1, x2, y2);
         }
 
-        canvas.StrokeColor = color;
-        canvas.StrokeSize = thickness;
-        canvas.DrawLine(x1, y1, x2, y2);
-
-        canvas.StrokeColor = Colors.White.WithAlpha(0.4f);
-        canvas.StrokeSize = thickness * 0.35f;
-        canvas.DrawLine(x1, y1, x2, y2);
-    }
-
-    private void DrawGlowCircle(ICanvas canvas, float cx, float cy, float radius, Color color)
-    {
-        for (int i = 12; i >= 1; i--)
-        {
-            float t = i / 12f;
-            float scale = 1f + t * 1.8f;
-            float alpha = 0.04f + (1f - t) * 0.25f;
-            canvas.FillColor = color.WithAlpha(alpha);
-            canvas.FillCircle(cx, cy, radius * scale);
-        }
-
+        // Solid circles at start and end
         canvas.FillColor = color;
-        canvas.FillCircle(cx, cy, radius);
-
-        canvas.FillColor = Colors.White.WithAlpha(0.6f);
-        canvas.FillCircle(cx - radius * 0.12f, cy - radius * 0.15f, radius * 0.4f);
+        canvas.FillCircle(
+            _offsetX + path[0].c * _cellSize + _cellSize / 2,
+            _offsetY + path[0].r * _cellSize + _cellSize / 2, thickness / 2);
+        canvas.FillCircle(
+            _offsetX + path[^1].c * _cellSize + _cellSize / 2,
+            _offsetY + path[^1].r * _cellSize + _cellSize / 2, thickness / 2);
     }
 
     private void DrawDots(ICanvas canvas, int rows, int cols)
     {
+        float radius = _cellSize * 0.18f;
         foreach (var pair in _vm.Pairs)
         {
-            float radius = _cellSize * 0.10f;
             DrawDot(canvas, pair.R1, pair.C1, pair.Color, radius);
             DrawDot(canvas, pair.R2, pair.C2, pair.Color, radius);
         }
@@ -147,26 +128,10 @@ public class CtdDrawable : IDrawable
     {
         float cx = _offsetX + c * _cellSize + _cellSize / 2;
         float cy = _offsetY + r * _cellSize + _cellSize / 2;
-        float maxGlowRadius = _cellSize * 0.30f;
-        float maxScale = maxGlowRadius / radius;
 
-        for (int i = 12; i >= 1; i--)
-        {
-            float t = i / 12f;
-            float scale = 1f + t * (maxScale - 1f);
-            float alpha = 0.02f + (1f - t) * 0.18f;
-            canvas.FillColor = color.WithAlpha(alpha);
-            canvas.FillCircle(cx, cy, radius * scale);
-        }
-
+        // Solid dot
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, radius);
-
-        canvas.FillColor = Colors.White.WithAlpha(0.6f);
-        canvas.FillCircle(cx - radius * 0.15f, cy - radius * 0.2f, radius * 0.3f);
-
-        canvas.FillColor = Colors.White.WithAlpha(0.95f);
-        canvas.FillCircle(cx - radius * 0.1f, cy - radius * 0.25f, radius * 0.12f);
     }
 
     public (int r, int c) HitTest(float x, float y)

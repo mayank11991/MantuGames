@@ -25,6 +25,12 @@ public partial class PuzzlePetsPage : ContentPage
     private double _pieceSize;
     private int _dragPieceId = -1;
     private int _trayCols;
+    private bool _isDragging;
+    private Border? _floatingPiece;
+    private int _dragOverCell = -1;
+    private Point _dragOrigin;
+    private double _lastPanX;
+    private double _lastPanY;
 
     private static readonly Color[] PiecePalette =
     {
@@ -88,6 +94,9 @@ public partial class PuzzlePetsPage : ContentPage
         double gap = 4;
         _pieceSize = Math.Floor((availW - gap * (_puzzle.Cols - 1) - 16) / _puzzle.Cols);
         _pieceSize = Math.Max(44, Math.Min(_pieceSize, 76));
+
+        int coins = CoinService.GetCoins("puzzlepets");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         BuildGrid();
         BuildTray();
@@ -162,14 +171,6 @@ public partial class PuzzlePetsPage : ContentPage
             };
             cell.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 10 };
 
-            int capturedPos = pos;
-
-            var drop = new DropGestureRecognizer();
-            drop.DragOver += (s, e) => OnDragOverCell(e, capturedPos);
-            drop.DragLeave += (s, e) => OnDragLeaveCell(capturedPos);
-            drop.Drop += (s, e) => OnDropOnCell(e, capturedPos);
-            cell.GestureRecognizers.Add(drop);
-
             Grid.SetRow(cell, row);
             Grid.SetColumn(cell, col);
             PuzzleGrid.Children.Add(cell);
@@ -242,90 +243,198 @@ public partial class PuzzlePetsPage : ContentPage
         border.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 };
 
         int capturedId = pieceId;
-        var drag = new DragGestureRecognizer();
-        drag.DragStarting += (s, e) =>
-        {
-            _dragPieceId = capturedId;
-            e.Data.Text = capturedId.ToString();
-        };
-        drag.DropCompleted += (s, e) =>
-        {
-            _dragPieceId = -1;
-        };
-        border.GestureRecognizers.Add(drag);
+
+        // Smooth touch drag via PanGestureRecognizer — starts on the first
+        // bit of finger movement (no long-press) and, unlike PointerGestureRecognizer,
+        // keeps receiving move/release reliably on Android even once the
+        // finger leaves the piece's own bounds.
+        var pan = new PanGestureRecognizer();
+        pan.PanUpdated += (s, e) => OnPiecePanUpdated(capturedId, border, e);
+        border.GestureRecognizers.Add(pan);
 
         return border;
     }
 
-    // ── Drag & Drop handlers ──────────────────────────────────────────────
-    private void OnDragOverCell(DragEventArgs e, int gridPos)
+    // ── Smooth drag via PanGestureRecognizer ────────────────────────────────
+    private async void OnPiecePanUpdated(int pieceId, Border source, PanUpdatedEventArgs e)
     {
-        if (_gameEnded || _dragPieceId < 0) return;
-        if (_puzzle.GridState[gridPos] != -1) return;
-        int pieceId = _dragPieceId;
-
-        bool isCorrect = _puzzle.PiecePositions[pieceId] == gridPos;
-        var cell = _gridCells[gridPos];
-
-        if (isCorrect)
+        switch (e.StatusType)
         {
-            cell.BackgroundColor = GetPieceColor(pieceId).WithAlpha(0.3f);
-            cell.Stroke = Color.FromArgb("#66BB6A");
-            cell.StrokeDashArray = null;
+            case GestureStatus.Started:
+                if (_gameEnded || _isDragging) return;
+                _isDragging = true;
+                _dragPieceId = pieceId;
+                _dragOrigin = GetAbsolutePosition(source, RootLayout);
+                _lastPanX = 0;
+                _lastPanY = 0;
+
+                _floatingPiece = CreatePieceView(pieceId);
+                _floatingPiece.Opacity = 0.85;
+                _floatingPiece.Scale = 1.1;
+                _floatingPiece.InputTransparent = true;
+                AbsoluteLayout.SetLayoutBounds(_floatingPiece,
+                    new Rect(_dragOrigin.X, _dragOrigin.Y, _pieceSize, _pieceSize));
+                RootLayout.Children.Add(_floatingPiece);
+
+                source.Opacity = 0.3;
+                break;
+
+            case GestureStatus.Running:
+                if (!_isDragging || _floatingPiece == null) return;
+                // Cache the delta ourselves — on Android, Completed/Canceled
+                // reports TotalX/TotalY as 0 instead of the final delta.
+                _lastPanX = e.TotalX;
+                _lastPanY = e.TotalY;
+                UpdateDragPosition(e.TotalX, e.TotalY);
+                break;
+
+            case GestureStatus.Completed:
+            case GestureStatus.Canceled:
+                if (!_isDragging) return;
+                await FinishDrag(source, _lastPanX, _lastPanY);
+                break;
         }
-        else
-        {
-            cell.BackgroundColor = Color.FromArgb("#B71C1C44");
-            cell.Stroke = Color.FromArgb("#EF5350");
-            cell.StrokeDashArray = new DoubleCollection { 2, 2 };
-        }
-        e.AcceptedOperation = DataPackageOperation.Copy;
     }
 
-    private void OnDragLeaveCell(int gridPos)
+    private void UpdateDragPosition(double totalX, double totalY)
     {
-        if (_gameEnded) return;
-        ResetCellAppearance(gridPos);
+        double x = _dragOrigin.X + totalX;
+        double y = _dragOrigin.Y + totalY;
+        AbsoluteLayout.SetLayoutBounds(_floatingPiece, new Rect(x, y, _pieceSize, _pieceSize));
+
+        var center = new Point(x + _pieceSize / 2, y + _pieceSize / 2);
+        int cellUnder = GetCellUnderPointer(center);
+        if (cellUnder != _dragOverCell)
+        {
+            if (_dragOverCell >= 0 && _dragOverCell < _gridCells.Count)
+                ResetCellAppearance(_dragOverCell);
+            _dragOverCell = cellUnder;
+            if (cellUnder >= 0 && cellUnder < _gridCells.Count && _puzzle.GridState[cellUnder] == -1)
+            {
+                bool isCorrect = _puzzle.PiecePositions[_dragPieceId] == cellUnder;
+                var cell = _gridCells[cellUnder];
+                cell.BackgroundColor = isCorrect ? GetPieceColor(_dragPieceId).WithAlpha(0.3f) : Color.FromArgb("#B71C1C44");
+                cell.Stroke = isCorrect ? Color.FromArgb("#66BB6A") : Color.FromArgb("#EF5350");
+                cell.StrokeDashArray = isCorrect ? null : new DoubleCollection { 2, 2 };
+            }
+        }
     }
 
-    private async void OnDropOnCell(DropEventArgs e, int gridPos)
+    private async Task FinishDrag(Border source, double totalX, double totalY)
     {
-        try
-        {
-            if (_gameEnded) return;
-            ResetCellAppearance(gridPos);
+        _isDragging = false;
 
-            if (_dragPieceId < 0) return;
+        // Remove floating piece
+        if (_floatingPiece != null)
+        {
+            RootLayout.Children.Remove(_floatingPiece);
+            _floatingPiece = null;
+        }
+
+        // Restore source opacity
+        if (_dragOverCell >= 0 && _dragOverCell < _gridCells.Count)
+            ResetCellAppearance(_dragOverCell);
+        source.Opacity = 1;
+
+        // Try to drop on the cell under the final finger position
+        double x = _dragOrigin.X + totalX;
+        double y = _dragOrigin.Y + totalY;
+        var dropPoint = new Point(x + _pieceSize / 2, y + _pieceSize / 2);
+        int cellUnder = GetCellUnderPointer(dropPoint);
+        _dragOverCell = -1;
+
+        if (cellUnder >= 0 && cellUnder < _gridCells.Count && _dragPieceId >= 0)
+        {
             int pieceId = _dragPieceId;
             _dragPieceId = -1;
 
-            bool success = _puzzle.TryPlace(pieceId, gridPos);
-
+            bool success = _puzzle.TryPlace(pieceId, cellUnder);
             if (success)
             {
                 AudioService.Instance.Play("correct");
-                await PlacePieceOnGrid(pieceId, gridPos);
+                await PlacePieceOnGrid(pieceId, cellUnder);
                 RebuildTray();
-
-                StatusLabel.Text =
-                    $"{_puzzle.Moves} / {_puzzle.TotalPieces} placed";
-
-                if (_puzzle.IsSolved)
-                    TriggerWin();
+                StatusLabel.Text = $"{_puzzle.Moves} / {_puzzle.TotalPieces} placed";
+                if (_puzzle.IsSolved) TriggerWin();
             }
             else
             {
                 AudioService.Instance.Play("wrong");
                 StatusLabel.Text = $"Piece {pieceId + 1} goes in a different spot";
-                var cell = _gridCells[gridPos];
+                var cell = _gridCells[cellUnder];
                 await cell.ScaleTo(1.1, 60, Easing.SpringOut);
                 await cell.ScaleTo(1.0, 60, Easing.SpringIn);
             }
         }
-        catch (Exception ex)
+        else
         {
-            Console.WriteLine($"Error in OnDropOnCell: {ex.Message}");
+            _dragPieceId = -1;
         }
+    }
+
+    // Walks up the visual tree summing each ancestor's Bounds (and
+    // subtracting ScrollView offsets) to get element's position relative
+    // to root — PanGestureRecognizer only gives movement deltas, not
+    // absolute touch coordinates like PointerEventArgs did.
+    private static Point GetAbsolutePosition(VisualElement element, VisualElement root)
+    {
+        double x = 0, y = 0;
+        Element current = element;
+        while (current != null && current != root)
+        {
+            if (current is VisualElement ve)
+            {
+                x += ve.Bounds.X;
+                y += ve.Bounds.Y;
+                if (ve is ScrollView sv)
+                {
+                    x -= sv.ScrollX;
+                    y -= sv.ScrollY;
+                }
+            }
+            current = current.Parent;
+        }
+        return new Point(x, y);
+    }
+
+    private int GetCellUnderPointer(Point pos)
+    {
+        // Convert pointer position to PuzzleGrid coordinates
+        // PuzzleGrid.Bounds is only relative to its immediate parent, not
+        // RootLayout (there's a ScrollView + centered stack + padding in
+        // between) — walk up to get its true on-screen origin.
+        var gridOrigin = GetAbsolutePosition(PuzzleGrid, RootLayout);
+        double gridX = pos.X - gridOrigin.X;
+        double gridY = pos.Y - gridOrigin.Y;
+
+        // Find which cell the position falls in
+        for (int i = 0; i < _gridCells.Count; i++)
+        {
+            var cell = _gridCells[i];
+            // Cell position is relative to PuzzleGrid
+            double cx = cell.X;
+            double cy = cell.Y;
+            var rect = new Rect(cx, cy, cell.Width, cell.Height);
+            if (rect.Contains(new Point(gridX, gridY)))
+                return i;
+        }
+
+        // Fallback: find closest cell
+        int closest = -1;
+        double minDist = double.MaxValue;
+        for (int i = 0; i < _gridCells.Count; i++)
+        {
+            var cell = _gridCells[i];
+            double cx = cell.X + cell.Width / 2;
+            double cy = cell.Y + cell.Height / 2;
+            double dist = Math.Sqrt(Math.Pow(gridX - cx, 2) + Math.Pow(gridY - cy, 2));
+            if (dist < minDist && dist < _pieceSize * 2)
+            {
+                minDist = dist;
+                closest = i;
+            }
+        }
+        return closest;
     }
 
     // ── Place piece onto grid ──────────────────────────────────────────────
@@ -547,6 +656,8 @@ public partial class PuzzlePetsPage : ContentPage
             {
                 StatusLabel.Text = "Puzzle complete!";
                 SolutionButton.IsEnabled = true;
+                int coins = CoinService.GetCoins("puzzlepets");
+                SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
             }
         }
         catch (Exception ex)

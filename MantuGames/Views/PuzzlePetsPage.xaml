@@ -79,23 +79,31 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="16" />
                 </Border.StrokeShape>
-                <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never">
-                    <Grid x:Name="PieceTrayGrid"
-                          ColumnSpacing="8" RowSpacing="8"
-                          Padding="4,4"
-                          HorizontalOptions="Center" />
-                </ScrollView>
+                <!-- No ScrollView here: on Android a vertical ScrollView steals
+                     vertical pan gestures from its children before the piece's
+                     drag recognizer sees them, which is why dragging did nothing.
+                     Tray fits within the row's available ("*") space up to 4x4. -->
+                <Grid x:Name="PieceTrayGrid"
+                      ColumnSpacing="8" RowSpacing="8"
+                      Padding="4,4"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center" />
             </Border>
 
             <!-- Row 4: Solution button -->
-            <Button Grid.Row="4"
-                    x:Name="SolutionButton"
-                    Text="Show Solution"
-                    FontSize="13" FontAttributes="Bold"
-                    TextColor="#160D02" BackgroundColor="#FF9F1C"
-                    CornerRadius="20" HeightRequest="40"
-                    Margin="50,0,50,4"
-                    Clicked="OnShowSolution" />
+            <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="50,0,50,4">
+                <Button x:Name="SolutionButton"
+                        Text="Show Solution"
+                        FontSize="13" FontAttributes="Bold"
+                        TextColor="#160D02" BackgroundColor="#FF9F1C"
+                        CornerRadius="20" HeightRequest="40"
+                        Clicked="OnShowSolution" />
+                <Label x:Name="SolutionCoinLabel"
+                       FontFamily="MomoTrustDisplay"
+                       FontSize="10"
+                       TextColor="#6B7280"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
         </Grid>
 
         <controls:GameResultPopup

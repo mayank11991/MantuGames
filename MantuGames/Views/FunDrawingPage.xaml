@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    x:Class="MantuGames.Views.FunDrawingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls"
+    Shell.NavBarIsVisible="False">
+    <ContentPage.BackgroundColor>
+        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
+    </ContentPage.BackgroundColor>
+
+    <AbsoluteLayout>
+        <Grid x:Name="RootGrid" RowDefinitions="Auto,*,Auto"
+              AbsoluteLayout.LayoutFlags="All"
+              AbsoluteLayout.LayoutBounds="0,0,1,1">
+
+            <!-- Row 0: Header -->
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="Auto,*,Auto"
+                  ColumnSpacing="6"
+                  Padding="12,16,12,0">
+                <ImageButton Grid.Column="0"
+                        Source="icon_back_round.svg"
+                        HeightRequest="48" WidthRequest="48"
+                        BackgroundColor="Transparent" Padding="0"
+                        Clicked="OnBackClicked"
+                        VerticalOptions="Center" />
+
+                <Frame Grid.Column="1"
+                       BackgroundColor="#182136" CornerRadius="20"
+                       Padding="12,6" HasShadow="False"
+                       HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label x:Name="LevelLabel"
+                           FontFamily="MomoTrustDisplay"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#FF6B6B"
+                           HorizontalOptions="Center" />
+                </Frame>
+
+                <ImageButton Grid.Column="2"
+                        Source="trash.png"
+                        HeightRequest="28" WidthRequest="28"
+                        BackgroundColor="Transparent" Padding="0"
+                        Margin="4,0"
+                        Clicked="OnClearClicked"
+                        VerticalOptions="Center" />
+            </Grid>
+
+            <!-- Row 1: Drawing canvas -->
+            <Border Grid.Row="1"
+                    BackgroundColor="#0F1420"
+                    StrokeThickness="1"
+                    Stroke="#2EFFFFFF"
+                    Margin="12,8"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <Grid x:Name="DrawingOverlay">
+                    <GraphicsView x:Name="DrawingCanvas"
+                                  HorizontalOptions="Fill"
+                                  VerticalOptions="Fill">
+                        <GraphicsView.GestureRecognizers>
+                            <PointerGestureRecognizer PointerPressed="OnPointerPressed"
+                                                      PointerMoved="OnPointerMoved"
+                                                      PointerReleased="OnPointerReleased" />
+                        </GraphicsView.GestureRecognizers>
+                    </GraphicsView>
+                </Grid>
+            </Border>
+
+            <!-- Row 2: Footer -->
+            <Label Grid.Row="2"
+                   Text="Draw with your finger!"
+                   FontFamily="MomoTrustDisplay"
+                   FontSize="13"
+                   FontAttributes="Bold"
+                   TextColor="#6B7280"
+                   HorizontalOptions="Center"
+                   Margin="0,4,0,12" />
+
+        </Grid>
+    </AbsoluteLayout>
+</ContentPage>

@@ -81,4 +81,11 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+
+    <!-- Gradient overlay for game cards with icon background -->
+    <LinearGradientBrush x:Key="CardOverlayGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#00000000" />
+        <GradientStop Offset="0.4" Color="#66000000" />
+        <GradientStop Offset="1" Color="#CC000000" />
+    </LinearGradientBrush>
 </ResourceDictionary>

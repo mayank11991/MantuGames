@@ -10,20 +10,18 @@ namespace MantuGames.Views;
 internal sealed class MazeDrawable : IDrawable
 {
     public MazePuzzle? Maze { get; set; }
-    public float PlayerRow { get; set; } // float for smooth animation
+    public float PlayerRow { get; set; }
     public float PlayerCol { get; set; }
     public HashSet<(int r, int c)> Trail { get; } = new();
-    public float PlayerBob { get; set; } // subtle up-down oscillation
+    public float PlayerBob { get; set; }
 
     public float CellSize { get; private set; }
     public float OffsetX { get; private set; }
     public float OffsetY { get; private set; }
 
-    // Colors (amber/orange palette)
     private static readonly Color WallColor = Color.FromArgb("#E65100");
     private static readonly Color FloorColor = Color.FromArgb("#0F1420");
     private static readonly Color TrailColor = Color.FromArgb("#FFB74D");
-    private static readonly Color ExitBg = Color.FromArgb("#FF8F00");
 
     public void Draw(ICanvas canvas, RectF bounds)
     {
@@ -31,48 +29,65 @@ internal sealed class MazeDrawable : IDrawable
 
         var (ox, oy, cs) = Layout(bounds);
 
-        // ── Floor cells (rounded) ───────────────────────────────────
+        // 1) Fill entire area with wall color
+        canvas.FillColor = WallColor;
+        canvas.FillRectangle(bounds);
+
+        // 2) Draw each cell as a circle (the open area)
         canvas.FillColor = FloorColor;
-        float corner = cs * 0.18f;
-        for (int r = 0; r < Maze.Rows; r++)
-        for (int c = 0; c < Maze.Cols; c++)
-            canvas.FillRoundedRectangle(
-                ox + c * cs + 1, oy + r * cs + 1,
-                cs - 2, cs - 2, corner);
-
-        // ── Breadcrumb trail ────────────────────────────────────────
-        canvas.FillColor = TrailColor;
-        float tp = cs * 0.22f;
-        foreach (var (tr, tc) in Trail)
-            canvas.FillRoundedRectangle(
-                ox + tc * cs + tp, oy + tr * cs + tp,
-                cs - tp * 2, cs - tp * 2, cs * 0.18f);
-
-        // ── Exit (rendered as DestinationImage overlay) ─────────────
-
-        // ── Walls ───────────────────────────────────────────────────
-        float wt = Math.Max(3f, cs * 0.10f);
-        canvas.StrokeColor = WallColor;
-        canvas.StrokeSize = wt;
-        canvas.StrokeLineCap = LineCap.Round;
-
+        float radius = cs * 0.38f;
         for (int r = 0; r < Maze.Rows; r++)
         for (int c = 0; c < Maze.Cols; c++)
         {
-            float x = ox + c * cs, y = oy + r * cs;
-            var cell = Maze.Cells[r, c];
-            if (cell.WallTop) canvas.DrawLine(x, y, x + cs, y);
-            if (cell.WallRight) canvas.DrawLine(x + cs, y, x + cs, y + cs);
-            if (cell.WallBottom) canvas.DrawLine(x, y + cs, x + cs, y + cs);
-            if (cell.WallLeft) canvas.DrawLine(x, y, x, y + cs);
+            float cx = ox + c * cs + cs / 2f;
+            float cy = oy + r * cs + cs / 2f;
+            canvas.FillCircle(cx, cy, radius);
         }
 
-        // ── Player highlight (image rendered on overlay) ─────────────
-        // Only draw a subtle glow beneath the player image
+        // 3) For each open passage, draw a rounded rectangle connecting the two cell centers
+        canvas.FillColor = FloorColor;
+        float pw = cs * 0.36f; // passage width
+        for (int r = 0; r < Maze.Rows; r++)
+        for (int c = 0; c < Maze.Cols; c++)
+        {
+            var cell = Maze.Cells[r, c];
+            float cx = ox + c * cs + cs / 2f;
+            float cy = oy + r * cs + cs / 2f;
+
+            if (!cell.WallRight && c + 1 < Maze.Cols)
+            {
+                // Horizontal passage to the right
+                float nx = ox + (c + 1) * cs + cs / 2f;
+                float left = cx;
+                float top = cy - pw / 2f;
+                float width = nx - cx;
+                canvas.FillRoundedRectangle(left, top, width, pw, pw / 2f);
+            }
+            if (!cell.WallBottom && r + 1 < Maze.Rows)
+            {
+                // Vertical passage downward
+                float ny = oy + (r + 1) * cs + cs / 2f;
+                float left = cx - pw / 2f;
+                float top = cy;
+                float height = ny - cy;
+                canvas.FillRoundedRectangle(left, top, pw, height, pw / 2f);
+            }
+        }
+
+        // 4) Breadcrumb trail — tiny dots
+        canvas.FillColor = TrailColor;
+        float tr = cs * 0.08f;
+        foreach (var (trr, tc) in Trail)
+        {
+            float cx = ox + tc * cs + cs / 2f;
+            float cy = oy + trr * cs + cs / 2f;
+            canvas.FillCircle(cx, cy, tr);
+        }
+
+        // 5) Player glow
         float px = ox + PlayerCol * cs + cs / 2f;
         float py = oy + PlayerRow * cs + cs / 2f + PlayerBob;
-        float pr = cs * 0.38f;
-
+        float pr = cs * 0.22f;
         canvas.FillColor = Color.FromArgb("#22B388FF");
         canvas.FillCircle(px, py + 2, pr * 1.1f);
     }
@@ -152,7 +167,11 @@ public partial class MazeRunnerPage : ContentPage
         _startTime = DateTime.Now;
 
         if (SolutionButton != null)
+        {
             SolutionButton.IsEnabled = true;
+            int coins = CoinService.GetCoins("mazerunner");
+            SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+        }
 
         LevelLabel.Text = $"Level {_level}  ({_maze.Rows}×{_maze.Cols})";
         MovesLabel.Text = "Moves: 0";
@@ -165,6 +184,10 @@ public partial class MazeRunnerPage : ContentPage
         };
         _drawable.Trail.Add((0, 0));
         MazeCanvas.Drawable = _drawable;
+
+        // Reset destination image state from previous win animation
+        DestinationImage.Opacity = 1;
+        DestinationImage.Scale = 1;
 
         UpdateTimerUI();
         ResultPopup.Hide();
@@ -328,58 +351,19 @@ public partial class MazeRunnerPage : ContentPage
         float px = ox + _drawable.PlayerCol * cs + cs / 2f;
         float py = oy + _drawable.PlayerRow * cs + cs / 2f + _drawable.PlayerBob;
 
-        float imgHalf = cs * 0.38f;
-        PlayerImage.WidthRequest = cs * 0.76f;
-        PlayerImage.HeightRequest = cs * 0.76f;
+        float imgHalf = cs * 0.20f;
+        PlayerImage.WidthRequest = cs * 0.40f;
+        PlayerImage.HeightRequest = cs * 0.40f;
         PlayerImage.TranslationX = px - imgHalf;
         PlayerImage.TranslationY = py - imgHalf;
 
-        float dstHalf = cs * 0.44f;
+        float dstHalf = cs * 0.22f;
         float dx = ox + (_maze.Cols - 1) * cs + cs / 2f;
         float dy = oy + (_maze.Rows - 1) * cs + cs / 2f;
-        DestinationImage.WidthRequest = cs * 0.88f;
-        DestinationImage.HeightRequest = cs * 0.88f;
+        DestinationImage.WidthRequest = cs * 0.44f;
+        DestinationImage.HeightRequest = cs * 0.44f;
         DestinationImage.TranslationX = dx - dstHalf;
         DestinationImage.TranslationY = dy - dstHalf;
-    }
-
-    // ── Swipe pad handlers ──────────────────────────────────────────────────
-    private void OnPadPan(object s, PanUpdatedEventArgs e)
-    {
-        switch (e.StatusType)
-        {
-            case GestureStatus.Started:
-                _panTotalX = 0;
-                _panTotalY = 0;
-                break;
-            case GestureStatus.Running:
-                _panTotalX = e.TotalX;
-                _panTotalY = e.TotalY;
-
-                string dir = "";
-                double ax = Math.Abs(_panTotalX), ay = Math.Abs(_panTotalY);
-                if (Math.Max(ax, ay) > 14)
-                {
-                    if (ax > ay) dir = _panTotalX > 0 ? "RIGHT" : "LEFT";
-                    else dir = _panTotalY > 0 ? "DOWN" : "UP";
-                }
-
-                PadDirectionLabel.Text = dir;
-                break;
-            case GestureStatus.Completed:
-            case GestureStatus.Canceled:
-                PadDirectionLabel.Text = "";
-                if (_isMoving || _gameEnded || _maze == null) return;
-                double dx = _panTotalX;
-                double dy = _panTotalY;
-                if (Math.Abs(dx) < 20 && Math.Abs(dy) < 20) return;
-
-                int dr = 0, dc = 0;
-                if (Math.Abs(dx) >= Math.Abs(dy)) dc = dx > 0 ? 1 : -1;
-                else dr = dy > 0 ? 1 : -1;
-                _ = TryMove(dr, dc);
-                break;
-        }
     }
 
     // ── Pan handler (distance-proportional movement) ───────────────────────

@@ -141,6 +141,13 @@ public static class ProfileService
         ProfilesChanged?.Invoke(null, EventArgs.Empty);
     }
 
+    public static void ChangeColor(PlayerProfile profile, string newColor)
+    {
+        profile.Color = newColor;
+        Save();
+        ProfilesChanged?.Invoke(null, EventArgs.Empty);
+    }
+
     public static void Save()
     {
         Preferences.Default.Set(ProfilesKey, JsonSerializer.Serialize(_profiles));

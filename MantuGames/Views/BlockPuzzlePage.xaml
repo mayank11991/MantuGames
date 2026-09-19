@@ -96,13 +96,19 @@
                               HorizontalOptions="Center"/>
                     </HorizontalStackLayout>
                 </Border>
-                <Button x:Name="SolutionButton"
-                        Text="Show Solution"
-                        FontSize="14" FontAttributes="Bold"
-                        TextColor="#160D02" BackgroundColor="#FF9F1C"
-                        CornerRadius="20" HeightRequest="40"
-                        Margin="60,0"
-                        Clicked="OnShowSolutionClicked" />
+                <VerticalStackLayout Spacing="2" Margin="60,0">
+                    <Button x:Name="SolutionButton"
+                            Text="Show Solution"
+                            FontSize="14" FontAttributes="Bold"
+                            TextColor="#160D02" BackgroundColor="#FF9F1C"
+                            CornerRadius="20" HeightRequest="40"
+                            Clicked="OnShowSolutionClicked" />
+                    <Label x:Name="SolutionCoinLabel"
+                           FontFamily="MomoTrustDisplay"
+                           FontSize="10"
+                           TextColor="#6B7280"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
             </VerticalStackLayout>
 
         </Grid>

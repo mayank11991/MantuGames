@@ -13,7 +13,7 @@
 
     <AbsoluteLayout>
 
-        <Grid x:Name="MazeRootGrid" RowDefinitions="Auto,Auto,Auto,3*,2*,Auto"
+        <Grid x:Name="MazeRootGrid" RowDefinitions="Auto,Auto,Auto,*,Auto"
               AbsoluteLayout.LayoutFlags="All"
               AbsoluteLayout.LayoutBounds="0,0,1,1">
 
@@ -64,12 +64,14 @@
                    VerticalOptions="Center"
                    Margin="0,2,0,0" />
 
-            <!-- ── Row 3 : maze canvas ───────────────────────────────────── -->
+            <!-- ── Row 3 : maze canvas (centered, fills available space) ──── -->
             <Border Grid.Row="3"
                     BackgroundColor="#0F1420"
                     StrokeThickness="1"
                     Stroke="#2EFFFFFF"
-                    Margin="12,4,12,4">
+                    Margin="16,8"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
                 <Grid x:Name="MazeOverlay">
                     <GraphicsView x:Name="MazeCanvas"
                                   HorizontalOptions="Fill"
@@ -93,49 +95,20 @@
                 </Grid>
             </Border>
 
-            <!-- ── Row 4 : swipe pad (mouse-pad style) ──────────────────── -->
-            <Border Grid.Row="4"
-                    BackgroundColor="#182136"
-                    StrokeThickness="1"
-                    Stroke="#2EFFFFFF"
-                    Margin="16,4,16,8">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="20" />
-                </Border.StrokeShape>
-                <Border.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="OnPadPan" />
-                </Border.GestureRecognizers>
-                <Grid>
-                    <Label Text="Swipe to move"
-                           FontFamily="MomoTrustDisplay"
-                           FontSize="13"
-                           FontAttributes="Bold"
-                           CharacterSpacing="2"
-                           TextColor="#3B82F6"
-                           Opacity="0.55"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center" />
-                    <Label x:Name="PadDirectionLabel"
-                           FontFamily="MomoTrustDisplay"
-                           FontSize="11"
-                           TextColor="#9AA7BD"
-                           Opacity="0.5"
-                           HorizontalOptions="Center"
-                           VerticalOptions="End"
-                           Margin="0,0,0,8"
-                           InputTransparent="True" />
-                </Grid>
-            </Border>
-
-            <!-- ── Row 5 : Show Solution (below finger pad) ──────────────── -->
-            <Button Grid.Row="5"
-                    x:Name="SolutionButton"
-                    Text="Show Solution"
-                    FontSize="13" FontAttributes="Bold"
-                    TextColor="#160D02" BackgroundColor="#FF9F1C"
-                    CornerRadius="20" HeightRequest="40"
-                    Margin="60,2,60,12"
-                    Clicked="OnShowSolutionClicked" />
+            <!-- ── Row 4 : Show Solution ──────────────────────────────────── -->
+            <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="60,4,60,12">
+                <Button x:Name="SolutionButton"
+                        Text="Show Solution"
+                        FontSize="13" FontAttributes="Bold"
+                        TextColor="#160D02" BackgroundColor="#FF9F1C"
+                        CornerRadius="20" HeightRequest="40"
+                        Clicked="OnShowSolutionClicked" />
+                <Label x:Name="SolutionCoinLabel"
+                       FontFamily="MomoTrustDisplay"
+                       FontSize="10"
+                       TextColor="#6B7280"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
 
         </Grid>
 

@@ -40,6 +40,7 @@ public partial class ConnectTheDotsPage : ContentPage
         PauseOverlay.Resumed -= OnResumeGame;
         if (_vm != null)
         {
+            _vm.BoardChanged -= OnBoardChanged;
             _vm.GameEnded -= OnGameEnded;
             _vm.Cleanup();
         }
@@ -51,6 +52,7 @@ public partial class ConnectTheDotsPage : ContentPage
         TimerView.TotalSeconds = ProgressService.GetTimerSeconds(level);
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
+        _vm.BoardChanged += OnBoardChanged;
 
         GameCanvas.Drawable = new CtdDrawable(_vm);
 
@@ -60,15 +62,19 @@ public partial class ConnectTheDotsPage : ContentPage
         AttachNativeTouch();
     }
 
+    private void OnBoardChanged() => GameCanvas.Invalidate();
+
     private void AttachNativeTouch()
     {
 #if ANDROID
         if (GameCanvas.Handler?.PlatformView is Android.Views.View nativeView)
         {
+            Console.WriteLine($"[CTD] Attached to {nativeView.GetType().Name}");
             nativeView.SetOnTouchListener(new Platforms.Android.CtdNativeTouchListener(nativeView, OnNativeTouch));
         }
         else
         {
+            Console.WriteLine($"[CTD] Handler not ready, waiting...");
             GameCanvas.HandlerChanged += OnCanvasHandlerChanged;
         }
 #endif
@@ -79,6 +85,7 @@ public partial class ConnectTheDotsPage : ContentPage
 #if ANDROID
         if (GameCanvas.Handler?.PlatformView is Android.Views.View nv)
         {
+            Console.WriteLine($"[CTD] Late attach to {nv.GetType().Name}");
             nv.SetOnTouchListener(new Platforms.Android.CtdNativeTouchListener(nv, OnNativeTouch));
         }
 #endif
@@ -97,6 +104,7 @@ public partial class ConnectTheDotsPage : ContentPage
 
             if (isDown)
             {
+                Console.WriteLine($"[CTD] DOWN ({x:F1},{y:F1}) cell=({cell.r},{cell.c}) vm={_vm != null} drawable={drawable != null}");
                 if (_vm.IsGameOver || cell.r < 0) return;
                 _isDragging = true;
                 _lastCell = cell;
@@ -105,12 +113,15 @@ public partial class ConnectTheDotsPage : ContentPage
             else if (isMove)
             {
                 if (!_isDragging || _vm.IsGameOver) return;
-                if (cell.r < 0 || cell == _lastCell) return;
-                _lastCell = cell;
+                if (cell.r < 0) return;
+                int pathLenBefore = _vm.CurrentPath.Count;
                 _vm.OnPointerDrag(cell);
+                if (_vm.CurrentPath.Count > pathLenBefore)
+                    _lastCell = _vm.CurrentPath[^1];
             }
             else if (isUp)
             {
+                Console.WriteLine($"[CTD] UP ({x:F1},{y:F1}) cell=({cell.r},{cell.c}) dragging={_isDragging}");
                 if (_isDragging && cell.r >= 0)
                     _vm.OnPointerUp(cell);
                 _isDragging = false;
@@ -175,11 +186,13 @@ public partial class ConnectTheDotsPage : ContentPage
     private void OnNextLevel(object sender, EventArgs e)
     {
         _startLevel = _vm.CurrentLevel + 1;
+        _vm.BoardChanged -= OnBoardChanged;
         _vm.GameEnded -= OnGameEnded;
         _vm = new CtdViewModel(_startLevel);
         TimerView.TotalSeconds = ProgressService.GetTimerSeconds(_startLevel);
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
+        _vm.BoardChanged += OnBoardChanged;
         GameCanvas.Drawable = new CtdDrawable(_vm);
         _isDragging = false;
         _lastCell = (-1, -1);
@@ -188,11 +201,13 @@ public partial class ConnectTheDotsPage : ContentPage
 
     private void OnRetry(object sender, EventArgs e)
     {
+        _vm.BoardChanged -= OnBoardChanged;
         _vm.GameEnded -= OnGameEnded;
         _vm = new CtdViewModel(_startLevel);
         TimerView.TotalSeconds = ProgressService.GetTimerSeconds(_startLevel);
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
+        _vm.BoardChanged += OnBoardChanged;
         GameCanvas.Drawable = new CtdDrawable(_vm);
         _isDragging = false;
         _lastCell = (-1, -1);
