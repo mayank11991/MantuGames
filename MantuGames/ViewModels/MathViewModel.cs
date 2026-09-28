@@ -171,6 +171,8 @@ public class MathViewModel : INotifyPropertyChanged
         await System.Threading.Tasks.Task.Delay(800);
 
         _currentIndex++;
+        OnPropertyChanged(nameof(ProgressValue));
+        OnPropertyChanged(nameof(ProgressText));
         if (_currentIndex >= _puzzle.TotalQuestions)
         {
             // Win = answered at least 4/5 correctly
@@ -195,8 +197,8 @@ public class MathViewModel : INotifyPropertyChanged
             if (c.Value == q.CorrectAnswer)
                 c.State = ChoiceState.Correct;
 
-        IsWin = false;
-        GameEnded?.Invoke(false);
+        IsWin = true;
+        GameEnded?.Invoke(true);
     }
 
     private void StartTimer()

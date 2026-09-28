@@ -62,7 +62,7 @@ public class NumberMatchViewModel : INotifyPropertyChanged
     private int _remainingAdds = 3;
     public int RemainingAdds { get => _remainingAdds; set { _remainingAdds = value; OnPropertyChanged(); OnPropertyChanged(nameof(AddButtonText)); OnPropertyChanged(nameof(CanAddNumbers)); OnPropertyChanged(nameof(AddButtonColor)); } }
 
-    public string AddButtonText => RemainingAdds > 0 ? $"➕ ADD ROWS ({RemainingAdds})" : "NO ADDS LEFT";
+    public string AddButtonText => RemainingAdds > 0 ? $"+ ADD ROWS ({RemainingAdds})" : "NO ADDS LEFT";
     public bool CanAddNumbers => RemainingAdds > 0 && !IsGameOver;
     public string AddButtonColor => CanAddNumbers ? "#F97316" : "#475569";
 

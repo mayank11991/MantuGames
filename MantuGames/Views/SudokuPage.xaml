@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <ContentPage
     x:Class="MantuGames.Views.SudokuPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -7,9 +6,6 @@
     xmlns:conv="clr-namespace:MantuGames.Converters"
     xmlns:controls="clr-namespace:MantuGames.Views.Controls"
     Shell.NavBarIsVisible="False">
-    <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
-    </ContentPage.BackgroundColor>
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -18,7 +14,8 @@
     </ContentPage.Resources>
 
     <AbsoluteLayout>
-
+        <Image Source="app_bg.png" Aspect="AspectFill"
+               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
         <!-- MAIN CONTENT -->
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,Auto,*,Auto,Auto"
@@ -28,27 +25,26 @@
 
             <!-- TOP BAR: Back + Level + Pause -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <ImageButton Grid.Column="0"
-                        Source="icon_back_round.svg" HeightRequest="48" WidthRequest="48"
-                        BackgroundColor="Transparent" Padding="0"
-                       
-                        Clicked="OnBackClicked"
-                        VerticalOptions="Center"
-                       />
-
+                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                       Padding="0" WidthRequest="48" HeightRequest="48"
+                       VerticalOptions="Center">
+                    <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
+                                 BackgroundColor="Transparent" Padding="0"
+                                 Clicked="OnBackClicked" />
+                </Frame>
                 <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
-                       Padding="12,6" HasShadow="False"
+                       Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding LevelDisplay}" TextColor="#22D3EE"
                            FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-
-                <ImageButton Grid.Column="2" Source="pause.svg"
-                             HeightRequest="24" WidthRequest="24"
-                             BackgroundColor="Transparent" Padding="0"
-                             Margin="4,0"
-                             Clicked="OnPause"
-                             VerticalOptions="Center" />
+                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                       Padding="0" WidthRequest="48" HeightRequest="48"
+                       VerticalOptions="Center">
+                    <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
+                                 BackgroundColor="Transparent" Padding="0"
+                                 Clicked="OnPause" />
+                </Frame>
             </Grid>
 
             <!-- REUSABLE TIMER CONTROL -->
@@ -56,54 +52,66 @@
                                     SecondsRemaining="{Binding TimeRemainingSec}" />
 
             <!-- SUDOKU GRID -->
-            <Frame Grid.Row="3" BackgroundColor="#182136" CornerRadius="20" Padding="6"
-                   HasShadow="True" VerticalOptions="Center" HorizontalOptions="Center">
+            <Border Grid.Row="3" BackgroundColor="#0F1420"
+                    Padding="6" Margin="4,0"
+                    VerticalOptions="Center" HorizontalOptions="Center">
+                <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <Grid x:Name="SudokuGrid" ColumnSpacing="3" RowSpacing="3" />
-            </Frame>
+            </Border>
 
             <!-- NUMBER BUTTONS with animal images -->
             <Grid Grid.Row="4" ColumnDefinitions="*,*,*,*,*,Auto"
                   ColumnSpacing="6" Padding="4,6">
-                <ImageButton Grid.Column="0" Source="cat.png"
-                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
-                             Padding="8"
-                             Command="{Binding EnterNumberCommand}" CommandParameter="1" />
-                <ImageButton Grid.Column="1" Source="elephant.png"
-                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
-                             Padding="8"
-                             Command="{Binding EnterNumberCommand}" CommandParameter="2" />
-                <ImageButton Grid.Column="2" Source="lion.png"
-                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
-                             Padding="8"
-                             Command="{Binding EnterNumberCommand}" CommandParameter="3" />
-                <ImageButton Grid.Column="3" Source="owl.png"
-                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
-                             Padding="8"
-                             Command="{Binding EnterNumberCommand}" CommandParameter="4" />
-                <ImageButton Grid.Column="4" Source="butterfly.png"
-                             BackgroundColor="#131A29" CornerRadius="14" HeightRequest="58"
-                             Padding="8"
-                             Command="{Binding EnterNumberCommand}" CommandParameter="5" />
-                <Button Grid.Column="5" Text="⌫"
-                        FontSize="28" FontAttributes="Bold"
-                        TextColor="#E7ECF5"
-                        BackgroundColor="#3B4A63" CornerRadius="14"
-                        HeightRequest="58" WidthRequest="58" Padding="0"
-                        Command="{Binding EraseCommand}" />
+                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="14"
+                       Padding="0">
+                    <ImageButton Source="cat.png" BackgroundColor="Transparent"
+                                 HeightRequest="58" Padding="8"
+                                 Command="{Binding EnterNumberCommand}" CommandParameter="1" />
+                </Frame>
+                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="14"
+                       Padding="0">
+                    <ImageButton Source="elephant.png" BackgroundColor="Transparent"
+                                 HeightRequest="58" Padding="8"
+                                 Command="{Binding EnterNumberCommand}" CommandParameter="2" />
+                </Frame>
+                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="14"
+                       Padding="0">
+                    <ImageButton Source="lion.png" BackgroundColor="Transparent"
+                                 HeightRequest="58" Padding="8"
+                                 Command="{Binding EnterNumberCommand}" CommandParameter="3" />
+                </Frame>
+                <Frame Grid.Column="3" BackgroundColor="#182136" CornerRadius="14"
+                       Padding="0">
+                    <ImageButton Source="owl.png" BackgroundColor="Transparent"
+                                 HeightRequest="58" Padding="8"
+                                 Command="{Binding EnterNumberCommand}" CommandParameter="4" />
+                </Frame>
+                <Frame Grid.Column="4" BackgroundColor="#182136" CornerRadius="14"
+                       Padding="0">
+                    <ImageButton Source="butterfly.png" BackgroundColor="Transparent"
+                                 HeightRequest="58" Padding="8"
+                                 Command="{Binding EnterNumberCommand}" CommandParameter="5" />
+                </Frame>
+                <Frame Grid.Column="5" BackgroundColor="#182136" CornerRadius="14"
+                       Padding="0" WidthRequest="58" HeightRequest="58">
+                    <Button Text="⌫" FontSize="28" FontAttributes="Bold"
+                            TextColor="#E7ECF5" BackgroundColor="Transparent"
+                            Padding="0" Command="{Binding EraseCommand}" />
+                </Frame>
             </Grid>
 
             <!-- SHOW SOLUTION -->
-            <VerticalStackLayout Grid.Row="5" Spacing="2" Margin="40,0">
+            <VerticalStackLayout Grid.Row="5" Spacing="2" Margin="60,0">
                 <Button x:Name="SolutionButton"
-                        Text="Show Solution"
+                        Text="💡 Show Solution"
                         FontSize="15" FontAttributes="Bold"
-                        TextColor="#160D02" BackgroundColor="#FF9F1C"
-                        CornerRadius="20" HeightRequest="44"
+                        TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                        CornerRadius="24" HeightRequest="50"
                         Clicked="OnShowSolutionClicked" />
                 <Label x:Name="SolutionCoinLabel"
                        FontFamily="MomoTrustDisplay"
-                       FontSize="10"
-                       TextColor="#6B7280"
+                       FontSize="11"
+                       TextColor="#DBD748"
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
 

@@ -7,7 +7,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:conv="clr-namespace:MantuGames.Converters"
     xmlns:controls="clr-namespace:MantuGames.Views.Controls"
-    BackgroundColor="{StaticResource ColorBg}"
+    BackgroundColor="Transparent"
     Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
@@ -15,6 +15,8 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,Auto,*">
+        <Image Source="app_bg.png" Aspect="AspectFill"
+               Grid.RowSpan="3" InputTransparent="True" />
 
         <!-- Nebula background effect (similar to website) -->
         <Grid x:Name="NebulaContainer" Grid.RowSpan="3" InputTransparent="True">
@@ -166,7 +168,7 @@
                 <DataTemplate>
                     <Frame Style="{StaticResource PanelCard}"
                            Padding="0"
-                           HasShadow="False"
+                          
                            BorderColor="Transparent"
                            CornerRadius="16"
                            HeightRequest="160">

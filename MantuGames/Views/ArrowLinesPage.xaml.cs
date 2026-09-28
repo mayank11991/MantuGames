@@ -218,14 +218,42 @@ public partial class ArrowLinesPage : ContentPage
         int coins = CoinService.GetCoins("arrowlines");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
+        _vm.IsShowSolutionActive = true;
         SolutionButton.IsEnabled = false;
-        var remaining = _vm.Arrows.Where(a => !a.IsCleared).ToList();
-        foreach (var arrow in remaining)
+
+        // Keep looping until all arrows cleared or no progress can be made
+        int maxPasses = 20;
+        for (int pass = 0; pass < maxPasses; pass++)
         {
             if (_vm.IsGameOver) break;
-            _vm.ArrowTappedCommand.Execute(arrow);
-            await Task.Delay(350);
+
+            var remaining = _vm.Arrows.Where(a => !a.IsCleared).ToList();
+            if (remaining.Count == 0) break;
+
+            bool clearedAny = false;
+            foreach (var arrow in remaining)
+            {
+                if (_vm.IsGameOver) break;
+                if (arrow.IsCleared) continue;
+
+                int clearedBefore = _vm.ArrowsCleared;
+                _vm.ArrowTappedCommand.Execute(arrow);
+                await Task.Delay(100);
+
+                // Wait for animation to finish
+                while (_isAnimating)
+                    await Task.Delay(50);
+
+                if (_vm.ArrowsCleared > clearedBefore)
+                    clearedAny = true;
+
+                await Task.Delay(250);
+            }
+
+            if (!clearedAny) break; // No progress = deadlock, stop
         }
+
+        _vm.IsShowSolutionActive = false;
         SolutionButton.IsEnabled = true;
     }
 

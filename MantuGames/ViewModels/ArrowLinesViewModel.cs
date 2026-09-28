@@ -15,6 +15,7 @@ public class ArrowLinesViewModel : INotifyPropertyChanged
     private bool _isPaused;
     private string _statusText = "Tap arrows to clear the board!";
     private int _lives = 3;
+    public bool IsShowSolutionActive { get; set; }
 
     public int CurrentLevel
     {
@@ -130,16 +131,19 @@ public class ArrowLinesViewModel : INotifyPropertyChanged
         else
         {
             Moves++;
-            Lives--;
-            StatusText = Lives > 0 ? $"Blocked! {Lives} lives left" : "No lives left!";
-            ArrowBlocked?.Invoke(arrow);
-            BoardChanged?.Invoke();
-
-            if (Lives <= 0)
+            if (!IsShowSolutionActive)
             {
-                IsGameOver = true;
-                StatusText = "Game Over!";
-                GameEnded?.Invoke(false);
+                Lives--;
+                StatusText = Lives > 0 ? $"Blocked! {Lives} lives left" : "No lives left!";
+                ArrowBlocked?.Invoke(arrow);
+                BoardChanged?.Invoke();
+
+                if (Lives <= 0)
+                {
+                    IsGameOver = true;
+                    StatusText = "Game Over!";
+                    GameEnded?.Invoke(false);
+                }
             }
         }
     }

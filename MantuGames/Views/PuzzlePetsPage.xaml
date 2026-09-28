@@ -5,13 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:MantuGames.Views.Controls"
     Shell.NavBarIsVisible="False"
-    >
-    <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
-    </ContentPage.BackgroundColor>
+>
 
     <AbsoluteLayout x:Name="RootLayout">
-
+        <Image Source="app_bg.png" Aspect="AspectFill"
+               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,Auto,*,Auto,Auto"
               Padding="12,16,12,8" RowSpacing="4"
@@ -20,26 +18,27 @@
 
             <!-- Row 0: Top bar -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <ImageButton Grid.Column="0"
-                             Source="icon_back_round.svg"
-                             Padding="0" HeightRequest="48" WidthRequest="48"
-                             BackgroundColor="Transparent"
-                             Clicked="OnBackClicked"
-                             VerticalOptions="Center" />
-                <Frame Grid.Column="1"
-                       BackgroundColor="#182136" CornerRadius="20"
-                       Padding="12,6" HasShadow="False"
+                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                       Padding="0" WidthRequest="48" HeightRequest="48"
+                       VerticalOptions="Center">
+                    <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
+                                 BackgroundColor="Transparent" Padding="0"
+                                 Clicked="OnBackClicked" />
+                </Frame>
+                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                       Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label x:Name="LevelLabel" Text="Level 1"
                            FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
                            TextColor="#F472B6" HorizontalOptions="Center" />
                 </Frame>
-                <ImageButton Grid.Column="2" Source="pause.svg"
-                             HeightRequest="24" WidthRequest="24"
-                             BackgroundColor="Transparent" Padding="0"
-                             Margin="4,0"
-                             Clicked="OnPause"
-                             VerticalOptions="Center" />
+                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                       Padding="0" WidthRequest="48" HeightRequest="48"
+                       VerticalOptions="Center">
+                    <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
+                                 BackgroundColor="Transparent" Padding="0"
+                                 Clicked="OnPause" />
+                </Frame>
             </Grid>
 
             <!-- Row 1: Timer -->
@@ -48,9 +47,8 @@
             <!-- Row 2: Puzzle grid -->
             <ScrollView Grid.Row="2" Orientation="Vertical" VerticalScrollBarVisibility="Never">
                 <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
-                    <Border 
-                            StrokeThickness="0"
-                            Padding="6"
+                    <Border StrokeThickness="2" Stroke="#2E3A5F"
+                            Padding="6" BackgroundColor="#0F1420"
                             HorizontalOptions="Center">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="14" />
@@ -60,9 +58,8 @@
                               HorizontalOptions="Center" />
                     </Border>
 
-                    <!-- Status label between grid and tray -->
                     <Label x:Name="StatusLabel"
-                           Text="Drag a piece to its spot!" HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                           Text="Drag pieces from the tray to their spots!" HorizontalOptions="Center" HorizontalTextAlignment="Center"
                            FontFamily="MomoTrustDisplay"
                            FontSize="13"
                            FontAttributes="Bold"
@@ -70,19 +67,13 @@
                 </VerticalStackLayout>
             </ScrollView>
 
-<!-- Row 3: Piece tray - Grid layout for NxN arrangement -->
+            <!-- Row 3: Piece tray -->
             <Border Grid.Row="3"
-                     
-                    StrokeThickness="0"
-                    Padding="8,8"
-                    Margin="8,2,8,4">
+                    BackgroundColor="#182136" StrokeThickness="0"
+                    Padding="8,8" Margin="8,2,8,4">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="16" />
                 </Border.StrokeShape>
-                <!-- No ScrollView here: on Android a vertical ScrollView steals
-                     vertical pan gestures from its children before the piece's
-                     drag recognizer sees them, which is why dragging did nothing.
-                     Tray fits within the row's available ("*") space up to 4x4. -->
                 <Grid x:Name="PieceTrayGrid"
                       ColumnSpacing="8" RowSpacing="8"
                       Padding="4,4"
@@ -90,18 +81,18 @@
                       VerticalOptions="Center" />
             </Border>
 
-            <!-- Row 4: Solution button -->
+            <!-- Row 4: Show Solution -->
             <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="50,0,50,4">
                 <Button x:Name="SolutionButton"
-                        Text="Show Solution"
-                        FontSize="13" FontAttributes="Bold"
-                        TextColor="#160D02" BackgroundColor="#FF9F1C"
-                        CornerRadius="20" HeightRequest="40"
+                        Text="💡 Show Solution"
+                        FontSize="14" FontAttributes="Bold"
+                        TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                        CornerRadius="24" HeightRequest="50"
                         Clicked="OnShowSolution" />
                 <Label x:Name="SolutionCoinLabel"
                        FontFamily="MomoTrustDisplay"
-                       FontSize="10"
-                       TextColor="#6B7280"
+                       FontSize="11"
+                       TextColor="#DBD748"
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
         </Grid>

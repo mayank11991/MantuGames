@@ -96,6 +96,8 @@ public partial class MathGamePage : ContentPage
             return;
         }
         CoinService.SpendCoins("mathchallenge", CoinService.SolutionCost);
+        int coins = CoinService.GetCoins("mathchallenge");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         _vm?.ShowSolutionCommand.Execute(null);
     }
 

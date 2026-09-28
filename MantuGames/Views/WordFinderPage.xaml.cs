@@ -77,6 +77,8 @@ public partial class WordFinderPage : ContentPage
             return;
         }
         CoinService.SpendCoins("wordfinder", CoinService.SolutionCost);
+        int coins = CoinService.GetCoins("wordfinder");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         _vm?.ShowSolutionCommand.Execute(null);
     }
 

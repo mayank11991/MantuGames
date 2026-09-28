@@ -784,6 +784,8 @@ public partial class AnimalCrushPage : ContentPage
             return;
         }
         CoinService.SpendCoins("animalcrush", CoinService.SolutionCost);
+        int coins = CoinService.GetCoins("animalcrush");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         SolutionButton.IsEnabled = false;
         var hint = _vm.FindHint();

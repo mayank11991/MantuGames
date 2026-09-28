@@ -173,6 +173,8 @@ public partial class MazeRunnerPage : ContentPage
             SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         }
 
+        DestinationImage.IsVisible = true;
+
         LevelLabel.Text = $"Level {_level}  ({_maze.Rows}×{_maze.Cols})";
         MovesLabel.Text = "Moves: 0";
 
@@ -220,6 +222,8 @@ public partial class MazeRunnerPage : ContentPage
         }
 
         CoinService.SpendCoins("mazerunner", CoinService.SolutionCost);
+        int coins = CoinService.GetCoins("mazerunner");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         SolutionButton.IsEnabled = false;
         _ = RevealPathAsync();
@@ -246,9 +250,12 @@ public partial class MazeRunnerPage : ContentPage
                 if (_gameEnded) return;
             }
 
+            // Hide flag before player arrives at exit
+            DestinationImage.IsVisible = false;
+
             await Task.Delay(400);
             if (!_gameEnded)
-                EndGame(win: false);
+                EndGame(win: true);
         }
         catch (Exception ex)
         {
@@ -506,28 +513,9 @@ public partial class MazeRunnerPage : ContentPage
     {
         try
         {
-            await Task.WhenAll(
-                DestinationImage.FadeTo(0, 350, Easing.CubicIn),
-                DestinationImage.ScaleTo(0.2, 350, Easing.CubicIn)
-            );
-            for (int i = 0; i < 3; i++)
-            {
-                await MazeCanvas.ScaleTo(1.06, 100, Easing.SpringOut);
-                await MazeCanvas.ScaleTo(1.00, 80, Easing.SpringIn);
-            }
-
-
-            CreateSparkles();
-
-            await Task.Delay(300);
-
-            for (int i = 0; i < 4; i++)
-            {
-                await PlayerImage.ScaleTo(1.5, 130, Easing.SpringOut);
-                await PlayerImage.ScaleTo(0.8, 130, Easing.SpringIn);
-            }
-
-            await PlayerImage.ScaleTo(1.0, 100, Easing.SpringOut);
+            // Simple fade out of destination, then short delay
+            DestinationImage.IsVisible = false;
+            await Task.Delay(200);
         }
         catch (Exception ex)
         {

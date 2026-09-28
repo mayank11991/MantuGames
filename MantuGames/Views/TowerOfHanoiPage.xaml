@@ -5,10 +5,9 @@
              x:Class="MantuGames.Views.TowerOfHanoiPage"
              xmlns:controls="clr-namespace:MantuGames.Views.Controls"
              Shell.NavBarIsVisible="False">
-    <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
-    </ContentPage.BackgroundColor>
     <AbsoluteLayout>
+        <Image Source="app_bg.png" Aspect="AspectFill"
+               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
 
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,*,Auto,Auto"
@@ -23,7 +22,7 @@
                        
                         Clicked="OnBackClicked" VerticalOptions="Center"/>
                 <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
-                       Padding="12,6" HasShadow="False"
+                       Padding="12,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding LevelDisplay}" TextColor="#EF4444"
                            FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
@@ -66,7 +65,7 @@
                 <Label x:Name="SolutionCoinLabel"
                        FontFamily="MomoTrustDisplay"
                        FontSize="10"
-                       TextColor="#6B7280"
+                       TextColor="#DBD748"
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
         </Grid>

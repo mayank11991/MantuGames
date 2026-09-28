@@ -116,7 +116,7 @@ public class CtdDrawable : IDrawable
 
     private void DrawDots(ICanvas canvas, int rows, int cols)
     {
-        float radius = _cellSize * 0.18f;
+        float radius = Math.Max(4, (_cellSize - 6) / 2f);
         foreach (var pair in _vm.Pairs)
         {
             DrawDot(canvas, pair.R1, pair.C1, pair.Color, radius);

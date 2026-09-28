@@ -307,9 +307,9 @@ namespace MantuGames.ViewModels
                 }
             }
 
-            IsWin = false;
+            IsWin = true;
             await Task.Delay(6000);
-            GameEnded?.Invoke(false);
+            GameEnded?.Invoke(true);
         }
 
         private void EndGame(bool win)

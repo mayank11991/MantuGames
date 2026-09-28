@@ -113,6 +113,8 @@ public partial class TowerOfHanoiPage : ContentPage
             return;
         }
         CoinService.SpendCoins("towerofhanoi", CoinService.SolutionCost);
+        int coins = CoinService.GetCoins("towerofhanoi");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         _vm?.ShowSolutionCommand.Execute(null);
     }
 
@@ -145,9 +147,10 @@ public partial class TowerOfHanoiPage : ContentPage
         Grid.SetRowSpan(bgPanel, 2);
 
         // Rod — 20% of the base bar width, set dynamically on layout
+        bool isGoal = poleIndex == _vm.Puzzle.GoalPole;
         var rod = new Border
         {
-            BackgroundColor = Color.FromArgb("#FACF93"),
+            BackgroundColor = isGoal ? Color.FromArgb("#34D399") : Color.FromArgb("#FACF93"),
             StrokeThickness = 0,
             WidthRequest = 16,
             HeightRequest = 200,
@@ -180,7 +183,7 @@ public partial class TowerOfHanoiPage : ContentPage
         // Base bar
         var baseBar = new Border
         {
-            BackgroundColor = Color.FromArgb("#FACF93"),
+            BackgroundColor = isGoal ? Color.FromArgb("#34D399") : Color.FromArgb("#FACF93"),
             StrokeThickness = 0,
             HeightRequest = 14,
             HorizontalOptions = LayoutOptions.Fill,
@@ -200,7 +203,7 @@ public partial class TowerOfHanoiPage : ContentPage
             FontSize = 12,
             FontFamily = "BrickSans",
             FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#8D6E63"),
+            TextColor = isGoal ? Color.FromArgb("#34D399") : Color.FromArgb("#8D6E63"),
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
             AutomationId = $"label_{poleIndex}"

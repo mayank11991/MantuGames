@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:MantuGames.Converters"
              xmlns:controls="clr-namespace:MantuGames.Views.Controls"
              Shell.NavBarIsVisible="False"
-             x:Class="MantuGames.Views.MathGamePage">
-    <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
-    </ContentPage.BackgroundColor>
+             x:Class="MantuGames.Views.MathGamePage"
+>
     <ContentPage.Resources>
         <converters:StringToColorConverter x:Key="StringToColor" />
     </ContentPage.Resources>
 
     <AbsoluteLayout>
-
+        <Image Source="app_bg.png" Aspect="AspectFill"
+               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
         <!-- MAIN CONTENT -->
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
@@ -24,39 +22,39 @@
 
             <!-- TOP BAR -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <ImageButton Grid.Column="0" Source="icon_back_round.svg" Padding="0" HeightRequest="48" WidthRequest="48" 
-                        BackgroundColor="Transparent"
-                       
-                        Clicked="OnBackClicked" VerticalOptions="Center" />
+                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                       Padding="0" WidthRequest="48" HeightRequest="48"
+                       VerticalOptions="Center">
+                    <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
+                                 BackgroundColor="Transparent" Padding="0"
+                                 Clicked="OnBackClicked" />
+                </Frame>
                 <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
-                       Padding="12,6" HasShadow="False"
+                       Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding LevelDisplay}" TextColor="#F59E0B"
                            FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-                <ImageButton Grid.Column="2" Source="pause.svg"
-                             HeightRequest="24" WidthRequest="24"
-                             BackgroundColor="Transparent" Padding="0"
-                             Margin="4,0"
-                             Clicked="OnPause"
-                             VerticalOptions="Center" />
+                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                       Padding="0" WidthRequest="48" HeightRequest="48"
+                       VerticalOptions="Center">
+                    <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
+                                 BackgroundColor="Transparent" Padding="0"
+                                 Clicked="OnPause" />
+                </Frame>
             </Grid>
 
             <!-- TIMER -->
             <controls:GameTimerView x:Name="MathTimer" Grid.Row="2"
                                     SecondsRemaining="{Binding TimeRemainingSec}" />
 
-            <!-- PROGRESS BAR styled -->
+            <!-- PROGRESS BAR -->
             <Border Grid.Row="3"
-                   
-                    StrokeThickness="0"
+                    BackgroundColor="#182136" StrokeThickness="0"
                     Padding="14,10" Margin="20,2">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="16" />
                 </Border.StrokeShape>
-                <Border.Shadow>
-                    <Shadow Brush="#20000000" Offset="0,2" Radius="6" Opacity="0.3" />
-                </Border.Shadow>
                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="6">
                     <Label Grid.Row="0" Grid.Column="0"
                            Text="Questions"
@@ -70,52 +68,51 @@
                            VerticalOptions="Center" />
                     <Frame Grid.Row="1" Grid.ColumnSpan="2"
                            BackgroundColor="#33FFFFFF" CornerRadius="8"
-                           Padding="0" HeightRequest="10" HasShadow="False">
-                         <BoxView x:Name="ProgressBar" BackgroundColor="Transparent"
-                                  Color="{Binding ProgressBarColor}" HeightRequest="10"
-                                  CornerRadius="8" HorizontalOptions="Start" />
+                           Padding="0" HeightRequest="10">
+                        <BoxView x:Name="ProgressBar" BackgroundColor="Transparent"
+                                 Color="{Binding ProgressBarColor}" HeightRequest="10"
+                                 CornerRadius="8" HorizontalOptions="Start" />
                     </Frame>
                 </Grid>
             </Border>
 
             <!-- QUESTION + CHOICES -->
             <StackLayout Grid.Row="4" Spacing="16" VerticalOptions="Center">
-
                 <!-- Question card -->
                 <Frame BackgroundColor="#182136" CornerRadius="24"
-                       Padding="24,28" HasShadow="True"
-                       HorizontalOptions="Center" WidthRequest="280">
+                       Padding="24,20" HasShadow="True"
+                       HorizontalOptions="Center" WidthRequest="300">
                     <Label x:Name="QuestionLabel"
                            Text="{Binding QuestionText}"
-                           FontSize="36" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
+                           FontSize="20" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
                            TextColor="#E7ECF5"
                            HorizontalOptions="Center"
-                           HorizontalTextAlignment="Center" />
+                           HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap"
+                           MaxLines="4" />
                 </Frame>
 
-                <!-- 4 choice buttons — 2x2 grid -->
+                <!-- 4 choice buttons -->
                 <Grid x:Name="ChoicesGrid"
                       ColumnDefinitions="*,*"
                       RowDefinitions="Auto,Auto"
                       ColumnSpacing="12" RowSpacing="12"
                       Padding="8,0">
-                    <!-- Populated in code-behind -->
                 </Grid>
-
             </StackLayout>
 
             <!-- SHOW SOLUTION -->
-            <VerticalStackLayout Grid.Row="5" Spacing="2" Margin="40,0">
+            <VerticalStackLayout Grid.Row="5" Spacing="2" Margin="60,0">
                 <Button x:Name="SolutionButton"
-                        Text="Show Solution"
+                        Text="💡 Show Solution"
                         FontSize="15" FontAttributes="Bold"
-                        TextColor="#160D02" BackgroundColor="#FF9F1C"
-                        CornerRadius="20" HeightRequest="44"
+                        TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                        CornerRadius="24" HeightRequest="50"
                         Clicked="OnShowSolutionClicked" />
                 <Label x:Name="SolutionCoinLabel"
                        FontFamily="MomoTrustDisplay"
-                       FontSize="10"
-                       TextColor="#6B7280"
+                       FontSize="11"
+                       TextColor="#DBD748"
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
 

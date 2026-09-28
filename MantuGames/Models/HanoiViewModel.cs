@@ -140,7 +140,7 @@ public class HanoiViewModel : INotifyPropertyChanged
             await System.Threading.Tasks.Task.Delay(500);
         }
 
-        MainThread.BeginInvokeOnMainThread(() => GameEnded?.Invoke(false));
+        MainThread.BeginInvokeOnMainThread(() => GameEnded?.Invoke(true));
     }
 
     private void EndGame(bool win)

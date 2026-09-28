@@ -15,9 +15,37 @@
                              HorizontalOptions="Center"
                              VerticalOptions="Center"
                              Spacing="10">
-            <HorizontalStackLayout x:Name="MantuRow"
-                                   HorizontalOptions="Center"
-                                   Spacing="4" />
+            <Grid x:Name="MantuRow"
+                  HorizontalOptions="Center"
+                  ColumnSpacing="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="38" />
+                    <ColumnDefinition Width="38" />
+                    <ColumnDefinition Width="38" />
+                    <ColumnDefinition Width="38" />
+                    <ColumnDefinition Width="38" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="L0" Text="M" Grid.Column="0"
+                       FontFamily="MomoTrustDisplay" FontSize="44"
+                       FontAttributes="Bold" TextColor="#E7ECF5"
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label x:Name="L1" Text="A" Grid.Column="1"
+                       FontFamily="MomoTrustDisplay" FontSize="44"
+                       FontAttributes="Bold" TextColor="#E7ECF5"
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label x:Name="L2" Text="N" Grid.Column="2"
+                       FontFamily="MomoTrustDisplay" FontSize="44"
+                       FontAttributes="Bold" TextColor="#E7ECF5"
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label x:Name="L3" Text="T" Grid.Column="3"
+                       FontFamily="MomoTrustDisplay" FontSize="44"
+                       FontAttributes="Bold" TextColor="#E7ECF5"
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label x:Name="L4" Text="U" Grid.Column="4"
+                       FontFamily="MomoTrustDisplay" FontSize="44"
+                       FontAttributes="Bold" TextColor="#E7ECF5"
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+            </Grid>
             <Label x:Name="GamingsLabel"
                    Text="GAMINGS"
                    FontFamily="MomoTrustDisplay"
@@ -27,14 +55,15 @@
                    CharacterSpacing="8"
                    Opacity="0"
                    Padding="10,0,10,10" />
-            <Image x:Name="SlothImage"
-                   Source="hammer.png"
-                   HeightRequest="120"
-                   WidthRequest="120"
-                   HorizontalOptions="Center"
-                   Opacity="0"
-                   Margin="0,4,0,0" />
         </VerticalStackLayout>
+        <Image x:Name="SlothImage"
+               Source="hammer.png"
+               HeightRequest="120"
+               WidthRequest="120"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Opacity="0"
+               Margin="0,450,0,0" />
     </Grid>
 
 </ContentPage>

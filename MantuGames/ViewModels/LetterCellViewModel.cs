@@ -255,9 +255,9 @@ public class LetterCellViewModel : INotifyPropertyChanged
                 if (wvm != null) wvm.IsFound = true;
             }
  
-            IsWin = false;
+            IsWin = true;
             await Task.Delay(2000);
-            GameEnded?.Invoke(false);
+            GameEnded?.Invoke(true);
         }
  
         private void StartTimer()

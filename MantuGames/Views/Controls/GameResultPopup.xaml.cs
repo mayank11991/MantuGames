@@ -82,6 +82,8 @@ public partial class GameResultPopup : ContentView
             PrimaryIcon.Source            = "icon_retry";
             PrimaryLabel.Text             = "Try Again";
             SecondaryBorder.IsVisible     = false;
+
+            PreloadAd();
         }
 
         await Task.Delay(800);

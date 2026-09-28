@@ -72,6 +72,8 @@ public partial class CardMemoryPage : ContentPage
             return;
         }
         CoinService.SpendCoins("cardmemory", CoinService.SolutionCost);
+        int coins = CoinService.GetCoins("cardmemory");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         SolutionButton.IsEnabled = false;
         _vm.RevealAll();
@@ -84,7 +86,7 @@ public partial class CardMemoryPage : ContentPage
         {
             await Task.Delay(2500);
             if (_vm != null && !_vm.IsGameOver)
-                _vm.ForceEnd(false);
+                _vm.ForceEnd(true);
         }
         catch (Exception ex)
         {

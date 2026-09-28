@@ -366,6 +366,8 @@ public partial class BlockPuzzlePage : ContentPage
             return;
         }
         CoinService.SpendCoins("blockpuzzle", CoinService.SolutionCost);
+        int coins = CoinService.GetCoins("blockpuzzle");
+        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         SolutionButton.IsEnabled = false;
         _ = AutoPlaceBestAsync();

@@ -2,6 +2,7 @@ using MantuGames.Services;
 
 namespace MantuGames.Views;
 
+// ── DUST EFFECT ─────────────────────────────────────────────────────────
 internal sealed class DustEffect : IDrawable
 {
     private readonly List<DustParticle> _particles = new();
@@ -15,8 +16,7 @@ internal sealed class DustEffect : IDrawable
             double speed = 30 + _rng.NextDouble() * 80;
             _particles.Add(new DustParticle
             {
-                X = cx,
-                Y = cy,
+                X = cx, Y = cy,
                 Vx = (float)(Math.Cos(angle) * speed),
                 Vy = (float)(Math.Sin(angle) * speed) - 20,
                 Life = 0.4f + (float)_rng.NextDouble() * 0.3f,
@@ -28,30 +28,20 @@ internal sealed class DustEffect : IDrawable
     public void Draw(ICanvas canvas, RectF bounds)
     {
         float dt = 0.016f;
-
         for (int i = _particles.Count - 1; i >= 0; i--)
         {
             var p = _particles[i];
             p.Life -= dt;
-            if (p.Life <= 0)
-            {
-                _particles.RemoveAt(i);
-                continue;
-            }
-
+            if (p.Life <= 0) { _particles.RemoveAt(i); continue; }
             p.X += p.Vx * dt;
             p.Y += p.Vy * dt;
             p.Vy += 120 * dt;
-
             float alpha = Math.Clamp(p.Life / 0.5f, 0, 1);
-
             canvas.FillColor = Color.FromArgb("#ffffff").WithAlpha(alpha * 0.7f);
             canvas.FillCircle(p.X, p.Y, p.Size * (0.5f + p.Life * 0.5f));
-
             canvas.FillColor = Color.FromArgb("#ffffff").WithAlpha(alpha * 0.4f);
             canvas.FillCircle(p.X - 1, p.Y - 1, p.Size * 0.5f * (0.5f + p.Life * 0.5f));
         }
-
         _particles.RemoveAll(p => p.Life <= 0);
     }
 
@@ -63,10 +53,12 @@ internal sealed class DustEffect : IDrawable
     }
 }
 
+// ── SPLASH PAGE ─────────────────────────────────────────────────────────
 public partial class SplashPage : ContentPage
 {
     private readonly DustEffect _dust = new();
     private IDispatcherTimer _dustTimer;
+    private Label[] MantuLetters;
 
     public SplashPage()
     {
@@ -74,7 +66,7 @@ public partial class SplashPage : ContentPage
         Loaded += OnLoaded;
     }
 
-    private async Task AnimateSlothAsync()
+    private async Task AnimateHammerAsync()
     {
         try
         {
@@ -82,14 +74,29 @@ public partial class SplashPage : ContentPage
             SlothImage.Opacity = 1;
             SlothImage.TranslationY = -Root.Height;
             AudioService.Instance.Play("whoosh");
-            await Task.WhenAll(
-                SlothImage.TranslateTo(0, 0, 1500, Easing.BounceOut),
-                SlothImage.FadeTo(1, 400, Easing.CubicOut));
+
+            await SlothImage.TranslateTo(0, 0, 800, Easing.CubicIn);
+
+            AudioService.Instance.Play("thud");
+            await ShakeScreenAsync();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error in AnimateSlothAsync: {ex.Message}");
+            Console.WriteLine($"Error in AnimateHammerAsync: {ex.Message}");
         }
+    }
+
+    private async Task ShakeScreenAsync()
+    {
+        int shakeCount = 6;
+        double shakeMagnitude = 8;
+
+        for (int i = 0; i < shakeCount; i++)
+        {
+            double offsetX = (i % 2 == 0 ? 1 : -1) * shakeMagnitude * (1.0 - (double)i / shakeCount);
+            await Root.TranslateTo(offsetX, 0, 30, Easing.Linear);
+        }
+        await Root.TranslateTo(0, 0, 30, Easing.Linear);
     }
 
     private async void OnLoaded(object? sender, EventArgs e)
@@ -98,8 +105,10 @@ public partial class SplashPage : ContentPage
         {
             Loaded -= OnLoaded;
 
-            _ = IPlatformApplication.Current!.Services.GetRequiredService<MantuGames.Services.AudioService>()
+            _ = IPlatformApplication.Current!.Services.GetRequiredService<AudioService>()
                 .PreloadAsync();
+
+            MantuLetters = [L0, L1, L2, L3, L4];
 
             DustCanvas.Drawable = _dust;
             _dustTimer = Dispatcher.CreateTimer();
@@ -107,55 +116,41 @@ public partial class SplashPage : ContentPage
             _dustTimer.Tick += (s, args) => DustCanvas.Invalidate();
             _dustTimer.Start();
 
-            // Sloth scrolls down from the top of the screen to sit at the
-            // bottom of the GAMINGS text, AFTER the letter animations finish.
-
-            string text = "MANTU";
-            var charLabels = new List<Label>();
-
-            foreach (char c in text)
+            // Hide all letters
+            foreach (var lbl in MantuLetters)
             {
-                var lbl = new Label
-                {
-                    Text = c.ToString(),
-                    FontFamily = "MomoTrustDisplay",
-                    FontSize = 44,
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = Color.FromArgb("#E7ECF5"),
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment = TextAlignment.Center,
-                    TranslationY = -400,
-                    Opacity = 0,
-                };
-                MantuRow.Children.Add(lbl);
-                charLabels.Add(lbl);
+                lbl.Opacity = 0;
+                lbl.TranslationY = -300;
             }
 
-            for (int i = 0; i < charLabels.Count; i++)
+            await Task.Delay(100);
+
+            // ── PHASE 1: Letters drop one by one ──────────────────────
+            for (int i = 0; i < MantuLetters.Length; i++)
             {
                 await Task.Delay(100);
-                charLabels[i].Opacity = 1;
+                MantuLetters[i].Opacity = 1;
                 AudioService.Instance.Play("thud");
-                await charLabels[i].TranslateTo(0, 0, 250, Easing.CubicOut);
+                await MantuLetters[i].TranslateTo(0, 0, 250, Easing.CubicOut);
 
-                var cb = charLabels[i].Bounds;
-                double charCenterX = MantuRow.Bounds.X + cb.X + cb.Width / 2 + CenterStack.Bounds.X;
-                double cy = MantuRow.Bounds.Y + cb.Y + cb.Height / 2 + CenterStack.Bounds.Y;
-                _dust.Burst((float)charCenterX, (float)cy);
+                double screenX = MantuRow.Bounds.X + MantuLetters[i].X + MantuLetters[i].Bounds.Width / 2 + CenterStack.Bounds.X;
+                double screenY = MantuRow.Bounds.Y + MantuLetters[i].Y + MantuLetters[i].Bounds.Height / 2 + CenterStack.Bounds.Y;
+                _dust.Burst((float)screenX, (float)screenY);
             }
 
             await Task.Delay(300);
 
-            GamingsLabel.TranslationX = 0;
+            // ── PHASE 2: GAMINGS drops in from below ──────────────────
             AudioService.Instance.Play("thud");
+            GamingsLabel.TranslationX = 0;
             GamingsLabel.TranslationY = 80;
             GamingsLabel.Opacity = 1;
             await GamingsLabel.TranslateTo(0, 0, 400, Easing.CubicOut);
 
-            // Sloth arrives only once the GAMINGS animation has finished.
-            await AnimateSlothAsync();
+            // ── PHASE 3: Hammer drops below GAMINGS ───────────────────
+            await AnimateHammerAsync();
 
-            // Wait for dust to settle
+            // ── PHASE 4: Wait for dust, then fade ─────────────────────
             while (!_dust.IsEmpty)
                 await Task.Delay(50);
 
