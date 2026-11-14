@@ -286,7 +286,7 @@ public partial class DashboardPage : ContentPage
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 22 },
             HeightRequest = thumbH,
             Padding = 0,
-            Shadow = null,
+            Shadow = null!,
             Content = new Image { Source = game.ImageName, Aspect = Aspect.AspectFill },
         };
 
