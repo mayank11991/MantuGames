@@ -167,7 +167,7 @@ public partial class MazeRunnerPage : ContentPage
         _startTime = DateTime.Now;
 
       
-            int coins = CoinService.GetCoins("mazerunner");
+            int coins = CoinService.Balance;
             SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
       
 
@@ -213,14 +213,14 @@ public partial class MazeRunnerPage : ContentPage
     {
         if (_maze == null || _gameEnded) return;
 
-        if (CoinService.GetCoins("mazerunner") < CoinService.SolutionCost)
+        if (CoinService.Balance < CoinService.SolutionCost)
         {
             CoinShopPopup.ShowForGame("mazerunner");
             return;
         }
 
         CoinService.SpendForSolution("mazerunner");
-        int coins = CoinService.GetCoins("mazerunner");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         SolutionCoinLabel.IsEnabled = false;

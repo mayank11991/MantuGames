@@ -71,7 +71,7 @@ public partial class TowerOfHanoiPage : ContentPage
         _selectedPole = null;
         _dragFromPole = null;
 
-        int coins = CoinService.GetCoins("towerofhanoi");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         // Determine number of poles based on level
@@ -107,13 +107,13 @@ public partial class TowerOfHanoiPage : ContentPage
 
     private void OnShowSolutionClicked(object? sender, EventArgs e)
     {
-        if (CoinService.GetCoins("towerofhanoi") < CoinService.SolutionCost)
+        if (CoinService.Balance < CoinService.SolutionCost)
         {
             CoinShopPopup.ShowForGame("towerofhanoi");
             return;
         }
         CoinService.SpendForSolution("towerofhanoi");
-        int coins = CoinService.GetCoins("towerofhanoi");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         _vm?.ShowSolutionCommand.Execute(null);
     }

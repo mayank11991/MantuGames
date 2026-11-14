@@ -13,6 +13,7 @@ public partial class BlockPuzzlePage : ContentPage
     private int _startLevel = 1;
     private int _prevLinesCleared;
     private BoxView[,] _cells = null!;
+    private double _cellSize = 24;
 
     // Gesture tracking
     private double _panX, _panY;
@@ -69,7 +70,7 @@ public partial class BlockPuzzlePage : ContentPage
         _vm.GameEnded    += OnGameEnded;
         _vm.LinesClearing += OnLinesClearing;
         BlockTimer.TotalSeconds = BlockPuzzleViewModel.LevelTimerSeconds;
-        int coins = CoinService.GetCoins("blockpuzzle");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildBoard();
         BuildNextPreview();
@@ -116,6 +117,7 @@ public partial class BlockPuzzlePage : ContentPage
             cell = Math.Floor((sw - 24) / BlockPuzzleViewModel.Cols);
         }
         cell = Math.Max(cell, 12);
+        _cellSize = cell;
 
         for (int r = 0; r < BlockPuzzleViewModel.Rows; r++)
             BoardGrid.RowDefinitions.Add(new RowDefinition { Height = cell });
@@ -128,7 +130,7 @@ public partial class BlockPuzzlePage : ContentPage
                 var bv = new BoxView
                 {
                     Color        = Color.FromArgb("#EAF2FB"),
-                    CornerRadius = 2,
+                    CornerRadius = 4,
                     Margin       = new Thickness(0.5)
                 };
                 Grid.SetRow(bv, r);
@@ -284,28 +286,90 @@ public partial class BlockPuzzlePage : ContentPage
         MainThread.BeginInvokeOnMainThread(Render);
     }
 
-    private async void OnLinesClearing(List<int> rows)
+    /// <summary>
+    /// Called just before the view model removes full rows. Snapshots the row colours
+    /// into an overlay so the break plays on top of the already-updated board:
+    /// white flash, blocks pop and burst outward with a little spin and gravity,
+    /// then the stack above drops into place.
+    /// </summary>
+    private void OnLinesClearing(List<int> rows)
     {
-        try
+        if (_cells == null || rows.Count == 0) return;
+        double cs = _cellSize;
+        int cols = BlockPuzzleViewModel.Cols;
+
+        // Snapshot colours now (the board is mutated right after this returns).
+        var snap = rows.Select(r => (row: r,
+            colors: Enumerable.Range(0, cols).Select(c => _vm.BoardColors[r, c]).ToArray())).ToList();
+        int lowest = rows.Max();
+
+        MainThread.BeginInvokeOnMainThread(async () =>
         {
-            foreach (int r in rows)
-                for (int c = 0; c < BlockPuzzleViewModel.Cols; c++)
-                    if (_cells[r, c] != null)
-                        _cells[r, c].Opacity = 1;
+            try
+            {
+                VibrationHelper.Click();
+                var anims = new List<Task>();
+                foreach (var (row, colors) in snap)
+                {
+                    // Flash bar
+                    var flash = new BoxView { Color = Colors.White, CornerRadius = 4, Opacity = 0 };
+                    AbsoluteLayout.SetLayoutBounds(flash, new Rect(0, row * cs, cols * cs, cs));
+                    FxLayer.Children.Add(flash);
+                    anims.Add(FlashAsync(flash));
 
-            var fades = new List<Task>();
-            foreach (int r in rows)
-                for (int c = 0; c < BlockPuzzleViewModel.Cols; c++)
-                    if (_cells[r, c] != null)
-                        fades.Add(_cells[r, c].FadeToAsync(0, 60, Easing.CubicIn));
-            await Task.WhenAll(fades);
+                    for (int c = 0; c < cols; c++)
+                    {
+                        var shard = new BoxView { Color = colors[c], CornerRadius = 4 };
+                        AbsoluteLayout.SetLayoutBounds(shard, new Rect(c * cs + 0.5, row * cs + 0.5, cs - 1, cs - 1));
+                        FxLayer.Children.Add(shard);
+                        // Burst away from the row's centre; outer blocks fly further.
+                        double dir = (c - (cols - 1) / 2.0) / ((cols - 1) / 2.0);
+                        double dx = dir * cs * (2.2 + Random.Shared.NextDouble());
+                        double dy = cs * (1.5 + Random.Shared.NextDouble() * 2.5);
+                        int delay = (int)(Math.Abs(dir) * 70);
+                        anims.Add(BurstAsync(shard, dx, dy, delay));
+                    }
+                }
 
-            foreach (int r in rows)
-                for (int c = 0; c < BlockPuzzleViewModel.Cols; c++)
-                    if (_cells[r, c] != null)
-                        _cells[r, c].Opacity = 1;
-        }
-        catch { }
+                // Stack above the cleared rows drops in.
+                int n = rows.Count;
+                for (int r = 0; r <= lowest; r++)
+                    for (int c = 0; c < cols; c++)
+                        _cells[r, c].TranslationY = -n * cs;
+                await Task.Delay(140);
+                var drops = new List<Task>();
+                for (int r = 0; r <= lowest; r++)
+                    for (int c = 0; c < cols; c++)
+                        drops.Add(_cells[r, c].TranslateToAsync(0, 0, 260, Easing.BounceOut));
+                anims.AddRange(drops);
+
+                await Task.WhenAll(anims);
+            }
+            catch { /* page torn down mid-animation */ }
+            finally
+            {
+                FxLayer.Children.Clear();
+                if (_cells != null)
+                    foreach (var bv in _cells) bv.TranslationY = 0;
+            }
+        });
+    }
+
+    private static async Task FlashAsync(BoxView flash)
+    {
+        await flash.FadeToAsync(0.95, 70, Easing.CubicOut);
+        await flash.FadeToAsync(0, 220, Easing.CubicIn);
+    }
+
+    private static async Task BurstAsync(BoxView shard, double dx, double dy, int delay)
+    {
+        if (delay > 0) await Task.Delay(delay);
+        await shard.ScaleToAsync(1.18, 80, Easing.CubicOut);
+        await Task.WhenAll(
+            shard.TranslateToAsync(dx, dy, 420, Easing.CubicIn),
+            shard.RotateToAsync(dx > 0 ? 160 : -160, 420, Easing.Linear),
+            shard.ScaleToAsync(0.4, 420, Easing.CubicIn),
+            shard.FadeToAsync(0, 420, Easing.CubicIn));
     }
 
     private async void OnPieceLocked()
@@ -360,13 +424,13 @@ public partial class BlockPuzzlePage : ContentPage
     {
         if (_vm == null || _vm.IsGameOver || _vm.CurrentPiece == null) return;
 
-        if (CoinService.GetCoins("blockpuzzle") < CoinService.SolutionCost)
+        if (CoinService.Balance < CoinService.SolutionCost)
         {
             CoinShopPopup.ShowForGame("blockpuzzle");
             return;
         }
         CoinService.SpendForSolution("blockpuzzle");
-        int coins = CoinService.GetCoins("blockpuzzle");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         SolutionCoinLabel.IsEnabled = false;

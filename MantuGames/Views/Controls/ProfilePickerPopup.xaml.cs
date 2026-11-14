@@ -114,8 +114,8 @@ public partial class ProfilePickerPopup : ContentView
         {
             Source = img,
             Aspect = Aspect.AspectFit,
-            WidthRequest = 56,
-            HeightRequest = 56,
+            WidthRequest = 72,
+            HeightRequest = 72,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };

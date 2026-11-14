@@ -27,7 +27,7 @@ public partial class DashboardPage : ContentPage
         EditProfilePopup.ProfileUpdated += OnProfileUpdated;
 
         // Restore remove_ads after reinstall and deliver any paid-but-unconsumed coin packs
-        IapService.UnassignedCoinsChanged += (s, e) => MainThread.BeginInvokeOnMainThread(RefreshCoins);
+        CoinService.CoinsChanged += (s, e) => MainThread.BeginInvokeOnMainThread(RefreshCoins);
         _ = IapService.ProcessOutstandingAsync();
     }
 
@@ -114,9 +114,8 @@ public partial class DashboardPage : ContentPage
         var active = ProfileService.Active;
         string avatar = string.IsNullOrEmpty(active?.AvatarImage) ? "a1.png" : active!.AvatarImage;
         HeaderAvatar.Source = avatar;
-        HeroAvatar.Source = avatar;
         HeaderPlayerName.Text = string.IsNullOrWhiteSpace(active?.Name) ? "Player" : active!.Name;
-        CoinBalanceLabel.Text = CoinService.GetTotalCoins().ToString();
+        CoinBalanceLabel.Text = CoinService.Balance.ToString();
 
         // Progress strip: stars, wins and completed levels across all games
         int stars = 0, levels = 0;
@@ -295,11 +294,11 @@ public partial class DashboardPage : ContentPage
             Text = number.ToString(),
             FontFamily = "Display",
             FontSize = 46,
-            TextColor = Colors.White,
+            TextColor = Color.FromArgb("#1F2A44"),
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.End,
             Margin = new Thickness(-2, 0, 0, -26),
-            Shadow = new Shadow { Brush = Color.FromArgb("#1F2A44"), Offset = new Point(2, 3), Radius = 0, Opacity = 1 },
+            Shadow = new Shadow { Brush = Colors.White, Offset = new Point(2, 2), Radius = 0, Opacity = 1 },
         };
 
         var title = new Label
@@ -333,7 +332,7 @@ public partial class DashboardPage : ContentPage
             StrokeThickness = 0,
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 999 },
             Padding = new Thickness(14, 6, 16, 7),
-            Margin = new Thickness(0, 8, 0, 4),
+            Margin = new Thickness(0, 8, 0, 8),
             HorizontalOptions = LayoutOptions.Fill,
             Shadow = new Shadow { Brush = Color.FromArgb("#239448"), Offset = new Point(0, 4), Radius = 0, Opacity = 1 },
             Content = new HorizontalStackLayout

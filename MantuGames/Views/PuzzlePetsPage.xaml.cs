@@ -95,7 +95,7 @@ public partial class PuzzlePetsPage : ContentPage
         _pieceSize = Math.Floor((availW - gap * (_puzzle.Cols - 1) - 16) / _puzzle.Cols);
         _pieceSize = Math.Max(44, Math.Min(_pieceSize, 76));
 
-        int coins = CoinService.GetCoins("puzzlepets");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         BuildGrid();
@@ -606,7 +606,7 @@ public partial class PuzzlePetsPage : ContentPage
     {
         try
         {
-            if (CoinService.GetCoins("puzzlepets") < CoinService.SolutionCost)
+            if (CoinService.Balance < CoinService.SolutionCost)
             {
                 CoinShopPopup.ShowForGame("puzzlepets");
                 return;
@@ -656,7 +656,7 @@ public partial class PuzzlePetsPage : ContentPage
             {
                 StatusLabel.Text = "Puzzle complete!";
                 SolutionCoinLabel.IsEnabled = true;
-                int coins = CoinService.GetCoins("puzzlepets");
+                int coins = CoinService.Balance;
                 SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
             }
         }

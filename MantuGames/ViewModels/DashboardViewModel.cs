@@ -22,7 +22,7 @@ public class DashboardViewModel
         new GameInfo { Id = "mazerunner",       Title = "Maze Adventure",   ImageName = "gi_mazerunner.png",         CardColor = "#9AE04A", Route = "mazerunner",       Description = "Blaze through twisting mazes",      IconEmoji = "🗺️", IconColor = "#2F9E7F" },
         new GameInfo { Id = "connectthedots",   Title = "Connect Dots",     ImageName = "gi_connectdots.png",        CardColor = "#3FE0C5", Route = "connectthedots",   Description = "Draw paths to connect pairs",       IconEmoji = "🎨", IconColor = "#E0568F" },
         new GameInfo { Id = "numbermatch",      Title = "Number Matching",     ImageName = "gi_numbermatch.png",        CardColor = "#FFB547", Route = "numbermatch",      Description = "Match numbers that add to 10",      IconEmoji = "⭐", IconColor = "#3D8BFD" },
-        new GameInfo { Id = "arrowlines",       Title = "Arrow Lines",       ImageName = "gi_arrowlines.png",         CardColor = "#FF7A59", Route = "arrowlines",       Description = "Clear the board with arrows",       IconEmoji = "🎮", IconColor = "#9B7BFF" },
+        new GameInfo { Id = "arrowlines",       Title = "Arrow Lines",       ImageName = "gi_arrowlines.png",         CardColor = "#FF7A59", Route = "arrowlines",       Description = "Slide every line off the board",       IconEmoji = "🎮", IconColor = "#9B7BFF" },
     };
 
     // Instance copy for binding

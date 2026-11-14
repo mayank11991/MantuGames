@@ -38,6 +38,25 @@ public partial class LevelMapPage : ContentPage
 
     private Color _gameAccentColor = Color.FromArgb("#7C5CFF");
 
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+        FitTitle();
+    }
+
+    /// <summary>
+    /// Shrinks the hero title so its longest word fits on one line next to the game art,
+    /// so long names like "NUMBER MATCHING" break between words, never inside one.
+    /// </summary>
+    private void FitTitle()
+    {
+        if (Width <= 0 || string.IsNullOrEmpty(GameTitleLabel.Text)) return;
+        double avail = Width - 40 /* page padding */ - 150 /* hero art */ - 8;
+        int longest = GameTitleLabel.Text.Split(' ').Max(w => w.Length);
+        // Anton is condensed: ~0.5em per uppercase glyph.
+        GameTitleLabel.FontSize = Math.Clamp(avail / (longest * 0.5), 28, 50);
+    }
+
     private void BuildMap()
     {
         if (string.IsNullOrEmpty(_gameId)) return;
@@ -50,9 +69,10 @@ public partial class LevelMapPage : ContentPage
 
         Backdrop.AccentColor = _gameAccentColor;
         GameTitleLabel.Text = (info?.Title ?? _gameId).ToUpperInvariant();
+        FitTitle();
         HeroThumb.Source = info?.ImageName;
         InstructionsLabel.Text = GameRules.GetRules(_gameId);
-        CoinsLabel.Text = CoinService.GetCoins(_gameId).ToString();
+        CoinsLabel.Text = CoinService.Balance.ToString();
 
         Levels.Clear();
         var levels = ProgressService.Instance.GetLevels(_gameId, 50);

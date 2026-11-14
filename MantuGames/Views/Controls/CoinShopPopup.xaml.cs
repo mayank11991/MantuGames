@@ -1,6 +1,5 @@
 using MantuGames.Models;
 using MantuGames.Services;
-using MantuGames.ViewModels;
 
 namespace MantuGames.Views.Controls;
 
@@ -9,52 +8,33 @@ public partial class CoinShopPopup : ContentView
     /// <summary>Raised whenever a coin purchase adds coins to any game.</summary>
     public event EventHandler? CoinsChanged;
 
-    private string? _targetGameId;
     private bool _busy;
 
     public CoinShopPopup()
     {
         InitializeComponent();
         BuildPacks();
-        BuildGames();
     }
 
-    /// <summary>Shop mode — buy a pack, then pick which game receives the coins.</summary>
+    /// <summary>Shop opened from the dashboard / settings.</summary>
     public void Show()
     {
-        _targetGameId = null;
-        MessageLabel.Text = "Buy coins and transfer them to any game.\nEach game keeps its own coin balance.";
-        BalanceLabel.Text = $"Total: {CoinService.GetTotalCoins()} coins";
-        PickerTitle.IsVisible = true;
-        GamesLayout.IsVisible = true;
-        BuildGames();
-        ShowUnassignedHint();
+        MessageLabel.Text = "Coins work in every game.\nUse them for Show Solution when you're stuck.";
+        RefreshBalance();
+        ShowStatus("");
         AnimateIn();
     }
 
-    /// <summary>Insufficient-coins mode — used by "Show Solution". Purchase adds coins directly to the given game.</summary>
+    /// <summary>Opened from "Show Solution" when the player can't afford it.</summary>
     public void ShowForGame(string gameId)
     {
-        var info = DashboardViewModel.Games.FirstOrDefault(g => g.Id == gameId);
-        string gameName = info?.Title ?? gameId;
-        _targetGameId = gameId;
-        MessageLabel.Text = $"Not enough coins to use Show Solution in {gameName}.\nShow Solution costs {CoinService.SolutionCost} coins.";
-        BalanceLabel.Text = $"{gameName}: {CoinService.GetCoins(gameId)} coins";
-        PickerTitle.IsVisible = false;
-        GamesLayout.IsVisible = false;
+        MessageLabel.Text = $"You need {CoinService.SolutionCost} coins for Show Solution.\nBeat levels to earn coins, or grab a pack:";
+        RefreshBalance();
         ShowStatus("");
-
-        // Purchased coins still waiting in the bank go straight to the game that needs them.
-        int moved = IapService.AssignUnassignedCoins(gameId);
-        if (moved > 0)
-        {
-            BalanceLabel.Text = $"{gameName}: {CoinService.GetCoins(gameId)} coins";
-            ShowStatus($"{moved} purchased coins added to {gameName}!", ok: true);
-            CoinsChanged?.Invoke(this, EventArgs.Empty);
-        }
-
         AnimateIn();
     }
+
+    private void RefreshBalance() => BalanceLabel.Text = $"You have {CoinService.Balance} coins";
 
     private void AnimateIn()
     {
@@ -77,15 +57,6 @@ public partial class CoinShopPopup : ContentView
                 IsVisible = false;
             });
         });
-    }
-
-    private void ShowUnassignedHint()
-    {
-        int waiting = IapService.UnassignedCoins;
-        if (waiting > 0)
-            ShowStatus($"{waiting} purchased coins are waiting. Tap a game to add them.", ok: true);
-        else
-            ShowStatus("");
     }
 
     private void ShowStatus(string text, bool ok = true)
@@ -131,20 +102,22 @@ public partial class CoinShopPopup : ContentView
 
             var buy = new Border
             {
-                BackgroundColor = Color.FromArgb("#D9F84A"),
-                StrokeThickness = 0,
-                Padding = new Thickness(12, 5),
+                BackgroundColor = Color.FromArgb("#3DC86A"),
+                Stroke = Colors.White,
+                StrokeThickness = 2,
+                Padding = new Thickness(16, 6),
+                Margin = new Thickness(0, 0, 0, 4),
                 VerticalOptions = LayoutOptions.Center,
                 InputTransparent = true,
+                Shadow = new Shadow { Brush = Color.FromArgb("#239448"), Offset = new Point(0, 4), Radius = 0, Opacity = 1 },
             };
-            buy.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 10 };
+            buy.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 999 };
             buy.Content = new Label
             {
                 Text = "BUY",
-                FontFamily = "MadimiOne",
-                FontSize = 12,
-                FontAttributes = FontAttributes.Bold,
-                TextColor = Color.FromArgb("#111114"),
+                FontFamily = "Display",
+                FontSize = 15,
+                TextColor = Colors.White,
                 HorizontalOptions = LayoutOptions.Center,
             };
             Grid.SetColumn(buy, 1);
@@ -173,19 +146,9 @@ public partial class CoinShopPopup : ContentView
 
             if (outcome == PurchaseOutcome.Purchased)
             {
-                // Coins are already saved in the unassigned bank by IapService.
-                if (_targetGameId != null)
-                {
-                    var info = DashboardViewModel.Games.FirstOrDefault(g => g.Id == _targetGameId);
-                    int moved = IapService.AssignUnassignedCoins(_targetGameId);
-                    BalanceLabel.Text = $"{info?.Title ?? _targetGameId}: {CoinService.GetCoins(_targetGameId)} coins";
-                    ShowStatus($"{moved} coins added to {info?.Title ?? _targetGameId}!", ok: true);
-                }
-                else
-                {
-                    BuildGames();
-                    ShowStatus($"{IapService.UnassignedCoins} coins ready! Tap a game to add them.", ok: true);
-                }
+                // IapService has already credited the wallet.
+                RefreshBalance();
+                ShowStatus($"+{coins} coins added!", ok: true);
                 CoinsChanged?.Invoke(this, EventArgs.Empty);
             }
             else if (outcome == PurchaseOutcome.Pending)
@@ -201,91 +164,6 @@ public partial class CoinShopPopup : ContentView
         {
             _busy = false;
         }
-    }
-
-    // ── Game picker ─────────────────────────────────────────────────────────
-    private void BuildGames()
-    {
-        GamesLayout.Children.Clear();
-
-        foreach (var g in DashboardViewModel.Games)
-        {
-            var chip = new Border
-            {
-                BackgroundColor = Color.FromArgb("#F5F6FA"),
-                Stroke = new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
-                StrokeThickness = 1,
-                Padding = new Thickness(10, 8),
-                Margin = new Thickness(3),
-            };
-            chip.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 };
-            FlexLayout.SetBasis(chip, new Microsoft.Maui.Layouts.FlexBasis(0.48f, true));
-
-            var stack = new VerticalStackLayout
-            {
-                Spacing = 2,
-                HorizontalOptions = LayoutOptions.Center,
-            };
-            stack.Children.Add(new Label
-            {
-                Text = g.Title,
-                FontFamily = "MadimiOne",
-                FontSize = 12,
-                FontAttributes = FontAttributes.Bold,
-                TextColor = Color.FromArgb("#111114"),
-                HorizontalOptions = LayoutOptions.Center,
-                HorizontalTextAlignment = TextAlignment.Center,
-            });
-            var balanceRow = new HorizontalStackLayout
-            {
-                Spacing = 4,
-                HorizontalOptions = LayoutOptions.Center,
-                Children =
-                {
-                    new Image
-                    {
-                        Source = "coin.png",
-                        WidthRequest = 13,
-                        HeightRequest = 13,
-                        VerticalOptions = LayoutOptions.Center,
-                    },
-                    new Label
-                    {
-                        Text = CoinService.GetCoins(g.Id).ToString(),
-                        FontFamily = "MadimiOne",
-                        FontSize = 11,
-                        TextColor = Color.FromArgb("#111114"),
-                        HorizontalOptions = LayoutOptions.Center,
-                        VerticalOptions = LayoutOptions.Center,
-                    },
-                }
-            };
-            var balance = (Label)balanceRow.Children[1];
-            stack.Children.Add(balanceRow);
-            chip.Content = stack;
-
-            string capturedId = g.Id;
-            var tap = new TapGestureRecognizer();
-            tap.Tapped += (s, e) => OnGameTapped(capturedId, balance);
-            chip.GestureRecognizers.Add(tap);
-
-            GamesLayout.Children.Add(chip);
-        }
-    }
-
-    private void OnGameTapped(string gameId, Label balanceLabel)
-    {
-        if (IapService.UnassignedCoins <= 0)
-        {
-            ShowStatus("Buy a coin pack first, then pick a game.", ok: false);
-            return;
-        }
-
-        var info = DashboardViewModel.Games.FirstOrDefault(g => g.Id == gameId);
-        int moved = IapService.AssignUnassignedCoins(gameId);
-        balanceLabel.Text = CoinService.GetCoins(gameId).ToString();
-        ShowStatus($"{moved} coins added to {info?.Title ?? gameId}!", ok: true);
-        CoinsChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnClose(object? sender, TappedEventArgs e) => Hide();

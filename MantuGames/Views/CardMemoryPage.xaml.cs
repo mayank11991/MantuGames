@@ -31,7 +31,7 @@ public partial class CardMemoryPage : ContentPage
         _vm.GameEnded += OnGameEnded;
         this.Loaded += (s, e) => BuildCards();
 
-        int coins = CoinService.GetCoins("cardmemory");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         this.Opacity = 0;
@@ -66,13 +66,13 @@ public partial class CardMemoryPage : ContentPage
     {
         if (_vm == null || _vm.IsGameOver) return;
 
-        if (CoinService.GetCoins("cardmemory") < CoinService.SolutionCost)
+        if (CoinService.Balance < CoinService.SolutionCost)
         {
             CoinShopPopup.ShowForGame("cardmemory");
             return;
         }
         CoinService.SpendForSolution("cardmemory");
-        int coins = CoinService.GetCoins("cardmemory");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         SolutionCoinLabel.IsEnabled = false;
@@ -319,7 +319,7 @@ public partial class CardMemoryPage : ContentPage
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
         SolutionCoinLabel.IsEnabled = true;
-        int coins = CoinService.GetCoins("cardmemory");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildCards();
     }
@@ -331,7 +331,7 @@ public partial class CardMemoryPage : ContentPage
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
         SolutionCoinLabel.IsEnabled = true;
-        int coins = CoinService.GetCoins("cardmemory");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildCards();
     }

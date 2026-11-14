@@ -77,41 +77,14 @@
                     <HorizontalStackLayout Spacing="12"
                                            HorizontalOptions="Center"
                                            Margin="0,4,0,0">
-                        <Border BackgroundColor="#F5F6FA"
-                                Stroke="#B3FFFFFF"
-                                StrokeThickness="2"
-                                Padding="20,10">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnCancel" />
-                            </Border.GestureRecognizers>
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="12" />
-                            </Border.StrokeShape>
-                            <Label Text="CANCEL"
-                                   FontFamily="MadimiOne"
-                                   FontSize="15"
-                                   FontAttributes="Bold"
-                                   TextColor="#111114"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center" />
-                        </Border>
-                        <Border BackgroundColor="#111114"
-                                StrokeThickness="0"
-                                Padding="20,10">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSubmit" />
-                            </Border.GestureRecognizers>
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="12" />
-                            </Border.StrokeShape>
-                            <Label Text="CREATE"
-                                   FontFamily="MadimiOne"
-                                   FontSize="15"
-                                   FontAttributes="Bold"
-                                   TextColor="White"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center" />
-                        </Border>
+                        <Border Style="{StaticResource CtaPillBlue}" >
+    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCancel" /></Border.GestureRecognizers>
+    <Label Text="CANCEL" Style="{StaticResource CtaPillLabel}" />
+</Border>
+                        <Border Style="{StaticResource CtaPillGreen}" >
+    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnSubmit" /></Border.GestureRecognizers>
+    <Label Text="CREATE" Style="{StaticResource CtaPillLabel}" />
+</Border>
                     </HorizontalStackLayout>
 
                 </VerticalStackLayout>

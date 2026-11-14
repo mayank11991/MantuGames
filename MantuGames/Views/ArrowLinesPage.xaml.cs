@@ -2,7 +2,6 @@ using MantuGames.Helpers;
 using MantuGames.Models;
 using MantuGames.Services;
 using MantuGames.ViewModels;
-using MantuGames.Views.Controls;
 
 namespace MantuGames.Views;
 
@@ -11,7 +10,7 @@ public partial class ArrowLinesPage : ContentPage
 {
     private ArrowLinesViewModel _vm = null!;
     private int _startLevel = 1;
-    private ArrowLinesDrawable _drawable;
+    private readonly ArrowLinesDrawable _drawable = new();
     private bool _isAnimating;
 
     public string Level
@@ -24,142 +23,165 @@ public partial class ArrowLinesPage : ContentPage
         InitializeComponent();
         this.AddBannerAd();
 
-        _drawable = new ArrowLinesDrawable();
         ArrowGraphics.Drawable = _drawable;
-        var tapGesture = new TapGestureRecognizer();
-        tapGesture.Tapped += OnGraphicsTapped;
-        ArrowGraphics.GestureRecognizers.Add(tapGesture);
+        var tap = new TapGestureRecognizer();
+        tap.Tapped += OnGraphicsTapped;
+        ArrowGraphics.GestureRecognizers.Add(tap);
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
         AudioService.Instance.StartMusic();
-        ArrowGraphics.SizeChanged += OnGraphicsSizeChanged;
-        InitGame(_startLevel);
         PauseOverlay.Resumed += OnResumeGame;
-
+        InitGame(_startLevel);
         RefreshSolutionText();
 
-        this.Opacity = 0;
+        Opacity = 0;
         this.FadeToAsync(1, 400);
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        ArrowGraphics.SizeChanged -= OnGraphicsSizeChanged;
         PauseOverlay.Resumed -= OnResumeGame;
-        if (_vm != null)
-        {
-            _vm.GameEnded -= OnGameEnded;
-            _vm.BoardChanged -= OnBoardChanged;
-            _vm.MoveAnimated -= OnMoveAnimated;
-            _vm.ArrowBlocked -= OnArrowBlocked;
-            _vm.Cleanup();
-        }
+        _vm?.Cleanup();
     }
 
     private void InitGame(int level)
     {
+        _vm?.Cleanup();
         _vm = new ArrowLinesViewModel(level);
         BindingContext = _vm;
+        _vm.LineEscaped += OnLineEscaped;
+        _vm.LineBlocked += OnLineBlocked;
         _vm.GameEnded += OnGameEnded;
-        _vm.BoardChanged += OnBoardChanged;
-        _vm.MoveAnimated += OnMoveAnimated;
-        _vm.ArrowBlocked += OnArrowBlocked;
-        HeartsLabel.SetBinding(Label.TextProperty, new Binding("LivesDisplay"));
-        RefreshDrawable();
-    }
+        HeartsLabel.SetBinding(Label.TextProperty, new Binding(nameof(ArrowLinesViewModel.LivesDisplay)));
 
-    private void RefreshDrawable()
-    {
-        _drawable.Arrows = _vm.Arrows;
-        _drawable.Rows = _vm.GridRows;
-        _drawable.Cols = _vm.GridCols;
-        // Fit board with side margins (24dp each side) instead of edge-to-edge
-        double availW = ArrowGraphics.Width - 48;
-        double availH = ArrowGraphics.Height - 32;
-        if (availW > 0 && availH > 0 && _vm.GridCols > 0 && _vm.GridRows > 0)
-            _drawable.CellSize = (float)Math.Min(Math.Min(availW / _vm.GridCols, availH / _vm.GridRows), 56);
-        _drawable.HighlightedArrow = null;
-        _drawable.SlideArrow = null;
-        _drawable.SlideProgress = 0;
+        _isAnimating = false;
+        _drawable.Puzzle = _vm.Puzzle;
+        _drawable.Moving = null;
+        _drawable.Hinted = null;
         ArrowGraphics.Invalidate();
     }
 
-    private void OnGraphicsSizeChanged(object? sender, EventArgs e)
-    {
-        RefreshDrawable();
-    }
-
+    // ── Input ────────────────────────────────────────────────────────────────
     private void OnGraphicsTapped(object? sender, TappedEventArgs e)
     {
         if (_isAnimating || _vm.IsGameOver) return;
+        var pt = e.GetPosition(ArrowGraphics);
+        if (pt == null || _drawable.CellSize <= 0) return;
 
-        var point = e.GetPosition(ArrowGraphics);
-        if (point == null) return;
+        float fx = ((float)pt.Value.X - _drawable.Origin.X) / _drawable.CellSize;
+        float fy = ((float)pt.Value.Y - _drawable.Origin.Y) / _drawable.CellSize;
+        int col = (int)Math.Floor(fx), row = (int)Math.Floor(fy);
 
-        float startX = (float)(ArrowGraphics.Width - _vm.GridCols * _drawable.CellSize) / 2;
-        float startY = (float)(ArrowGraphics.Height - _vm.GridRows * _drawable.CellSize) / 2;
+        // Exact cell first, then the nearest neighbour (fingers are bigger than lines).
+        var line = _vm.Puzzle.LineAt(row, col);
+        if (line == null)
+        {
+            double best = 0.75;
+            for (int dr = -1; dr <= 1; dr++)
+                for (int dc = -1; dc <= 1; dc++)
+                {
+                    var l = _vm.Puzzle.LineAt(row + dr, col + dc);
+                    if (l == null) continue;
+                    double d = Math.Sqrt(Math.Pow(fx - (col + dc + 0.5), 2) + Math.Pow(fy - (row + dr + 0.5), 2));
+                    if (d < best) { best = d; line = l; }
+                }
+        }
+        if (line == null) return;
 
-        float relX = (float)point.Value.X - startX;
-        float relY = (float)point.Value.Y - startY;
-
-        int col = (int)(relX / _drawable.CellSize);
-        int row = (int)(relY / _drawable.CellSize);
-
-        if (row < 0 || row >= _vm.GridRows || col < 0 || col >= _vm.GridCols) return;
-
-        var arrow = _vm.Arrows.FirstOrDefault(a => a.Row == row && a.Col == col && !a.IsCleared);
-        if (arrow == null) return;
-
-        _vm.ArrowTappedCommand.Execute(arrow);
+        AudioService.Instance.Play("tap");
+        _drawable.Hinted = null;
+        _vm.Tap(line);
     }
 
-    private async void OnMoveAnimated(ArrowCell arrow, List<(int Row, int Col)> path)
+    // ── Animations ───────────────────────────────────────────────────────────
+    private async Task AnimateAsync(float from, float to, uint ms, Easing easing)
+    {
+        var tcs = new TaskCompletionSource();
+        new Animation(v =>
+        {
+            _drawable.Offset = (float)v;
+            ArrowGraphics.Invalidate();
+        }, from, to, easing).Commit(this, "arrowline", 16, ms, finished: (_, _) => tcs.TrySetResult());
+        await tcs.Task;
+    }
+
+    private async void OnLineEscaped(ArrowLine line)
     {
         _isAnimating = true;
-
-        // Just slide the arrow off in its direction, no line
-        _drawable.SlideArrow = arrow;
-        _drawable.SlideProgress = 0;
-        ArrowGraphics.Invalidate();
-
-        // Animate slide out
-        for (int i = 0; i <= 10; i++)
+        try
         {
-            _drawable.SlideProgress = i / 10f;
-            ArrowGraphics.Invalidate();
-            await Task.Delay(25);
+            AudioService.Instance.Play("slide");
+            _drawable.Moving = line;
+            _drawable.MovingIsBump = false;
+            int distance = _vm.Puzzle.Rows + line.Cells.Count + 1;
+            await AnimateAsync(0, distance, (uint)Math.Min(900, 260 + distance * 45), Easing.CubicIn);
         }
-
-        // Clear and refresh
-        _drawable.SlideArrow = null;
-        _drawable.SlideProgress = 0;
-        _isAnimating = false;
-
-        RefreshDrawable();
-    }
-
-    private async void OnArrowBlocked(ArrowCell arrow)
-    {
-        // Flash the arrow briefly
-        _drawable.HighlightedArrow = arrow;
-        ArrowGraphics.Invalidate();
-        await Task.Delay(200);
-        _drawable.HighlightedArrow = null;
-        ArrowGraphics.Invalidate();
-    }
-
-    private void OnBoardChanged()
-    {
-        MainThread.BeginInvokeOnMainThread(() =>
+        finally
         {
-            if (!_isAnimating)
-                RefreshDrawable();
-        });
+            _drawable.Moving = null;
+            _drawable.Offset = 0;
+            _isAnimating = false;
+            ArrowGraphics.Invalidate();
+        }
     }
+
+    private async void OnLineBlocked(ArrowLine line, int run)
+    {
+        _isAnimating = true;
+        try
+        {
+            _drawable.Moving = line;
+            _drawable.MovingIsBump = false;
+            float hit = run + 0.3f;
+            await AnimateAsync(0, hit, (uint)(140 + run * 50), Easing.CubicIn);
+            _drawable.MovingIsBump = true;
+            AudioService.Instance.Play("wrong");
+            VibrationHelper.Click();
+            _ = ArrowGraphics.TranslateToAsync(-6, 0, 40).ContinueWith(_ =>
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await ArrowGraphics.TranslateToAsync(6, 0, 40);
+                    await ArrowGraphics.TranslateToAsync(0, 0, 40);
+                }));
+            await AnimateAsync(hit, 0, (uint)(180 + run * 50), Easing.CubicOut);
+        }
+        finally
+        {
+            _drawable.Moving = null;
+            _drawable.Offset = 0;
+            _drawable.MovingIsBump = false;
+            _isAnimating = false;
+            ArrowGraphics.Invalidate();
+        }
+    }
+
+    // ── Game end ─────────────────────────────────────────────────────────────
+    private async void OnGameEnded(bool isWin)
+    {
+        // Let the last slide finish before the popup covers the board.
+        while (_isAnimating) await Task.Delay(50);
+
+        if (isWin)
+        {
+            int stars = _vm.Stars;
+            AudioService.Instance.Play("win");
+            VibrationHelper.Click();
+            await ResultPopup.Show(true, _vm.CurrentLevel, 0, 210, stars, ProgressService.CoinReward(stars), gameId: "arrowlines");
+        }
+        else
+        {
+            AudioService.Instance.Play("lose");
+            await ResultPopup.Show(false, _vm.CurrentLevel, 0, 210, reason: "Out of lives!", gameId: "arrowlines");
+        }
+    }
+
+    private void OnNextLevel(object? sender, EventArgs e) => InitGame(_vm.CurrentLevel + 1);
+
+    private void OnRetry(object? sender, EventArgs e) => InitGame(_vm.CurrentLevel);
 
     private async void OnBackClicked(object? sender, EventArgs e)
     {
@@ -170,38 +192,10 @@ public partial class ArrowLinesPage : ContentPage
         await Shell.Current.GoToAsync("..");
     }
 
-    private async void OnGameEnded(bool isWin)
+    protected override bool OnBackButtonPressed()
     {
-        if (isWin)
-        {
-            int elapsed = 0;
-            int total = 210;
-            int stars = _vm.Moves <= _vm.TotalArrows + 2 ? 3 :
-                        _vm.Moves <= _vm.TotalArrows + 5 ? 2 : 1;
-            int coins = stars == 3 ? 5 : stars == 2 ? 3 : 1;
-
-            AudioService.Instance.Play("win");
-            VibrationHelper.Click();
-
-            await ResultPopup.Show(true, _vm.CurrentLevel, elapsed, total, stars, coins, gameId: "arrowlines");
-        }
-        else
-        {
-            AudioService.Instance.Play("lose");
-            await ResultPopup.Show(false, _vm.CurrentLevel, 0, 210, reason: "No moves left!", gameId: "arrowlines");
-        }
-    }
-
-    private void OnNextLevel(object? sender, EventArgs e)
-    {
-        _vm.Cleanup();
-        InitGame(_vm.CurrentLevel + 1);
-    }
-
-    private void OnRetry(object? sender, EventArgs e)
-    {
-        _vm?.Cleanup();
-        InitGame(_startLevel);
+        OnBackClicked(this, EventArgs.Empty);
+        return true;
     }
 
     private void OnPause(object? sender, EventArgs e)
@@ -210,16 +204,14 @@ public partial class ArrowLinesPage : ContentPage
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object? sender, EventArgs e)
-    {
-        AudioService.Instance.Play("tap");
-    }
+    private void OnResumeGame(object? sender, EventArgs e) => AudioService.Instance.Play("tap");
 
+    // ── Show Solution: clears the board in a valid order ────────────────────
     private async void OnShowSolution(object? sender, EventArgs e)
     {
         if (_vm == null || _vm.IsGameOver || _isAnimating) return;
 
-        if (CoinService.GetCoins("arrowlines") < CoinService.SolutionCost)
+        if (CoinService.Balance < CoinService.SolutionCost)
         {
             CoinShopPopup.ShowForGame("arrowlines");
             return;
@@ -229,55 +221,30 @@ public partial class ArrowLinesPage : ContentPage
 
         _vm.IsShowSolutionActive = true;
         SolutionCoinLabel.IsEnabled = false;
-
-        // Solve one escapable arrow per pass until board clears or deadlocks
-        int maxPasses = 30;
-        for (int pass = 0; pass < maxPasses; pass++)
+        try
         {
-            if (_vm.IsGameOver) break;
-
-            var target = _vm.Arrows.FirstOrDefault(a => !a.IsCleared && _vm.CanEscape(a));
-            if (target == null)
+            while (!_vm.IsGameOver)
             {
-                SolutionCoinLabel.Text = "No moves possible!";
-                _ = RestoreSolutionTextAsync();
-                break;
+                var next = _vm.NextFreeLine();
+                if (next == null) break;
+                _drawable.Hinted = next;
+                ArrowGraphics.Invalidate();
+                await Task.Delay(220);
+                _drawable.Hinted = null;
+                _vm.Tap(next);
+                while (_isAnimating) await Task.Delay(40);
             }
-
-            int clearedBefore = _vm.ArrowsCleared;
-            _vm.ArrowTappedCommand.Execute(target);
-            await Task.Delay(100);
-
-            // Wait for animation to finish
-            while (_isAnimating)
-                await Task.Delay(50);
-
-            if (_vm.ArrowsCleared <= clearedBefore)
-                break; // safety: no progress
-
-            await Task.Delay(250);
         }
-
-        _vm.IsShowSolutionActive = false;
-        SolutionCoinLabel.IsEnabled = true;
-        RefreshSolutionText();
+        finally
+        {
+            _vm.IsShowSolutionActive = false;
+            SolutionCoinLabel.IsEnabled = true;
+            RefreshSolutionText();
+        }
     }
 
     private void RefreshSolutionText()
     {
-        int coins = CoinService.GetCoins("arrowlines");
-        SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
-    }
-
-    private async Task RestoreSolutionTextAsync()
-    {
-        await Task.Delay(1500);
-        MainThread.BeginInvokeOnMainThread(RefreshSolutionText);
-    }
-
-    protected override bool OnBackButtonPressed()
-    {
-        OnBackClicked(this, EventArgs.Empty);
-        return true;
+        SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {CoinService.Balance}";
     }
 }

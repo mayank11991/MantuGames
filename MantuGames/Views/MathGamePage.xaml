@@ -60,12 +60,12 @@
                            FontSize="12" FontFamily="MadimiOne" FontAttributes="Bold"
                            TextColor="#6B7A90"
                            VerticalOptions="Center" />
-                    <Border Style="{StaticResource ClayFrame}" Grid.Row="1" Grid.ColumnSpan="2"
-                           BackgroundColor="#80FFFFFF" StrokeShape="RoundRectangle 8"
-                           Padding="0" HeightRequest="10">
+                    <Border Grid.Row="1" Grid.ColumnSpan="2" StrokeThickness="0"
+                           BackgroundColor="#E3ECF7" StrokeShape="RoundRectangle 7"
+                           Padding="0" HeightRequest="14">
                         <BoxView x:Name="ProgressBar" BackgroundColor="Transparent"
-                                 Color="{Binding ProgressBarColor}" HeightRequest="10"
-                                 CornerRadius="8" HorizontalOptions="Start" />
+                                 Color="{Binding ProgressBarColor}" HeightRequest="14"
+                                 CornerRadius="7" HorizontalOptions="Start" />
                     </Border>
                 </Grid>
             </Border>

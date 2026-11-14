@@ -47,26 +47,10 @@
                                TextColor="#6E6E7C" />
                     </ScrollView>
 
-                    <Border x:Name="UpdateBorder"
-                            BackgroundColor="#D9F84A"
-                            StrokeThickness="0"
-                            Padding="32,10"
-                            HorizontalOptions="Center"
-                            MinimumWidthRequest="140">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="14" />
-                        </Border.StrokeShape>
-                        <Label Text="UPDATE NOW"
-                               FontFamily="MadimiOne"
-                               FontSize="16"
-                               FontAttributes="Bold"
-                               TextColor="#111114"
-                               HorizontalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnUpdate" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Border>
+                    <Border Style="{StaticResource CtaPillGreen}" x:Name="UpdateBorder" HorizontalOptions="Center" WidthRequest="140">
+    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnUpdate" /></Border.GestureRecognizers>
+    <Label Text="UPDATE NOW" Style="{StaticResource CtaPillLabel}" />
+</Border>
 
                     <Label x:Name="LaterLabel"
                            Text="Not now"

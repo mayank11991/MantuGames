@@ -33,25 +33,10 @@
                            TextColor="#6E6E7C"
                            HorizontalOptions="Start" />
                 </ScrollView>
-                <Border BackgroundColor="#D9F84A"
-                        StrokeThickness="0"
-                        Padding="32,10"
-                        HorizontalOptions="Center"
-                        MinimumWidthRequest="140">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="14" />
-                    </Border.StrokeShape>
-                    <Label Text="Got it!"
-                           FontFamily="MadimiOne"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           TextColor="#111114"
-                           HorizontalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnDismiss" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                </Border>
+                <Border Style="{StaticResource CtaPillGreen}" HorizontalOptions="Center" WidthRequest="140">
+    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnDismiss" /></Border.GestureRecognizers>
+    <Label Text="GOT IT!" Style="{StaticResource CtaPillLabel}" />
+</Border>
             </VerticalStackLayout>
         </Border>
     </Grid>

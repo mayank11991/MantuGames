@@ -256,25 +256,10 @@
                     </Label>
 
                     <!-- Close Button -->
-                    <Border Grid.Row="3"
-                            BackgroundColor="#D9F84A"
-                            StrokeThickness="0"
-                            Padding="12,8"
-                            HorizontalOptions="Center">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="12" />
-                        </Border.StrokeShape>
-                        <Label Text="CLOSE"
-                               FontFamily="MadimiOne"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               TextColor="#111114"
-                               HorizontalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnClose" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Border>
+                    <Border Style="{StaticResource CtaPillBlue}" Grid.Row="3" HorizontalOptions="Center">
+    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnClose" /></Border.GestureRecognizers>
+    <Label Text="CLOSE" Style="{StaticResource CtaPillLabel}" />
+</Border>
                 </Grid>
             </Border>
         </Grid>

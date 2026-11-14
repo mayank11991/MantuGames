@@ -58,40 +58,25 @@
                     </Border>
                 </Grid>
 
-                <!-- Hero: WELCOME! with the player's avatar breaking the headline -->
-                <Grid Margin="0,18,0,0" HeightRequest="190">
+                <!-- Hero: WELCOME! + player name -->
+                <VerticalStackLayout Margin="0,18,0,0" Spacing="0">
                     <Label Text="WELCOME!"
                            Style="{StaticResource PopHero}"
                            FontSize="76"
                            HorizontalOptions="Start"
                            VerticalOptions="Start" />
-                    <Border HorizontalOptions="End" VerticalOptions="End"
-                            WidthRequest="132" HeightRequest="132"
-                            Margin="0,0,4,0"
-                            BackgroundColor="{StaticResource PopPaper}"
-                            Stroke="{StaticResource PopInk}" StrokeThickness="3"
-                            Padding="0" Rotation="6">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="40" />
-                        </Border.StrokeShape>
-                        <Border.Shadow>
-                            <Shadow Brush="#000000" Offset="6,8" Radius="0" Opacity="0.9" />
-                        </Border.Shadow>
-                        <Image x:Name="HeroAvatar" Source="a1.png" Aspect="AspectFill" />
-                    </Border>
-                    <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="End" Spacing="0" Margin="2,0,140,6">
+                    <VerticalStackLayout HorizontalOptions="Start" Spacing="0" Margin="2,0,0,0">
                         <Label Text="Hey" Style="{StaticResource PopBody}" FontSize="16" />
                         <Label x:Name="HeaderPlayerName" Text="Player"
                                FontFamily="Baloo2ExtraBold" FontSize="26"
                                LineBreakMode="TailTruncation" MaxLines="1" />
                     </VerticalStackLayout>
-                </Grid>
+                </VerticalStackLayout>
 
                 <!-- Stats strip -->
                 <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,18,0,0">
                     <Border Grid.Column="0" Style="{StaticResource PopCard}" Padding="12,10">
-                        <HorizontalStackLayout Spacing="8">
-                            <Image Source="star_kawaii_filled.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
                             <VerticalStackLayout Spacing="-4" VerticalOptions="Center">
                                 <Label x:Name="StarsStat" Text="0" FontFamily="Display" FontSize="22" />
                                 <Label Text="stars" Style="{StaticResource PopMutedLabel}" FontSize="11" />
@@ -99,8 +84,7 @@
                         </HorizontalStackLayout>
                     </Border>
                     <Border Grid.Column="1" Style="{StaticResource PopCard}" Padding="12,10">
-                        <HorizontalStackLayout Spacing="8">
-                            <Image Source="ic_trophy_ink.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
                             <VerticalStackLayout Spacing="-4" VerticalOptions="Center">
                                 <Label x:Name="WinsStat" Text="0" FontFamily="Display" FontSize="22" />
                                 <Label Text="wins" Style="{StaticResource PopMutedLabel}" FontSize="11" />
@@ -108,8 +92,7 @@
                         </HorizontalStackLayout>
                     </Border>
                     <Border Grid.Column="2" Style="{StaticResource PopCard}" Padding="12,10">
-                        <HorizontalStackLayout Spacing="8">
-                            <Image Source="ic_grid_ink.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
                             <VerticalStackLayout Spacing="-4" VerticalOptions="Center">
                                 <Label x:Name="LevelsStat" Text="0" FontFamily="Display" FontSize="22" />
                                 <Label Text="levels" Style="{StaticResource PopMutedLabel}" FontSize="11" />
@@ -145,7 +128,7 @@
         </ScrollView>
 
         <!-- ── BOTTOM NAVIGATION: ( home | stats )  [ games ]  ( settings | profile ) ── -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,*" Padding="20,8,20,14" ColumnSpacing="14">
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,*" Padding="16,10,16,10" ColumnSpacing="16">
             <Grid.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Offset="0" Color="#00FFFFFF" />
@@ -153,9 +136,7 @@
                 </LinearGradientBrush>
             </Grid.Background>
 
-            <Border Grid.Column="0" Style="{StaticResource PopPillLight}" Padding="6,5,6,10"
-                    HorizontalOptions="End" HeightRequest="72">
-                <HorizontalStackLayout Spacing="4">
+            <HorizontalStackLayout Grid.Column="0" Spacing="10" HorizontalOptions="End" Padding="0,0,0,8">
                     <Border Style="{StaticResource CtaCircleGreen}" WidthRequest="50" HeightRequest="50">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnNavHomeClicked" />
@@ -169,7 +150,6 @@
                         <Image Source="ic_trophy_white.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
                 </HorizontalStackLayout>
-            </Border>
 
             <Border Grid.Column="1" Style="{StaticResource CtaCircleOrange}"
                     WidthRequest="66" HeightRequest="66" StrokeThickness="4" Margin="0,0,0,6">
@@ -179,9 +159,7 @@
                 <Image Source="ic_grid_white.png" WidthRequest="30" HeightRequest="30" />
             </Border>
 
-            <Border Grid.Column="2" Style="{StaticResource PopPillLight}" Padding="6,5,6,10"
-                    HorizontalOptions="Start" HeightRequest="72">
-                <HorizontalStackLayout Spacing="4">
+            <HorizontalStackLayout Grid.Column="2" Spacing="10" HorizontalOptions="Start" Padding="0,0,0,8">
                     <Border Style="{StaticResource CtaCircleBlue}" WidthRequest="50" HeightRequest="50">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnNavSettingsClicked" />
@@ -195,7 +173,6 @@
                         <Image Source="ic_user_white.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
                 </HorizontalStackLayout>
-            </Border>
         </Grid>
 
         <controls:SettingsPopup x:Name="SettingsPopup" IsVisible="False" Grid.RowSpan="2" />

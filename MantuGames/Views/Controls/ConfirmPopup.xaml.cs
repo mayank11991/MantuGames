@@ -13,8 +13,8 @@ public partial class ConfirmPopup : ContentView
     {
         TitleLabel.Text = title;
         MessageLabel.Text = message;
-        ConfirmLabel.Text = confirm;
-        CancelLabel.Text = cancel;
+        ConfirmLabel.Text = confirm.ToUpperInvariant();
+        CancelLabel.Text = cancel.ToUpperInvariant();
 
         _tcs = new TaskCompletionSource<bool>();
 

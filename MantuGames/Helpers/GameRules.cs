@@ -24,7 +24,7 @@ public static class GameRules
 
         "numbermatch" => "Tap two matching numbers (same value or sum to 10). They must be adjacent or connected through empty spaces. Add new numbers if stuck!",
 
-        "arrowlines" => "Tap arrows to launch them in their direction. They fly until they exit the board or hit another arrow. Clear all arrows to win!",
+        "arrowlines" => "Tap a line and it slides out the way its arrow points. If another line is in the way it bumps back and you lose a life. Find the right order and clear every line!",
 
         _ => "Welcome to this game! Tap a level to start playing. Complete each level to earn stars and unlock new challenges. Have fun!"
     };

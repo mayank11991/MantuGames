@@ -41,7 +41,7 @@ namespace MantuGames.Views
             BindingContext = _vm;
             _vm.GameEnded += OnGameEnded;
 
-            int coins = CoinService.GetCoins("sudoku");
+            int coins = CoinService.Balance;
             SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
             this.Loaded += (s, e) => BuildSudokuGrid();
@@ -76,13 +76,13 @@ namespace MantuGames.Views
 
         private void OnShowSolutionClicked(object? sender, EventArgs e)
         {
-            if (CoinService.GetCoins("sudoku") < CoinService.SolutionCost)
+            if (CoinService.Balance < CoinService.SolutionCost)
             {
                 CoinShopPopup.ShowForGame("sudoku");
                 return;
             }
             CoinService.SpendForSolution("sudoku");
-            int coins = CoinService.GetCoins("sudoku");
+            int coins = CoinService.Balance;
             SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
             _vm?.ShowSolutionCommand.Execute(null);
         }

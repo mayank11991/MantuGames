@@ -5,15 +5,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid x:Name="Overlay"
-          BackgroundColor="#99111114"
+          BackgroundColor="#991F2A44"
           InputTransparent="False">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
 
         <Border Background="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}"
-                Stroke="{AppThemeBinding Light=#B3FFFFFF, Dark=#B3FFFFFF}"
-                StrokeThickness="1"
+                Stroke="#1F2A44"
+                StrokeThickness="3"
                 Padding="28"
                 WidthRequest="300"
                 HorizontalOptions="Center"
@@ -22,10 +22,10 @@
                 <RoundRectangle CornerRadius="24" />
             </Border.StrokeShape>
             <Border.Shadow>
-                <Shadow Brush="#2A2E45" Offset="0,6" Radius="20" Opacity="0.3" />
+                <Shadow Brush="#1F2A44" Offset="0,8" Radius="0" Opacity="0.9" />
             </Border.Shadow>
 
-            <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
+            <VerticalStackLayout Spacing="20" HorizontalOptions="Fill">
 
                 <Label x:Name="TitleLabel"
                        FontFamily="Display"
@@ -45,47 +45,22 @@
                     </Label.TextColor>
                 </Label>
 
-                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" HorizontalOptions="Center">
-                    <Border x:Name="SecondaryBorder"
-                            Grid.Column="0"
-                            BackgroundColor="#CCFFFFFF"
-                            StrokeThickness="3"
-                            Stroke="#111114"
-                            Padding="20,10"
-                            HorizontalOptions="Fill">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="12" />
-                        </Border.StrokeShape>
-                        <Label x:Name="CancelLabel"
-                               FontFamily="MadimiOne"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"
-                               TextColor="#111114">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnCancel" />
-                            </Label.GestureRecognizers>
-                        </Label>
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="14" HorizontalOptions="Fill">
+                    <!-- Cancel / safe choice: blue candy button -->
+                    <Border x:Name="SecondaryBorder" Grid.Column="0"
+                            Style="{StaticResource CtaPillBlue}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCancel" />
+                        </Border.GestureRecognizers>
+                        <Label x:Name="CancelLabel" Style="{StaticResource CtaPillLabel}" />
                     </Border>
-                    <Border x:Name="PrimaryBorder"
-                            Grid.Column="1"
-                            BackgroundColor="#FF4F6D"
-                            StrokeThickness="0"
-                            Padding="20,10"
-                            HorizontalOptions="Fill">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="12" />
-                        </Border.StrokeShape>
-                        <Label x:Name="ConfirmLabel"
-                               FontFamily="MadimiOne"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"
-                               TextColor="#111114">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnConfirm" />
-                            </Label.GestureRecognizers>
-                        </Label>
+                    <!-- Confirm: orange candy button -->
+                    <Border x:Name="PrimaryBorder" Grid.Column="1"
+                            Style="{StaticResource CtaPillOrange}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnConfirm" />
+                        </Border.GestureRecognizers>
+                        <Label x:Name="ConfirmLabel" Style="{StaticResource CtaPillLabel}" />
                     </Border>
                 </Grid>
 

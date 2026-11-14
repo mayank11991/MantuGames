@@ -38,7 +38,7 @@ public partial class WordFinderPage : ContentPage
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
 
-        int coins = CoinService.GetCoins("wordfinder");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
         this.Loaded += (s, e) => BuildGrid();
         this.Opacity = 0;
@@ -71,13 +71,13 @@ public partial class WordFinderPage : ContentPage
 
     private void OnShowSolutionClicked(object? sender, EventArgs e)
     {
-        if (CoinService.GetCoins("wordfinder") < CoinService.SolutionCost)
+        if (CoinService.Balance < CoinService.SolutionCost)
         {
             CoinShopPopup.ShowForGame("wordfinder");
             return;
         }
         CoinService.SpendForSolution("wordfinder");
-        int coins = CoinService.GetCoins("wordfinder");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         _vm?.ShowSolutionCommand.Execute(null);
     }

@@ -44,27 +44,16 @@ public static class IapService
     private static readonly SemaphoreSlim _billingLock = new(1, 1);
     private static readonly object _creditLock = new();
 
-    /// <summary>Raised (any thread) when purchased coins land in the unassigned bank.</summary>
-    public static event EventHandler? UnassignedCoinsChanged;
-
     public static bool RemoveAdsOwned => Preferences.Default.Get(RemoveAdsOwnedKey, false);
 
     public static void SetRemoveAdsOwned(bool value) => Preferences.Default.Set(RemoveAdsOwnedKey, value);
 
-    /// <summary>Purchased coins not yet moved into a game. Device-wide, survives restarts.</summary>
-    public static int UnassignedCoins => Preferences.Default.Get(UnassignedCoinsKey, 0);
-
-    /// <summary>Moves all unassigned coins into the given game. Returns how many were moved.</summary>
-    public static int AssignUnassignedCoins(string gameId)
+    /// <summary>Coins bought by older builds that were never moved into a game. Read once by the wallet migration.</summary>
+    internal static int TakeLegacyUnassignedCoins()
     {
-        lock (_creditLock)
-        {
-            int amount = UnassignedCoins;
-            if (amount <= 0) return 0;
-            CoinService.AddCoins(gameId, amount);
-            Preferences.Default.Set(UnassignedCoinsKey, 0);
-            return amount;
-        }
+        int amount = Preferences.Default.Get(UnassignedCoinsKey, 0);
+        Preferences.Default.Remove(UnassignedCoinsKey);
+        return amount;
     }
 
     private static int CoinsFor(string productId) =>
@@ -80,13 +69,12 @@ public static class IapService
                 .Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
             if (tokens.Contains(token)) return false;
 
-            Preferences.Default.Set(UnassignedCoinsKey, UnassignedCoins + coins);
+            CoinService.AddCoins(coins);
             tokens.Add(token);
             // Keep the list bounded; consumed tokens never come back from Play.
             if (tokens.Count > 200) tokens = tokens.Skip(tokens.Count - 200).ToList();
             Preferences.Default.Set(CreditedTokensKey, string.Join('\n', tokens));
         }
-        UnassignedCoinsChanged?.Invoke(null, EventArgs.Empty);
         return true;
     }
 
@@ -142,9 +130,10 @@ public static class IapService
         catch (InAppBillingPurchaseException ex) when (ex.PurchaseError == PurchaseError.AlreadyOwned)
         {
             // An earlier purchase of this pack was never consumed: deliver it now.
+            int before = CoinService.Balance;
             try { await ProcessOutstandingCoreAsync(billing); }
             catch (Exception inner) { CrashGuardService.Log(inner); return PurchaseOutcome.Failed; }
-            return productId == RemoveAdsId || UnassignedCoins > 0 ? PurchaseOutcome.Purchased : PurchaseOutcome.Failed;
+            return productId == RemoveAdsId || CoinService.Balance > before ? PurchaseOutcome.Purchased : PurchaseOutcome.Failed;
         }
         catch (Exception ex)
         {

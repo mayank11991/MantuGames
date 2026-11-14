@@ -35,7 +35,7 @@ public partial class MathGamePage : ContentPage
         _vm.GameEnded += OnGameEnded;
         _vm.QuestionChanged += BuildChoices;
 
-        int coins = CoinService.GetCoins("mathchallenge");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
         this.Loaded += (s, e) =>
         {
@@ -90,13 +90,13 @@ public partial class MathGamePage : ContentPage
 
     private void OnShowSolutionClicked(object? sender, EventArgs e)
     {
-        if (CoinService.GetCoins("mathchallenge") < CoinService.SolutionCost)
+        if (CoinService.Balance < CoinService.SolutionCost)
         {
             CoinShopPopup.ShowForGame("mathchallenge");
             return;
         }
         CoinService.SpendForSolution("mathchallenge");
-        int coins = CoinService.GetCoins("mathchallenge");
+        int coins = CoinService.Balance;
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         _vm?.ShowSolutionCommand.Execute(null);
     }

@@ -3,51 +3,89 @@ using MantuGames.ViewModels;
 namespace MantuGames.Services;
 
 /// <summary>
-/// Per-game coin wallets. Each game has its own independent coin balance,
-/// used to pay for "Show Solution". Coins are bought via in-app purchase
-/// and transferred to a game of the player's choice.
+/// One coin wallet per player profile. Coins are earned by beating levels (new best
+/// stars only), bought in the shop, and spent on "Show Solution" in any game.
 /// </summary>
 public static class CoinService
 {
     public const int SolutionCost = 10;
 
-    private static string Key(string gameId) => ProfileService.Key($"{gameId}_coins");
+    /// <summary>Raised (any thread) whenever the balance changes.</summary>
+    public static event EventHandler? CoinsChanged;
 
-    public static int GetCoins(string gameId) => Preferences.Default.Get(Key(gameId), 0);
+    private static readonly object _lock = new();
 
-    public static void AddCoins(string gameId, int amount)
+    private static string WalletKey => ProfileService.Key("wallet_coins");
+    private static string MigratedKey => ProfileService.Key("wallet_migrated");
+
+    public static int Balance
     {
-        if (amount <= 0) return;
-        Preferences.Default.Set(Key(gameId), GetCoins(gameId) + amount);
+        get
+        {
+            EnsureMigrated();
+            return Preferences.Default.Get(WalletKey, 0);
+        }
     }
 
-    public static bool SpendCoins(string gameId, int amount)
+    public static void AddCoins(int amount)
     {
-        int balance = GetCoins(gameId);
-        if (balance < amount) return false;
-        Preferences.Default.Set(Key(gameId), balance - amount);
+        if (amount <= 0) return;
+        lock (_lock) Preferences.Default.Set(WalletKey, Balance + amount);
+        CoinsChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static bool SpendCoins(int amount)
+    {
+        lock (_lock)
+        {
+            int balance = Balance;
+            if (balance < amount) return false;
+            Preferences.Default.Set(WalletKey, balance - amount);
+        }
+        CoinsChanged?.Invoke(null, EventArgs.Empty);
         return true;
     }
 
     /// <summary>Pays for "Show Solution" and marks the current attempt as assisted.</summary>
     public static bool SpendForSolution(string gameId)
     {
-        if (!SpendCoins(gameId, SolutionCost)) return false;
+        if (!SpendCoins(SolutionCost)) return false;
         ProgressService.MarkAssisted(gameId);
         return true;
     }
 
-    public static int GetTotalCoins()
-    {
-        int total = IapService.UnassignedCoins;
-        foreach (var g in DashboardViewModel.Games)
-            total += GetCoins(g.Id);
-        return total;
-    }
-
     public static void ResetAll()
     {
-        foreach (var g in DashboardViewModel.Games)
-            Preferences.Default.Remove(Key(g.Id));
+        Preferences.Default.Set(WalletKey, 0);
+        CoinsChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+    /// <summary>
+    /// Older builds kept a separate wallet per game plus a device-wide bank of bought
+    /// coins. Fold all of it into this profile's wallet once, so nobody loses coins.
+    /// </summary>
+    private static void EnsureMigrated()
+    {
+        if (Preferences.Default.Get(MigratedKey, false)) return;
+        lock (_lock)
+        {
+            if (Preferences.Default.Get(MigratedKey, false)) return;
+            int total = Preferences.Default.Get(WalletKey, 0);
+            foreach (var g in DashboardViewModel.Games)
+            {
+                string legacy = ProfileService.Key($"{g.Id}_coins");
+                total += Preferences.Default.Get(legacy, 0);
+                Preferences.Default.Remove(legacy);
+            }
+            total += IapService.TakeLegacyUnassignedCoins();
+            // Coins credited before any profile was active landed in the un-prefixed key.
+            if (ProfileService.Active != null)
+            {
+                total += Preferences.Default.Get("wallet_coins", 0);
+                Preferences.Default.Remove("wallet_coins");
+            }
+            Preferences.Default.Set(WalletKey, total);
+            Preferences.Default.Set(MigratedKey, true);
+        }
     }
 }

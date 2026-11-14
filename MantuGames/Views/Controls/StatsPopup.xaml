@@ -63,25 +63,10 @@
 
                     <BoxView HeightRequest="1" Color="#B3FFFFFF" />
 
-                    <Border BackgroundColor="#D9F84A"
-                            StrokeThickness="0"
-                            Padding="32,10"
-                            HorizontalOptions="Center"
-                            MinimumWidthRequest="140">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="14" />
-                        </Border.StrokeShape>
-                        <Label Text="CLOSE"
-                               FontFamily="MadimiOne"
-                               FontSize="16"
-                               FontAttributes="Bold"
-                               TextColor="#111114"
-                               HorizontalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnClose" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Border>
+                    <Border Style="{StaticResource CtaPillBlue}" HorizontalOptions="Center" WidthRequest="140">
+    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnClose" /></Border.GestureRecognizers>
+    <Label Text="CLOSE" Style="{StaticResource CtaPillLabel}" />
+</Border>
 
                 </VerticalStackLayout>
             </Border>

@@ -76,9 +76,9 @@ public partial class GameResultPopup : ContentView
             else
                 MessageLabel.Text = $"Level {levelNumber} solved!";
 
-            PrimaryBorder.BackgroundColor = Color.FromArgb("#20B26B");
-            PrimaryIcon.Source            = "icon_next";
-            PrimaryLabel.Text             = "Next Level";
+            PrimaryBorder.Style           = (Style)Application.Current!.Resources["CtaPillGreen"];
+            PrimaryIcon.Source            = "ic_next_white.png";
+            PrimaryLabel.Text             = "NEXT LEVEL";
             SecondaryBorder.IsVisible     = true;
 
             PreloadAd();
@@ -95,9 +95,9 @@ public partial class GameResultPopup : ContentView
 
             MessageLabel.Text = "Don't worry — you can do it!\nGive it another try!";
 
-            PrimaryBorder.BackgroundColor = Color.FromArgb("#FF4F6D");
-            PrimaryIcon.Source            = "icon_retry";
-            PrimaryLabel.Text             = "Try Again";
+            PrimaryBorder.Style           = (Style)Application.Current!.Resources["CtaPillOrange"];
+            PrimaryIcon.Source            = "ic_refresh_white.png";
+            PrimaryLabel.Text             = "TRY AGAIN";
             SecondaryBorder.IsVisible     = false;
 
             PreloadAd();

@@ -1,26 +1,28 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using MantuGames.Models;
 
 namespace MantuGames.ViewModels;
 
+/// <summary>
+/// Arrow Lines: tap a line and it slides out the way its arrow points. If another
+/// line is in the way it bumps, bounces back and costs a life. Clear every line to win.
+/// </summary>
 public class ArrowLinesViewModel : INotifyPropertyChanged
 {
     private ArrowLinesPuzzle _puzzle = null!;
     private int _currentLevel;
     private int _moves;
-    private int _arrowsCleared;
-    private bool _isGameOver;
-    private bool _isPaused;
-    private string _statusText = "Tap arrows to clear the board!";
+    private int _cleared;
     private int _lives = 3;
+    private bool _isGameOver;
+
     public bool IsShowSolutionActive { get; set; }
 
     public int CurrentLevel
     {
         get => _currentLevel;
-        set { _currentLevel = value; OnPropertyChanged(); OnPropertyChanged(nameof(LevelDisplay)); }
+        private set { _currentLevel = value; OnPropertyChanged(); OnPropertyChanged(nameof(LevelDisplay)); }
     }
 
     public string LevelDisplay => $"Level {CurrentLevel}";
@@ -28,65 +30,43 @@ public class ArrowLinesViewModel : INotifyPropertyChanged
     public int Moves
     {
         get => _moves;
-        set { _moves = value; OnPropertyChanged(); }
+        private set { _moves = value; OnPropertyChanged(); }
     }
 
+    /// <summary>Lines cleared so far (bound as "CLEARED" in the header).</summary>
     public int ArrowsCleared
     {
-        get => _arrowsCleared;
-        set { _arrowsCleared = value; OnPropertyChanged(); OnPropertyChanged(nameof(RemainingText)); }
-    }
-
-    public int TotalArrows => _puzzle?.Arrows.Count ?? 0;
-
-    public string RemainingText => _puzzle == null ? "" : $"{_puzzle.RemainingCount} arrows left";
-
-    public bool IsGameOver
-    {
-        get => _isGameOver;
-        set { _isGameOver = value; OnPropertyChanged(); }
-    }
-
-    public bool IsPaused
-    {
-        get => _isPaused;
-        set { _isPaused = value; OnPropertyChanged(); }
+        get => _cleared;
+        private set { _cleared = value; OnPropertyChanged(); OnPropertyChanged(nameof(RemainingText)); }
     }
 
     public int Lives
     {
         get => _lives;
-        set { _lives = value; OnPropertyChanged(); OnPropertyChanged(nameof(LivesDisplay)); }
+        private set { _lives = value; OnPropertyChanged(); OnPropertyChanged(nameof(LivesDisplay)); }
     }
 
-    public string LivesDisplay => new string('\u2764', _lives);
+    public string LivesDisplay => new string('❤', Math.Max(0, _lives));
 
-    public string StatusText
+    public string RemainingText => _puzzle == null ? "" :
+        _puzzle.RemainingCount == 1 ? "1 line left" : $"{_puzzle.RemainingCount} lines left";
+
+    public bool IsGameOver
     {
-        get => _statusText;
-        set { _statusText = value; OnPropertyChanged(); }
+        get => _isGameOver;
+        private set { _isGameOver = value; OnPropertyChanged(); }
     }
 
-    public List<ArrowCell> Arrows => _puzzle?.Arrows ?? new();
+    public ArrowLinesPuzzle Puzzle => _puzzle;
+    public int TotalLines => _puzzle.Lines.Count;
 
-    public bool CanEscape(ArrowCell arrow) => _puzzle?.CanEscape(arrow) ?? false;
-
-    public int GridRows => _puzzle?.Rows ?? 5;
-    public int GridCols => _puzzle?.Cols ?? 5;
-
-    public ICommand ArrowTappedCommand { get; }
-
+    /// <summary>Line escaped: animate it out along its path.</summary>
+    public event Action<ArrowLine>? LineEscaped;
+    /// <summary>Line bumped into another after travelling <c>run</c> free cells.</summary>
+    public event Action<ArrowLine, int>? LineBlocked;
     public event Action<bool>? GameEnded;
-    public event Action<ArrowCell, List<(int Row, int Col)>>? MoveAnimated;
-    public event Action? BoardChanged;
-    public event Action<ArrowCell>? ArrowBlocked;
 
-    public ArrowLinesViewModel(int level = 1)
-    {
-        ArrowTappedCommand = new Command<ArrowCell>(OnArrowTapped);
-        CurrentLevel = level;
-        StartLevel(level);
-    }
+    public ArrowLinesViewModel(int level = 1) => StartLevel(level);
 
     public void StartLevel(int level)
     {
@@ -96,66 +76,49 @@ public class ArrowLinesViewModel : INotifyPropertyChanged
         ArrowsCleared = 0;
         Lives = 3;
         IsGameOver = false;
-        IsPaused = false;
-        StatusText = "Tap arrows to clear the board!";
-
-        OnPropertyChanged(nameof(Arrows));
-        OnPropertyChanged(nameof(TotalArrows));
-        OnPropertyChanged(nameof(RemainingText));
-        OnPropertyChanged(nameof(GridRows));
-        OnPropertyChanged(nameof(GridCols));
-        BoardChanged?.Invoke();
+        OnPropertyChanged(nameof(Puzzle));
     }
 
-    private void OnArrowTapped(ArrowCell arrow)
+    public void Tap(ArrowLine line)
     {
-        if (IsGameOver || arrow == null || arrow.IsCleared) return;
+        if (IsGameOver || line.IsCleared) return;
+        Moves++;
 
-        var path = _puzzle.SimulateMove(arrow);
-
-        if (arrow.IsCleared)
+        int run = _puzzle.FreeRunBeforeBlock(line);
+        if (run < 0)
         {
-            Moves++;
+            _puzzle.Remove(line);
             ArrowsCleared++;
-            StatusText = $"Cleared! {_puzzle.RemainingCount} remaining";
-
-            // Fire animation BEFORE board refresh removes the view
-            MoveAnimated?.Invoke(arrow, path);
-            BoardChanged?.Invoke();
-
+            LineEscaped?.Invoke(line);
             if (_puzzle.AllCleared)
             {
                 IsGameOver = true;
-                StatusText = "All arrows cleared!";
                 GameEnded?.Invoke(true);
             }
+            return;
         }
-        else
-        {
-            Moves++;
-            if (!IsShowSolutionActive)
-            {
-                Lives--;
-                StatusText = Lives > 0 ? $"Blocked! {Lives} lives left" : "No lives left!";
-                ArrowBlocked?.Invoke(arrow);
-                BoardChanged?.Invoke();
 
-                if (Lives <= 0)
-                {
-                    IsGameOver = true;
-                    StatusText = "Game Over!";
-                    GameEnded?.Invoke(false);
-                }
-            }
+        LineBlocked?.Invoke(line, run);
+        if (IsShowSolutionActive) return;
+        Lives--;
+        if (Lives <= 0)
+        {
+            IsGameOver = true;
+            GameEnded?.Invoke(false);
         }
     }
 
+    /// <summary>Any line whose way out is clear (used by Show Solution).</summary>
+    public ArrowLine? NextFreeLine() => _puzzle.Lines.FirstOrDefault(_puzzle.CanEscape);
+
+    /// <summary>3 lives left → 3★, 2 → 2★, 1 → 1★.</summary>
+    public int Stars => Math.Clamp(Lives, 1, 3);
+
     public void Cleanup()
     {
+        LineEscaped = null;
+        LineBlocked = null;
         GameEnded = null;
-        MoveAnimated = null;
-        BoardChanged = null;
-        ArrowBlocked = null;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

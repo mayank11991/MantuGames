@@ -262,6 +262,8 @@
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="NightCircle">
+        <!-- room for the hard-shadow lip so parents don't clip it -->
+        <Setter Property="Margin" Value="0,0,0,7" />
         <Setter Property="BackgroundColor" Value="{StaticResource CtaBlue}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
@@ -276,6 +278,8 @@
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="NightAction">
+        <!-- room for the hard-shadow lip so parents don't clip it -->
+        <Setter Property="Margin" Value="0,0,0,7" />
         <Setter Property="BackgroundColor" Value="{StaticResource CtaYellow}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
@@ -288,6 +292,8 @@
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaCircleBlue">
+        <!-- room for the hard-shadow lip so parents don't clip it -->
+        <Setter Property="Margin" Value="0,0,0,7" />
         <Setter Property="BackgroundColor" Value="{StaticResource CtaBlue}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
@@ -302,6 +308,8 @@
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaCircleYellow">
+        <!-- room for the hard-shadow lip so parents don't clip it -->
+        <Setter Property="Margin" Value="0,0,0,7" />
         <Setter Property="BackgroundColor" Value="{StaticResource CtaYellow}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
@@ -316,6 +324,8 @@
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaCircleGreen">
+        <!-- room for the hard-shadow lip so parents don't clip it -->
+        <Setter Property="Margin" Value="0,0,0,7" />
         <Setter Property="BackgroundColor" Value="{StaticResource CtaGreen}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
@@ -330,6 +340,8 @@
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaCirclePink">
+        <!-- room for the hard-shadow lip so parents don't clip it -->
+        <Setter Property="Margin" Value="0,0,0,7" />
         <Setter Property="BackgroundColor" Value="{StaticResource CtaPink}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
@@ -344,6 +356,8 @@
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaCircleOrange">
+        <!-- room for the hard-shadow lip so parents don't clip it -->
+        <Setter Property="Margin" Value="0,0,0,7" />
         <Setter Property="BackgroundColor" Value="{StaticResource CtaOrange}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
@@ -358,6 +372,8 @@
         </Setter>
     </Style>
     <Style TargetType="Button" x:Key="CtaButtonYellow">
+        <!-- room for the hard-shadow lip so parents don't clip it -->
+        <Setter Property="Margin" Value="0,0,0,7" />
         <Setter Property="BackgroundColor" Value="{StaticResource CtaYellow}" />
         <Setter Property="TextColor" Value="#1F2A44" />
         <Setter Property="FontFamily" Value="Baloo2ExtraBold" />
@@ -366,6 +382,84 @@
         <Setter Property="Shadow">
             <Shadow Brush="{StaticResource CtaYellowLip}" Offset="0,5" Radius="0" Opacity="1" />
         </Setter>
+    </Style>
+
+    <Style TargetType="Border" x:Key="CtaPillBlue">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaBlue}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="Padding" Value="18,11" />
+        <Setter Property="Margin" Value="0,0,0,7" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaBlueLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="CtaPillOrange">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaOrange}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="Padding" Value="18,11" />
+        <Setter Property="Margin" Value="0,0,0,7" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaOrangeLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="CtaPillGreen">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaGreen}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="Padding" Value="18,11" />
+        <Setter Property="Margin" Value="0,0,0,7" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaGreenLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="CtaPillYellow">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaYellow}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="Padding" Value="18,11" />
+        <Setter Property="Margin" Value="0,0,0,7" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaYellowLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="CtaPillPink">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaPink}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="Padding" Value="18,11" />
+        <Setter Property="Margin" Value="0,0,0,7" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaPinkLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Label" x:Key="CtaPillLabel">
+        <Setter Property="LineBreakMode" Value="NoWrap" />
+        <Setter Property="FontFamily" Value="Display" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="CharacterSpacing" Value="0.5" />
+    </Style>
+    <Style TargetType="Label" x:Key="CtaPillLabelDark" BasedOn="{StaticResource CtaPillLabel}">
+        <Setter Property="TextColor" Value="#1F2A44" />
     </Style>
 
     <Style TargetType="Border" x:Key="NightPill">

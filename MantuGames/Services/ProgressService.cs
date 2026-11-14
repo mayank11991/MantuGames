@@ -57,7 +57,7 @@ public class ProgressService
 
         Preferences.Set(StarsKey(gameId, levelNumber), stars);
         int awarded = CoinReward(stars) - CoinReward(existing);
-        CoinService.AddCoins(gameId, awarded);
+        CoinService.AddCoins(awarded);
         return awarded;
     }
 

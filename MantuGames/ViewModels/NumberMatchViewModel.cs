@@ -26,9 +26,9 @@ public class NmCell : INotifyPropertyChanged
     private bool _isSelected;
     public bool IsSelected { get => _isSelected; set { _isSelected = value; OnPropertyChanged(); OnPropertyChanged(nameof(CellBg)); } }
 
-    public string CellBg => IsEliminated ? "#E9DEFF" : IsSelected ? "#FFD166" : "#F4E9FF";
+    public string CellBg => IsEliminated ? "#F2F6FB" : IsSelected ? "#FFC83D" : "#EAF3FF";
     public bool TextVisibility => true;
-    public string ValueTextColor => IsEliminated ? "#9B8AAE" : "#3D2C4E";
+    public string ValueTextColor => IsEliminated ? "#C3CEDB" : "#1F2A44";
 
     public event PropertyChangedEventHandler? PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string? n = null)
@@ -178,11 +178,20 @@ public class NumberMatchViewModel : INotifyPropertyChanged
             if (pairsPlaced >= count / 2) break;
         }
 
-        // Fill any unpaired cells with random (safety fallback)
+        // Cells the greedy pass couldn't pair get paired with each other in reading order.
+        // Once every greedy pair is cleared, consecutive leftovers touch in reading order,
+        // so the whole board is always solvable.
+        int pending = -1;
         for (int i = 0; i < count; i++)
         {
-            if (!used[i])
-                result[i] = rng.Next(1, 10);
+            if (used[i]) continue;
+            if (pending < 0) { pending = i; continue; }
+            int val = rng.Next(1, 10);
+            bool sum = rng.Next(2) == 0 && val != 5;
+            result[pending] = val;
+            result[i] = sum ? 10 - val : val;
+            used[pending] = used[i] = true;
+            pending = -1;
         }
 
         _numbers.AddRange(result);
@@ -241,9 +250,16 @@ public class NumberMatchViewModel : INotifyPropertyChanged
             AudioService.Instance.Play("pop");
             CompactGrid();
             CheckWin();
+            _selectedIdx = -1;
+        }
+        else
+        {
+            // Not a valid pair: switch the selection to the newly tapped cell.
+            AudioService.Instance.Play("wrong");
+            _selectedIdx = b;
+            Cells[b].IsSelected = true;
         }
 
-        _selectedIdx = -1;
         BoardChanged?.Invoke();
     }
 
@@ -303,54 +319,11 @@ public class NumberMatchViewModel : INotifyPropertyChanged
             return true;
         }
 
-        if (rB == rA + 1 && IsLastVisibleInRow(rA, cA) && IsFirstVisibleInRow(rB, cB)) return true;
-        if (rA == rB + 1 && IsLastVisibleInRow(rB, cB) && IsFirstVisibleInRow(rA, cA)) return true;
-
-        if (rB > rA + 1 && AllRowsClearedBetween(rA + 1, rB))
-        {
-            if (IsLastVisibleInRow(rA, cA) && IsFirstVisibleInRow(rB, cB)) return true;
-        }
-        if (rA > rB + 1 && AllRowsClearedBetween(rB + 1, rA))
-        {
-            if (IsLastVisibleInRow(rB, cB) && IsFirstVisibleInRow(rA, cA)) return true;
-        }
-
-        return false;
-    }
-
-    private bool IsLastVisibleInRow(int row, int col)
-    {
-        for (int c = Columns - 1; c >= 0; c--)
-        {
-            int idx = row * Columns + c;
-            if (idx < Cells.Count && !Cells[idx].IsEliminated)
-                return c == col;
-        }
-        return false;
-    }
-
-    private bool IsFirstVisibleInRow(int row, int col)
-    {
-        for (int c = 0; c < Columns; c++)
-        {
-            int idx = row * Columns + c;
-            if (idx < Cells.Count && !Cells[idx].IsEliminated)
-                return c == col;
-        }
-        return false;
-    }
-
-    private bool AllRowsClearedBetween(int fromRow, int toRow)
-    {
-        for (int r = fromRow; r < toRow; r++)
-        {
-            for (int c = 0; c < Columns; c++)
-            {
-                int idx = r * Columns + c;
-                if (idx < Cells.Count && !Cells[idx].IsEliminated)
-                    return false;
-            }
-        }
+        // Reading order: the pair touches if every cell between them (left-to-right,
+        // wrapping to the next row) is already cleared.
+        int lo = Math.Min(idxA, idxB), hi = Math.Max(idxA, idxB);
+        for (int i = lo + 1; i < hi; i++)
+            if (!IsCellEliminated(i)) return false;
         return true;
     }
 
@@ -428,6 +401,7 @@ public class NumberMatchViewModel : INotifyPropertyChanged
         RemainingAdds--;
         AudioService.Instance.Play("pop");
         BoardChanged?.Invoke();
+        if (RemainingAdds <= 0) CheckNoMovesLeft();
     }
 
     private void CheckWin()

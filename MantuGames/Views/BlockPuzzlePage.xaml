@@ -69,9 +69,11 @@
                     <TapGestureRecognizer Tapped="OnRotate"/>
                     <PanGestureRecognizer PanUpdated="OnPanBoard"/>
                 </Border.GestureRecognizers>
-                <Grid x:Name="BoardGrid" RowSpacing="0" ColumnSpacing="0"
-                      HorizontalOptions="Center" VerticalOptions="Center"
-                      InputTransparent="True"/>
+                <Grid HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True">
+                    <Grid x:Name="BoardGrid" RowSpacing="0" ColumnSpacing="0" InputTransparent="True"/>
+                    <!-- Line-clear effects (flash + flying shards) are drawn here -->
+                    <AbsoluteLayout x:Name="FxLayer" InputTransparent="True"/>
+                </Grid>
             </Border>
 
             <!-- BOTTOM PANEL: Next piece + Show Solution -->

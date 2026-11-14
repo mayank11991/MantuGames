@@ -71,24 +71,10 @@
                 </VerticalStackLayout>
 
                 <!-- Save button -->
-                <Border Grid.Row="4"
-                        BackgroundColor="#111114"
-                        StrokeThickness="0"
-                        Padding="12,12"
-                        HorizontalOptions="Fill">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnSave" />
-                    </Border.GestureRecognizers>
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="12" />
-                    </Border.StrokeShape>
-                    <Label Text="SAVE"
-                           FontFamily="MadimiOne"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           TextColor="White"
-                           HorizontalOptions="Center" />
-                </Border>
+                <Border Style="{StaticResource CtaPillGreen}" Grid.Row="4" HorizontalOptions="Fill">
+    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnSave" /></Border.GestureRecognizers>
+    <Label Text="SAVE" Style="{StaticResource CtaPillLabel}" />
+</Border>
 
             </Grid>
         </Border>

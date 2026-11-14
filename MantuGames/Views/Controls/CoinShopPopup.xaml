@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Grid x:Name="Overlay" BackgroundColor="#99111114" InputTransparent="False">
+    <Grid x:Name="Overlay" BackgroundColor="#991F2A44" InputTransparent="False">
         <ScrollView VerticalOptions="Center" HorizontalOptions="Center"
                     InputTransparent="False">
             <Grid Padding="28"
@@ -51,20 +51,6 @@
                         <!-- Coin packs (built in code-behind) -->
                         <VerticalStackLayout x:Name="PacksLayout" Spacing="10" />
 
-                        <!-- Game picker (transfer target) -->
-                        <Label x:Name="PickerTitle"
-                               Text="Transfer coins to game:"
-                               FontFamily="MadimiOne"
-                               FontSize="13"
-                               FontAttributes="Bold"
-                               TextColor="#111114"
-                               HorizontalOptions="Center" />
-                        <FlexLayout x:Name="GamesLayout"
-                                    Wrap="Wrap"
-                                    JustifyContent="Center"
-                                    AlignItems="Center"
-                                    AlignContent="Center" />
-
                         <Label x:Name="StatusLabel"
                                FontFamily="MadimiOne"
                                FontSize="13"
@@ -74,24 +60,10 @@
                                HorizontalOptions="Center" />
 
                         <!-- Close Button -->
-                        <Border BackgroundColor="#D9F84A"
-                                StrokeThickness="0"
-                                Padding="12,8"
-                                HorizontalOptions="Center">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="12" />
-                            </Border.StrokeShape>
-                            <Label Text="CLOSE"
-                                   FontFamily="MadimiOne"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   TextColor="#111114"
-                                   HorizontalOptions="Center">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnClose" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </Border>
+                        <Border Style="{StaticResource CtaPillBlue}" HorizontalOptions="Center">
+    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnClose" /></Border.GestureRecognizers>
+    <Label Text="CLOSE" Style="{StaticResource CtaPillLabel}" />
+</Border>
 
                     </VerticalStackLayout>
                 </Border>
