@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage BackgroundColor="{StaticResource NightBg}" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MantuGames.Views.Controls"
              Shell.NavBarIsVisible="False"
              x:Class="MantuGames.Views.WordFinderPage"
 >
     <AbsoluteLayout>
-        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
+        <controls:ClayBackground Variant="Night" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <!-- MAIN CONTENT -->
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
@@ -16,23 +16,23 @@
 
             <!-- TOP BAR -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Border Style="{StaticResource ClayFrame}" Grid.Column="0" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
+                <Border Style="{StaticResource NightCircle}" Grid.Column="0"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
-                    <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
+                    <ImageButton Source="ic_back_white.png" HeightRequest="24" WidthRequest="24"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource ClayFrame}" Grid.Column="1" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 20"
+                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#9B7BFF"
-                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
+                           FontSize="20" FontFamily="Display" HorizontalOptions="Center" />
                 </Border>
-                <Border Style="{StaticResource ClayFrame}" Grid.Column="2" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
+                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
-                    <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
+                    <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnPause" />
                 </Border>
@@ -46,7 +46,7 @@
             <Border Grid.Row="3"
                     BackgroundColor="#668A6FA8"
                     Padding="6"
-                    StrokeThickness="2" Stroke="#D8CAE8"
+                    StrokeThickness="2" Stroke="#4D4495"
                     VerticalOptions="Center" HorizontalOptions="Center">
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <Grid x:Name="LetterGrid" ColumnSpacing="2" RowSpacing="2" />
@@ -59,7 +59,7 @@
                    HorizontalOptions="Fill">
                 <StackLayout Spacing="4">
                     <Label Text="Find these words:" FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold"
-                           TextColor="#9B7BFF" HorizontalOptions="Center" />
+                           TextColor="#FFC83D" HorizontalOptions="Center" />
                     <CollectionView ItemsSource="{Binding Words}" SelectionMode="None">
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="8" VerticalItemSpacing="4" />
@@ -67,7 +67,7 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Border Style="{StaticResource ClayFrame}" Padding="6,4" StrokeShape="RoundRectangle 8"
-                                       BackgroundColor="#F4E9FF"
+                                       BackgroundColor="#3A3175"
                                        HorizontalOptions="Fill"
                                        Margin="2">
                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
@@ -75,12 +75,12 @@
                                                FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold"
                                                HorizontalOptions="Start"
                                                HorizontalTextAlignment="Start"
-                                               TextColor="#3D2C4E" VerticalOptions="Center" />
+                                               TextColor="#F6F4FF" VerticalOptions="Center" />
                                         <Label Grid.Column="1"
                                                Text="✓"
                                                FontSize="14"
                                                FontAttributes="Bold"
-                                               TextColor="#2F9E7F"
+                                               TextColor="#35D49A"
                                                VerticalOptions="Center"
                                                HorizontalOptions="End"
                                                IsVisible="{Binding IsFound}" />
@@ -97,7 +97,7 @@
                 <Button x:Name="SolutionCoinLabel"
                        
                         FontSize="14" FontAttributes="Bold"
-                        TextColor="#3D2C4E" BackgroundColor="#FFA94D"
+                        TextColor="#111114" BackgroundColor="#FFC83D"
                         CornerRadius="24" HeightRequest="50"
                         Clicked="OnShowSolutionClicked" />
                 <!-- <Label x:Name="SolutionCoinLabel" -->

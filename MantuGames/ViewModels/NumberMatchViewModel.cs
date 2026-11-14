@@ -60,11 +60,12 @@ public class NumberMatchViewModel : INotifyPropertyChanged
     public int Moves { get => _moves; set { _moves = value; OnPropertyChanged(); } }
 
     private int _remainingAdds = 3;
-    public int RemainingAdds { get => _remainingAdds; set { _remainingAdds = value; OnPropertyChanged(); OnPropertyChanged(nameof(AddButtonText)); OnPropertyChanged(nameof(CanAddNumbers)); OnPropertyChanged(nameof(AddButtonColor)); } }
+    public int RemainingAdds { get => _remainingAdds; set { _remainingAdds = value; OnPropertyChanged(); OnPropertyChanged(nameof(AddButtonText)); OnPropertyChanged(nameof(CanAddNumbers)); OnPropertyChanged(nameof(AddButtonColor)); OnPropertyChanged(nameof(AddButtonTextColor)); } }
 
     public string AddButtonText => RemainingAdds > 0 ? $"+ ADD ROWS ({RemainingAdds})" : "NO ADDS LEFT";
     public bool CanAddNumbers => RemainingAdds > 0 && !IsGameOver;
-    public string AddButtonColor => CanAddNumbers ? "#FFA94D" : "#D8CAE8";
+    public string AddButtonColor => CanAddNumbers ? "#FFC83D" : "#3A3175";
+    public string AddButtonTextColor => CanAddNumbers ? "#111114" : "#AAA4D8";
 
     public int CurrentLevel { get; private set; }
 

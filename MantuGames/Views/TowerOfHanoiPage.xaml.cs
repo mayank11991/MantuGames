@@ -203,7 +203,7 @@ public partial class TowerOfHanoiPage : ContentPage
             FontSize = 12,
             FontFamily = "BrickSans",
             FontAttributes = FontAttributes.Bold,
-            TextColor = isGoal ? Color.FromArgb("#1F8A70") : Color.FromArgb("#8D6E63"),
+            TextColor = isGoal ? Color.FromArgb("#35D49A") : Color.FromArgb("#AAA4D8"),
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
             AutomationId = $"label_{poleIndex}"

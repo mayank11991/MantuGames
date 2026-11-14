@@ -40,7 +40,7 @@ public class MathViewModel : INotifyPropertyChanged
     public double ProgressValue => _puzzle == null ? 0 : (double)_currentIndex / _puzzle.TotalQuestions;
     public int CorrectCount => _correctCount;
 
-    private string _progressBarColor = "#FF8A65";
+    private string _progressBarColor = "#FFC83D";
     public string ProgressBarColor
     {
         get => _progressBarColor;
@@ -144,7 +144,7 @@ public class MathViewModel : INotifyPropertyChanged
 
         OnPropertyChanged(nameof(ProgressText));
         OnPropertyChanged(nameof(ProgressValue));
-        ProgressBarColor = "#FF8A65";
+        ProgressBarColor = "#FFC83D";
         QuestionChanged?.Invoke();
     }
 
@@ -164,7 +164,7 @@ public class MathViewModel : INotifyPropertyChanged
         }
 
         if (correct) _correctCount++;
-        ProgressBarColor = correct ? "#2F9E7F" : "#E0566F";
+        ProgressBarColor = correct ? "#35D49A" : "#FF5C7A";
 
         // Wait briefly so player sees the result, then advance
         await System.Threading.Tasks.Task.Delay(800);
@@ -262,9 +262,9 @@ public class ChoiceViewModel : INotifyPropertyChanged
 
     public string BgColor => State switch
     {
-        ChoiceState.Correct => "#2F9E7F",
-        ChoiceState.Wrong => "#E0566F",
-        _ => "#9B7BFF"
+        ChoiceState.Correct => "#20B26B",
+        ChoiceState.Wrong => "#FF5C7A",
+        _ => "#3A3175"
     };
 
     public string TextColor => "#FFFFFF";

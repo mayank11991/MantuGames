@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage
+<ContentPage BackgroundColor="{StaticResource NightBg}"
     x:Class="MantuGames.Views.NumberMatchPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -8,7 +8,7 @@
 >
 
     <AbsoluteLayout>
-        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
+        <controls:ClayBackground Variant="Night" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,0,*,Auto,Auto"
               Padding="12,16,12,8" RowSpacing="6"
@@ -17,30 +17,30 @@
 
             <!-- TOP BAR -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Border Style="{StaticResource ClayFrame}" Grid.Column="0" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
+                <Border Style="{StaticResource NightCircle}" Grid.Column="0"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
-                    <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
+                    <ImageButton Source="ic_back_white.png" HeightRequest="24" WidthRequest="24"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource ClayFrame}" Grid.Column="1" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 20"
+                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#FF8C5A"
-                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
+                           FontSize="20" FontFamily="Display" HorizontalOptions="Center" />
                 </Border>
-                <Border Style="{StaticResource ClayFrame}" Grid.Column="2" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
+                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
-                    <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
+                    <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnPause" />
                 </Border>
             </Grid>
 
             <!-- 8x8 NUMBER GRID -->
-            <Border Grid.Row="2" BackgroundColor="#F4E9FF" StrokeThickness="2" Stroke="#D8CAE8"
+            <Border Grid.Row="2" BackgroundColor="#3A3175" StrokeThickness="2" Stroke="#4D4495"
                     Padding="6" Margin="4,0">
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <CollectionView x:Name="NumberGrid"
@@ -56,7 +56,7 @@
                         <DataTemplate>
                             <Border BackgroundColor="{Binding CellBg}"
                                     StrokeThickness="1"
-                                    Stroke="#D8CAE8"
+                                    Stroke="#4D4495"
                                     HeightRequest="44"
                                     WidthRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
@@ -79,20 +79,20 @@
             </Border>
 
             <!-- SCORE -->
-            <Border Grid.Row="3" BackgroundColor="#FFFDFA" StrokeThickness="0"
+            <Border Grid.Row="3" BackgroundColor="#2B2459" StrokeThickness="0"
                     Padding="16,8" Margin="40,0">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                 <Grid ColumnDefinitions="*,Auto,*">
                     <StackLayout Grid.Column="0" Spacing="0">
-                        <Label Text="SCORE" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
+                        <Label Text="SCORE" TextColor="#AAA4D8" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Score}" TextColor="#6D4AFF"
+                        <Label Text="{Binding Score}" TextColor="#FFC83D"
                                FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Grid.Column="2" Spacing="0">
-                        <Label Text="MOVES" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
+                        <Label Text="MOVES" TextColor="#AAA4D8" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Moves}" TextColor="#FF8C5A"
+                        <Label Text="{Binding Moves}" TextColor="#FFC83D"
                                FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                 </Grid>
@@ -100,17 +100,18 @@
 
             <!-- ADD NUMBERS -->
             <Border Grid.Row="4" StrokeThickness="0"
-                    Padding="24,12" Margin="60,0"
+                    Padding="28,12" Margin="60,0"
+                    Shadow="{x:Null}"
                     HorizontalOptions="Center">
                 <Border.BackgroundColor>
                     <Binding Path="AddButtonColor" />
                 </Border.BackgroundColor>
-                <Border.StrokeShape><RoundRectangle CornerRadius="20" /></Border.StrokeShape>
+                <Border.StrokeShape><RoundRectangle CornerRadius="999" /></Border.StrokeShape>
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnAddNumbers" />
                 </Border.GestureRecognizers>
-                <Label Text="{Binding AddButtonText}" TextColor="#3D2C4E"
-                       FontSize="14" FontFamily="MadimiOne" FontAttributes="Bold" />
+                <Label Text="{Binding AddButtonText}" TextColor="{Binding AddButtonTextColor}"
+                       FontSize="15" FontFamily="Baloo2ExtraBold" />
             </Border>
 
         </Grid>

@@ -19,9 +19,9 @@ internal sealed class MazeDrawable : IDrawable
     public float OffsetX { get; private set; }
     public float OffsetY { get; private set; }
 
-    private static readonly Color WallColor = Color.FromArgb("#66E65100");
-    private static readonly Color FloorColor = Color.FromArgb("#F4E9FF");
-    private static readonly Color TrailColor = Color.FromArgb("#FFB74D");
+    private static readonly Color WallColor = Color.FromArgb("#3A3175");
+    private static readonly Color FloorColor = Color.FromArgb("#ECE8FF");
+    private static readonly Color TrailColor = Color.FromArgb("#FFC83D");
 
     public void Draw(ICanvas canvas, RectF bounds)
     {

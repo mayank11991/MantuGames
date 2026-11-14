@@ -5,48 +5,31 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid x:Name="Overlay"
-          BackgroundColor="#663D2C4E"
+          BackgroundColor="#B3130F2B"
           InputTransparent="False">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
-        <Border BackgroundColor="#FFFDFA"
-                Stroke="#B3FFFFFF"
-                StrokeThickness="1"
-                Padding="40,32"
+        <Border Style="{StaticResource NightCard}"
+                Padding="44,30"
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="28" />
-            </Border.StrokeShape>
-            <Border.Shadow>
-                <Shadow Brush="#8A6FA8" Offset="0,8" Radius="24" Opacity="0.28" />
-            </Border.Shadow>
-            <VerticalStackLayout Spacing="24">
-                <Label Text="PAUSED"
-                       FontFamily="MadimiOne"
-                       FontSize="36"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       TextColor="#3D2C4E" />
-
-                <Border BackgroundColor="#FFA94D"
-                        StrokeThickness="0"
-                        Padding="32,14"
+            <VerticalStackLayout Spacing="22">
+                <Border Style="{StaticResource NightCircle}" WidthRequest="64" HeightRequest="64"
                         HorizontalOptions="Center">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="16" />
-                    </Border.StrokeShape>
-                    <Label Text="RESUME"
-                           FontFamily="MadimiOne"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           TextColor="#3D2C4E">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnResume" />
-                        </Label.GestureRecognizers>
-                    </Label>
+                    <Image Source="ic_pause_white.png" WidthRequest="30" HeightRequest="30" />
+                </Border>
+                <Label Text="PAUSED" Style="{StaticResource NightTitle}" FontSize="44"
+                       HorizontalOptions="Center" />
+                <Border Style="{StaticResource NightAction}" Padding="36,14" HorizontalOptions="Center">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnResume" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="8">
+                        <Image Source="ic_play_ink.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center" />
+                        <Label Text="RESUME" FontFamily="Baloo2ExtraBold" FontSize="16"
+                               TextColor="#111114" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
                 </Border>
             </VerticalStackLayout>
         </Border>

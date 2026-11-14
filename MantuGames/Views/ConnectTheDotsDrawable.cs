@@ -34,12 +34,12 @@ public class CtdDrawable : IDrawable
 
     private void DrawGrid(int rows, int cols, ICanvas canvas)
     {
-        // Clay background
-        canvas.FillColor = Color.FromArgb("#FFFDFA");
+        // Night board background
+        canvas.FillColor = Color.FromArgb("#1B1640");
         canvas.FillRectangle(_offsetX, _offsetY, _cellSize * cols, _cellSize * rows);
 
-        // Soft clay grid lines
-        canvas.StrokeColor = Color.FromArgb("#D8CAE8");
+        // Subtle grid lines
+        canvas.StrokeColor = Color.FromArgb("#3A3175");
         canvas.StrokeSize = 1f;
 
         for (int r = 0; r <= rows; r++)
@@ -56,7 +56,7 @@ public class CtdDrawable : IDrawable
             {
                 float x = _offsetX + c * _cellSize;
                 float y = _offsetY + r * _cellSize;
-                canvas.FillColor = Color.FromArgb("#FFFDFA");
+                canvas.FillColor = Color.FromArgb("#221B4D");
                 canvas.FillRectangle(x + 1, y + 1, _cellSize - 2, _cellSize - 2);
             }
         }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage BackgroundColor="{StaticResource NightBg}" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MantuGames.Views.TowerOfHanoiPage"
              xmlns:controls="clr-namespace:MantuGames.Views.Controls"
              Shell.NavBarIsVisible="False">
     <AbsoluteLayout>
-        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
+        <controls:ClayBackground Variant="Night" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
 
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,*,Auto,Auto"
@@ -16,22 +16,20 @@
 
             <!-- TOP BAR -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <ImageButton Grid.Column="0" Source="icon_back_round.svg" Padding="0" HeightRequest="48" WidthRequest="48" 
-                        BackgroundColor="Transparent"
-                       
-                        Clicked="OnBackClicked" VerticalOptions="Center"/>
-                <Border Style="{StaticResource ClayFrame}" Grid.Column="1" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 20"
+                <Border Grid.Column="0" Style="{StaticResource NightCircle}" WidthRequest="48" HeightRequest="48" VerticalOptions="Center">
+                    <ImageButton Source="ic_back_white.png" Padding="0" HeightRequest="24" WidthRequest="24"
+                                 BackgroundColor="Transparent" Clicked="OnBackClicked" />
+                </Border>
+                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
                        Padding="12,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#E0566F"
-                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
+                           FontSize="20" FontFamily="Display" HorizontalOptions="Center" />
                 </Border>
-                <ImageButton Grid.Column="2" Source="pause.svg"
-                             HeightRequest="24" WidthRequest="24"
-                             BackgroundColor="Transparent" Padding="0"
-                             Margin="4,0"
-                             Clicked="OnPause"
-                             VerticalOptions="Center" />
+                <Border Grid.Column="2" Style="{StaticResource NightCircle}" WidthRequest="48" HeightRequest="48" VerticalOptions="Center">
+                    <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
+                                 BackgroundColor="Transparent" Padding="0" Clicked="OnPause" />
+                </Border>
             </Grid>
 
             <!-- TIMER -->
@@ -51,13 +49,13 @@
             <Label Grid.Row="3"
                    Text="{Binding MovesDisplay}"
                    FontSize="15" FontFamily="MadimiOne" FontAttributes="Bold"
-                   TextColor="#7C6A8E" HorizontalOptions="Center" />
+                   TextColor="#AAA4D8" HorizontalOptions="Center" />
 
             <!-- SHOW SOLUTION -->
             <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="40,0">
                 <Button x:Name="SolutionCoinLabel"
                         FontSize="15" FontAttributes="Bold"
-                        TextColor="#3D2C4E" BackgroundColor="#FFA94D"
+                        TextColor="#111114" BackgroundColor="#FFC83D"
                         CornerRadius="20" HeightRequest="44"
                         Clicked="OnShowSolutionClicked" />
                 <!-- <Label x:Name="SolutionCoinLabel" -->
