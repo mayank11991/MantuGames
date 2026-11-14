@@ -112,6 +112,7 @@ public partial class LevelMapPage : ContentPage
         {
             AudioService.Instance.Play("tap");
             VibrationHelper.Click();
+            ProgressService.ClearAssisted(_gameId);
             Console.WriteLine($"Navigating to {_gameRoute}?level={vm.LevelNumber}");
             await Shell.Current.GoToAsync($"{_gameRoute}?level={vm.LevelNumber}");
             Console.WriteLine($"Navigation completed");

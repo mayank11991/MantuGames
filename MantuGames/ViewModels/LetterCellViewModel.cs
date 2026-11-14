@@ -1,3 +1,4 @@
+using MantuGames.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -40,7 +41,7 @@ public class LetterCellViewModel : INotifyPropertyChanged
         private WordPuzzle _puzzle;
         private System.Threading.Timer _timer;
         private bool _isGameOver, _isWin;
-        private int _timeRemainingSec = 210;
+        private int _timeRemainingSec = ProgressService.ClassicTimerSeconds;
         private int _currentLevel;
         private readonly List<(int Row, int Col)> _selection = new();
  
@@ -55,7 +56,7 @@ public class LetterCellViewModel : INotifyPropertyChanged
             set { _timeRemainingSec = value; OnPropertyChanged(); OnPropertyChanged(nameof(TimerDisplay)); OnPropertyChanged(nameof(TimerProgress)); }
         }
         public string TimerDisplay  => $"{TimeRemainingSec / 60}:{TimeRemainingSec % 60:D2}";
-        public double TimerProgress => TimeRemainingSec / 210.0;
+        public double TimerProgress => TimeRemainingSec / (double)ProgressService.ClassicTimerSeconds;
  
         public bool IsGameOver { get => _isGameOver; set { _isGameOver = value; OnPropertyChanged(); } }
         public bool IsWin      { get => _isWin;      set { _isWin = value;      OnPropertyChanged(); } }
@@ -83,7 +84,7 @@ public class LetterCellViewModel : INotifyPropertyChanged
         private void StartLevel(int level)
         {
             CurrentLevel      = level;
-            TimeRemainingSec  = 210;
+            TimeRemainingSec  = ProgressService.ClassicTimerSeconds;
             IsGameOver        = false;
             IsWin             = false;
             SolutionWasShown  = false;

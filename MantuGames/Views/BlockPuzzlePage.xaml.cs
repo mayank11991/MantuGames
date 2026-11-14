@@ -365,7 +365,7 @@ public partial class BlockPuzzlePage : ContentPage
             CoinShopPopup.ShowForGame("blockpuzzle");
             return;
         }
-        CoinService.SpendCoins("blockpuzzle", CoinService.SolutionCost);
+        CoinService.SpendForSolution("blockpuzzle");
         int coins = CoinService.GetCoins("blockpuzzle");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 

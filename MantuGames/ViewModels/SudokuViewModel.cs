@@ -1,3 +1,4 @@
+using MantuGames.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -97,7 +98,7 @@ namespace MantuGames.ViewModels
 
         public ObservableCollection<CellViewModel> Cells { get; } = new();
 
-        private int _timeRemainingSec = 210;
+        private int _timeRemainingSec = ProgressService.ClassicTimerSeconds;
 
         public int TimeRemainingSec
         {
@@ -112,7 +113,7 @@ namespace MantuGames.ViewModels
         }
 
         public string TimerDisplay => $"{TimeRemainingSec / 60}:{TimeRemainingSec % 60:D2}";
-        public double TimerProgress => TimeRemainingSec / 210.0;
+        public double TimerProgress => TimeRemainingSec / (double)ProgressService.ClassicTimerSeconds;
 
         public bool IsGameOver
         {
@@ -184,7 +185,7 @@ namespace MantuGames.ViewModels
         private void StartLevel(int level)
         {
             CurrentLevel = level;
-            TimeRemainingSec = 210;
+            TimeRemainingSec = ProgressService.ClassicTimerSeconds;
             IsGameOver = false;
             IsWin = false;
             ErrorsCount = 0;

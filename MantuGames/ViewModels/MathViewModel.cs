@@ -1,3 +1,4 @@
+using MantuGames.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -11,7 +12,7 @@ public class MathViewModel : INotifyPropertyChanged
     private MathPuzzle _puzzle;
     private System.Threading.Timer _timer;
     private bool _isGameOver, _isWin;
-    private int _timeRemainingSec = 210;
+    private int _timeRemainingSec = ProgressService.ClassicTimerSeconds;
     private int _currentLevel;
     private int _currentIndex = 0;
     private int _correctCount = 0;
@@ -60,7 +61,7 @@ public class MathViewModel : INotifyPropertyChanged
     }
 
     public string TimerDisplay => $"{TimeRemainingSec / 60}:{TimeRemainingSec % 60:D2}";
-    public double TimerProgress => TimeRemainingSec / 210.0;
+    public double TimerProgress => TimeRemainingSec / (double)ProgressService.ClassicTimerSeconds;
 
     public bool IsGameOver
     {
@@ -111,7 +112,7 @@ public class MathViewModel : INotifyPropertyChanged
     private void StartLevel(int level)
     {
         CurrentLevel = level;
-        TimeRemainingSec = 210;
+        TimeRemainingSec = ProgressService.ClassicTimerSeconds;
         IsGameOver = false;
         IsWin = false;
         SolutionWasShown = false;

@@ -71,7 +71,7 @@ public partial class CardMemoryPage : ContentPage
             CoinShopPopup.ShowForGame("cardmemory");
             return;
         }
-        CoinService.SpendCoins("cardmemory", CoinService.SolutionCost);
+        CoinService.SpendForSolution("cardmemory");
         int coins = CoinService.GetCoins("cardmemory");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 

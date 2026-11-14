@@ -29,6 +29,14 @@ public static class CoinService
         return true;
     }
 
+    /// <summary>Pays for "Show Solution" and marks the current attempt as assisted.</summary>
+    public static bool SpendForSolution(string gameId)
+    {
+        if (!SpendCoins(gameId, SolutionCost)) return false;
+        ProgressService.MarkAssisted(gameId);
+        return true;
+    }
+
     public static int GetTotalCoins()
     {
         int total = IapService.UnassignedCoins;

@@ -219,7 +219,7 @@ public partial class MazeRunnerPage : ContentPage
             return;
         }
 
-        CoinService.SpendCoins("mazerunner", CoinService.SolutionCost);
+        CoinService.SpendForSolution("mazerunner");
         int coins = CoinService.GetCoins("mazerunner");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
@@ -578,7 +578,7 @@ public partial class MazeRunnerPage : ContentPage
         if (_gameEnded) return;
         _gameEnded = true;
         StopTimers();
-        _ = ResultPopup.Show(win, _level, _totalSec, _totalSec);
+        _ = ResultPopup.Show(win, _level, _totalSec, _totalSec, gameId: "mazerunner");
     }
 
     // ── UI helpers ──────────────────────────────────────────────────────────

@@ -112,7 +112,7 @@ public partial class TowerOfHanoiPage : ContentPage
             CoinShopPopup.ShowForGame("towerofhanoi");
             return;
         }
-        CoinService.SpendCoins("towerofhanoi", CoinService.SolutionCost);
+        CoinService.SpendForSolution("towerofhanoi");
         int coins = CoinService.GetCoins("towerofhanoi");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         _vm?.ShowSolutionCommand.Execute(null);

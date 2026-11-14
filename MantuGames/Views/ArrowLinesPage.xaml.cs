@@ -224,7 +224,7 @@ public partial class ArrowLinesPage : ContentPage
             CoinShopPopup.ShowForGame("arrowlines");
             return;
         }
-        CoinService.SpendCoins("arrowlines", CoinService.SolutionCost);
+        CoinService.SpendForSolution("arrowlines");
         RefreshSolutionText();
 
         _vm.IsShowSolutionActive = true;

@@ -576,7 +576,7 @@ public partial class PuzzlePetsPage : ContentPage
         if (_gameEnded) return;
         _gameEnded = true;
         _gameTimer?.Stop();
-        _ = ResultPopup.Show(win, _level, _totalSec, _totalSec);
+        _ = ResultPopup.Show(win, _level, _totalSec, _totalSec, gameId: "puzzlepets");
     }
 
     // ── Navigation ──────────────────────────────────────────────────────────
@@ -611,7 +611,7 @@ public partial class PuzzlePetsPage : ContentPage
                 CoinShopPopup.ShowForGame("puzzlepets");
                 return;
             }
-            CoinService.SpendCoins("puzzlepets", CoinService.SolutionCost);
+            CoinService.SpendForSolution("puzzlepets");
 
             SolutionCoinLabel.IsEnabled = false;
             StatusLabel.Text = "Placing pieces...";

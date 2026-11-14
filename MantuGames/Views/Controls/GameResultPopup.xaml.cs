@@ -25,6 +25,18 @@ public partial class GameResultPopup : ContentView
                            int totalSeconds = 210, int stars = 0, int coins = 0,
                            string reason = null, string gameId = null)
     {
+        // A paid "Show Solution" during this attempt means no stars or coins.
+        bool assisted = !string.IsNullOrEmpty(gameId) && ProgressService.TakeAssisted(gameId);
+        if (assisted) stars = 0;
+
+        // Save progress immediately on win, before any ad or button tap,
+        // so closing the app on this screen can never lose a solved level.
+        // Coins shown are the coins actually awarded (only for new best stars),
+        // not whatever the game page estimated.
+        coins = 0;
+        if (isWin && !string.IsNullOrEmpty(gameId))
+            coins = ProgressService.Instance.CompleteLevel(gameId, levelNumber, stars);
+
         _isWin = isWin;
         _gameId = gameId;
         _levelNumber = levelNumber;
@@ -32,11 +44,6 @@ public partial class GameResultPopup : ContentView
         _completionCoins = coins;
 
         StatsService.RecordGame(gameId, isWin, coins);
-
-        // Save progress immediately on win, before any ad or button tap,
-        // so closing the app on this screen can never lose a solved level.
-        if (isWin && !string.IsNullOrEmpty(gameId))
-            ProgressService.Instance.CompleteLevel(gameId, levelNumber, stars);
 
         AudioService.Instance.Play(isWin ? "win" : "lose");
         if (isWin) VibrationHelper.LongPress();
@@ -62,7 +69,12 @@ public partial class GameResultPopup : ContentView
             else
                 PointsBadge.IsVisible = false;
 
-            MessageLabel.Text = $"Level {levelNumber} solved in {elapsedSeconds / 60}:{elapsedSeconds % 60:D2}";
+            if (assisted)
+                MessageLabel.Text = $"Level {levelNumber} solved with Show Solution.\nSolve it yourself to earn stars!";
+            else if (elapsedSeconds > 0)
+                MessageLabel.Text = $"Level {levelNumber} solved in {elapsedSeconds / 60}:{elapsedSeconds % 60:D2}";
+            else
+                MessageLabel.Text = $"Level {levelNumber} solved!";
 
             PrimaryBorder.BackgroundColor = Color.FromArgb("#1F8A70");
             PrimaryIcon.Source            = "icon_next";

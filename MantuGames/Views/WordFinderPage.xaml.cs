@@ -34,7 +34,7 @@ public partial class WordFinderPage : ContentPage
         base.OnAppearing();
         AudioService.Instance.StartMusic();
         _vm = new WordFinderViewModel(_startLevel);
-        WordFinderTimer.TotalSeconds = ProgressService.GetTimerSeconds(_startLevel);
+        WordFinderTimer.TotalSeconds = ProgressService.ClassicTimerSeconds;
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
 
@@ -76,7 +76,7 @@ public partial class WordFinderPage : ContentPage
             CoinShopPopup.ShowForGame("wordfinder");
             return;
         }
-        CoinService.SpendCoins("wordfinder", CoinService.SolutionCost);
+        CoinService.SpendForSolution("wordfinder");
         int coins = CoinService.GetCoins("wordfinder");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         _vm?.ShowSolutionCommand.Execute(null);
@@ -275,13 +275,13 @@ public partial class WordFinderPage : ContentPage
     {
         try
         {
-            int elapsed = 210 - _vm.TimeRemainingSec;
+            int elapsed = ProgressService.ClassicTimerSeconds - _vm.TimeRemainingSec;
             string reason = _vm.SolutionWasShown ? "Solution Shown" : null;
 
-            int stars  = isWin && reason == null ? ProgressService.CalcStars(elapsed, 210) : 0;
+            int stars  = isWin && reason == null ? ProgressService.CalcStars(elapsed, ProgressService.ClassicTimerSeconds) : 0;
             int coins = isWin && reason == null ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
 
-            await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, 210, stars, coins, reason, "wordfinder");
+            await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, ProgressService.ClassicTimerSeconds, stars, coins, reason, "wordfinder");
         }
         catch (Exception ex)
         {
