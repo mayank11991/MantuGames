@@ -2,7 +2,7 @@ namespace MantuGames.Views.Controls;
 
 public partial class ConfirmPopup : ContentView
 {
-    private TaskCompletionSource<bool> _tcs;
+    private TaskCompletionSource<bool>? _tcs;
 
     public ConfirmPopup()
     {
@@ -22,13 +22,13 @@ public partial class ConfirmPopup : ContentView
         Overlay.IsVisible = true;
         Opacity = 0;
         Scale = 0.8;
-        this.FadeTo(1, 200, Easing.CubicOut);
-        this.ScaleTo(1, 200, Easing.SpringOut);
+        _ = this.FadeToAsync(1, 200, Easing.CubicOut);
+        _ = this.ScaleToAsync(1, 200, Easing.SpringOut);
 
         bool result = await _tcs.Task;
 
-        this.FadeTo(0, 150, Easing.CubicIn);
-        this.ScaleTo(0.8, 150, Easing.CubicIn).ContinueWith(_ =>
+        _ = this.FadeToAsync(0, 150, Easing.CubicIn);
+        _ = this.ScaleToAsync(0.8, 150, Easing.CubicIn).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -45,14 +45,14 @@ public partial class ConfirmPopup : ContentView
         _tcs?.TrySetResult(false);
     }
 
-    private void OnOverlayTapped(object sender, TappedEventArgs e) { }
+    private void OnOverlayTapped(object? sender, TappedEventArgs e) { }
 
-    private void OnConfirm(object sender, TappedEventArgs e)
+    private void OnConfirm(object? sender, TappedEventArgs e)
     {
         _tcs?.TrySetResult(true);
     }
 
-    private void OnCancel(object sender, TappedEventArgs e)
+    private void OnCancel(object? sender, TappedEventArgs e)
     {
         _tcs?.TrySetResult(false);
     }

@@ -6,8 +6,8 @@ namespace MantuGames.Views;
 
 public partial class FunDrawingPage : ContentPage
 {
-    private FunDrawingGrid _grid;
-    private FunDrawingDrawable _drawable;
+    private FunDrawingGrid _grid = null!;
+    private FunDrawingDrawable _drawable = null!;
     private bool _isDrawing;
     private int _currentColorIndex;
     private Random _rng = new();
@@ -22,7 +22,7 @@ public partial class FunDrawingPage : ContentPage
         base.OnAppearing();
         StartLevel(1);
         this.Opacity = 0;
-        this.FadeTo(1, 350);
+        this.FadeToAsync(1, 350);
     }
 
     private void StartLevel(int level)
@@ -34,20 +34,20 @@ public partial class FunDrawingPage : ContentPage
         LevelLabel.Text = $"Level {level}";
     }
 
-    private void OnPointerPressed(object sender, PointerEventArgs e)
+    private void OnPointerPressed(object? sender, PointerEventArgs e)
     {
         _isDrawing = true;
         _currentColorIndex = _rng.Next(12);
         ColorAtPosition(e);
     }
 
-    private void OnPointerMoved(object sender, PointerEventArgs e)
+    private void OnPointerMoved(object? sender, PointerEventArgs e)
     {
         if (!_isDrawing) return;
         ColorAtPosition(e);
     }
 
-    private void OnPointerReleased(object sender, PointerEventArgs e)
+    private void OnPointerReleased(object? sender, PointerEventArgs e)
     {
         _isDrawing = false;
     }
@@ -71,7 +71,7 @@ public partial class FunDrawingPage : ContentPage
         }
     }
 
-    private void OnClearClicked(object sender, EventArgs e)
+    private void OnClearClicked(object? sender, EventArgs e)
     {
         for (int r = 0; r < _grid.Rows; r++)
         for (int c = 0; c < _grid.Cols; c++)
@@ -79,7 +79,7 @@ public partial class FunDrawingPage : ContentPage
         DrawingCanvas.Invalidate();
     }
 
-    private void OnBackClicked(object sender, EventArgs e)
+    private void OnBackClicked(object? sender, EventArgs e)
     {
         Shell.Current.GoToAsync("..");
     }

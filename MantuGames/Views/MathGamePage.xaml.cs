@@ -8,7 +8,7 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class MathGamePage : ContentPage
 {
-    private MathViewModel _vm;
+    private MathViewModel _vm = null!;
     private int _startLevel = 1;
 
     public string Level
@@ -44,7 +44,7 @@ public partial class MathGamePage : ContentPage
         };
         _vm.PropertyChanged += OnViewModelPropertyChanged;
         this.Opacity = 0;
-        this.FadeTo(1, 400);
+        this.FadeToAsync(1, 400);
         PauseOverlay.Resumed += OnResumeGame;
     }
 
@@ -61,7 +61,7 @@ public partial class MathGamePage : ContentPage
         }
     }
 
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -77,18 +77,18 @@ public partial class MathGamePage : ContentPage
     }
 
     // ── Pause / Resume ──────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         try { _vm?.PauseTimer(); } catch { }
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnShowSolutionClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object? sender, EventArgs e)
     {
         if (CoinService.GetCoins("mathchallenge") < CoinService.SolutionCost)
         {
@@ -102,7 +102,7 @@ public partial class MathGamePage : ContentPage
     }
 
     // ── PROGRESS BAR ────────────────────────────────────────────
-    private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(MathViewModel.ProgressValue))
             UpdateProgressBar();
@@ -110,7 +110,7 @@ public partial class MathGamePage : ContentPage
 
     private void UpdateProgressBar()
     {
-        double containerW = ProgressBar.Parent is Frame f ? f.Width : 300;
+        double containerW = ProgressBar.Parent is Border f ? f.Width : 300;
         if (containerW <= 0) containerW = 300;
         ProgressBar.WidthRequest = Math.Max(0, _vm.ProgressValue * containerW);
     }
@@ -134,7 +134,7 @@ public partial class MathGamePage : ContentPage
         }
     }
 
-    private Frame CreateChoiceButton(ChoiceViewModel choice)
+    private Border CreateChoiceButton(ChoiceViewModel choice)
     {
         var label = new Label
         {
@@ -147,11 +147,11 @@ public partial class MathGamePage : ContentPage
             InputTransparent = true
         };
 
-        var frame = new Frame
+        var frame = new Border
         {
-            CornerRadius = 18,
+            Style = ClayStyles.ClayFrame,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 18 },
             Padding = new Thickness(0),
-            HasShadow = true,
             HeightRequest = 70,
             BackgroundColor = Color.FromArgb(choice.BgColor),
             Content = label
@@ -178,8 +178,8 @@ public partial class MathGamePage : ContentPage
         tap.Tapped += async (s, e) =>
         {
             if (_vm.IsGameOver) return;
-            await frame.ScaleTo(0.92, 80);
-            await frame.ScaleTo(1.0, 80);
+            await frame.ScaleToAsync(0.92, 80);
+            await frame.ScaleToAsync(1.0, 80);
             _vm.AnswerCommand.Execute(choice);
         };
         frame.GestureRecognizers.Add(tap);
@@ -193,7 +193,7 @@ public partial class MathGamePage : ContentPage
         try
         {
             int elapsed = ProgressService.ClassicTimerSeconds - _vm.TimeRemainingSec;
-            string reason = _vm.SolutionWasShown ? "Solution Shown" : null;
+            string? reason = _vm.SolutionWasShown ? "Solution Shown" : null;
 
             int stars  = isWin && reason == null ? ProgressService.CalcStars(elapsed, ProgressService.ClassicTimerSeconds) : 0;
             int coins = isWin && reason == null ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
@@ -206,8 +206,8 @@ public partial class MathGamePage : ContentPage
         }
     }
 
-    private void OnNextLevel(object sender, EventArgs e) => ResetWith(_startLevel = _vm.CurrentLevel + 1);
-    private void OnRetry(object sender, EventArgs e) => ResetWith(_startLevel);
+    private void OnNextLevel(object? sender, EventArgs e) => ResetWith(_startLevel = _vm.CurrentLevel + 1);
+    private void OnRetry(object? sender, EventArgs e) => ResetWith(_startLevel);
 
     private void ResetWith(int level)
     {

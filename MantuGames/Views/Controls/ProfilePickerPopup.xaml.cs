@@ -38,13 +38,13 @@ public partial class ProfilePickerPopup : ContentView
         {
             if (!IsVisible) return;
             Sheet.Opacity = 1;
-            Sheet.ScaleTo(1.0, 250, Easing.CubicOut);
+            Sheet.ScaleToAsync(1.0, 250, Easing.CubicOut);
         });
     }
 
     public void Hide()
     {
-        Sheet.ScaleTo(0.85, 200, Easing.CubicIn).ContinueWith(_ =>
+        Sheet.ScaleToAsync(0.85, 200, Easing.CubicIn).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -286,12 +286,12 @@ public partial class ProfilePickerPopup : ContentView
         AddProfileRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnOverlayTapped(object sender, TappedEventArgs e)
+    private void OnOverlayTapped(object? sender, TappedEventArgs e)
     {
         // Consume tap — selection is mandatory
     }
 
-    private void OnSheetTapped(object sender, TappedEventArgs e)
+    private void OnSheetTapped(object? sender, TappedEventArgs e)
     {
         // Consume tap — selection is mandatory
     }

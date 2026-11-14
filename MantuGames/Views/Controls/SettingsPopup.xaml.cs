@@ -5,12 +5,12 @@ namespace MantuGames.Views.Controls;
 
 public partial class SettingsPopup : ContentView
 {
-    public event EventHandler EditProfileRequested;
-    public event EventHandler ProgressReset;
-    public event EventHandler StatisticsRequested;
-    public event EventHandler UpdateCheckRequested;
-    public event EventHandler ProfileSwitchRequested;
-    public event EventHandler CoinShopRequested;
+    public event EventHandler? EditProfileRequested;
+    public event EventHandler? ProgressReset;
+    public event EventHandler? StatisticsRequested;
+    public event EventHandler? UpdateCheckRequested;
+    public event EventHandler? ProfileSwitchRequested;
+    public event EventHandler? CoinShopRequested;
 
     public SettingsPopup()
     {
@@ -46,14 +46,14 @@ public partial class SettingsPopup : ContentView
         Opacity = 0;
         Scale = 0.8;
         Overlay.IsVisible = true;
-        this.FadeTo(1, 200, Easing.CubicOut);
-        this.ScaleTo(1, 200, Easing.SpringOut);
+        this.FadeToAsync(1, 200, Easing.CubicOut);
+        this.ScaleToAsync(1, 200, Easing.SpringOut);
     }
 
     public void Hide()
     {
-        this.FadeTo(0, 150, Easing.CubicIn);
-        this.ScaleTo(0.8, 150, Easing.CubicIn).ContinueWith(_ =>
+        this.FadeToAsync(0, 150, Easing.CubicIn);
+        this.ScaleToAsync(0.8, 150, Easing.CubicIn).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -63,51 +63,51 @@ public partial class SettingsPopup : ContentView
         });
     }
 
-    private void OnMusicToggled(object sender, ToggledEventArgs e)
+    private void OnMusicToggled(object? sender, ToggledEventArgs e)
     {
         AudioService.Instance.MusicEnabled = e.Value;
     }
 
-    private void OnSfxToggled(object sender, ToggledEventArgs e)
+    private void OnSfxToggled(object? sender, ToggledEventArgs e)
     {
         AudioService.Instance.SfxEnabled = e.Value;
     }
 
-    private void OnVibrationToggled(object sender, ToggledEventArgs e)
+    private void OnVibrationToggled(object? sender, ToggledEventArgs e)
     {
         Preferences.Set("vibration_enabled", e.Value);
     }
 
-    private void OnOverlayTapped(object sender, TappedEventArgs e)
+    private void OnOverlayTapped(object? sender, TappedEventArgs e)
     {
         // Consume tap to prevent passing through to views underneath
     }
 
-    private void OnSwitchProfile(object sender, TappedEventArgs e)
+    private void OnSwitchProfile(object? sender, TappedEventArgs e)
     {
         Hide();
         ProfileSwitchRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnOpenCoinShop(object sender, TappedEventArgs e)
+    private void OnOpenCoinShop(object? sender, TappedEventArgs e)
     {
         Hide();
         CoinShopRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnEditProfile(object sender, TappedEventArgs e)
+    private void OnEditProfile(object? sender, TappedEventArgs e)
     {
         Hide();
         EditProfileRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnStatistics(object sender, TappedEventArgs e)
+    private void OnStatistics(object? sender, TappedEventArgs e)
     {
         Hide();
         StatisticsRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    private async void OnCheckForUpdates(object sender, TappedEventArgs e)
+    private async void OnCheckForUpdates(object? sender, TappedEventArgs e)
     {
         try
         {
@@ -137,7 +137,7 @@ public partial class SettingsPopup : ContentView
         }
     }
 
-    private async void OnContactSupport(object sender, TappedEventArgs e)
+    private async void OnContactSupport(object? sender, TappedEventArgs e)
     {
         try
         {
@@ -149,7 +149,7 @@ public partial class SettingsPopup : ContentView
         }
     }
 
-    private async void OnPrivacyPolicy(object sender, TappedEventArgs e)
+    private async void OnPrivacyPolicy(object? sender, TappedEventArgs e)
     {
         try
         {
@@ -161,7 +161,7 @@ public partial class SettingsPopup : ContentView
         }
     }
 
-    private async void OnPrivacyChoices(object sender, TappedEventArgs e)
+    private async void OnPrivacyChoices(object? sender, TappedEventArgs e)
     {
         try
         {
@@ -173,7 +173,7 @@ public partial class SettingsPopup : ContentView
         }
     }
 
-    private async void OnRateUs(object sender, TappedEventArgs e)
+    private async void OnRateUs(object? sender, TappedEventArgs e)
     {
         try
         {
@@ -185,7 +185,7 @@ public partial class SettingsPopup : ContentView
         }
     }
 
-    private async void OnRemoveAds(object sender, TappedEventArgs e)
+    private async void OnRemoveAds(object? sender, TappedEventArgs e)
     {
         try
         {
@@ -213,11 +213,11 @@ public partial class SettingsPopup : ContentView
         }
     }
 
-    private async void OnResetProgress(object sender, TappedEventArgs e)
+    private async void OnResetProgress(object? sender, TappedEventArgs e)
     {
         try
         {
-            bool confirm = await Application.Current!.Windows[0].Page!.DisplayAlert(
+            bool confirm = await Application.Current!.Windows[0].Page!.DisplayAlertAsync(
                 "Reset Progress", "This will erase all your progress for all games. Are you sure?", "Reset", "Cancel");
             if (!confirm) return;
           
@@ -238,7 +238,7 @@ public partial class SettingsPopup : ContentView
         }
     }
 
-    private void OnClose(object sender, TappedEventArgs e)
+    private void OnClose(object? sender, TappedEventArgs e)
     {
         Hide();
     }

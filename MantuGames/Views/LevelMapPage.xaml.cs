@@ -11,11 +11,11 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(GameId), "gameId")]
 public partial class LevelMapPage : ContentPage
 {
-    private string _gameId;
-    private string _gameRoute;
+    private string _gameId = null!;
+    private string _gameRoute = null!;
     private bool _isNavigating;
     private bool _isNebulaAnimating = false;
-    private CancellationTokenSource _nebulaCts;
+    private CancellationTokenSource? _nebulaCts;
 
     public string GameId
     {
@@ -130,6 +130,9 @@ public partial class LevelMapPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        // Back from a game without finishing: any Show Solution used there ends with that attempt.
+        if (!string.IsNullOrEmpty(_gameId))
+            ProgressService.ClearAssisted(_gameId);
         BuildMap();
         AudioService.Instance.StartMusic();
         StartNebulaAnimation();
@@ -193,7 +196,7 @@ public partial class LevelMapPage : ContentPage
         _nebulaCts = null;
     }
 
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -210,22 +213,22 @@ public partial class LevelMapPage : ContentPage
 
 public class LevelTileViewModel : INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
     protected void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
     public int LevelNumber { get; set; }
     public bool IsLocked { get; set; }
     public bool IsCompleted { get; set; }
     public int Stars { get; set; }
-    public Color BgColor { get; set; }
-    public Color StrokeColor { get; set; }
-    public Color FaceColor { get; set; }
+    public Color BgColor { get; set; } = null!;
+    public Color StrokeColor { get; set; } = null!;
+    public Color FaceColor { get; set; } = null!;
     public double FaceOpacity { get; set; }
-    public Brush ShadowBrush { get; set; }
+    public Brush ShadowBrush { get; set; } = null!;
     public bool ShowNumber { get; set; }
     public bool ShowLock { get; set; }
     public bool ShowStars { get; set; }
-    public string LevelText { get; set; }
+    public string LevelText { get; set; } = "";
     public bool Star1 { get; set; }
     public bool Star2 { get; set; }
     public bool Star3 { get; set; }

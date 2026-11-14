@@ -18,8 +18,8 @@ public class LetterCellViewModel : INotifyPropertyChanged
         public bool IsFound    { get => _isFound;    set { _isFound = value;    OnPropertyChanged(); } }
         public bool IsHinted   { get => _isHinted;   set { _isHinted = value;   OnPropertyChanged(); } }
  
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }
  
@@ -28,18 +28,18 @@ public class LetterCellViewModel : INotifyPropertyChanged
         private bool _isFound;
         public string Word     { get => _word;    set { _word = value;    OnPropertyChanged(); } }
         public bool   IsFound  { get => _isFound; set { _isFound = value; OnPropertyChanged(); OnPropertyChanged(nameof(DisplayWord)); } }
-        private string _word;
+        private string _word = null!;
         public string DisplayWord => IsFound ? Word : Word;
  
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }
  
     public class WordFinderViewModel : INotifyPropertyChanged
     {
-        private WordPuzzle _puzzle;
-        private System.Threading.Timer _timer;
+        private WordPuzzle _puzzle = null!;
+        private System.Threading.Timer? _timer;
         private bool _isGameOver, _isWin;
         private int _timeRemainingSec = ProgressService.ClassicTimerSeconds;
         private int _currentLevel;
@@ -72,7 +72,7 @@ public class LetterCellViewModel : INotifyPropertyChanged
         public ICommand TapCellCommand      { get; }
         public ICommand ShowSolutionCommand { get; }
  
-        public event Action<bool> GameEnded;
+        public event Action<bool>? GameEnded;
  
         public WordFinderViewModel(int level = 1)
         {
@@ -156,7 +156,7 @@ public class LetterCellViewModel : INotifyPropertyChanged
             {
                 // Mark cells as found
                 foreach (var p in _selection)
-                    GetCell(p.Row, p.Col).IsFound = true;
+                    if (GetCell(p.Row, p.Col) is { } foundCell) foundCell.IsFound = true;
  
                 // Update word list
                 var wvm = Words.FirstOrDefault(w => w.Word == found.Word);
@@ -233,7 +233,7 @@ public class LetterCellViewModel : INotifyPropertyChanged
             if (found != null)
             {
                 foreach (var p in _selection)
-                    GetCell(p.Row, p.Col).IsFound = true;
+                    if (GetCell(p.Row, p.Col) is { } foundCell) foundCell.IsFound = true;
                 var wvm = Words.FirstOrDefault(w => w.Word == found.Word);
                 if (wvm != null) wvm.IsFound = true;
                 ClearSelection();
@@ -250,7 +250,7 @@ public class LetterCellViewModel : INotifyPropertyChanged
             foreach (var pw in _puzzle.Words.Where(w => !w.Found))
             {
                 foreach (var pos in _puzzle.GetWordCells(pw))
-                    GetCell(pos.Row, pos.Col).IsHinted = true;
+                    if (GetCell(pos.Row, pos.Col) is { } foundCell) foundCell.IsHinted = true;
  
                 var wvm = Words.FirstOrDefault(w => w.Word == pw.Word);
                 if (wvm != null) wvm.IsFound = true;
@@ -285,10 +285,10 @@ public class LetterCellViewModel : INotifyPropertyChanged
             GameEnded?.Invoke(win);
         }
  
-        private LetterCellViewModel GetCell(int r, int c) =>
+        private LetterCellViewModel? GetCell(int r, int c) =>
             Cells.FirstOrDefault(x => x.Row == r && x.Col == c);
  
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }

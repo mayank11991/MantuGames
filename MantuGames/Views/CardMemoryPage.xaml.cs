@@ -8,7 +8,7 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class CardMemoryPage : ContentPage
 {
-    private CardMemoryViewModel _vm;
+    private CardMemoryViewModel _vm = null!;
     private int _startLevel = 1;
 
     public string Level
@@ -35,7 +35,7 @@ public partial class CardMemoryPage : ContentPage
         SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         this.Opacity = 0;
-        this.FadeTo(1, 400);
+        this.FadeToAsync(1, 400);
         PauseOverlay.Resumed += OnResumeGame;
     }
 
@@ -51,18 +51,18 @@ public partial class CardMemoryPage : ContentPage
     }
 
     // ── Pause / Resume ──────────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         try { _vm?.PauseTimer(); } catch { }
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnShowSolutionClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object? sender, EventArgs e)
     {
         if (_vm == null || _vm.IsGameOver) return;
 
@@ -95,7 +95,7 @@ public partial class CardMemoryPage : ContentPage
     }
 
     // ── BACK ────────────────────────────────────────────────────────
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -271,9 +271,9 @@ public partial class CardMemoryPage : ContentPage
             {
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
-                    await border.ScaleXTo(0, 100, Easing.Linear);
+                    await border.ScaleXToAsync(0, 100, Easing.Linear);
                     ApplyState();
-                    await border.ScaleXTo(1, 100, Easing.Linear);
+                    await border.ScaleXToAsync(1, 100, Easing.Linear);
                 });
             }
         };
@@ -311,7 +311,7 @@ public partial class CardMemoryPage : ContentPage
         }
     }
 
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
         _startLevel = _vm.CurrentLevel + 1;
         _vm.GameEnded -= OnGameEnded;
@@ -324,7 +324,7 @@ public partial class CardMemoryPage : ContentPage
         BuildCards();
     }
 
-    private void OnRetry(object sender, EventArgs e)
+    private void OnRetry(object? sender, EventArgs e)
     {
         _vm.GameEnded -= OnGameEnded;
         _vm = new CardMemoryViewModel(_startLevel);

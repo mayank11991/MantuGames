@@ -136,4 +136,15 @@
       <AdditionalFiles Include="Views\DashboardPage.xaml" />
     </ItemGroup>
 
+    <!-- Animal Crush is paused (not in the current release). Its page and view model are kept
+         in the repo but not compiled into the app. Models/AnimalCrushPuzzle.cs stays in the
+         build because MantuGames.Tests covers it. To bring the game back: delete this block,
+         re-enable its route in AppShell.xaml.cs and add it to DashboardViewModel.Games. -->
+    <ItemGroup>
+      <MauiXaml Remove="Views\AnimalCrushPage.xaml" />
+      <None Include="Views\AnimalCrushPage.xaml" />
+      <Compile Remove="Views\AnimalCrushPage.xaml.cs;ViewModels\AnimalCrushViewModel.cs" />
+      <None Include="Views\AnimalCrushPage.xaml.cs;ViewModels\AnimalCrushViewModel.cs" />
+    </ItemGroup>
+
 </Project>

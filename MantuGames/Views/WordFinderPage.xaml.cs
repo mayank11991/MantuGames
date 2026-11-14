@@ -8,7 +8,7 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class WordFinderPage : ContentPage
 {
-    private WordFinderViewModel _vm;
+    private WordFinderViewModel _vm = null!;
     private int _startLevel = 1;
     private int _cellSize;
     private int _dragStartRow, _dragStartCol;
@@ -42,7 +42,7 @@ public partial class WordFinderPage : ContentPage
         SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
         this.Loaded += (s, e) => BuildGrid();
         this.Opacity = 0;
-        this.FadeTo(1, 400);
+        this.FadeToAsync(1, 400);
         PauseOverlay.Resumed += OnResumeGame;
     }
 
@@ -58,18 +58,18 @@ public partial class WordFinderPage : ContentPage
     }
 
     // ── Pause / Resume ──────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         try { _vm?.PauseTimer(); } catch { }
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnShowSolutionClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object? sender, EventArgs e)
     {
         if (CoinService.GetCoins("wordfinder") < CoinService.SolutionCost)
         {
@@ -83,7 +83,7 @@ public partial class WordFinderPage : ContentPage
     }
 
     // ── BACK ────────────────────────────────────────────────────
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -130,7 +130,7 @@ public partial class WordFinderPage : ContentPage
         }
     }
 
-    private Frame CreateCellFrame(LetterCellViewModel cell, int size)
+    private Border CreateCellFrame(LetterCellViewModel cell, int size)
     {
         var label = new Label
         {
@@ -145,12 +145,12 @@ public partial class WordFinderPage : ContentPage
             InputTransparent = true
         };
 
-        var frame = new Frame
+        var frame = new Border
         {
+            Style = ClayStyles.ClayFrame,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 8 },
             Padding = 0,
             Margin = new Thickness(1),
-            CornerRadius = 8,
-            HasShadow = false,
             HeightRequest = size,
             WidthRequest = size,
             BackgroundColor = Color.FromArgb("#F1F8E9"),
@@ -196,8 +196,8 @@ public partial class WordFinderPage : ContentPage
                 AudioService.Instance.Play("tap");
                 if (cell.IsSelected)
                 {
-                    await frame.ScaleTo(1.15, 60);
-                    await frame.ScaleTo(1.0, 60);
+                    await frame.ScaleToAsync(1.15, 60);
+                    await frame.ScaleToAsync(1.0, 60);
                 }
             }
         };
@@ -262,8 +262,8 @@ public partial class WordFinderPage : ContentPage
             if (e.PropertyName == nameof(LetterCellViewModel.IsFound) && cell.IsFound)
             {
                 AudioService.Instance.Play("clear");
-                await frame.ScaleTo(1.3, 100);
-                await frame.ScaleTo(1.0, 100);
+                await frame.ScaleToAsync(1.3, 100);
+                await frame.ScaleToAsync(1.0, 100);
             }
         };
 
@@ -276,7 +276,7 @@ public partial class WordFinderPage : ContentPage
         try
         {
             int elapsed = ProgressService.ClassicTimerSeconds - _vm.TimeRemainingSec;
-            string reason = _vm.SolutionWasShown ? "Solution Shown" : null;
+            string? reason = _vm.SolutionWasShown ? "Solution Shown" : null;
 
             int stars  = isWin && reason == null ? ProgressService.CalcStars(elapsed, ProgressService.ClassicTimerSeconds) : 0;
             int coins = isWin && reason == null ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
@@ -289,7 +289,7 @@ public partial class WordFinderPage : ContentPage
         }
     }
 
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
         _startLevel = _vm.CurrentLevel + 1;
         _vm.GameEnded -= OnGameEnded;
@@ -299,7 +299,7 @@ public partial class WordFinderPage : ContentPage
         BuildGrid();
     }
 
-    private void OnRetry(object sender, EventArgs e)
+    private void OnRetry(object? sender, EventArgs e)
     {
         _vm.GameEnded -= OnGameEnded;
         _vm = new WordFinderViewModel(_startLevel);

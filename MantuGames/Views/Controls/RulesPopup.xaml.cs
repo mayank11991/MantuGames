@@ -14,14 +14,14 @@ public partial class RulesPopup : ContentView
         Overlay.IsVisible = true;
         Opacity = 0;
         Scale = 0.85;
-        this.FadeTo(1, 200, Easing.CubicOut);
-        this.ScaleTo(1, 200, Easing.SpringOut);
+        this.FadeToAsync(1, 200, Easing.CubicOut);
+        this.ScaleToAsync(1, 200, Easing.SpringOut);
     }
 
     public void Hide()
     {
-        this.FadeTo(0, 150, Easing.CubicIn);
-        this.ScaleTo(0.85, 150, Easing.CubicIn).ContinueWith(_ =>
+        this.FadeToAsync(0, 150, Easing.CubicIn);
+        this.ScaleToAsync(0.85, 150, Easing.CubicIn).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -31,5 +31,5 @@ public partial class RulesPopup : ContentView
         });
     }
 
-    private void OnDismiss(object sender, TappedEventArgs e) => Hide();
+    private void OnDismiss(object? sender, TappedEventArgs e) => Hide();
 }

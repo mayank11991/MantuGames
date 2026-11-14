@@ -6,7 +6,7 @@ namespace MantuGames.Converters;
 // so cards read as glossy tiles instead of flat swatches.
 public class CardColorToGradientConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         var baseColor = value is string hex && !string.IsNullOrEmpty(hex)
             ? Color.FromArgb("#F4E9FF")
@@ -24,7 +24,7 @@ public class CardColorToGradientConverter : IValueConverter
             new Point(0, 0), new Point(1, 1));
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => throw new NotImplementedException();
 }
 
@@ -32,7 +32,7 @@ public class CardColorToGradientConverter : IValueConverter
 // used behind the card as a colored glow instead of a plain black shadow.
 public class CardColorToGlowBrushConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         var baseColor = value is string hex && !string.IsNullOrEmpty(hex)
             ? Color.FromArgb("#F4E9FF")
@@ -41,6 +41,6 @@ public class CardColorToGlowBrushConverter : IValueConverter
         return new SolidColorBrush(baseColor.WithAlpha(0.55f));
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => throw new NotImplementedException();
 }

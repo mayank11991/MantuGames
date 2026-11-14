@@ -36,7 +36,7 @@ public partial class AnimalCrushPage : ContentPage
         _vm.GameEnded += OnGameEnded;
         this.Loaded += (s, e) => BuildBoard();
         this.Opacity = 0;
-        this.FadeTo(1, 400);
+        this.FadeToAsync(1, 400);
         PauseOverlay.Resumed += OnResumeGame;
     }
 
@@ -52,19 +52,19 @@ public partial class AnimalCrushPage : ContentPage
     }
 
     // ── Pause / Resume ──────────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         try { _vm?.PauseTimer(); } catch { }
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         try { _vm?.ResumeTimer(); } catch { }
     }
 
     // ── BACK ────────────────────────────────────────────────────────
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -152,7 +152,7 @@ public partial class AnimalCrushPage : ContentPage
     private bool _isDragging;
     private Point _panStartPoint;
 
-    private void OnBoardPan(object sender, PanUpdatedEventArgs e)
+    private void OnBoardPan(object? sender, PanUpdatedEventArgs e)
     {
         if (_vm == null || _vm.IsGameOver || _vm.IsBusy || _activePowerUp != null) return;
 
@@ -354,9 +354,9 @@ public partial class AnimalCrushPage : ContentPage
     }
 
     // ── Power-up selection ──────────────────────────────────────────────
-    private void OnHammerTapped(object sender, EventArgs e) => TogglePowerUp(AnimalCrushPuzzle.PowerUpKind.Hammer, HammerButton);
-    private void OnRocketTapped(object sender, EventArgs e) => TogglePowerUp(AnimalCrushPuzzle.PowerUpKind.Rocket, RocketButton);
-    private void OnBombTapped(object sender, EventArgs e) => TogglePowerUp(AnimalCrushPuzzle.PowerUpKind.Bomb, BombButton);
+    private void OnHammerTapped(object? sender, EventArgs e) => TogglePowerUp(AnimalCrushPuzzle.PowerUpKind.Hammer, HammerButton);
+    private void OnRocketTapped(object? sender, EventArgs e) => TogglePowerUp(AnimalCrushPuzzle.PowerUpKind.Rocket, RocketButton);
+    private void OnBombTapped(object? sender, EventArgs e) => TogglePowerUp(AnimalCrushPuzzle.PowerUpKind.Bomb, BombButton);
 
     private void TogglePowerUp(AnimalCrushPuzzle.PowerUpKind kind, Border button)
     {
@@ -413,8 +413,8 @@ public partial class AnimalCrushPage : ContentPage
 
         // Visual swap with translate
         await Task.WhenAll(
-            img1.TranslateTo((c2 - c1) * img1.Width, (r2 - r1) * img1.Height, 150, Easing.CubicOut),
-            img2.TranslateTo((c1 - c2) * img2.Width, (r1 - r2) * img2.Height, 150, Easing.CubicOut)
+            img1.TranslateToAsync((c2 - c1) * img1.Width, (r2 - r1) * img1.Height, 150, Easing.CubicOut),
+            img2.TranslateToAsync((c1 - c2) * img2.Width, (r1 - r2) * img2.Height, 150, Easing.CubicOut)
         );
 
         // Swap the sources
@@ -433,16 +433,16 @@ public partial class AnimalCrushPage : ContentPage
 
         // Quick wobble
         await Task.WhenAll(
-            b1.TranslateTo(15, 0, 60, Easing.CubicOut),
-            b2.TranslateTo(-15, 0, 60, Easing.CubicOut)
+            b1.TranslateToAsync(15, 0, 60, Easing.CubicOut),
+            b2.TranslateToAsync(-15, 0, 60, Easing.CubicOut)
         );
         await Task.WhenAll(
-            b1.TranslateTo(-10, 0, 60, Easing.CubicInOut),
-            b2.TranslateTo(10, 0, 60, Easing.CubicInOut)
+            b1.TranslateToAsync(-10, 0, 60, Easing.CubicInOut),
+            b2.TranslateToAsync(10, 0, 60, Easing.CubicInOut)
         );
         await Task.WhenAll(
-            b1.TranslateTo(0, 0, 80, Easing.SpringOut),
-            b2.TranslateTo(0, 0, 80, Easing.SpringOut)
+            b1.TranslateToAsync(0, 0, 80, Easing.SpringOut),
+            b2.TranslateToAsync(0, 0, 80, Easing.SpringOut)
         );
     }
 
@@ -552,8 +552,8 @@ public partial class AnimalCrushPage : ContentPage
     private async Task AnimateCellClear(Border cell)
     {
         await Task.WhenAll(
-            cell.ScaleTo(0.1, 120, Easing.CubicIn),
-            cell.FadeTo(0, 120, Easing.CubicIn)
+            cell.ScaleToAsync(0.1, 120, Easing.CubicIn),
+            cell.FadeToAsync(0, 120, Easing.CubicIn)
         );
         cell.Opacity = 1; // Will be reset when new content arrives
         cell.Scale = 1;
@@ -575,11 +575,11 @@ public partial class AnimalCrushPage : ContentPage
             if (img != null)
             {
                 // Animate the image falling
-                tasks.Add(img.TranslateTo(0, fallDistance, 250, Easing.BounceOut));
+                tasks.Add(img.TranslateToAsync(0, fallDistance, 250, Easing.BounceOut));
             }
             else
             {
-                tasks.Add(cell.TranslateTo(0, fallDistance, 250, Easing.BounceOut));
+                tasks.Add(cell.TranslateToAsync(0, fallDistance, 250, Easing.BounceOut));
             }
         }
         
@@ -622,8 +622,8 @@ public partial class AnimalCrushPage : ContentPage
     private async Task AnimateBlockFall(Image img, double startOffsetY)
     {
         // Fall with bounce
-        await img.TranslateTo(0, 0, 300, Easing.BounceOut);
-        await img.FadeTo(1, 150, Easing.CubicOut);
+        await img.TranslateToAsync(0, 0, 300, Easing.BounceOut);
+        await img.FadeToAsync(1, 150, Easing.CubicOut);
     }
 
     // Update only the cell images from the model, don't recreate borders
@@ -687,11 +687,11 @@ public partial class AnimalCrushPage : ContentPage
         
         // Smash effect - scale down with rotation + particles
         await Task.WhenAll(
-            cell.ScaleTo(0.1, 120, Easing.CubicIn),
-            cell.FadeTo(0, 120, Easing.CubicIn),
-            cell.RotateTo(15, 60, Easing.CubicOut)
+            cell.ScaleToAsync(0.1, 120, Easing.CubicIn),
+            cell.FadeToAsync(0, 120, Easing.CubicIn),
+            cell.RotateToAsync(15, 60, Easing.CubicOut)
         );
-        await cell.RotateTo(0, 60, Easing.SpringOut);
+        await cell.RotateToAsync(0, 60, Easing.SpringOut);
         
         // The cascade animation will handle the falling blocks
     }
@@ -724,10 +724,10 @@ public partial class AnimalCrushPage : ContentPage
         
         // Scale pulse with rotation
         await Task.WhenAll(
-            cell.ScaleTo(1.4, 100, Easing.CubicOut),
-            cell.RotateTo(isHorizontal ? 0 : 90, 100, Easing.CubicOut)
+            cell.ScaleToAsync(1.4, 100, Easing.CubicOut),
+            cell.RotateToAsync(isHorizontal ? 0 : 90, 100, Easing.CubicOut)
         );
-        await cell.ScaleTo(1.0, 150, Easing.SpringOut);
+        await cell.ScaleToAsync(1.0, 150, Easing.SpringOut);
     }
 
     private async Task AnimateBomb(int r, int c)
@@ -756,25 +756,25 @@ public partial class AnimalCrushPage : ContentPage
         
         // Explosion - scale up and fade with rotation
         await Task.WhenAll(
-            cell.ScaleTo(1.8, 100, Easing.CubicOut),
-            cell.FadeTo(0, 100, Easing.CubicOut),
-            cell.RotateTo(180, 100, Easing.CubicOut)
+            cell.ScaleToAsync(1.8, 100, Easing.CubicOut),
+            cell.FadeToAsync(0, 100, Easing.CubicOut),
+            cell.RotateToAsync(180, 100, Easing.CubicOut)
         );
         
         // Debris fall
-        await cell.ScaleTo(0.1, 150, Easing.CubicIn);
+        await cell.ScaleToAsync(0.1, 150, Easing.CubicIn);
         
         // Reappear with bounce
         cell.Rotation = 0;
         await Task.WhenAll(
-            cell.ScaleTo(1.2, 200, Easing.BounceOut),
-            cell.FadeTo(1, 150, Easing.CubicOut)
+            cell.ScaleToAsync(1.2, 200, Easing.BounceOut),
+            cell.FadeToAsync(1, 150, Easing.CubicOut)
         );
-        await cell.ScaleTo(1.0, 100, Easing.CubicIn);
+        await cell.ScaleToAsync(1.0, 100, Easing.CubicIn);
     }
 
     // ── SHOW SOLUTION ───────────────────────────────────────────────
-    private async void OnShowSolutionClicked(object sender, EventArgs e)
+    private async void OnShowSolutionClicked(object? sender, EventArgs e)
     {
         if (_vm == null || _vm.IsGameOver) return;
 
@@ -849,13 +849,13 @@ public partial class AnimalCrushPage : ContentPage
         BuildBoard();
     }
 
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
         _startLevel = _vm.CurrentLevel + 1;
         StartNewGame();
     }
 
-    private void OnRetry(object sender, EventArgs e)
+    private void OnRetry(object? sender, EventArgs e)
     {
         StartNewGame();
     }

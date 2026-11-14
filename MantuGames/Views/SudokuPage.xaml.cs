@@ -13,7 +13,7 @@ namespace MantuGames.Views
             "cat.png", "elephant.png", "lion.png", "owl.png", "butterfly.png"
         };
 
-        private GameViewModel _vm;
+        private GameViewModel _vm = null!;
         private int _startLevel = 1;
 
         public string Level
@@ -47,7 +47,7 @@ namespace MantuGames.Views
             this.Loaded += (s, e) => BuildSudokuGrid();
 
             this.Opacity = 0;
-            this.FadeTo(1, 400);
+            this.FadeToAsync(1, 400);
             PauseOverlay.Resumed += OnResumeGame;
         }
 
@@ -63,18 +63,18 @@ namespace MantuGames.Views
         }
 
         // ── Pause / Resume ──────────────────────────────────────────
-        private void OnPause(object sender, EventArgs e)
+        private void OnPause(object? sender, EventArgs e)
         {
             try { _vm?.PauseTimer(); } catch { }
             PauseOverlay.Show();
         }
 
-        private void OnResumeGame(object sender, EventArgs e)
+        private void OnResumeGame(object? sender, EventArgs e)
         {
             try { _vm?.ResumeTimer(); } catch { }
         }
 
-        private void OnShowSolutionClicked(object sender, EventArgs e)
+        private void OnShowSolutionClicked(object? sender, EventArgs e)
         {
             if (CoinService.GetCoins("sudoku") < CoinService.SolutionCost)
             {
@@ -88,7 +88,7 @@ namespace MantuGames.Views
         }
 
         // ── BACK ────────────────────────────────────────────────────
-        private async void OnBackClicked(object sender, EventArgs e)
+        private async void OnBackClicked(object? sender, EventArgs e)
         {
             try
             {
@@ -188,8 +188,8 @@ namespace MantuGames.Views
                 {
                     _vm.SelectCellCommand.Execute(cell);
                     AudioService.Instance.Play("tap");
-                    await border.ScaleTo(1.1, 70);
-                    await border.ScaleTo(1.0, 70);
+                    await border.ScaleToAsync(1.1, 70);
+                    await border.ScaleToAsync(1.0, 70);
                 }
             };
             border.GestureRecognizers.Add(tap);
@@ -198,16 +198,16 @@ namespace MantuGames.Views
             {
                 if (e.PropertyName == nameof(CellViewModel.Value) && cell.Value != 0 && !cell.IsRevealed)
                 {
-                    await image.ScaleTo(1.35, 90);
-                    await image.ScaleTo(1.0, 90);
+                    await image.ScaleToAsync(1.35, 90);
+                    await image.ScaleToAsync(1.0, 90);
                 }
 
                 if (e.PropertyName == nameof(CellViewModel.IsError) && cell.IsError)
                 {
                     AudioService.Instance.Play("wobble");
-                    await border.TranslateTo(-5, 0, 50);
-                    await border.TranslateTo(5, 0, 50);
-                    await border.TranslateTo(0, 0, 50);
+                    await border.TranslateToAsync(-5, 0, 50);
+                    await border.TranslateToAsync(5, 0, 50);
+                    await border.TranslateToAsync(0, 0, 50);
                 }
             };
 
@@ -220,7 +220,7 @@ namespace MantuGames.Views
             try
             {
                 int elapsed = ProgressService.ClassicTimerSeconds - _vm.TimeRemainingSec;
-                string reason = null;
+                string? reason = null;
 
                 if (!isWin && _vm.SolutionWasShown)
                     reason = "Solution Shown";
@@ -236,7 +236,7 @@ namespace MantuGames.Views
             }
         }
 
-        private void OnNextLevel(object sender, EventArgs e)
+        private void OnNextLevel(object? sender, EventArgs e)
         {
             _startLevel = _vm.CurrentLevel + 1;
             _vm.GameEnded -= OnGameEnded;
@@ -246,7 +246,7 @@ namespace MantuGames.Views
             BuildSudokuGrid();
         }
 
-        private void OnRetry(object sender, EventArgs e)
+        private void OnRetry(object? sender, EventArgs e)
         {
             _vm.GameEnded -= OnGameEnded;
             _vm = new GameViewModel(_startLevel);

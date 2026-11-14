@@ -7,12 +7,12 @@ namespace MantuGames.ViewModels;
 
 public class CtdViewModel : INotifyPropertyChanged
 {
-    private CtdPuzzle _puzzle;
+    private CtdPuzzle _puzzle = null!;
     private int _level;
     private int? _activePair;
     private readonly List<(int r, int c)> _currentPath = new();
     private readonly Dictionary<int, List<(int r, int c)>> _completedPaths = new();
-    private System.Threading.Timer _timer;
+    private System.Threading.Timer? _timer;
 
     public int Rows => _puzzle?.Rows ?? 5;
     public int Cols => _puzzle?.Cols ?? 5;
@@ -38,8 +38,8 @@ public class CtdViewModel : INotifyPropertyChanged
         set { _timeRemainingSec = value; OnPropertyChanged(); }
     }
 
-    public event Action BoardChanged;
-    public event Action<bool> GameEnded;
+    public event Action? BoardChanged;
+    public event Action<bool>? GameEnded;
 
     public CtdViewModel(int level = 1)
     {
@@ -244,7 +244,7 @@ public class CtdViewModel : INotifyPropertyChanged
         return Colors.Transparent;
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string n = null)
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? n = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }

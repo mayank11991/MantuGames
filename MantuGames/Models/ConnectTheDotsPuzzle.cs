@@ -129,7 +129,7 @@ public class CtdPuzzle
         return true;
     }
 
-    private static List<(int, int)> FindPath(int[,] grid, int rows, int cols,
+    private static List<(int, int)>? FindPath(int[,] grid, int rows, int cols,
         int sr, int sc, int er, int ec, HashSet<(int, int)> occupied)
     {
         var visited = new bool[rows, cols];
@@ -202,5 +202,5 @@ public class CtdPair
     public int C1 { get; set; }
     public int R2 { get; set; }
     public int C2 { get; set; }
-    public Color Color { get; set; }
+    public Color Color { get; set; } = null!;
 }

@@ -9,7 +9,7 @@ public enum Direction
 
 public class PlacedWord
 {
-    public string Word { get; set; }
+    public string Word { get; set; } = "";
     public int StartRow { get; set; }
     public int StartCol { get; set; }
     public Direction Dir { get; set; }
@@ -19,7 +19,7 @@ public class PlacedWord
 public class WordPuzzle
 {
     public int GridSize { get; private set; }
-    public char[,] Grid { get; private set; }
+    public char[,] Grid { get; private set; } = null!;
     public List<PlacedWord> Words { get; private set; } = new();
 
     private static readonly Random _rng = new();
@@ -186,7 +186,7 @@ private static readonly string[] Tier3 = // 5-letter, levels 13+ (original 20 + 
 
     public bool AllFound() => Words.All(w => w.Found);
 
-    public PlacedWord CheckSelection(List<(int Row, int Col)> selected)
+    public PlacedWord? CheckSelection(List<(int Row, int Col)> selected)
     {
         if (selected.Count < 2) return null;
 

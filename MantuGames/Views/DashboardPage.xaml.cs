@@ -44,7 +44,7 @@ public partial class DashboardPage : ContentPage
             var report = CrashGuardService.TakePendingReport();
             if (report != null)
             {
-                _ = Application.Current!.Windows[0].Page!.DisplayAlert(
+                _ = Application.Current!.Windows[0].Page!.DisplayAlertAsync(
                     "Welcome back!",
                     "The app closed unexpectedly last time. Your progress is safe — we've noted the issue and it will be fixed soon.",
                     "OK");
@@ -117,7 +117,7 @@ public partial class DashboardPage : ContentPage
         CoinBalanceLabel.Text = CoinService.GetTotalCoins().ToString();
     }
 
-    private void OnProgressReset(object sender, EventArgs e)
+    private void OnProgressReset(object? sender, EventArgs e)
     {
         RefreshCoins();
     }
@@ -137,18 +137,18 @@ public partial class DashboardPage : ContentPage
         RefreshCoins();
     }
 
-    private void OnEditProfile(object sender, EventArgs e)
+    private void OnEditProfile(object? sender, EventArgs e)
     {
         if (ProfileService.Active != null)
             EditProfilePopup.Show(ProfileService.Active);
     }
 
-    private void OnStatisticsRequested(object sender, EventArgs e)
+    private void OnStatisticsRequested(object? sender, EventArgs e)
     {
         ShowStats();
     }
 
-    private void OnUpdateCheckRequested(object sender, EventArgs e)
+    private void OnUpdateCheckRequested(object? sender, EventArgs e)
     {
         _ = CheckForUpdatesAsync(force: true);
     }
@@ -198,7 +198,7 @@ public partial class DashboardPage : ContentPage
         ProfilePicker.Show();
     }
 
-    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    private void OnSearchTextChanged(object? sender, TextChangedEventArgs e)
     {
         string q = e.NewTextValue?.Trim() ?? "";
         PopulateGamesFlex(q);

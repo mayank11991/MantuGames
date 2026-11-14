@@ -4,7 +4,7 @@ namespace MantuGames.Converters;
 
 public class StringToColorConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is string hex && !string.IsNullOrEmpty(hex))
         {
@@ -13,7 +13,7 @@ public class StringToColorConverter : IValueConverter
                 var color = Color.FromArgb(hex.StartsWith('#') ? hex : "#" + hex);
                 if (parameter != null && color != null)
                 {
-                    var raw = parameter.ToString();
+                    var raw = parameter.ToString() ?? "";
                     if (byte.TryParse(raw.TrimStart('#'), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var alpha))
                     {
                         color = Color.FromArgb($"#{alpha:X2}{color.ToHex().Substring(1)}");
@@ -29,6 +29,6 @@ public class StringToColorConverter : IValueConverter
         return Color.FromArgb("#7C5CFF");
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => throw new NotImplementedException();
 }

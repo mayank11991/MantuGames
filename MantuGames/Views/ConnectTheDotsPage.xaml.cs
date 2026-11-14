@@ -7,7 +7,7 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class ConnectTheDotsPage : ContentPage
 {
-    private CtdViewModel _vm;
+    private CtdViewModel _vm = null!;
     private int _startLevel = 1;
     private bool _isDragging;
     private (int r, int c) _lastCell = (-1, -1);
@@ -31,7 +31,7 @@ public partial class ConnectTheDotsPage : ContentPage
         PauseOverlay.Resumed += OnResumeGame;
 
         this.Opacity = 0;
-        this.FadeTo(1, 400);
+        this.FadeToAsync(1, 400);
     }
 
     protected override void OnDisappearing()
@@ -80,7 +80,7 @@ public partial class ConnectTheDotsPage : ContentPage
 #endif
     }
 
-    private void OnCanvasHandlerChanged(object sender, EventArgs e)
+    private void OnCanvasHandlerChanged(object? sender, EventArgs e)
     {
 #if ANDROID
         if (GameCanvas.Handler?.PlatformView is Android.Views.View nv)
@@ -105,7 +105,7 @@ public partial class ConnectTheDotsPage : ContentPage
             if (isDown)
             {
                 Console.WriteLine($"[CTD] DOWN ({x:F1},{y:F1}) cell=({cell.r},{cell.c}) vm={_vm != null} drawable={drawable != null}");
-                if (_vm.IsGameOver || cell.r < 0) return;
+                if (_vm == null || _vm.IsGameOver || cell.r < 0) return;
                 _isDragging = true;
                 _lastCell = cell;
                 _vm.OnPointerDown(cell);
@@ -131,19 +131,19 @@ public partial class ConnectTheDotsPage : ContentPage
     }
 
     // ── Pause / Resume ──────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         try { _vm?.PauseTimer(); } catch { }
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         try { _vm?.ResumeTimer(); } catch { }
     }
 
     // ── BACK ────────────────────────────────────────────────────
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -183,7 +183,7 @@ public partial class ConnectTheDotsPage : ContentPage
         }
     }
 
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
         _startLevel = _vm.CurrentLevel + 1;
         _vm.BoardChanged -= OnBoardChanged;
@@ -199,7 +199,7 @@ public partial class ConnectTheDotsPage : ContentPage
         AttachNativeTouch();
     }
 
-    private void OnRetry(object sender, EventArgs e)
+    private void OnRetry(object? sender, EventArgs e)
     {
         _vm.BoardChanged -= OnBoardChanged;
         _vm.GameEnded -= OnGameEnded;

@@ -9,7 +9,7 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class ArrowLinesPage : ContentPage
 {
-    private ArrowLinesViewModel _vm;
+    private ArrowLinesViewModel _vm = null!;
     private int _startLevel = 1;
     private ArrowLinesDrawable _drawable;
     private bool _isAnimating;
@@ -42,7 +42,7 @@ public partial class ArrowLinesPage : ContentPage
         RefreshSolutionText();
 
         this.Opacity = 0;
-        this.FadeTo(1, 400);
+        this.FadeToAsync(1, 400);
     }
 
     protected override void OnDisappearing()
@@ -88,12 +88,12 @@ public partial class ArrowLinesPage : ContentPage
         ArrowGraphics.Invalidate();
     }
 
-    private void OnGraphicsSizeChanged(object sender, EventArgs e)
+    private void OnGraphicsSizeChanged(object? sender, EventArgs e)
     {
         RefreshDrawable();
     }
 
-    private void OnGraphicsTapped(object sender, TappedEventArgs e)
+    private void OnGraphicsTapped(object? sender, TappedEventArgs e)
     {
         if (_isAnimating || _vm.IsGameOver) return;
 
@@ -161,7 +161,7 @@ public partial class ArrowLinesPage : ContentPage
         });
     }
 
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         AudioService.Instance.Play("tap");
         bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost.", "Leave", "Stay");
@@ -192,30 +192,30 @@ public partial class ArrowLinesPage : ContentPage
         }
     }
 
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
-        _vm?.Cleanup();
+        _vm.Cleanup();
         InitGame(_vm.CurrentLevel + 1);
     }
 
-    private void OnRetry(object sender, EventArgs e)
+    private void OnRetry(object? sender, EventArgs e)
     {
         _vm?.Cleanup();
         InitGame(_startLevel);
     }
 
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         AudioService.Instance.Play("tap");
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         AudioService.Instance.Play("tap");
     }
 
-    private async void OnShowSolution(object sender, EventArgs e)
+    private async void OnShowSolution(object? sender, EventArgs e)
     {
         if (_vm == null || _vm.IsGameOver || _isAnimating) return;
 

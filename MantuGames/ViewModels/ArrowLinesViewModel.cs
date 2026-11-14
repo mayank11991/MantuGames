@@ -7,7 +7,7 @@ namespace MantuGames.ViewModels;
 
 public class ArrowLinesViewModel : INotifyPropertyChanged
 {
-    private ArrowLinesPuzzle _puzzle;
+    private ArrowLinesPuzzle _puzzle = null!;
     private int _currentLevel;
     private int _moves;
     private int _arrowsCleared;
@@ -76,10 +76,10 @@ public class ArrowLinesViewModel : INotifyPropertyChanged
 
     public ICommand ArrowTappedCommand { get; }
 
-    public event Action<bool> GameEnded;
-    public event Action<ArrowCell, List<(int Row, int Col)>> MoveAnimated;
-    public event Action BoardChanged;
-    public event Action<ArrowCell> ArrowBlocked;
+    public event Action<bool>? GameEnded;
+    public event Action<ArrowCell, List<(int Row, int Col)>>? MoveAnimated;
+    public event Action? BoardChanged;
+    public event Action<ArrowCell>? ArrowBlocked;
 
     public ArrowLinesViewModel(int level = 1)
     {
@@ -158,7 +158,7 @@ public class ArrowLinesViewModel : INotifyPropertyChanged
         ArrowBlocked = null;
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string name = null)
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? name = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }

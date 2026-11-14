@@ -10,7 +10,7 @@ public static class StatsService
     private static string PlayedKey(string gameId) => ProfileService.Key($"{gameId}_stats_played");
     private static string WonKey(string gameId) => ProfileService.Key($"{gameId}_stats_won");
 
-    public static void RecordGame(string gameId, bool isWin, int coins)
+    public static void RecordGame(string? gameId, bool isWin, int coins)
     {
         if (string.IsNullOrEmpty(gameId)) return;
 

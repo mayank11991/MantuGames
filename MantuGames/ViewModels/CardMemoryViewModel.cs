@@ -13,7 +13,7 @@ public class CardViewModel : INotifyPropertyChanged
 
     public int    Id     { get; set; }
     public int    PairId { get; set; }
-    public string Image  { get; set; }
+    public string Image  { get; set; } = "";
 
     public bool IsFlipped
     {
@@ -27,14 +27,14 @@ public class CardViewModel : INotifyPropertyChanged
         set { _isMatched = value; OnPropertyChanged(); }
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }
 
 public class CardMemoryViewModel : INotifyPropertyChanged
 {
-    private System.Threading.Timer _timer;
+    private System.Threading.Timer? _timer;
     private bool _isGameOver;
     private int  _timeRemainingSec;
     private int  _currentLevel;
@@ -89,7 +89,7 @@ public class CardMemoryViewModel : INotifyPropertyChanged
 
     public ICommand FlipCommand { get; }
 
-    public event Action<bool> GameEnded;
+    public event Action<bool>? GameEnded;
 
     public CardMemoryViewModel(int level = 1)
     {
@@ -208,7 +208,7 @@ public class CardMemoryViewModel : INotifyPropertyChanged
     public void PauseTimer() => StopTimer();
     public void ResumeTimer() => StartTimer();
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }

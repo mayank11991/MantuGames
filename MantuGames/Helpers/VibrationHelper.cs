@@ -8,47 +8,54 @@ public static class VibrationHelper
         set => Preferences.Set("vibration_enabled", value);
     }
 
-    public static void Click()
+    public static void Click() => Vibrate(20, HapticFeedbackType.Click);
+
+    public static void LongPress() => Vibrate(50, HapticFeedbackType.LongPress);
+
+    private static void Vibrate(long milliseconds, HapticFeedbackType fallback)
     {
         if (!Enabled) return;
         try
         {
 #if ANDROID
-            var ctx = Android.App.Application.Context;
-            var vibrator = ctx.GetSystemService(Android.Content.Context.VibratorService) as Android.OS.Vibrator;
-            if (vibrator?.HasVibrator == true)
-            {
-                if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
-                    vibrator.Vibrate(Android.OS.VibrationEffect.CreateOneShot(20, Android.OS.VibrationEffect.DefaultAmplitude));
-                else
-                    vibrator.Vibrate(20);
-                return;
-            }
+            if (TryAndroidVibrate(milliseconds)) return;
 #endif
-            HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+            HapticFeedback.Default.Perform(fallback);
         }
         catch { }
     }
 
-    public static void LongPress()
-    {
-        if (!Enabled) return;
-        try
-        {
 #if ANDROID
-            var ctx = Android.App.Application.Context;
-            var vibrator = ctx.GetSystemService(Android.Content.Context.VibratorService) as Android.OS.Vibrator;
-            if (vibrator?.HasVibrator == true)
-            {
-                if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
-                    vibrator.Vibrate(Android.OS.VibrationEffect.CreateOneShot(50, Android.OS.VibrationEffect.DefaultAmplitude));
-                else
-                    vibrator.Vibrate(50);
-                return;
-            }
-#endif
-            HapticFeedback.Default.Perform(HapticFeedbackType.LongPress);
+    private static bool TryAndroidVibrate(long milliseconds)
+    {
+        var ctx = Android.App.Application.Context;
+
+        Android.OS.Vibrator? vibrator;
+        if (OperatingSystem.IsAndroidVersionAtLeast(31))
+        {
+            var manager = ctx.GetSystemService(Android.Content.Context.VibratorManagerService) as Android.OS.VibratorManager;
+            vibrator = manager?.DefaultVibrator;
         }
-        catch { }
+        else
+        {
+#pragma warning disable CA1422 // VibratorService is the only option below Android 12
+            vibrator = ctx.GetSystemService(Android.Content.Context.VibratorService) as Android.OS.Vibrator;
+#pragma warning restore CA1422
+        }
+
+        if (vibrator?.HasVibrator != true) return false;
+
+        if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            vibrator.Vibrate(Android.OS.VibrationEffect.CreateOneShot(milliseconds, Android.OS.VibrationEffect.DefaultAmplitude));
+        }
+        else
+        {
+#pragma warning disable CA1422 // Vibrate(long) is the only option below Android 8
+            vibrator.Vibrate(milliseconds);
+#pragma warning restore CA1422
+        }
+        return true;
     }
+#endif
 }

@@ -6,8 +6,8 @@ namespace MantuGames.Views;
 public class ArrowLinesDrawable : IDrawable
 {
     public List<ArrowCell> Arrows { get; set; } = new();
-    public ArrowCell HighlightedArrow { get; set; }
-    public ArrowCell SlideArrow { get; set; }
+    public ArrowCell? HighlightedArrow { get; set; }
+    public ArrowCell? SlideArrow { get; set; }
     public float SlideProgress { get; set; } = 0;
     public int Rows { get; set; } = 9;
     public int Cols { get; set; } = 9;

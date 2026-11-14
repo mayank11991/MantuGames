@@ -2,7 +2,7 @@ namespace MantuGames.Views.Controls;
 
 public partial class PauseOverlay : ContentView
 {
-    public event EventHandler Resumed;
+    public event EventHandler? Resumed;
 
     public PauseOverlay()
     {
@@ -14,12 +14,12 @@ public partial class PauseOverlay : ContentView
         IsVisible = true;
         Opacity = 0;
         Overlay.IsVisible = true;
-        this.FadeTo(1, 200);
+        this.FadeToAsync(1, 200);
     }
 
     public void Hide()
     {
-        this.FadeTo(0, 150).ContinueWith(_ =>
+        this.FadeToAsync(0, 150).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -29,9 +29,9 @@ public partial class PauseOverlay : ContentView
         });
     }
 
-    private void OnOverlayTapped(object sender, TappedEventArgs e) { }
+    private void OnOverlayTapped(object? sender, TappedEventArgs e) { }
 
-    private void OnResume(object sender, TappedEventArgs e)
+    private void OnResume(object? sender, TappedEventArgs e)
     {
         Hide();
         Resumed?.Invoke(this, EventArgs.Empty);

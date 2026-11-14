@@ -7,7 +7,7 @@ namespace MantuGames.Views.Controls;
 public partial class CoinShopPopup : ContentView
 {
     /// <summary>Raised whenever a coin purchase adds coins to any game.</summary>
-    public event EventHandler CoinsChanged;
+    public event EventHandler? CoinsChanged;
 
     private string? _targetGameId;
     private bool _busy;
@@ -62,14 +62,14 @@ public partial class CoinShopPopup : ContentView
         Overlay.IsVisible = true;
         Opacity = 0;
         Scale = 0.8;
-        this.FadeTo(1, 200, Easing.CubicOut);
-        this.ScaleTo(1, 200, Easing.SpringOut);
+        this.FadeToAsync(1, 200, Easing.CubicOut);
+        this.ScaleToAsync(1, 200, Easing.SpringOut);
     }
 
     public void Hide()
     {
-        this.FadeTo(0, 150, Easing.CubicIn);
-        this.ScaleTo(0.8, 150, Easing.CubicIn).ContinueWith(_ =>
+        this.FadeToAsync(0, 150, Easing.CubicIn);
+        this.ScaleToAsync(0.8, 150, Easing.CubicIn).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -260,7 +260,7 @@ public partial class CoinShopPopup : ContentView
                     },
                 }
             };
-            var balance = balanceRow.Children[1] as Label;
+            var balance = (Label)balanceRow.Children[1];
             stack.Children.Add(balanceRow);
             chip.Content = stack;
 
@@ -288,5 +288,5 @@ public partial class CoinShopPopup : ContentView
         CoinsChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnClose(object sender, TappedEventArgs e) => Hide();
+    private void OnClose(object? sender, TappedEventArgs e) => Hide();
 }

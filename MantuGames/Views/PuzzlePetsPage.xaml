@@ -17,27 +17,27 @@
 
             <!-- Row 0: Top bar -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="0" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
-                </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="1" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label x:Name="LevelLabel" Text="Level 1"
                            FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold"
                            TextColor="#F472B6" HorizontalOptions="Center" />
-                </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="2" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnPause" />
-                </Frame>
+                </Border>
             </Grid>
 
             <!-- Row 1: Timer -->

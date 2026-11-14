@@ -57,8 +57,8 @@ internal sealed class DustEffect : IDrawable
 public partial class SplashPage : ContentPage
 {
     private readonly DustEffect _dust = new();
-    private IDispatcherTimer _dustTimer;
-    private Label[] MantuLetters;
+    private IDispatcherTimer? _dustTimer;
+    private Label[] MantuLetters = null!;
 
     public SplashPage()
     {
@@ -74,9 +74,9 @@ public partial class SplashPage : ContentPage
         for (int i = 0; i < shakeCount; i++)
         {
             double offsetX = (i % 2 == 0 ? 1 : -1) * shakeMagnitude * (1.0 - (double)i / shakeCount);
-            await Root.TranslateTo(offsetX, 0, 30, Easing.Linear);
+            await Root.TranslateToAsync(offsetX, 0, 30, Easing.Linear);
         }
-        await Root.TranslateTo(0, 0, 30, Easing.Linear);
+        await Root.TranslateToAsync(0, 0, 30, Easing.Linear);
     }
 
     private async void OnLoaded(object? sender, EventArgs e)
@@ -111,7 +111,7 @@ public partial class SplashPage : ContentPage
                 await Task.Delay(100);
                 MantuLetters[i].Opacity = 1;
                 AudioService.Instance.Play("thud");
-                await MantuLetters[i].TranslateTo(0, 0, 250, Easing.CubicOut);
+                await MantuLetters[i].TranslateToAsync(0, 0, 250, Easing.CubicOut);
 
                 double screenX = MantuRow.Bounds.X + MantuLetters[i].X + MantuLetters[i].Bounds.Width / 2 + CenterStack.Bounds.X;
                 double screenY = MantuRow.Bounds.Y + MantuLetters[i].Y + MantuLetters[i].Bounds.Height / 2 + CenterStack.Bounds.Y;
@@ -125,7 +125,7 @@ public partial class SplashPage : ContentPage
             GamingsLabel.TranslationX = 0;
             GamingsLabel.TranslationY = -200;
             GamingsLabel.Opacity = 1;
-            await GamingsLabel.TranslateTo(0, 0, 400, Easing.CubicIn);
+            await GamingsLabel.TranslateToAsync(0, 0, 400, Easing.CubicIn);
             AudioService.Instance.Play("thud");
             await ShakeScreenAsync();
 
@@ -136,8 +136,8 @@ public partial class SplashPage : ContentPage
             _dustTimer?.Stop();
             await Task.Delay(1800);
 
-            await MantuRow.FadeTo(0, 200, Easing.CubicIn);
-            await GamingsLabel.FadeTo(0, 200, Easing.CubicIn);
+            await MantuRow.FadeToAsync(0, 200, Easing.CubicIn);
+            await GamingsLabel.FadeToAsync(0, 200, Easing.CubicIn);
             Application.Current!.Windows[0].Page = new AppShell();
         }
         catch (Exception ex)

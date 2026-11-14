@@ -46,7 +46,7 @@ namespace MantuGames.Converters
     /// <summary>Timer bar color — green → orange → red as time runs out.</summary>
     public class TimerColorConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is double progress)
             {
@@ -58,31 +58,31 @@ namespace MantuGames.Converters
             return Color.FromArgb("#2F9E7F");
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
             => throw new NotImplementedException();
     }
 
     /// <summary>Converts total seconds to "m:ss" display string.</summary>
     public class SecondsToTimeConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is int sec)
                 return $"{sec / 60}:{sec % 60:D2}";
             return "0:00";
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
             => throw new NotImplementedException();
     }
 
     /// <summary>Bool to visibility (IsVisible).</summary>
     public class InverseBoolConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
             => value is bool b && !b;
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
             => value is bool b && !b;
     }
 }

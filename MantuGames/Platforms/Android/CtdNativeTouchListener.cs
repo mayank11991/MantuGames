@@ -16,11 +16,12 @@ public class CtdNativeTouchListener : Java.Lang.Object, global::Android.Views.Vi
     public CtdNativeTouchListener(global::Android.Views.View hostView, Action<float, float, bool, bool, bool> callback)
     {
         _callback = callback;
-        _density = hostView.Resources.DisplayMetrics.Density;
+        _density = hostView.Resources?.DisplayMetrics?.Density ?? 1f;
     }
 
-    public bool OnTouch(global::Android.Views.View v, MotionEvent e)
+    public bool OnTouch(global::Android.Views.View? v, MotionEvent? e)
     {
+        if (e == null) return false;
         float x = e.GetX() / _density;
         float y = e.GetY() / _density;
 

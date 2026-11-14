@@ -29,7 +29,7 @@ public partial class GameTimerView : ContentView
         set => SetValue(SecondsRemainingProperty, value);
     }
 
-    private CancellationTokenSource _pulseCts;
+    private CancellationTokenSource? _pulseCts;
 
     public GameTimerView()
     {
@@ -98,8 +98,8 @@ public partial class GameTimerView : ContentView
         {
             while (!ct.IsCancellationRequested)
             {
-                await BarFill.ScaleTo(1.05, 400, Easing.SinInOut);
-                await BarFill.ScaleTo(1.0, 400, Easing.SinInOut);
+                await BarFill.ScaleToAsync(1.05, 400, Easing.SinInOut);
+                await BarFill.ScaleToAsync(1.0, 400, Easing.SinInOut);
             }
         }
         catch (TaskCanceledException) { }
@@ -110,6 +110,6 @@ public partial class GameTimerView : ContentView
         _pulseCts?.Cancel();
         _pulseCts?.Dispose();
         _pulseCts = null;
-        BarFill.ScaleTo(1.0, 100);
+        BarFill.ScaleToAsync(1.0, 100);
     }
 }

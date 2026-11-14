@@ -7,7 +7,7 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class NumberMatchPage : ContentPage
 {
-    private NumberMatchViewModel _vm;
+    private NumberMatchViewModel _vm = null!;
     private int _startLevel = 1;
 
     public string Level
@@ -29,7 +29,7 @@ public partial class NumberMatchPage : ContentPage
         PauseOverlay.Resumed += OnResumeGame;
 
         this.Opacity = 0;
-        this.FadeTo(1, 400);
+        this.FadeToAsync(1, 400);
     }
 
     protected override void OnDisappearing()
@@ -51,17 +51,17 @@ public partial class NumberMatchPage : ContentPage
     }
 
     // ── Pause / Resume ──────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
     }
 
     // ── BACK ────────────────────────────────────────────────────
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -94,21 +94,21 @@ public partial class NumberMatchPage : ContentPage
         }
     }
 
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
         _startLevel = _vm.CurrentLevel + 1;
         _vm.GameEnded -= OnGameEnded;
         InitGame(_startLevel);
     }
 
-    private void OnRetry(object sender, EventArgs e)
+    private void OnRetry(object? sender, EventArgs e)
     {
         _vm.GameEnded -= OnGameEnded;
         InitGame(_startLevel);
     }
 
     // ── ADD NUMBERS ─────────────────────────────────────────────
-    private void OnAddNumbers(object sender, EventArgs e)
+    private void OnAddNumbers(object? sender, EventArgs e)
     {
         _vm?.AddNumbers();
     }

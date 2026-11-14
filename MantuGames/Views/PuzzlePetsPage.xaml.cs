@@ -15,10 +15,10 @@ public partial class PuzzlePetsPage : ContentPage
     };
 
     private int _level = 1;
-    private PuzzlePetsPuzzle _puzzle;
+    private PuzzlePetsPuzzle _puzzle = null!;
     private int _totalSec;
     private int _remainSec;
-    private IDispatcherTimer _gameTimer;
+    private IDispatcherTimer? _gameTimer;
     private DateTime _startTime;
     private bool _gameEnded;
     private readonly List<Border> _gridCells = new();
@@ -63,7 +63,7 @@ public partial class PuzzlePetsPage : ContentPage
         AudioService.Instance.StartMusic();
         StartLevel();
         this.Opacity = 0;
-        this.FadeTo(1, 350);
+        this.FadeToAsync(1, 350);
         PauseOverlay.Resumed += OnResumeGame;
     }
 
@@ -362,8 +362,8 @@ public partial class PuzzlePetsPage : ContentPage
                 AudioService.Instance.Play("wrong");
                 StatusLabel.Text = $"Piece {pieceId + 1} goes in a different spot";
                 var cell = _gridCells[cellUnder];
-                await cell.ScaleTo(1.1, 60, Easing.SpringOut);
-                await cell.ScaleTo(1.0, 60, Easing.SpringIn);
+                await cell.ScaleToAsync(1.1, 60, Easing.SpringOut);
+                await cell.ScaleToAsync(1.0, 60, Easing.SpringIn);
             }
         }
         else
@@ -452,10 +452,10 @@ public partial class PuzzlePetsPage : ContentPage
         placed.Scale = 0.5;
         placed.Opacity = 0;
         await Task.WhenAll(
-            placed.ScaleTo(1.15, 150, Easing.SpringOut),
-            placed.FadeTo(1, 120)
+            placed.ScaleToAsync(1.15, 150, Easing.SpringOut),
+            placed.FadeToAsync(1, 120)
         );
-        await placed.ScaleTo(1.0, 100, Easing.SpringIn);
+        await placed.ScaleToAsync(1.0, 100, Easing.SpringIn);
     }
 
     private void RebuildTray()
@@ -508,13 +508,13 @@ public partial class PuzzlePetsPage : ContentPage
         PiecePalette[pieceId % PiecePalette.Length];
 
     // ── Pause / Resume ──────────────────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         _gameTimer?.Stop();
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         _gameTimer?.Start();
     }
@@ -528,7 +528,7 @@ public partial class PuzzlePetsPage : ContentPage
         _gameTimer.Start();
     }
 
-    private void OnGameTick(object s, EventArgs e)
+    private void OnGameTick(object? s, EventArgs e)
     {
         if (_gameEnded) return;
         _remainSec = Math.Max(0, _remainSec - 1);
@@ -557,8 +557,8 @@ public partial class PuzzlePetsPage : ContentPage
 
             foreach (var cell in _gridCells)
             {
-                await cell.ScaleTo(1.08, 60, Easing.SpringOut);
-                await cell.ScaleTo(1.0, 60, Easing.SpringIn);
+                await cell.ScaleToAsync(1.08, 60, Easing.SpringOut);
+                await cell.ScaleToAsync(1.0, 60, Easing.SpringIn);
             }
 
             StatusLabel.Text = "Puzzle Complete!";
@@ -580,15 +580,15 @@ public partial class PuzzlePetsPage : ContentPage
     }
 
     // ── Navigation ──────────────────────────────────────────────────────────
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
         _level++;
         StartLevel();
     }
 
-    private void OnRetry(object sender, EventArgs e) => StartLevel();
+    private void OnRetry(object? sender, EventArgs e) => StartLevel();
 
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -602,7 +602,7 @@ public partial class PuzzlePetsPage : ContentPage
         }
     }
 
-    private async void OnShowSolution(object sender, EventArgs e)
+    private async void OnShowSolution(object? sender, EventArgs e)
     {
         try
         {
@@ -637,11 +637,11 @@ public partial class PuzzlePetsPage : ContentPage
                 placed.Opacity = 0;
                 placed.TranslationY = 40;
                 await Task.WhenAll(
-                    placed.TranslateTo(0, 0, 300, Easing.CubicInOut),
-                    placed.ScaleTo(1.15, 180, Easing.SpringOut),
-                    placed.FadeTo(1, 150)
+                    placed.TranslateToAsync(0, 0, 300, Easing.CubicInOut),
+                    placed.ScaleToAsync(1.15, 180, Easing.SpringOut),
+                    placed.FadeToAsync(1, 150)
                 );
-                await placed.ScaleTo(1.0, 80, Easing.SpringIn);
+                await placed.ScaleToAsync(1.0, 80, Easing.SpringIn);
 
                 RebuildTray();
                 await Task.Delay(80);

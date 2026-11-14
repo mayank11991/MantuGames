@@ -143,7 +143,7 @@ public partial class MazeRunnerPage : ContentPage
         AudioService.Instance.StartMusic();
         StartLevel();
         this.Opacity = 0;
-        this.FadeTo(1, 350);
+        this.FadeToAsync(1, 350);
         PauseOverlay.Resumed += OnResumeGame;
     }
 
@@ -196,20 +196,20 @@ public partial class MazeRunnerPage : ContentPage
     }
 
     // ── Pause / Resume ──────────────────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         _gameTimer?.Stop();
         _animTimer?.Stop();
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         _gameTimer?.Start();
         _animTimer?.Start();
     }
 
-    private void OnShowSolutionClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object? sender, EventArgs e)
     {
         if (_maze == null || _gameEnded) return;
 
@@ -374,7 +374,7 @@ public partial class MazeRunnerPage : ContentPage
     // ── Pan handler (distance-proportional movement) ───────────────────────
     private double _panTotalX, _panTotalY;
 
-    private void OnPanMaze(object s, PanUpdatedEventArgs e)
+    private void OnPanMaze(object? s, PanUpdatedEventArgs e)
     {
         switch (e.StatusType)
         {
@@ -447,8 +447,8 @@ public partial class MazeRunnerPage : ContentPage
             if (!showBump) return;
             _isMoving = true;
             AudioService.Instance.Play("bump");
-            await MazeCanvas.TranslateTo(dc * 6, dr * 6, 60, Easing.CubicOut);
-            await MazeCanvas.TranslateTo(0, 0, 80, Easing.SpringOut);
+            await MazeCanvas.TranslateToAsync(dc * 6, dr * 6, 60, Easing.CubicOut);
+            await MazeCanvas.TranslateToAsync(0, 0, 80, Easing.SpringOut);
             _isMoving = false;
             return;
         }
@@ -557,11 +557,11 @@ public partial class MazeRunnerPage : ContentPage
                     await Task.Delay((int)delay);
                     await MainThread.InvokeOnMainThreadAsync(async () =>
                     {
-                        await sparkle.ScaleTo(1.5 + rng.NextDouble(), 250, Easing.SpringOut);
-                        await sparkle.FadeTo(1, 150, Easing.CubicOut);
+                        await sparkle.ScaleToAsync(1.5 + rng.NextDouble(), 250, Easing.SpringOut);
+                        await sparkle.FadeToAsync(1, 150, Easing.CubicOut);
                         await Task.WhenAll(
-                            sparkle.ScaleTo(0.3, 350, Easing.CubicIn),
-                            sparkle.FadeTo(0, 350, Easing.CubicIn)
+                            sparkle.ScaleToAsync(0.3, 350, Easing.CubicIn),
+                            sparkle.FadeToAsync(0, 350, Easing.CubicIn)
                         );
                         MazeOverlay.Children.Remove(sparkle);
                     });
@@ -589,15 +589,15 @@ public partial class MazeRunnerPage : ContentPage
     }
 
     // ── Navigation ──────────────────────────────────────────────────────────
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
         _level++;
         StartLevel();
     }
 
-    private void OnRetry(object sender, EventArgs e) => StartLevel();
+    private void OnRetry(object? sender, EventArgs e) => StartLevel();
 
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {

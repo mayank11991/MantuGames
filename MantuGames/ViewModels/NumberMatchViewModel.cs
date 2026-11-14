@@ -30,8 +30,8 @@ public class NmCell : INotifyPropertyChanged
     public bool TextVisibility => true;
     public string ValueTextColor => IsEliminated ? "#9B8AAE" : "#3D2C4E";
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string n = null)
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? n = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }
 
@@ -68,8 +68,8 @@ public class NumberMatchViewModel : INotifyPropertyChanged
 
     public int CurrentLevel { get; private set; }
 
-    public event Action BoardChanged;
-    public event Action<bool> GameEnded;
+    public event Action? BoardChanged;
+    public event Action<bool>? GameEnded;
 
     public NumberMatchViewModel(int level = 1)
     {
@@ -477,7 +477,7 @@ public class NumberMatchViewModel : INotifyPropertyChanged
         GameEnded = null;
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string n = null)
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? n = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }

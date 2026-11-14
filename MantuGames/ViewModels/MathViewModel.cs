@@ -9,20 +9,19 @@ namespace MantuGames.ViewModels;
 
 public class MathViewModel : INotifyPropertyChanged
 {
-    private MathPuzzle _puzzle;
-    private System.Threading.Timer _timer;
+    private MathPuzzle _puzzle = null!;
+    private System.Threading.Timer? _timer;
     private bool _isGameOver, _isWin;
     private int _timeRemainingSec = ProgressService.ClassicTimerSeconds;
     private int _currentLevel;
     private int _currentIndex = 0;
     private int _correctCount = 0;
-    private int? _selectedChoice = null;
     private bool _answerRevealed = false;
 
     public bool SolutionWasShown { get; private set; }
 
     // Current question data
-    private string _questionText;
+    private string _questionText = null!;
     private ObservableCollection<ChoiceViewModel> _choices = new();
 
     public string QuestionText
@@ -99,8 +98,8 @@ public class MathViewModel : INotifyPropertyChanged
     public ICommand AnswerCommand { get; }
     public ICommand ShowSolutionCommand { get; }
 
-    public event Action<bool> GameEnded;
-    public event Action QuestionChanged;
+    public event Action<bool>? GameEnded;
+    public event Action? QuestionChanged;
 
     public MathViewModel(int level = 1)
     {
@@ -142,7 +141,6 @@ public class MathViewModel : INotifyPropertyChanged
             _choices.Add(new ChoiceViewModel { Value = c, State = ChoiceState.Normal });
 
         _answerRevealed = false;
-        _selectedChoice = null;
 
         OnPropertyChanged(nameof(ProgressText));
         OnPropertyChanged(nameof(ProgressValue));
@@ -232,9 +230,9 @@ public class MathViewModel : INotifyPropertyChanged
         GameEnded?.Invoke(win);
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+    protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }
 
@@ -271,8 +269,8 @@ public class ChoiceViewModel : INotifyPropertyChanged
 
     public string TextColor => "#FFFFFF";
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+    protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }

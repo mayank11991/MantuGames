@@ -4,11 +4,11 @@ namespace MantuGames.Services;
 
 public class AudioService
 {
-    public static AudioService Instance { get; private set; }
+    public static AudioService Instance { get; private set; } = null!;
 
     private readonly IAudioManager _audio;
     private readonly Dictionary<string, IAudioPlayer?> _cache = new();
-    private IAudioPlayer _bgPlayer;
+    private IAudioPlayer? _bgPlayer;
     private bool _musicEnabled = true;
     private bool _sfxEnabled = true;
     private bool _wasPlayingBeforeSleep;
@@ -58,7 +58,7 @@ public class AudioService
         }
     }
 
-    private void OnBgPlaybackEnded(object sender, EventArgs e)
+    private void OnBgPlaybackEnded(object? sender, EventArgs e)
     {
         if (_isAppInBackground) return;
         if (_musicEnabled && _bgPlayer != null)

@@ -80,19 +80,19 @@ namespace MantuGames.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+        protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }
 
     public class GameViewModel : INotifyPropertyChanged
     {
-        private SudokuPuzzle _puzzle;
-        private CellViewModel _selectedCell;
+        private SudokuPuzzle _puzzle = null!;
+        private CellViewModel? _selectedCell;
         private bool _isGameOver, _isWin;
         private int _errorsCount;
-        private System.Threading.Timer _timer;
+        private System.Threading.Timer? _timer;
 
         public bool SolutionWasShown { get; private set; }
 
@@ -165,7 +165,7 @@ namespace MantuGames.ViewModels
         public ICommand EraseCommand { get; }
         public ICommand ShowSolutionCommand { get; }
 
-        public event Action<bool> GameEnded;
+        public event Action<bool>? GameEnded;
 
         public GameViewModel(int level = 1)
         {
@@ -321,9 +321,9 @@ namespace MantuGames.ViewModels
             GameEnded?.Invoke(win);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+        protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
     }
 }

@@ -41,13 +41,13 @@ public partial class EditProfilePopup : ContentView
             if (!IsVisible) return;
             Sheet.TranslationY = Math.Max(Sheet.Height, 400);
             Sheet.Opacity = 1;
-            Sheet.TranslateTo(0, 0, 320, Easing.CubicOut);
+            Sheet.TranslateToAsync(0, 0, 320, Easing.CubicOut);
         });
     }
 
     public void Hide()
     {
-        Sheet.TranslateTo(0, 500, 240, Easing.CubicIn).ContinueWith(_ =>
+        Sheet.TranslateToAsync(0, 500, 240, Easing.CubicIn).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -120,9 +120,9 @@ public partial class EditProfilePopup : ContentView
         AvatarImage.Source = _selectedAvatar;
     }
 
-    private void OnOverlayTapped(object sender, TappedEventArgs e) { }
+    private void OnOverlayTapped(object? sender, TappedEventArgs e) { }
 
-    private void OnSave(object sender, TappedEventArgs e)
+    private void OnSave(object? sender, TappedEventArgs e)
     {
         if (_profile == null) return;
 

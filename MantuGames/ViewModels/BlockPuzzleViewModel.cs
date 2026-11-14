@@ -12,10 +12,10 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
     public const int Cols = 10;
 
     // ── Backing fields ────────────────────────────────────────────────────────
-    private bool[,]  _board;
-    private Color[,] _boardColors;
-    private BlockPiece _currentPiece;
-    private BlockPiece _nextPiece;
+    private bool[,]  _board = null!;
+    private Color[,] _boardColors = null!;
+    private BlockPiece? _currentPiece;
+    private BlockPiece _nextPiece = null!;
     private int  _currentX;
     private int  _currentY;
     private int  _score;
@@ -23,8 +23,8 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
     private int  _linesCleared;
     private int  _timeRemainingSec;
     private bool _isGameOver;
-    private System.Threading.Timer _dropTimer;
-    private IDispatcherTimer _gameTimer;
+    private System.Threading.Timer? _dropTimer;
+    private IDispatcherTimer? _gameTimer;
     private static readonly Random Rng = new();
 
     // ── Public properties ─────────────────────────────────────────────────────
@@ -40,7 +40,7 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
         private set { _boardColors = value; OnPropertyChanged(); }
     }
 
-    public BlockPiece CurrentPiece
+    public BlockPiece? CurrentPiece
     {
         get => _currentPiece;
         private set { _currentPiece = value; OnPropertyChanged(); }
@@ -111,10 +111,10 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
     public ICommand DropCommand       { get; }
 
     // ── Events ────────────────────────────────────────────────────────────────
-    public event Action<bool> GameEnded;
-    public event Action BoardChanged;
-    public event Action PieceLocked;
-    public event Action<List<int>> LinesClearing;
+    public event Action<bool>? GameEnded;
+    public event Action? BoardChanged;
+    public event Action? PieceLocked;
+    public event Action<List<int>>? LinesClearing;
 
     // ── Constructor ───────────────────────────────────────────────────────────
     public BlockPuzzleViewModel(int level = 1)
@@ -254,7 +254,7 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
 
     private void AutoDrop()
     {
-        if (_isGameOver) return;
+        if (_isGameOver || _currentPiece == null) return;
 
         if (CanPlace(_currentPiece, _currentX, _currentY + 1))
         {
@@ -420,7 +420,7 @@ public class BlockPuzzleViewModel : INotifyPropertyChanged
     public void ResumeTimer() { StartTimer(); StartGameTimer(); }
 
     // ── INotifyPropertyChanged ────────────────────────────────────────────────
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }

@@ -21,7 +21,7 @@ public class AnimalCrushViewModel : INotifyPropertyChanged
 
     public AnimalCrushPuzzle Puzzle { get; private set; }
 
-    public event Action<bool> GameEnded;
+    public event Action<bool>? GameEnded;
 
     public int CurrentLevel
     {
@@ -280,7 +280,7 @@ public class AnimalCrushViewModel : INotifyPropertyChanged
         GameEnded?.Invoke(win);
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }

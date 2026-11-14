@@ -24,26 +24,26 @@
 
             <!-- TOP BAR: Back + Level + Pause -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="0" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
-                </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="1" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding LevelDisplay}" TextColor="#6D4AFF"
                            FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
-                </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="2" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnPause" />
-                </Frame>
+                </Border>
             </Grid>
 
             <!-- REUSABLE TIMER CONTROL -->
@@ -61,42 +61,42 @@
             <!-- NUMBER BUTTONS with animal images -->
             <Grid Grid.Row="4" ColumnDefinitions="*,*,*,*,*,Auto"
                   ColumnSpacing="6" Padding="4,6">
-                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="14"
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="0" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 14"
                        Padding="0">
                     <ImageButton Source="cat.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="1" />
-                </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="14"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="1" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 14"
                        Padding="0">
                     <ImageButton Source="elephant.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="2" />
-                </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="14"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="2" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 14"
                        Padding="0">
                     <ImageButton Source="lion.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="3" />
-                </Frame>
-                <Frame Grid.Column="3" BackgroundColor="#FFFDFA" CornerRadius="14"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="3" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 14"
                        Padding="0">
                     <ImageButton Source="owl.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="4" />
-                </Frame>
-                <Frame Grid.Column="4" BackgroundColor="#FFFDFA" CornerRadius="14"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="4" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 14"
                        Padding="0">
                     <ImageButton Source="butterfly.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="5" />
-                </Frame>
-                <Frame Grid.Column="5" BackgroundColor="#FFFDFA" CornerRadius="14"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="5" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 14"
                        Padding="0" WidthRequest="58" HeightRequest="58">
                     <Button Text="⌫" FontSize="28" FontAttributes="Bold"
                             TextColor="#3D2C4E" BackgroundColor="Transparent"
                             Padding="0" Command="{Binding EraseCommand}" />
-                </Frame>
+                </Border>
             </Grid>
 
             <!-- SHOW SOLUTION -->

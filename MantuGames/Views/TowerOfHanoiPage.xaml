@@ -20,12 +20,12 @@
                         BackgroundColor="Transparent"
                        
                         Clicked="OnBackClicked" VerticalOptions="Center"/>
-                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="1" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 20"
                        Padding="12,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding LevelDisplay}" TextColor="#E0566F"
                            FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
-                </Frame>
+                </Border>
                 <ImageButton Grid.Column="2" Source="pause.svg"
                              HeightRequest="24" WidthRequest="24"
                              BackgroundColor="Transparent" Padding="0"

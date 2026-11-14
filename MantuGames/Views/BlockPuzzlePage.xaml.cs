@@ -9,10 +9,10 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class BlockPuzzlePage : ContentPage
 {
-    private BlockPuzzleViewModel _vm;
+    private BlockPuzzleViewModel _vm = null!;
     private int _startLevel = 1;
     private int _prevLinesCleared;
-    private BoxView[,] _cells;
+    private BoxView[,] _cells = null!;
 
     // Gesture tracking
     private double _panX, _panY;
@@ -33,7 +33,7 @@ public partial class BlockPuzzlePage : ContentPage
         BoardContainer.SizeChanged += OnBoardContainerSizeChanged;
     }
 
-    private void OnBoardContainerSizeChanged(object sender, EventArgs e)
+    private void OnBoardContainerSizeChanged(object? sender, EventArgs e)
     {
         if (_vm == null) return;
         if (BoardContainer.Width <= 0 || BoardContainer.Height <= 0) return;
@@ -83,7 +83,7 @@ public partial class BlockPuzzlePage : ContentPage
         _vm.GameEnded    -= OnGameEnded;
         _vm.LinesClearing -= OnLinesClearing;
         _vm.Cleanup();
-        _vm = null;
+        _vm = null!; // released; recreated by InitGame
     }
 
     // ── Build board ───────────────────────────────────────────────────────────
@@ -228,13 +228,13 @@ public partial class BlockPuzzlePage : ContentPage
     }
 
     // ── Gesture handlers ─────────────────────────────────────────────────────
-    private void OnRotate(object sender, EventArgs e)
+    private void OnRotate(object? sender, EventArgs e)
     {
         _vm?.RotateCommand.Execute(null);
         AudioService.Instance.Play("pop");
     }
 
-    private void OnPanBoard(object s, PanUpdatedEventArgs e)
+    private void OnPanBoard(object? s, PanUpdatedEventArgs e)
     {
         switch (e.StatusType)
         {
@@ -297,7 +297,7 @@ public partial class BlockPuzzlePage : ContentPage
             foreach (int r in rows)
                 for (int c = 0; c < BlockPuzzleViewModel.Cols; c++)
                     if (_cells[r, c] != null)
-                        fades.Add(_cells[r, c].FadeTo(0, 60, Easing.CubicIn));
+                        fades.Add(_cells[r, c].FadeToAsync(0, 60, Easing.CubicIn));
             await Task.WhenAll(fades);
 
             foreach (int r in rows)
@@ -316,10 +316,10 @@ public partial class BlockPuzzlePage : ContentPage
         AudioService.Instance.Play("slide");
         try
         {
-            await BoardContainer.TranslateTo(-6, 0, 30);
-            await BoardContainer.TranslateTo(6, 0, 30);
-            await BoardContainer.TranslateTo(-3, 0, 20);
-            await BoardContainer.TranslateTo(0, 0, 20);
+            await BoardContainer.TranslateToAsync(-6, 0, 30);
+            await BoardContainer.TranslateToAsync(6, 0, 30);
+            await BoardContainer.TranslateToAsync(-3, 0, 20);
+            await BoardContainer.TranslateToAsync(0, 0, 20);
         }
         catch { }
     }
@@ -345,18 +345,18 @@ public partial class BlockPuzzlePage : ContentPage
     }
 
     // ── Pause / Resume ───────────────────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         try { _vm?.PauseTimer(); } catch { }
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnShowSolutionClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object? sender, EventArgs e)
     {
         if (_vm == null || _vm.IsGameOver || _vm.CurrentPiece == null) return;
 
@@ -417,7 +417,7 @@ public partial class BlockPuzzlePage : ContentPage
     }
 
     // ── Navigation ────────────────────────────────────────────────────────────
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -432,11 +432,11 @@ public partial class BlockPuzzlePage : ContentPage
         }
     }
 
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
         _startLevel = (_vm?.Level ?? _startLevel) + 1;
         InitGame(_startLevel);
     }
 
-    private void OnRetry(object sender, EventArgs e) => InitGame(_startLevel);
+    private void OnRetry(object? sender, EventArgs e) => InitGame(_startLevel);
 }

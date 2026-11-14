@@ -181,11 +181,14 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Frame">
+    <!-- Former <Frame> panels (Frame is obsolete since .NET 9): same fill, corners and clay shadow, no stroke. -->
+    <Style TargetType="Border" x:Key="ClayFrame">
         <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel}" />
-        <Setter Property="BorderColor" Value="Transparent" />
-        <Setter Property="CornerRadius" Value="20" />
-        <Setter Property="HasShadow" Value="True" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="20" />
+        </Setter>
         <Setter Property="Shadow">
             <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,6" Radius="14" Opacity="0.26" />
         </Setter>

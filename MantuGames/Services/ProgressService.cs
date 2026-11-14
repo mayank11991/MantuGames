@@ -4,7 +4,7 @@ namespace MantuGames.Services;
 
 public class ProgressService
 {
-    private static ProgressService _instance;
+    private static ProgressService? _instance;
     public static ProgressService Instance => _instance ??= new ProgressService();
     private ProgressService() { }
 

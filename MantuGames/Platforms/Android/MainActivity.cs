@@ -37,14 +37,21 @@ public class MainActivity : MauiAppCompatActivity
         try
         {
             var clay = Android.Graphics.Color.ParseColor("#F7EFFF");
-            Window?.SetStatusBarColor(clay);
-            Window?.SetNavigationBarColor(clay);
+            // Android 15+ draws edge-to-edge and ignores bar colours; the page background shows through.
+            if (!OperatingSystem.IsAndroidVersionAtLeast(35))
+            {
+                Window?.SetStatusBarColor(clay);
+                Window?.SetNavigationBarColor(clay);
+            }
 
             if (Window is not null)
             {
                 var controller = WindowCompat.GetInsetsController(Window, Window.DecorView);
-                controller.AppearanceLightStatusBars = true;
-                controller.AppearanceLightNavigationBars = true;
+                if (controller != null)
+                {
+                    controller.AppearanceLightStatusBars = true;
+                    controller.AppearanceLightNavigationBars = true;
+                }
             }
         }
         catch (Exception ex)

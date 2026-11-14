@@ -28,14 +28,14 @@ public partial class UpdatePopup : ContentView
         Overlay.IsVisible = true;
         Opacity = 0;
         Scale = 0.8;
-        this.FadeTo(1, 200, Easing.CubicOut);
-        this.ScaleTo(1, 200, Easing.SpringOut);
+        this.FadeToAsync(1, 200, Easing.CubicOut);
+        this.ScaleToAsync(1, 200, Easing.SpringOut);
     }
 
     public void Hide()
     {
-        this.FadeTo(0, 150, Easing.CubicIn);
-        this.ScaleTo(0.8, 150, Easing.CubicIn).ContinueWith(_ =>
+        this.FadeToAsync(0, 150, Easing.CubicIn);
+        this.ScaleToAsync(0.8, 150, Easing.CubicIn).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -45,7 +45,7 @@ public partial class UpdatePopup : ContentView
         });
     }
 
-    private async void OnUpdate(object sender, TappedEventArgs e)
+    private async void OnUpdate(object? sender, TappedEventArgs e)
     {
         try
         {
@@ -58,5 +58,5 @@ public partial class UpdatePopup : ContentView
         }
     }
 
-    private void OnLater(object sender, TappedEventArgs e) => Hide();
+    private void OnLater(object? sender, TappedEventArgs e) => Hide();
 }

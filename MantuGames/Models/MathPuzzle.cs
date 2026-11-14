@@ -2,9 +2,9 @@ namespace MantuGames.Models;
 
 public class MathQuestion
 {
-    public string QuestionText { get; set; }
+    public string QuestionText { get; set; } = "";
     public int CorrectAnswer { get; set; }
-    public List<int> Choices { get; set; }
+    public List<int> Choices { get; set; } = null!;
 }
 
 public class MathPuzzle

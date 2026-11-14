@@ -21,26 +21,26 @@
 
             <!-- TOP BAR -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="0" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
-                </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="1" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding LevelDisplay}" TextColor="#F09A2E"
                            FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
-                </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="2" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnPause" />
-                </Frame>
+                </Border>
             </Grid>
 
             <!-- TIMER -->
@@ -65,21 +65,21 @@
                            FontSize="12" FontFamily="MadimiOne" FontAttributes="Bold"
                            TextColor="#7C6A8E"
                            VerticalOptions="Center" />
-                    <Frame Grid.Row="1" Grid.ColumnSpan="2"
-                           BackgroundColor="#80FFFFFF" CornerRadius="8"
+                    <Border Style="{StaticResource ClayFrame}" Grid.Row="1" Grid.ColumnSpan="2"
+                           BackgroundColor="#80FFFFFF" StrokeShape="RoundRectangle 8"
                            Padding="0" HeightRequest="10">
                         <BoxView x:Name="ProgressBar" BackgroundColor="Transparent"
                                  Color="{Binding ProgressBarColor}" HeightRequest="10"
                                  CornerRadius="8" HorizontalOptions="Start" />
-                    </Frame>
+                    </Border>
                 </Grid>
             </Border>
 
             <!-- QUESTION + CHOICES -->
             <StackLayout Grid.Row="4" Spacing="16" VerticalOptions="Center">
                 <!-- Question card -->
-                <Frame BackgroundColor="#FFFDFA" CornerRadius="24"
-                       Padding="24,20" HasShadow="True"
+                <Border Style="{StaticResource ClayFrame}" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
+                       Padding="24,20"
                        HorizontalOptions="Center" WidthRequest="300">
                     <Label x:Name="QuestionLabel"
                            Text="{Binding QuestionText}"
@@ -89,7 +89,7 @@
                            HorizontalTextAlignment="Center"
                            LineBreakMode="WordWrap"
                            MaxLines="4" />
-                </Frame>
+                </Border>
 
                 <!-- 4 choice buttons -->
                 <Grid x:Name="ChoicesGrid"

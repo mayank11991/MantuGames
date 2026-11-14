@@ -5,16 +5,16 @@ namespace MantuGames.Views.Controls;
 
 public partial class GameResultPopup : ContentView
 {
-    public event EventHandler NextLevelRequested;
-    public event EventHandler RetryRequested;
+    public event EventHandler? NextLevelRequested;
+    public event EventHandler? RetryRequested;
 
     private bool _isWin;
     private bool _isProcessing;
-    private string _gameId;
+    private string? _gameId;
     private int _levelNumber;
     private int _completionStars;
     private int _completionCoins;
-    private AdService _adService;
+    private AdService? _adService;
 
     public GameResultPopup()
     {
@@ -23,7 +23,7 @@ public partial class GameResultPopup : ContentView
 
     public async Task Show(bool isWin, int levelNumber, int elapsedSeconds,
                            int totalSeconds = 210, int stars = 0, int coins = 0,
-                           string reason = null, string gameId = null)
+                           string? reason = null, string? gameId = null)
     {
         // A paid "Show Solution" during this attempt means no stars or coins.
         bool assisted = !string.IsNullOrEmpty(gameId) && ProgressService.TakeAssisted(gameId);
@@ -110,8 +110,8 @@ public partial class GameResultPopup : ContentView
         PopupCard.Opacity   = 0;
 
         await Task.WhenAll(
-            PopupCard.ScaleTo(1.0, 380, Easing.SpringOut),
-            PopupCard.FadeTo(1.0, 260)
+            PopupCard.ScaleToAsync(1.0, 380, Easing.SpringOut),
+            PopupCard.FadeToAsync(1.0, 260)
         );
 
         _ = MaybeRateNudgeAsync();
@@ -139,7 +139,7 @@ public partial class GameResultPopup : ContentView
             int dismissed = Preferences.Get("rate_dismissed", 0);
             if (dismissed >= 2) { Preferences.Set("rate_done", true); return; }
 
-            bool rate = await Application.Current!.Windows[0].Page!.DisplayAlert(
+            bool rate = await Application.Current!.Windows[0].Page!.DisplayAlertAsync(
                 "Enjoying Mantu Games?",
                 "Your rating helps other players discover the games. Rate us on Google Play!",
                 "Rate Now", "Not Now");
@@ -186,7 +186,7 @@ public partial class GameResultPopup : ContentView
         }
     }
 
-    private async void OnPrimaryClicked(object sender, TappedEventArgs e)
+    private async void OnPrimaryClicked(object? sender, TappedEventArgs e)
     {
         try
         {
@@ -213,7 +213,7 @@ public partial class GameResultPopup : ContentView
         }
     }
 
-    private async void OnSecondaryClicked(object sender, TappedEventArgs e)
+    private async void OnSecondaryClicked(object? sender, TappedEventArgs e)
     {
         try
         {

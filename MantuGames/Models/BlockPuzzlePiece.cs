@@ -2,9 +2,9 @@ namespace MantuGames.Models;
 
 public class BlockPiece
 {
-    public int[,]  Shape { get; init; }
-    public Color   PieceColor  { get; init; }
-    public string  Name  { get; init; }
+    public int[,]  Shape { get; init; } = null!;
+    public Color   PieceColor  { get; init; } = null!;
+    public string  Name  { get; init; } = "";
 
     // Rotate shape 90 degrees clockwise
     public BlockPiece RotateClockwise()

@@ -4,14 +4,14 @@ public class CardItem
 {
     public int    Id        { get; set; }
     public int    PairId    { get; set; }
-    public string Image     { get; set; }
+    public string Image     { get; set; } = "";
     public bool   IsFlipped { get; set; }
     public bool   IsMatched { get; set; }
 }
 
 public class CardMemoryPuzzle
 {
-    public List<CardItem> Cards     { get; private set; }
+    public List<CardItem> Cards     { get; private set; } = null!;
     public int            Columns   { get; private set; }
     public int            PairCount { get; private set; }
     public int            TimerSec  { get; private set; }

@@ -32,14 +32,14 @@ public partial class ProfilePopup : ContentView
         Opacity = 0;
         Scale = 0.8;
         Overlay.IsVisible = true;
-        this.FadeTo(1, 300, Easing.CubicOut);
-        this.ScaleTo(1, 300, Easing.SpringOut);
+        this.FadeToAsync(1, 300, Easing.CubicOut);
+        this.ScaleToAsync(1, 300, Easing.SpringOut);
     }
 
     public void Hide()
     {
-        this.FadeTo(0, 200, Easing.CubicIn);
-        this.ScaleTo(0.8, 200, Easing.CubicIn).ContinueWith(_ =>
+        this.FadeToAsync(0, 200, Easing.CubicIn);
+        this.ScaleToAsync(0.8, 200, Easing.CubicIn).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -106,20 +106,20 @@ public partial class ProfilePopup : ContentView
         }
     }
 
-    private void OnOverlayTapped(object sender, TappedEventArgs e)
+    private void OnOverlayTapped(object? sender, TappedEventArgs e)
     {
         // Consume tap to prevent passing through
     }
 
-    private void OnCancel(object sender, TappedEventArgs e)
+    private void OnCancel(object? sender, TappedEventArgs e)
     {
         Hide();
     }
 
-    private void OnSubmit(object sender, TappedEventArgs e)
+    private void OnSubmit(object? sender, TappedEventArgs e)
     {
         if (_submitted) return;
-        string name = NameEntry.Text?.Trim();
+        string? name = NameEntry.Text?.Trim();
         if (string.IsNullOrEmpty(name))
         {
             NameEntry.PlaceholderColor = Color.FromArgb("#C0392B");

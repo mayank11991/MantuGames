@@ -8,7 +8,7 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class TowerOfHanoiPage : ContentPage
 {
-    private HanoiViewModel _vm;
+    private HanoiViewModel _vm = null!;
     private int _startLevel = 1;
 
     // disc size (1=smallest) → color — fixed, never changes during gameplay
@@ -45,7 +45,7 @@ public partial class TowerOfHanoiPage : ContentPage
         AudioService.Instance.StartMusic();
         InitVm();
         this.Opacity = 0;
-        this.FadeTo(1, 400);
+        this.FadeToAsync(1, 400);
         PauseOverlay.Resumed += OnResumeGame;
     }
 
@@ -94,18 +94,18 @@ public partial class TowerOfHanoiPage : ContentPage
         MainThread.BeginInvokeOnMainThread(RenderDiscs);
 
     // ── Pause / Resume ──────────────────────────────────────────
-    private void OnPause(object sender, EventArgs e)
+    private void OnPause(object? sender, EventArgs e)
     {
         try { _vm?.PauseTimer(); } catch { }
         PauseOverlay.Show();
     }
 
-    private void OnResumeGame(object sender, EventArgs e)
+    private void OnResumeGame(object? sender, EventArgs e)
     {
         try { _vm?.ResumeTimer(); } catch { }
     }
 
-    private void OnShowSolutionClicked(object sender, EventArgs e)
+    private void OnShowSolutionClicked(object? sender, EventArgs e)
     {
         if (CoinService.GetCoins("towerofhanoi") < CoinService.SolutionCost)
         {
@@ -238,8 +238,8 @@ public partial class TowerOfHanoiPage : ContentPage
         int poleCount = _startLevel <= 5 ? 3 : _startLevel <= 15 ? 4 : 5;
         for (int p = 0; p < poleCount; p++)
         {
-            StackLayout discStack = null;
-            Border baseBar = null;
+            StackLayout? discStack = null;
+            Border? baseBar = null;
 
             foreach (var child in _polePanels[p].Children)
             {
@@ -276,7 +276,7 @@ public partial class TowerOfHanoiPage : ContentPage
     // Disc color is always fixed to the disc's size — never changes on selection or drag.
     // isTopDisc: only the topmost disc on a pole can be dragged or tapped.
     // isSelectedTop: show selection border without altering the background color.
-    private Frame BuildDiscView(int discSize, bool isTopDisc, bool isSelectedTop, int poleIndex)
+    private Border BuildDiscView(int discSize, bool isTopDisc, bool isSelectedTop, int poleIndex)
     {
         int idx = Math.Clamp(discSize - 1, 0, DiscColors.Length - 1);
         Color color = DiscColors[idx]; // always the fixed disc color
@@ -284,12 +284,13 @@ public partial class TowerOfHanoiPage : ContentPage
         // Larger disc = wider. size 1 → ~40% width, size 5 → ~96% width
         double marginEach = (1.0 - (0.38 + (discSize - 1) * 0.145)) * 44.0;
 
-        var frame = new Frame
+        var frame = new Border
         {
+            Style = ClayStyles.ClayFrame,
             BackgroundColor = color,
-            BorderColor = isSelectedTop ? Colors.White : Colors.Transparent,
-            CornerRadius = 12,
-            HasShadow = true,
+            Stroke = isSelectedTop ? Colors.White : Colors.Transparent,
+            StrokeThickness = isSelectedTop ? 2 : 0,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
             Padding = 0,
             HeightRequest = 28,
             HorizontalOptions = LayoutOptions.Fill,
@@ -387,16 +388,16 @@ public partial class TowerOfHanoiPage : ContentPage
 
     private async System.Threading.Tasks.Task AnimateBounce(View v)
     {
-        await v.ScaleTo(1.06, 80, Easing.CubicOut);
-        await v.ScaleTo(1.00, 80, Easing.CubicIn);
+        await v.ScaleToAsync(1.06, 80, Easing.CubicOut);
+        await v.ScaleToAsync(1.00, 80, Easing.CubicIn);
     }
 
     private async System.Threading.Tasks.Task AnimateShake(View v)
     {
-        await v.TranslateTo(-8, 0, 50);
-        await v.TranslateTo(8, 0, 50);
-        await v.TranslateTo(-4, 0, 40);
-        await v.TranslateTo(0, 0, 40);
+        await v.TranslateToAsync(-8, 0, 50);
+        await v.TranslateToAsync(8, 0, 50);
+        await v.TranslateToAsync(-4, 0, 40);
+        await v.TranslateToAsync(0, 0, 40);
     }
 
     // ── EVENTS ───────────────────────────────────────────────────
@@ -405,7 +406,7 @@ public partial class TowerOfHanoiPage : ContentPage
         try
         {
             int elapsed = _vm.TotalTimerSec - _vm.TimeRemainingSec;
-            string reason = _vm.SolutionWasShown ? "Solution Shown" : null;
+            string? reason = _vm.SolutionWasShown ? "Solution Shown" : null;
             int stars  = isWin && reason == null ? ProgressService.CalcStars(elapsed, _vm.TotalTimerSec) : 0;
             int coins = isWin && reason == null ? stars switch { 3 => 5, 2 => 3, 1 => 1, _ => 0 } : 0;
             await ResultPopup.Show(isWin, _vm.CurrentLevel, elapsed, _vm.TotalTimerSec, stars, coins, reason, "towerofhanoi");
@@ -416,15 +417,15 @@ public partial class TowerOfHanoiPage : ContentPage
         }
     }
 
-    private void OnNextLevel(object sender, EventArgs e)
+    private void OnNextLevel(object? sender, EventArgs e)
     {
         _startLevel = _vm.CurrentLevel + 1;
         InitVm();
     }
 
-    private void OnRetry(object sender, EventArgs e) => InitVm();
+    private void OnRetry(object? sender, EventArgs e) => InitVm();
 
-    private async void OnBackClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object? sender, EventArgs e)
     {
         try
         {

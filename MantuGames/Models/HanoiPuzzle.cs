@@ -10,7 +10,7 @@ public class HanoiPuzzle
         public int StartPole { get; internal set; }
         public int GoalPole  { get; internal set; }
         // Stack top = top of visual tower = smallest disc currently on pole
-        public List<Stack<int>> Poles { get; internal set; }
+        public List<Stack<int>> Poles { get; internal set; } = null!;
         public int MinMoves  => (int)Math.Pow(2, DiscCount) - 1;
         public int MoveCount { get; private set; }
   

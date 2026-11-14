@@ -16,26 +16,26 @@
 
             <!-- TOP BAR -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="0" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
-                </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="1" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding LevelDisplay}" TextColor="#9B7BFF"
                            FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
-                </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
+                </Border>
+                <Border Style="{StaticResource ClayFrame}" Grid.Column="2" BackgroundColor="#FFFDFA" StrokeShape="RoundRectangle 24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnPause" />
-                </Frame>
+                </Border>
             </Grid>
 
             <!-- TIMER -->
@@ -53,9 +53,9 @@
             </Border>
 
             <!-- WORD LIST -->
-            <Frame Grid.Row="4"
-                   BackgroundColor="#668A6FA8" CornerRadius="16"
-                   Padding="10,8" HasShadow="True"
+            <Border Style="{StaticResource ClayFrame}" Grid.Row="4"
+                   BackgroundColor="#668A6FA8" StrokeShape="RoundRectangle 16"
+                   Padding="10,8"
                    HorizontalOptions="Fill">
                 <StackLayout Spacing="4">
                     <Label Text="Find these words:" FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold"
@@ -66,7 +66,7 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame Padding="6,4" CornerRadius="8"
+                                <Border Style="{StaticResource ClayFrame}" Padding="6,4" StrokeShape="RoundRectangle 8"
                                        BackgroundColor="#F4E9FF"
                                        HorizontalOptions="Fill"
                                        Margin="2">
@@ -85,12 +85,12 @@
                                                HorizontalOptions="End"
                                                IsVisible="{Binding IsFound}" />
                                     </Grid>
-                                </Frame>
+                                </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </StackLayout>
-            </Frame>
+            </Border>
 
             <!-- SHOW SOLUTION -->
             <VerticalStackLayout Grid.Row="5" Spacing="2" Margin="60,0">

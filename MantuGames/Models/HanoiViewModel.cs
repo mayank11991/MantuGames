@@ -8,14 +8,14 @@ namespace MantuGames.Models;
 
 public class HanoiViewModel : INotifyPropertyChanged
 {
-    private System.Threading.Timer _timer;
+    private System.Threading.Timer? _timer;
     private bool _isGameOver, _isWin;
     private int _timeRemainingSec = 210;
     private int _totalTimerSec = 210;
     private int _currentLevel;
     private int _moveCount;
 
-    public HanoiPuzzle Puzzle { get; private set; }
+    public HanoiPuzzle Puzzle { get; private set; } = null!;
 
     public bool SolutionWasShown { get; set; }
 
@@ -88,8 +88,8 @@ public class HanoiViewModel : INotifyPropertyChanged
 
     public ICommand ShowSolutionCommand { get; }
 
-    public event Action<bool> GameEnded;
-    public event Action BoardChanged;
+    public event Action<bool>? GameEnded;
+    public event Action? BoardChanged;
 
     public HanoiViewModel(int level = 1)
     {
@@ -173,8 +173,8 @@ public class HanoiViewModel : INotifyPropertyChanged
         _timer = null;
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName] string n = null) =>
+    protected void OnPropertyChanged([CallerMemberName] string? n = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 }
