@@ -295,11 +295,11 @@ public partial class DashboardPage : ContentPage
             Text = number.ToString(),
             FontFamily = "Display",
             FontSize = 46,
-            TextColor = Color.FromArgb("#2F6BFF"),
+            TextColor = Colors.White,
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.End,
             Margin = new Thickness(-2, 0, 0, -26),
-            Shadow = new Shadow { Brush = Colors.White, Offset = new Point(2, 2), Radius = 0, Opacity = 1 },
+            Shadow = new Shadow { Brush = Color.FromArgb("#1F2A44"), Offset = new Point(2, 3), Radius = 0, Opacity = 1 },
         };
 
         var title = new Label
