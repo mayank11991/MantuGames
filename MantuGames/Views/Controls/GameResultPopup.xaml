@@ -7,23 +7,23 @@
 
     <Grid>
         <!-- Dim backdrop -->
-        <BoxView BackgroundColor="#663D2C4E" HorizontalOptions="Fill" VerticalOptions="Fill" />
+        <BoxView BackgroundColor="#99111114" HorizontalOptions="Fill" VerticalOptions="Fill" />
 
         <!-- Popup card -->
         <Border x:Name="PopupCard"
-                StrokeThickness="1"
-                Stroke="#B3FFFFFF"
+                StrokeThickness="3"
+                Stroke="#111114"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 WidthRequest="310">
             <Border.BackgroundColor>
-                <AppThemeBinding Light="#FFFDFA" Dark="#FFFDFA" />
+                <AppThemeBinding Light="#FFFFFF" Dark="#FFFFFF" />
             </Border.BackgroundColor>
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="32"/>
             </Border.StrokeShape>
             <Border.Shadow>
-                <Shadow Brush="#8A6FA8" Offset="0,6" Radius="24" Opacity="0.28"/>
+                <Shadow Brush="#2A2E45" Offset="0,6" Radius="24" Opacity="0.28"/>
             </Border.Shadow>
 
             <StackLayout Spacing="0" Padding="24,20,24,28">
@@ -57,7 +57,7 @@
 
                 <!-- Points badge -->
                 <Border x:Name="PointsBadge"
-                        BackgroundColor="#FFA94D"
+                        BackgroundColor="#D9F84A"
                         StrokeThickness="0"
                         HorizontalOptions="Center"
                         IsVisible="False"
@@ -69,14 +69,14 @@
                            FontFamily="MadimiOne"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="#3D2C4E"
+                           TextColor="#111114"
                            Padding="14,5"/>
                 </Border>
 
                 <!-- Message -->
                 <Label x:Name="MessageLabel"
                        FontSize="14"
-                       TextColor="#7C6A8E"
+                       TextColor="#6E6E7C"
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
                        Margin="0,4,0,18"/>
@@ -90,7 +90,7 @@
                         <RoundRectangle CornerRadius="28"/>
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="#8A6FA8" Offset="0,4" Radius="8" Opacity="0.22"/>
+                        <Shadow Brush="#2A2E45" Offset="0,4" Radius="8" Opacity="0.22"/>
                     </Border.Shadow>
                     <Grid HeightRequest="58">
                         <Grid.GestureRecognizers>
@@ -107,7 +107,7 @@
                                FontFamily="MadimiOne"
                                FontSize="16"
                                FontAttributes="Bold"
-                               TextColor="#3D2C4E"
+                               TextColor="#111114"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"/>
                     </Grid>
@@ -134,7 +134,7 @@
                                Margin="10,0,0,0"/>
                         <Label FontFamily="MadimiOne"
                                FontSize="15"
-                               TextColor="#3D2C4E"
+                               TextColor="#111114"
                                Text="Retry"
                                HorizontalOptions="Center"
                                VerticalOptions="Center"/>

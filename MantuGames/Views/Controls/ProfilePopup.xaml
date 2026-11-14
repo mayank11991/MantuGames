@@ -5,15 +5,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid x:Name="Overlay"
-          BackgroundColor="#663D2C4E"
+          BackgroundColor="#99111114"
           InputTransparent="False">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
 
-        <Border Background="#FFFDFA"
-                Stroke="#B3FFFFFF"
-                StrokeThickness="1"
+        <Border Background="#FFFFFF"
+                Stroke="#111114"
+                StrokeThickness="3"
                 Padding="28"
                 WidthRequest="320"
                 MaximumHeightRequest="480"
@@ -23,27 +23,26 @@
                 <RoundRectangle CornerRadius="24" />
             </Border.StrokeShape>
             <Border.Shadow>
-                <Shadow Brush="#8A6FA8" Offset="0,6" Radius="20" Opacity="0.3" />
+                <Shadow Brush="#2A2E45" Offset="0,6" Radius="20" Opacity="0.3" />
             </Border.Shadow>
 
             <ScrollView>
                 <VerticalStackLayout Spacing="16">
 
                     <Label Text="Create Profile"
-                           FontFamily="MadimiOne"
-                           FontSize="24"
-                           FontAttributes="Bold"
-                           TextColor="#3D2C4E"
+                           FontFamily="Display"
+                           FontSize="30"
+                           TextColor="#111114"
                            HorizontalOptions="Center" />
 
                     <Label Text="Who is playing?"
                            FontFamily="MadimiOne"
                            FontSize="12"
-                           TextColor="#7C6A8E"
+                           TextColor="#6E6E7C"
                            HorizontalOptions="Center" />
 
                     <!-- Name -->
-                    <Border Background="#F4E9FF"
+                    <Border Background="#F5F6FA"
                             Stroke="#B3FFFFFF"
                             StrokeThickness="1"
                             Padding="12,4">
@@ -52,10 +51,10 @@
                         </Border.StrokeShape>
                         <Entry x:Name="NameEntry"
                                Placeholder="Your name"
-                               PlaceholderColor="#8A78A0"
+                               PlaceholderColor="#6E6E7C"
                                FontFamily="MadimiOne"
                                FontSize="16"
-                               TextColor="#3D2C4E"
+                               TextColor="#111114"
                                BackgroundColor="Transparent" />
                     </Border>
 
@@ -64,7 +63,7 @@
                     <Label Text="Choose Avatar"
                            FontFamily="MadimiOne"
                            FontSize="14"
-                           TextColor="#3D2C4E"
+                           TextColor="#111114"
                            HorizontalOptions="Center" />
 
                     <!-- Avatar Picker Grid (A1-A7) -->
@@ -78,7 +77,7 @@
                     <HorizontalStackLayout Spacing="12"
                                            HorizontalOptions="Center"
                                            Margin="0,4,0,0">
-                        <Border BackgroundColor="#E9DEFF"
+                        <Border BackgroundColor="#F5F6FA"
                                 Stroke="#B3FFFFFF"
                                 StrokeThickness="2"
                                 Padding="20,10">
@@ -92,11 +91,11 @@
                                    FontFamily="MadimiOne"
                                    FontSize="15"
                                    FontAttributes="Bold"
-                                   TextColor="#3D2C4E"
+                                   TextColor="#111114"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center" />
                         </Border>
-                        <Border BackgroundColor="#3D2C4E"
+                        <Border BackgroundColor="#111114"
                                 StrokeThickness="0"
                                 Padding="20,10">
                             <Border.GestureRecognizers>

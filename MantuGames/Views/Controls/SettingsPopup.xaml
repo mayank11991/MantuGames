@@ -5,7 +5,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Grid x:Name="Overlay" BackgroundColor="#663D2C4E" InputTransparent="False">
+    <Grid x:Name="Overlay" BackgroundColor="#99111114" InputTransparent="False">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
@@ -14,9 +14,9 @@
               Margin="20"
               InputTransparent="False">
 
-            <Border Background="#FFFDFA"
-                    Stroke="#B3FFFFFF"
-                    StrokeThickness="1"
+            <Border Background="#FFFFFF"
+                    Stroke="#111114"
+                    StrokeThickness="3"
                     Padding="0"
                     HorizontalOptions="Fill"
                     VerticalOptions="Center">
@@ -24,16 +24,15 @@
                     <RoundRectangle CornerRadius="24" />
                 </Border.StrokeShape>
                 <Border.Shadow>
-                    <Shadow Brush="#8A6FA8" Offset="0,8" Radius="24" Opacity="0.25" />
+                    <Shadow Brush="#2A2E45" Offset="0,8" Radius="24" Opacity="0.25" />
                 </Border.Shadow>
 
                 <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="10" Padding="20,16">
                     <Label Grid.Row="0"
                            Text="SETTINGS"
-                           FontFamily="MadimiOne"
-                           FontSize="22"
-                           FontAttributes="Bold"
-                           TextColor="#3D2C4E"
+                           FontFamily="Display"
+                           FontSize="28"
+                           TextColor="#111114"
                            HorizontalOptions="Center" />
 
                     <BoxView Grid.Row="0" HeightRequest="1" Color="#B3FFFFFF"
@@ -60,7 +59,7 @@
                                        FontFamily="MadimiOne"
                                        FontSize="17"
                                        FontAttributes="Bold"
-                                       TextColor="#3D2C4E"
+                                       TextColor="#111114"
                                        VerticalOptions="Center"
                                        LineBreakMode="TailTruncation">
                                     <Label.GestureRecognizers>
@@ -69,7 +68,7 @@
                                 </Label>
                                 <!-- Coins (tap to buy) -->
                                 <Border Style="{StaticResource ClayFrame}" Grid.Column="2"
-                                       BackgroundColor="#3D2C4E"
+                                       BackgroundColor="#111114"
                                        StrokeShape="RoundRectangle 14"
                                        Padding="10,6"
                                        VerticalOptions="Center">
@@ -98,12 +97,12 @@
                                        Text="Background Music"
                                        FontFamily="MadimiOne"
                                        FontSize="16"
-                                       TextColor="#3D2C4E"
+                                       TextColor="#111114"
                                        VerticalOptions="Center" />
                                 <Switch x:Name="MusicSwitch"
                                         Grid.Column="1"
-                                        OnColor="#6D4AFF"
-                                        ThumbColor="#3D2C4E"
+                                        OnColor="#111114"
+                                        ThumbColor="#111114"
                                         Toggled="OnMusicToggled" />
                             </Grid>
 
@@ -113,12 +112,12 @@
                                        Text="Sound Effects"
                                        FontFamily="MadimiOne"
                                        FontSize="16"
-                                       TextColor="#3D2C4E"
+                                       TextColor="#111114"
                                        VerticalOptions="Center" />
                                 <Switch x:Name="SfxSwitch"
                                         Grid.Column="1"
-                                        OnColor="#6D4AFF"
-                                        ThumbColor="#3D2C4E"
+                                        OnColor="#111114"
+                                        ThumbColor="#111114"
                                         Toggled="OnSfxToggled" />
                             </Grid>
 
@@ -128,7 +127,7 @@
                             <Label x:Name="VersionLabel"
                                    FontFamily="MadimiOne"
                                    FontSize="16"
-                                   TextColor="#ffffff"
+                                   TextColor="#111114"
                                    HorizontalOptions="Center" />
 
                             <!-- Statistics -->
@@ -136,7 +135,7 @@
                                    FontFamily="MadimiOne"
                                    FontSize="16"
                                    HorizontalOptions="Center"
-                                   TextColor="#ffffff">
+                                   TextColor="#111114">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnStatistics" />
                                 </Label.GestureRecognizers>
@@ -148,7 +147,7 @@
                                        Text="Check for Updates"
                                        FontFamily="MadimiOne"
                                        FontSize="16"
-                                       TextColor="#ffffff"
+                                       TextColor="#111114"
                                        VerticalOptions="Center">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnCheckForUpdates" />
@@ -159,7 +158,7 @@
                                        FontFamily="MadimiOne"
                                        FontSize="11"
                                        FontAttributes="Bold"
-                                       TextColor="#6D4AFF"
+                                       TextColor="#111114"
                                        VerticalOptions="Center" />
                             </Grid>
 
@@ -168,7 +167,7 @@
                                    FontFamily="MadimiOne"
                                    FontSize="16"
                                    HorizontalOptions="Start"
-                                   TextColor="#ffffff">
+                                   TextColor="#111114">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnContactSupport" />
                                 </Label.GestureRecognizers>
@@ -179,7 +178,7 @@
                                    FontFamily="MadimiOne"
                                    FontSize="16"
                                    HorizontalOptions="Start"
-                                   TextColor="#ffffff">
+                                   TextColor="#111114">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnEditProfile" />
                                 </Label.GestureRecognizers>
@@ -190,7 +189,7 @@
                                    FontFamily="MadimiOne"
                                    FontSize="16"
                                    HorizontalOptions="Start"
-                                   TextColor="#ffffff">
+                                   TextColor="#111114">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnPrivacyPolicy" />
                                 </Label.GestureRecognizers>
@@ -202,7 +201,7 @@
                                    FontFamily="MadimiOne"
                                    FontSize="16"
                                    HorizontalOptions="Start"
-                                   TextColor="#ffffff"
+                                   TextColor="#111114"
                                    IsVisible="False">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnPrivacyChoices" />
@@ -214,7 +213,7 @@
                                    FontFamily="MadimiOne"
                                    FontSize="16"
                                    HorizontalOptions="Start"
-                                   TextColor="#ffffff">
+                                   TextColor="#111114">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnRateUs" />
                                 </Label.GestureRecognizers>
@@ -226,7 +225,7 @@
                                        Text="Remove Ads"
                                        FontFamily="MadimiOne"
                                        FontSize="16"
-                                       TextColor="#ffffff"
+                                       TextColor="#111114"
                                        VerticalOptions="Center">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnRemoveAds" />
@@ -237,7 +236,7 @@
                                        FontFamily="MadimiOne"
                                        FontSize="11"
                                        FontAttributes="Bold"
-                                       TextColor="#6D4AFF"
+                                       TextColor="#111114"
                                        VerticalOptions="Center" />
                             </Grid>
 
@@ -250,7 +249,7 @@
                            FontFamily="MadimiOne"
                            FontSize="16"
                            HorizontalOptions="Center"
-                           TextColor="#E0566F">
+                           TextColor="#FF4F6D">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnResetProgress" />
                         </Label.GestureRecognizers>
@@ -258,7 +257,7 @@
 
                     <!-- Close Button -->
                     <Border Grid.Row="3"
-                            BackgroundColor="#FFA94D"
+                            BackgroundColor="#D9F84A"
                             StrokeThickness="0"
                             Padding="12,8"
                             HorizontalOptions="Center">
@@ -269,7 +268,7 @@
                                FontFamily="MadimiOne"
                                FontSize="14"
                                FontAttributes="Bold"
-                               TextColor="#3D2C4E"
+                               TextColor="#111114"
                                HorizontalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnClose" />

@@ -16,8 +16,8 @@ public partial class ProfilePickerPopup : ContentView
 
     private static readonly string[] PillColors =
     {
-        "#7C5CFF", "#FF8FB1", "#4FD1B5", "#FFB86B", "#7FD8FF",
-        "#A78BFA", "#FFD166"
+        "#5AA6FF", "#FF8FC0", "#7BE8B0", "#FFB547", "#C79BFF",
+        "#D9F84A", "#4FD2F5"
     };
 
     public ProfilePickerPopup()
@@ -87,14 +87,14 @@ public partial class ProfilePickerPopup : ContentView
         {
             WidthRequest = 100,
             HeightRequest = 100,
-            BackgroundColor = Color.FromArgb("#FFFDFA"),
+            BackgroundColor = Color.FromArgb("#FFFFFF"),
             StrokeThickness = isActive ? 3 : 2,
-            Stroke = isActive ? new SolidColorBrush(Color.FromArgb("#7C5CFF")) : new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
+            Stroke = isActive ? new SolidColorBrush(Color.FromArgb("#111114")) : new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 16 },
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
-        tile.Shadow = new Shadow { Brush = Color.FromArgb("#8A6FA8"), Offset = new Point(0, 6), Opacity = 0.26f, Radius = 10 };
+        tile.Shadow = new Shadow { Brush = Color.FromArgb("#2A2E45"), Offset = new Point(0, 6), Opacity = 0.26f, Radius = 10 };
 
         var inner = new Grid();
 
@@ -143,7 +143,7 @@ public partial class ProfilePickerPopup : ContentView
             FontFamily = "MadimiOne",
             FontSize = 11,
             FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#3D2C4E"),
+            TextColor = Color.FromArgb("#111114"),
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalTextAlignment = TextAlignment.Center,
             HorizontalOptions = LayoutOptions.Center,
@@ -157,7 +157,7 @@ public partial class ProfilePickerPopup : ContentView
         {
             WidthRequest = 24,
             HeightRequest = 24,
-            BackgroundColor = Color.FromArgb("#3D2C4E"),
+            BackgroundColor = Color.FromArgb("#111114"),
             StrokeThickness = 0,
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
             HorizontalOptions = LayoutOptions.End,
@@ -208,16 +208,16 @@ public partial class ProfilePickerPopup : ContentView
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
-        tile.Shadow = new Shadow { Brush = Color.FromArgb("#8A6FA8"), Offset = new Point(0, 6), Opacity = 0.26f, Radius = 10 };
+        tile.Shadow = new Shadow { Brush = Color.FromArgb("#2A2E45"), Offset = new Point(0, 6), Opacity = 0.26f, Radius = 10 };
 
         var avatarBorder = new Border
         {
             WidthRequest = 72,
             HeightRequest = 72,
-            BackgroundColor = Color.FromArgb("#F4E9FF"),
+            BackgroundColor = Color.FromArgb("#F5F6FA"),
             StrokeThickness = 2,
             StrokeDashArray = new double[] { 5, 3 },
-            Stroke = new SolidColorBrush(Color.FromArgb("#7C5CFF")),
+            Stroke = new SolidColorBrush(Color.FromArgb("#111114")),
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 36 },
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
@@ -228,7 +228,7 @@ public partial class ProfilePickerPopup : ContentView
             FontFamily = "MadimiOne",
             FontSize = 28,
             FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#7C5CFF"),
+            TextColor = Color.FromArgb("#111114"),
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalTextAlignment = TextAlignment.Center,
             HorizontalOptions = LayoutOptions.Center,
@@ -239,7 +239,7 @@ public partial class ProfilePickerPopup : ContentView
         // "Add" label - half on card bottom border, half outside
         var pill = new Border
         {
-            BackgroundColor = Color.FromArgb("#D8CAE8"),
+            BackgroundColor = Color.FromArgb("#E6E7EE"),
             StrokeThickness = 0,
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
             Padding = new Thickness(8, 2, 8, 2),
@@ -254,7 +254,7 @@ public partial class ProfilePickerPopup : ContentView
             FontFamily = "MadimiOne",
             FontSize = 11,
             FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#3D2C4E"),
+            TextColor = Color.FromArgb("#111114"),
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalTextAlignment = TextAlignment.Center,
             HorizontalOptions = LayoutOptions.Center,

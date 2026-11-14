@@ -25,8 +25,8 @@ public partial class SettingsPopup : ContentView
     {
         RemoveAdsStatus.Text = IapService.RemoveAdsOwned ? "Purchased" : "BUY";
         RemoveAdsStatus.TextColor = IapService.RemoveAdsOwned
-            ? Color.FromArgb("#1F8A70")
-            : Color.FromArgb("#FFA94D");
+            ? Color.FromArgb("#20B26B")
+            : Color.FromArgb("#D9F84A");
     }
 
     /// <summary>Refreshes the profile + coins section (called on Show and when data changes).</summary>

@@ -91,7 +91,7 @@ public partial class CoinShopPopup : ContentView
     private void ShowStatus(string text, bool ok = true)
     {
         StatusLabel.Text = text;
-        StatusLabel.TextColor = ok ? Color.FromArgb("#1F8A70") : Color.FromArgb("#E0566F");
+        StatusLabel.TextColor = ok ? Color.FromArgb("#20B26B") : Color.FromArgb("#FF4F6D");
     }
 
     // ── Coin packs ─────────────────────────────────────────────────────────
@@ -102,7 +102,7 @@ public partial class CoinShopPopup : ContentView
         {
             var row = new Border
             {
-                BackgroundColor = Color.FromArgb("#FFF4E8"),
+                BackgroundColor = Color.FromArgb("#F5F6FA"),
                 Stroke = new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
                 StrokeThickness = 1,
                 Padding = new Thickness(14, 8),
@@ -124,14 +124,14 @@ public partial class CoinShopPopup : ContentView
                 FontFamily = "MadimiOne",
                 FontSize = 15,
                 FontAttributes = FontAttributes.Bold,
-                TextColor = Color.FromArgb("#3D2C4E"),
+                TextColor = Color.FromArgb("#111114"),
                 VerticalOptions = LayoutOptions.Center,
             };
             rowGrid.Children.Add(coinLabel);
 
             var buy = new Border
             {
-                BackgroundColor = Color.FromArgb("#FFA94D"),
+                BackgroundColor = Color.FromArgb("#D9F84A"),
                 StrokeThickness = 0,
                 Padding = new Thickness(12, 5),
                 VerticalOptions = LayoutOptions.Center,
@@ -144,7 +144,7 @@ public partial class CoinShopPopup : ContentView
                 FontFamily = "MadimiOne",
                 FontSize = 12,
                 FontAttributes = FontAttributes.Bold,
-                TextColor = Color.FromArgb("#3D2C4E"),
+                TextColor = Color.FromArgb("#111114"),
                 HorizontalOptions = LayoutOptions.Center,
             };
             Grid.SetColumn(buy, 1);
@@ -212,7 +212,7 @@ public partial class CoinShopPopup : ContentView
         {
             var chip = new Border
             {
-                BackgroundColor = Color.FromArgb("#FFF4E8"),
+                BackgroundColor = Color.FromArgb("#F5F6FA"),
                 Stroke = new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
                 StrokeThickness = 1,
                 Padding = new Thickness(10, 8),
@@ -232,7 +232,7 @@ public partial class CoinShopPopup : ContentView
                 FontFamily = "MadimiOne",
                 FontSize = 12,
                 FontAttributes = FontAttributes.Bold,
-                TextColor = Color.FromArgb("#3D2C4E"),
+                TextColor = Color.FromArgb("#111114"),
                 HorizontalOptions = LayoutOptions.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
             });
@@ -254,7 +254,7 @@ public partial class CoinShopPopup : ContentView
                         Text = CoinService.GetCoins(g.Id).ToString(),
                         FontFamily = "MadimiOne",
                         FontSize = 11,
-                        TextColor = Color.FromArgb("#6D4AFF"),
+                        TextColor = Color.FromArgb("#111114"),
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center,
                     },

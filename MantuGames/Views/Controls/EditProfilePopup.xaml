@@ -6,7 +6,7 @@
 
     <Grid RowDefinitions="*">
         <!-- Dark overlay -->
-        <BoxView x:Name="Overlay" Color="#663D2C4E" IsVisible="False">
+        <BoxView x:Name="Overlay" Color="#99111114" IsVisible="False">
             <BoxView.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnOverlayTapped" />
             </BoxView.GestureRecognizers>
@@ -14,9 +14,9 @@
 
         <!-- Bottom sheet -->
         <Border x:Name="Sheet"
-                BackgroundColor="#FFFDFA"
-                Stroke="#B3FFFFFF"
-                StrokeThickness="2"
+                BackgroundColor="#FFFFFF"
+                Stroke="#111114"
+                StrokeThickness="3"
                 VerticalOptions="End"
                 Padding="24,20"
                 IsVisible="False">
@@ -28,10 +28,9 @@
 
                 <Label Grid.Row="0"
                        Text="EDIT PROFILE"
-                       FontFamily="MadimiOne"
-                       FontSize="20"
-                       FontAttributes="Bold"
-                       TextColor="#3D2C4E"
+                       FontFamily="Display"
+                       FontSize="26"
+                       TextColor="#111114"
                        HorizontalOptions="Center" />
 
                 <!-- Avatar preview -->
@@ -53,11 +52,11 @@
                 <Entry x:Name="NameEntry"
                        Grid.Row="2"
                        Placeholder="Enter name"
-                       PlaceholderColor="#7C6A8E"
+                       PlaceholderColor="#6E6E7C"
                        FontFamily="MadimiOne"
                        FontSize="16"
-                       TextColor="#3D2C4E"
-                       BackgroundColor="#F4E9FF"
+                       TextColor="#111114"
+                       BackgroundColor="#F5F6FA"
                        MaxLength="20" />
 
                 <!-- Avatar picker (A1-A7) -->
@@ -65,7 +64,7 @@
                     <Label Text="Choose avatar"
                            FontFamily="MadimiOne"
                            FontSize="14"
-                           TextColor="#7C6A8E" />
+                           TextColor="#6E6E7C" />
                     <HorizontalStackLayout x:Name="AvatarPalette"
                                            Spacing="10"
                                            HorizontalOptions="Center" />
@@ -73,7 +72,7 @@
 
                 <!-- Save button -->
                 <Border Grid.Row="4"
-                        BackgroundColor="#3D2C4E"
+                        BackgroundColor="#111114"
                         StrokeThickness="0"
                         Padding="12,12"
                         HorizontalOptions="Fill">

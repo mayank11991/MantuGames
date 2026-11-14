@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Grid x:Name="Overlay" BackgroundColor="#663D2C4E">
+    <Grid x:Name="Overlay" BackgroundColor="#99111114">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
@@ -18,16 +18,16 @@
 
             <!-- Dialog Border (content area) -->
             <Border x:Name="DialogBorder"
-                    BackgroundColor="#FFFDFA"
-                    Stroke="#B3FFFFFF"
-                    StrokeThickness="2"
+                    BackgroundColor="#FFFFFF"
+                    Stroke="#111114"
+                    StrokeThickness="3"
                     Padding="0"
                     Margin="0,30,0,0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="24" />
                 </Border.StrokeShape>
                 <Border.Shadow>
-                    <Shadow Brush="#8A6FA8" Offset="0,8" Radius="20" Opacity="0.4" />
+                    <Shadow Brush="#2A2E45" Offset="0,8" Radius="20" Opacity="0.4" />
                 </Border.Shadow>
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnSheetTapped" />
@@ -46,7 +46,7 @@
                            FontFamily="MadimiOne"
                            FontSize="12"
                            FontAttributes="Bold"
-                           TextColor="#7C6A8E"
+                           TextColor="#6E6E7C"
                            HorizontalTextAlignment="Center"
                            HorizontalOptions="Center"
                            Margin="0,0,0,10" />
@@ -63,15 +63,24 @@
             </Border>
 
             <!-- Banner image ON TOP of dialog (half above, half overlapping) -->
-            <Image x:Name="BannerImage"
-                   Source="profile_header.png"
-                   Aspect="AspectFit"
-                   HeightRequest="90"
-                   WidthRequest="300"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Start"
-                   Margin="0,0,0,0"
-                   InputTransparent="True" />
+            <!-- Title tag ON TOP of dialog (half above, half overlapping) -->
+            <Border x:Name="BannerImage"
+                    BackgroundColor="#111114"
+                    StrokeThickness="0"
+                    Padding="22,8,22,4"
+                    Rotation="-3"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start"
+                    Margin="0,22,0,0"
+                    InputTransparent="True">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="14" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#D9F84A" Offset="5,6" Radius="0" Opacity="1" />
+                </Border.Shadow>
+                <Label Text="WHO'S PLAYING?" FontFamily="Display" FontSize="32" TextColor="#FFFFFF" />
+            </Border>
         </Grid>
     </Grid>
 </ContentView>

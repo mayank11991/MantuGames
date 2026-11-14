@@ -14,8 +14,6 @@ public partial class LevelMapPage : ContentPage
     private string _gameId = null!;
     private string _gameRoute = null!;
     private bool _isNavigating;
-    private bool _isNebulaAnimating = false;
-    private CancellationTokenSource? _nebulaCts;
 
     public string GameId
     {
@@ -48,59 +46,52 @@ public partial class LevelMapPage : ContentPage
         _gameRoute = info?.Route ?? _gameId;
 
         if (info?.CardColor != null)
-        {
             _gameAccentColor = Color.FromArgb(info.CardColor);
-        }
 
-        // Set game title
-        GameTitleLabel.Text = info?.Title ?? _gameId;
-
-        // Set instructions
+        Backdrop.AccentColor = _gameAccentColor;
+        GameTitleLabel.Text = (info?.Title ?? _gameId).ToUpperInvariant();
+        HeroThumb.Source = info?.ImageName;
         InstructionsLabel.Text = GameRules.GetRules(_gameId);
-
-        // Set coins for this game
-        int coins = CoinService.GetCoins(_gameId);
-        CoinsLabel.Text = $"{coins}";
+        CoinsLabel.Text = CoinService.GetCoins(_gameId).ToString();
 
         Levels.Clear();
-
-        int highest = ProgressService.Instance.GetHighestUnlocked(_gameId);
-        int show = Math.Min(highest + 50, 50); // Show up to 50 levels
-
-        var levels = ProgressService.Instance.GetLevels(_gameId, show);
+        var levels = ProgressService.Instance.GetLevels(_gameId, 50);
+        int done = 0, stars = 0;
         foreach (var lp in levels)
         {
-            var vm = CreateLevelTileViewModel(lp);
-            Levels.Add(vm);
+            if (lp.IsCompleted) { done++; stars += lp.Stars; }
+            Levels.Add(CreateLevelTileViewModel(lp));
         }
+        ProgressLabel.Text = $"{done} / {levels.Count} levels";
+        StarsLabel.Text = stars.ToString();
     }
 
+    // Tile states: completed = white + ink outline + stars; current = solid ink;
+    // locked = translucent white with a lock.
     private LevelTileViewModel CreateLevelTileViewModel(LevelProgress lp)
     {
-        Color accent = lp.IsLocked ? Color.FromArgb("#99888888") : _gameAccentColor;
+        var ink = Color.FromArgb("#111114");
+        bool current = lp.IsUnlocked && !lp.IsCompleted;
 
         var vm = new LevelTileViewModel
         {
             LevelNumber = lp.LevelNumber,
             IsLocked = lp.IsLocked,
             IsCompleted = lp.IsCompleted,
+            IsCurrent = current,
             Stars = lp.IsCompleted ? lp.Stars : 0,
-            BgColor = Color.FromArgb("#FFFDFA"),
-            StrokeColor = accent,
-            FaceColor = accent,
-            FaceOpacity = lp.IsLocked ? 0.6 : 1.0,
-            ShadowBrush = lp.IsLocked ? Brush.Transparent : new SolidColorBrush(Color.FromArgb("#668A6FA8")),
+            BgColor = lp.IsLocked ? Color.FromArgb("#80FFFFFF") : current ? ink : Colors.White,
+            StrokeColor = lp.IsLocked ? Colors.Transparent : ink,
+            FaceColor = Colors.Transparent,
+            FaceOpacity = lp.IsLocked ? 0.75 : 1.0,
+            ShadowBrush = lp.IsLocked ? Brush.Transparent : new SolidColorBrush(current ? _gameAccentColor : ink),
             ShowStars = lp.IsCompleted,
             LevelText = lp.LevelNumber.ToString(),
         };
 
-        // Set star visibility
         vm.Star1 = vm.Stars >= 1;
         vm.Star2 = vm.Stars >= 2;
         vm.Star3 = vm.Stars >= 3;
-        vm.Star4 = false;
-        vm.Star5 = false;
-
         return vm;
     }
 
@@ -135,65 +126,6 @@ public partial class LevelMapPage : ContentPage
             ProgressService.ClearAssisted(_gameId);
         BuildMap();
         AudioService.Instance.StartMusic();
-        StartNebulaAnimation();
-    }
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        StopNebulaAnimation();
-    }
-
-    private void StartNebulaAnimation()
-    {
-        if (_isNebulaAnimating) return;
-        _isNebulaAnimating = true;
-        _nebulaCts = new CancellationTokenSource();
-        var token = _nebulaCts.Token;
-
-        _ = Task.Run(async () =>
-        {
-            try
-            {
-                double phase1 = 0, phase2 = 0, phase3 = 0;
-                while (!token.IsCancellationRequested)
-                {
-                    await MainThread.InvokeOnMainThreadAsync(() =>
-                    {
-                        if (Nebula1 != null && Nebula2 != null && Nebula3 != null)
-                        {
-                            Nebula1.TranslationX = 30 * Math.Sin(phase1);
-                            Nebula1.TranslationY = -20 * Math.Cos(phase1);
-                            Nebula1.Scale = 1 + 0.05 * Math.Sin(phase1);
-
-                            Nebula2.TranslationX = -20 * Math.Sin(phase2);
-                            Nebula2.TranslationY = 25 * Math.Cos(phase2);
-                            Nebula2.Scale = 1 + 0.05 * Math.Cos(phase2);
-
-                            Nebula3.TranslationX = -15 * Math.Sin(phase3);
-                            Nebula3.TranslationY = -30 * Math.Cos(phase3);
-                            Nebula3.Scale = 1 + 0.03 * Math.Sin(phase3);
-                        }
-                    });
-
-                    phase1 += 0.02;
-                    phase2 += 0.018;
-                    phase3 += 0.022;
-                    await Task.Delay(16, token);
-                }
-            }
-            catch (OperationCanceledException) { }
-            catch { }
-        }, token);
-    }
-
-    private void StopNebulaAnimation()
-    {
-        if (!_isNebulaAnimating) return;
-        _isNebulaAnimating = false;
-        _nebulaCts?.Cancel();
-        _nebulaCts?.Dispose();
-        _nebulaCts = null;
     }
 
     private async void OnBackClicked(object? sender, EventArgs e)
@@ -219,6 +151,7 @@ public class LevelTileViewModel : INotifyPropertyChanged
     public int LevelNumber { get; set; }
     public bool IsLocked { get; set; }
     public bool IsCompleted { get; set; }
+    public bool IsCurrent { get; set; }
     public int Stars { get; set; }
     public Color BgColor { get; set; } = null!;
     public Color StrokeColor { get; set; } = null!;
@@ -235,22 +168,26 @@ public class LevelTileViewModel : INotifyPropertyChanged
     public bool Star4 { get; set; }
     public bool Star5 { get; set; }
 
+    public string Star1Icon => Star1 ? "star_kawaii_filled.png" : "star_kawaii_empty.png";
+    public string Star2Icon => Star2 ? "star_kawaii_filled.png" : "star_kawaii_empty.png";
+    public string Star3Icon => Star3 ? "star_kawaii_filled.png" : "star_kawaii_empty.png";
+
     public View FaceContent => IsLocked
         ? new Image
         {
-            Source = "lock",
-            HeightRequest = 30,
-            WidthRequest = 30,
+            Source = "ic_lock_ink.png",
+            HeightRequest = 22,
+            WidthRequest = 22,
+            Opacity = 0.55,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         }
         : new Label
         {
             Text = LevelText,
-            FontFamily = "MadimiOne",
-            FontSize = 28,
-            FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#3D2C4E"),
+            FontFamily = "Display",
+            FontSize = 26,
+            TextColor = IsCurrent ? Colors.White : Color.FromArgb("#111114"),
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };

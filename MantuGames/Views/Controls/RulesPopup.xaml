@@ -5,10 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid x:Name="Overlay"
-          BackgroundColor="#663D2C4E"
+          BackgroundColor="#99111114"
           InputTransparent="False">
 
-        <Border Background="{AppThemeBinding Light=#FFFDFA, Dark=#FFFDFA}"
+        <Border Background="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}"
                 Stroke="{AppThemeBinding Light=#B3FFFFFF, Dark=#B3FFFFFF}"
                 StrokeThickness="1"
                 Padding="24"
@@ -21,20 +21,19 @@
             <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
                 <Label x:Name="TitleLabel"
                        Text="How to Play"
-                       FontFamily="MadimiOne"
-                       FontSize="22"
-                       FontAttributes="Bold"
-                       TextColor="#3D2C4E"
+                       FontFamily="Display"
+                       FontSize="28"
+                       TextColor="#111114"
                        HorizontalOptions="Center" />
                 <ScrollView MaximumHeightRequest="320">
                     <Label x:Name="BodyLabel"
                            FontFamily="MadimiOne"
                            FontSize="15"
                            LineHeight="1.5"
-                           TextColor="#7C6A8E"
+                           TextColor="#6E6E7C"
                            HorizontalOptions="Start" />
                 </ScrollView>
-                <Border BackgroundColor="#FFA94D"
+                <Border BackgroundColor="#D9F84A"
                         StrokeThickness="0"
                         Padding="32,10"
                         HorizontalOptions="Center"
@@ -46,7 +45,7 @@
                            FontFamily="MadimiOne"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="#3D2C4E"
+                           TextColor="#111114"
                            HorizontalOptions="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnDismiss" />

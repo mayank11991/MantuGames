@@ -108,7 +108,7 @@ public partial class EditProfilePopup : ContentView
                     var isSelected = fis.File == _selectedAvatar;
                     b.StrokeThickness = isSelected ? 3 : 0;
                     b.Stroke = isSelected
-                        ? new SolidColorBrush(Color.FromArgb("#3D2C4E"))
+                        ? new SolidColorBrush(Color.FromArgb("#111114"))
                         : new SolidColorBrush(Colors.Transparent);
                 }
             }

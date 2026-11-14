@@ -59,7 +59,7 @@ public partial class GameResultPopup : ContentView
             StarImg3.Source = stars >= 3 ? "star_kawaii_filled" : "star_kawaii_empty";
 
             TitleLabel.Text      = "You Won!";
-            TitleLabel.TextColor = Color.FromArgb("#1F8A70");
+            TitleLabel.TextColor = Color.FromArgb("#20B26B");
 
             if (coins > 0)
             {
@@ -76,7 +76,7 @@ public partial class GameResultPopup : ContentView
             else
                 MessageLabel.Text = $"Level {levelNumber} solved!";
 
-            PrimaryBorder.BackgroundColor = Color.FromArgb("#1F8A70");
+            PrimaryBorder.BackgroundColor = Color.FromArgb("#20B26B");
             PrimaryIcon.Source            = "icon_next";
             PrimaryLabel.Text             = "Next Level";
             SecondaryBorder.IsVisible     = true;
@@ -91,11 +91,11 @@ public partial class GameResultPopup : ContentView
             PointsBadge.IsVisible = false;
 
             TitleLabel.Text      = reason ?? "Time's Up!";
-            TitleLabel.TextColor = Color.FromArgb("#E0566F");
+            TitleLabel.TextColor = Color.FromArgb("#FF4F6D");
 
             MessageLabel.Text = "Don't worry — you can do it!\nGive it another try!";
 
-            PrimaryBorder.BackgroundColor = Color.FromArgb("#E0566F");
+            PrimaryBorder.BackgroundColor = Color.FromArgb("#FF4F6D");
             PrimaryIcon.Source            = "icon_retry";
             PrimaryLabel.Text             = "Try Again";
             SecondaryBorder.IsVisible     = false;

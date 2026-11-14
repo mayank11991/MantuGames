@@ -4,15 +4,15 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Grid x:Name="Overlay" BackgroundColor="#663D2C4E" InputTransparent="False">
+    <Grid x:Name="Overlay" BackgroundColor="#99111114" InputTransparent="False">
         <Grid VerticalOptions="Center"
               HorizontalOptions="Center"
               Padding="28"
               InputTransparent="False">
 
-            <Border Background="#FFFDFA"
-                    Stroke="#B3FFFFFF"
-                    StrokeThickness="1"
+            <Border Background="#FFFFFF"
+                    Stroke="#111114"
+                    StrokeThickness="3"
                     Padding="24"
                     WidthRequest="320"
                     HorizontalOptions="Fill"
@@ -21,23 +21,22 @@
                     <RoundRectangle CornerRadius="24" />
                 </Border.StrokeShape>
                 <Border.Shadow>
-                    <Shadow Brush="#8A6FA8" Offset="0,8" Radius="24" Opacity="0.25" />
+                    <Shadow Brush="#2A2E45" Offset="0,8" Radius="24" Opacity="0.25" />
                 </Border.Shadow>
 
                 <VerticalStackLayout Spacing="18" HorizontalOptions="Center">
 
                     <Label x:Name="TitleLabel"
                            Text="Update Available"
-                           FontFamily="MadimiOne"
-                           FontSize="20"
-                           FontAttributes="Bold"
-                           TextColor="#3D2C4E"
+                           FontFamily="Display"
+                           FontSize="26"
+                           TextColor="#111114"
                            HorizontalOptions="Center" />
 
                     <Label x:Name="VersionLabel"
                            FontFamily="MadimiOne"
                            FontSize="13"
-                           TextColor="#7C6A8E"
+                           TextColor="#6E6E7C"
                            HorizontalOptions="Center" />
 
                     <ScrollView MaximumHeightRequest="140">
@@ -45,11 +44,11 @@
                                FontFamily="MadimiOne"
                                FontSize="14"
                                LineHeight="1.4"
-                               TextColor="#7C6A8E" />
+                               TextColor="#6E6E7C" />
                     </ScrollView>
 
                     <Border x:Name="UpdateBorder"
-                            BackgroundColor="#FFA94D"
+                            BackgroundColor="#D9F84A"
                             StrokeThickness="0"
                             Padding="32,10"
                             HorizontalOptions="Center"
@@ -61,7 +60,7 @@
                                FontFamily="MadimiOne"
                                FontSize="16"
                                FontAttributes="Bold"
-                               TextColor="#3D2C4E"
+                               TextColor="#111114"
                                HorizontalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnUpdate" />
@@ -73,7 +72,7 @@
                            Text="Not now"
                            FontFamily="MadimiOne"
                            FontSize="13"
-                           TextColor="#7C6A8E"
+                           TextColor="#6E6E7C"
                            TextDecorations="Underline"
                            HorizontalOptions="Center">
                         <Label.GestureRecognizers>

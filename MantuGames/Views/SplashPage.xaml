@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MantuGames.Views.Controls"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="#F7EFFF"
+             BackgroundColor="#E9F95A"
              x:Class="MantuGames.Views.SplashPage">
 
     <Grid x:Name="Root" HorizontalOptions="Fill" VerticalOptions="Fill">
@@ -19,44 +19,45 @@
                              Spacing="10">
             <Grid x:Name="MantuRow"
                   HorizontalOptions="Center"
-                  ColumnSpacing="6">
+                  ColumnSpacing="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="42" />
-                    <ColumnDefinition Width="42" />
-                    <ColumnDefinition Width="42" />
-                    <ColumnDefinition Width="42" />
-                    <ColumnDefinition Width="42" />
+                    <ColumnDefinition Width="58" />
+                    <ColumnDefinition Width="58" />
+                    <ColumnDefinition Width="58" />
+                    <ColumnDefinition Width="58" />
+                    <ColumnDefinition Width="58" />
                 </Grid.ColumnDefinitions>
                 <Label x:Name="L0" Text="M" Grid.Column="0"
-                       FontFamily="MadimiOne" FontSize="46"
-                       FontAttributes="Bold" TextColor="#3D2C4E"
+                       FontFamily="Display" FontSize="92"
+                       TextColor="#111114"
                        HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                 <Label x:Name="L1" Text="A" Grid.Column="1"
-                       FontFamily="MadimiOne" FontSize="46"
-                       FontAttributes="Bold" TextColor="#3D2C4E"
+                       FontFamily="Display" FontSize="92"
+                       TextColor="#111114"
                        HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                 <Label x:Name="L2" Text="N" Grid.Column="2"
-                       FontFamily="MadimiOne" FontSize="46"
-                       FontAttributes="Bold" TextColor="#3D2C4E"
+                       FontFamily="Display" FontSize="92"
+                       TextColor="#111114"
                        HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                 <Label x:Name="L3" Text="T" Grid.Column="3"
-                       FontFamily="MadimiOne" FontSize="46"
-                       FontAttributes="Bold" TextColor="#3D2C4E"
+                       FontFamily="Display" FontSize="92"
+                       TextColor="#111114"
                        HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                 <Label x:Name="L4" Text="U" Grid.Column="4"
-                       FontFamily="MadimiOne" FontSize="46"
-                       FontAttributes="Bold" TextColor="#3D2C4E"
+                       FontFamily="Display" FontSize="92"
+                       TextColor="#111114"
                        HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
             </Grid>
             <Label x:Name="GamingsLabel"
-                   Text="GAMINGS"
-                   FontFamily="MadimiOne"
-                   FontSize="16"
-                   TextColor="#2F9E7F"
+                   Text="GAMES"
+                   FontFamily="Baloo2ExtraBold"
+                   FontSize="18"
+                   TextColor="#FFFFFF"
+                   BackgroundColor="#111114"
                    HorizontalOptions="Center"
-                   CharacterSpacing="8"
+                   CharacterSpacing="10"
                    Opacity="0"
-                   Padding="10,0,10,10" />
+                   Padding="22,6,12,4" />
         </VerticalStackLayout>
     </Grid>
 

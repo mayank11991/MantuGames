@@ -45,7 +45,7 @@ public partial class StatsPopup : ContentView
                         FontFamily = "MadimiOne",
                         FontSize = 13,
                         FontAttributes = FontAttributes.Bold,
-                        TextColor = Color.FromArgb("#3D2C4E"),
+                        TextColor = Color.FromArgb("#111114"),
                         VerticalOptions = LayoutOptions.Center,
                     },
                 }
@@ -58,7 +58,7 @@ public partial class StatsPopup : ContentView
                 Text = $"{s.Won}/{s.Played}",
                 FontFamily = "MadimiOne",
                 FontSize = 12,
-                TextColor = Color.FromArgb("#7C6A8E"),
+                TextColor = Color.FromArgb("#6E6E7C"),
                 VerticalOptions = LayoutOptions.Center,
             });
             Grid.SetRow((BindableObject)StatsGrid.Children[^1], row);
@@ -69,7 +69,7 @@ public partial class StatsPopup : ContentView
                 Text = StatsService.WinRate(s.Played, s.Won) > 0 ? $"{StatsService.WinRate(s.Played, s.Won):0}%" : "—",
                 FontFamily = "MadimiOne",
                 FontSize = 12,
-                TextColor = Color.FromArgb("#1F8A70"),
+                TextColor = Color.FromArgb("#20B26B"),
                 VerticalOptions = LayoutOptions.Center,
             });
             Grid.SetRow((BindableObject)StatsGrid.Children[^1], row);

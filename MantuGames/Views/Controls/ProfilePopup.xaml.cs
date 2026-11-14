@@ -100,7 +100,7 @@ public partial class ProfilePopup : ContentView
             {
                 b.StrokeThickness = idx == _selectedAvatarIndex ? 3 : 0;
                 b.Stroke = idx == _selectedAvatarIndex
-                    ? new SolidColorBrush(Color.FromArgb("#3D2C4E"))
+                    ? new SolidColorBrush(Color.FromArgb("#111114"))
                     : null;
             }
         }

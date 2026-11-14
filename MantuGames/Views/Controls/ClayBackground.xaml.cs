@@ -5,6 +5,8 @@ public enum BackdropVariant
     Lime,
     Sky,
     Night,
+    /// <summary>Gradient from <see cref="ClayBackground.AccentColor"/> down to white.</summary>
+    Accent,
 }
 
 public partial class ClayBackground : ContentView
@@ -17,6 +19,16 @@ public partial class ClayBackground : ContentView
     {
         get => (BackdropVariant)GetValue(VariantProperty);
         set => SetValue(VariantProperty, value);
+    }
+
+    public static readonly BindableProperty AccentColorProperty =
+        BindableProperty.Create(nameof(AccentColor), typeof(Color), typeof(ClayBackground),
+            Colors.White, propertyChanged: (b, _, _) => ((ClayBackground)b).Apply());
+
+    public Color AccentColor
+    {
+        get => (Color)GetValue(AccentColorProperty);
+        set => SetValue(AccentColorProperty, value);
     }
 
     public ClayBackground()
@@ -48,6 +60,9 @@ public partial class ClayBackground : ContentView
             case BackdropVariant.Night:
                 Helpers.SystemBars.Apply(Color.FromArgb("#221B4D"), Color.FromArgb("#130F2B"), darkIcons: false);
                 break;
+            case BackdropVariant.Accent:
+                Helpers.SystemBars.Apply(AccentColor, Color.FromArgb("#FFFFFF"), darkIcons: true);
+                break;
             case BackdropVariant.Sky:
                 Helpers.SystemBars.Apply(Color.FromArgb("#5AA6FF"), Color.FromArgb("#F4F8FF"), darkIcons: true);
                 break;
@@ -65,8 +80,20 @@ public partial class ClayBackground : ContentView
             BackdropVariant.Night => "GradNight",
             _ => "GradLime",
         };
-        if (Application.Current?.Resources.TryGetValue(key, out var brush) == true && brush is Brush b)
+        if (Variant == BackdropVariant.Accent)
+        {
+            var a = AccentColor;
+            Root.Background = new LinearGradientBrush(new GradientStopCollection
+            {
+                new GradientStop(a, 0f),
+                new GradientStop(a.WithAlpha(0.35f), 0.55f),
+                new GradientStop(Colors.White, 1f),
+            }, new Point(0, 0), new Point(0, 1));
+        }
+        else if (Application.Current?.Resources.TryGetValue(key, out var brush) == true && brush is Brush b)
+        {
             Root.Background = b;
+        }
 
         (Color g1, Color g2) = Variant switch
         {
@@ -82,5 +109,7 @@ public partial class ClayBackground : ContentView
         {
             new GradientStop(g2, 0f), new GradientStop(Colors.Transparent, 1f),
         });
+
+        if (IsLoaded) ApplySystemBars();
     }
 }
