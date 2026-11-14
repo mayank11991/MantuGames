@@ -7,245 +7,209 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:conv="clr-namespace:MantuGames.Converters"
     xmlns:controls="clr-namespace:MantuGames.Views.Controls"
-    BackgroundColor="{StaticResource ColorBg}"
+    BackgroundColor="{StaticResource PopPaper}"
     Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
         <conv:StringToColorConverter x:Key="StringToColor" />
     </ContentPage.Resources>
 
-    <!-- Clay background is drawn by ClayBackground; page stays soft lavender. -->
-    <Grid RowDefinitions="Auto,*,Auto">
-        <!-- Soft clay background -->
-        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
+    <Grid RowDefinitions="*,Auto">
+        <controls:ClayBackground Grid.RowSpan="2" Variant="Lime" />
 
-        <!-- ── HEADER ── -->
-        <Grid Grid.Row="0" Padding="18,8,18,4"
-              RowDefinitions="Auto,Auto,Auto">
+        <!-- ── SCROLLING CONTENT ── -->
+        <ScrollView x:Name="GamesScroll" Grid.Row="0">
+            <VerticalStackLayout Padding="20,14,20,24" Spacing="0">
 
-            <!-- Utility row: profile avatar + coin balance -->
-            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
-                <Border Grid.Column="0"
-                        BackgroundColor="#FFFFFF"
-                        Stroke="#80FFFFFF"
-                        StrokeThickness="1"
-                        Padding="3,3,12,3"
-                        VerticalOptions="Center">
+                <!-- Top bar: avatar · coins · settings -->
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10">
+                    <Border Grid.Column="0" Style="{StaticResource PopCircleSoft}"
+                            WidthRequest="54" HeightRequest="54" BackgroundColor="{StaticResource PopPaper}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSwitchProfile" />
+                        </Border.GestureRecognizers>
+                        <Image x:Name="HeaderAvatar" Source="a1.png" Aspect="AspectFill"
+                               WidthRequest="48" HeightRequest="48">
+                            <Image.Clip>
+                                <EllipseGeometry Center="24,24" RadiusX="24" RadiusY="24" />
+                            </Image.Clip>
+                        </Image>
+                    </Border>
+
+                    <!-- Coin balance pill -->
+                    <Border Grid.Column="2" Style="{StaticResource PopPillDark}"
+                            Padding="12,8,16,8" VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCoinShopClicked" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6">
+                            <Image Source="coin.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                            <Label x:Name="CoinBalanceLabel" Text="0"
+                                   FontFamily="Baloo2ExtraBold" FontSize="15"
+                                   TextColor="#FFFFFF" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <Border Grid.Column="3" Style="{StaticResource PopCircleSoft}" VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSettingsClicked" />
+                        </Border.GestureRecognizers>
+                        <Image Source="ic_gear_ink.png" WidthRequest="24" HeightRequest="24" />
+                    </Border>
+                </Grid>
+
+                <!-- Hero: WELCOME! with the player's avatar breaking the headline -->
+                <Grid Margin="0,18,0,0" HeightRequest="190">
+                    <Label Text="WELCOME!"
+                           Style="{StaticResource PopHero}"
+                           FontSize="76"
+                           HorizontalOptions="Start"
+                           VerticalOptions="Start" />
+                    <Border HorizontalOptions="End" VerticalOptions="End"
+                            WidthRequest="132" HeightRequest="132"
+                            Margin="0,0,4,0"
+                            BackgroundColor="{StaticResource PopPaper}"
+                            Stroke="{StaticResource PopInk}" StrokeThickness="3"
+                            Padding="0" Rotation="6">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="40" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#000000" Offset="6,8" Radius="0" Opacity="0.9" />
+                        </Border.Shadow>
+                        <Image x:Name="HeroAvatar" Source="a1.png" Aspect="AspectFill" />
+                    </Border>
+                    <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="End" Spacing="0" Margin="2,0,140,6">
+                        <Label Text="Hey" Style="{StaticResource PopBody}" FontSize="16" />
+                        <Label x:Name="HeaderPlayerName" Text="Player"
+                               FontFamily="Baloo2ExtraBold" FontSize="26"
+                               LineBreakMode="TailTruncation" MaxLines="1" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Stats strip -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,18,0,0">
+                    <Border Grid.Column="0" Style="{StaticResource PopCard}" Padding="12,10">
+                        <HorizontalStackLayout Spacing="8">
+                            <Image Source="star_kawaii_filled.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
+                            <VerticalStackLayout Spacing="-4" VerticalOptions="Center">
+                                <Label x:Name="StarsStat" Text="0" FontFamily="Display" FontSize="22" />
+                                <Label Text="stars" Style="{StaticResource PopMutedLabel}" FontSize="11" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource PopCard}" Padding="12,10">
+                        <HorizontalStackLayout Spacing="8">
+                            <Image Source="ic_trophy_ink.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
+                            <VerticalStackLayout Spacing="-4" VerticalOptions="Center">
+                                <Label x:Name="WinsStat" Text="0" FontFamily="Display" FontSize="22" />
+                                <Label Text="wins" Style="{StaticResource PopMutedLabel}" FontSize="11" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource PopCard}" Padding="12,10">
+                        <HorizontalStackLayout Spacing="8">
+                            <Image Source="ic_grid_ink.png" WidthRequest="22" HeightRequest="22" VerticalOptions="Center" />
+                            <VerticalStackLayout Spacing="-4" VerticalOptions="Center">
+                                <Label x:Name="LevelsStat" Text="0" FontFamily="Display" FontSize="22" />
+                                <Label Text="levels" Style="{StaticResource PopMutedLabel}" FontSize="11" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Section title + search -->
+                <Label Text="Pick your game" Style="{StaticResource PopSection}" FontSize="26" Margin="2,22,0,10" />
+                <Border BackgroundColor="#F2FFFFFF" StrokeThickness="0" Padding="16,2,16,2">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="19" />
+                        <RoundRectangle CornerRadius="999" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="#8A6FA8" Offset="0,2" Radius="5" Opacity="0.18" />
+                        <Shadow Brush="{StaticResource PopShadow}" Offset="0,4" Radius="12" Opacity="0.10" />
                     </Border.Shadow>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnSwitchProfile" />
-                    </Border.GestureRecognizers>
-                    <HorizontalStackLayout Spacing="7" VerticalOptions="Center">
-                        <Border WidthRequest="30" HeightRequest="30"
-                                BackgroundColor="#E9DEFF"
-                                Stroke="#FFFFFF"
-                                StrokeThickness="2"
-                                Padding="0"
-                                VerticalOptions="Center">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="15" />
-                            </Border.StrokeShape>
-                            <Image x:Name="HeaderAvatar"
-                                   Source="a1.png"
-                                   Aspect="AspectFit"
-                                   WidthRequest="26" HeightRequest="26"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center" />
-                        </Border>
-                        <Label x:Name="HeaderPlayerName"
-                               Text="Player"
-                               FontFamily="MadimiOne"
-                               FontSize="13"
-                               FontAttributes="Bold"
-                               TextColor="#3D2C4E"
-                               MaximumWidthRequest="120"
-                               LineBreakMode="TailTruncation"
-                               VerticalOptions="Center" />
-                    </HorizontalStackLayout>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Image Source="ic_search_ink.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                        <Entry Grid.Column="1" x:Name="SearchEntry"
+                               Placeholder="Search a game"
+                               PlaceholderColor="{StaticResource PopMuted}"
+                               TextColor="{StaticResource PopInk}"
+                               BackgroundColor="Transparent"
+                               FontFamily="Baloo2Medium" FontSize="15"
+                               TextChanged="OnSearchTextChanged" />
+                    </Grid>
                 </Border>
 
-                <Border Grid.Column="2"
-                        BackgroundColor="#FFFFFF"
-                        Stroke="#80FFFFFF"
-                        StrokeThickness="1"
-                        Padding="10,5"
-                        VerticalOptions="Center">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="16" />
-                    </Border.StrokeShape>
-                    <Border.Shadow>
-                        <Shadow Brush="#8A6FA8" Offset="0,2" Radius="5" Opacity="0.15" />
-                    </Border.Shadow>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnCoinShopClicked" />
-                    </Border.GestureRecognizers>
-                    <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
-                        <Image Source="coin.png"
-                               WidthRequest="18" HeightRequest="18"
-                               VerticalOptions="Center" />
-                        <Label x:Name="CoinBalanceLabel"
-                               Text="0"
-                               FontFamily="MadimiOne"
-                               FontSize="13"
-                               FontAttributes="Bold"
-                               TextColor="#3D2C4E"
-                               VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                </Border>
-            </Grid>
-
-            <!-- Clay title -->
-            <Grid Grid.Row="1" Margin="0,2,0,0">
-                <Label Text="Mantu Games"
-                       FontFamily="Baloo2ExtraBold"
-                       FontSize="40"
-                       CharacterSpacing="0.5"
-                       TextColor="#3D2C4E"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center">
-                    <Label.Shadow>
-                        <Shadow Brush="#FFFFFF" Offset="0,3" Radius="2" Opacity="0.9" />
-                    </Label.Shadow>
-                </Label>
-            </Grid>
-
-            <Label Grid.Row="2"
-                   Text="Play  •  Learn  •  Explore"
-                   FontFamily="MadimiOne"
-                   FontSize="12"
-                   FontAttributes="Bold"
-                   CharacterSpacing="1"
-                   TextColor="#7C6A8E"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center"
-                   Margin="0,0,0,2" />
-        </Grid>
-
-        <!-- ── GAME GRID ── -->
-        <ScrollView x:Name="GamesScroll"
-                    Grid.Row="1"
-                    Margin="14,6,14,4"
-                    VerticalOptions="Fill">
-            <VerticalStackLayout x:Name="GamesFlex"
-                                 Spacing="12"
-                                 HorizontalOptions="Center"
-                                 Margin="0,0,0,8" />
+                <!-- Game cards (built in code-behind, 2 columns) -->
+                <VerticalStackLayout x:Name="GamesFlex" Spacing="14" Margin="0,18,0,0" />
+            </VerticalStackLayout>
         </ScrollView>
 
-        <!-- ── BOTTOM NAVIGATION ── -->
-        <Border Grid.Row="2"
-                Margin="16,0,16,10"
-                BackgroundColor="#FFFFFF"
-                Stroke="#40FFFFFF"
-                StrokeThickness="1"
-                Padding="6,6">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="26" />
-            </Border.StrokeShape>
-            <Border.Shadow>
-                <Shadow Brush="#8A6FA8" Offset="0,4" Radius="14" Opacity="0.20" />
-            </Border.Shadow>
+        <!-- ── BOTTOM NAVIGATION: ( home | stats )  [ games ]  ( settings | profile ) ── -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,*" Padding="20,8,20,14" ColumnSpacing="14">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="#00FFFFFF" />
+                    <GradientStop Offset="0.45" Color="#F2FFFFFF" />
+                </LinearGradientBrush>
+            </Grid.Background>
 
-            <Grid ColumnDefinitions="*,*,*,*">
-
-                <!-- Home (active) -->
-                <VerticalStackLayout Grid.Column="0" Spacing="1"
-                                     HorizontalOptions="Center" VerticalOptions="Center">
-                    <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavHomeClicked" />
-                    </VerticalStackLayout.GestureRecognizers>
-                    <Border BackgroundColor="#E9DEFF"
-                            StrokeThickness="0"
-                            WidthRequest="50" HeightRequest="30"
-                            Padding="0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="15" />
-                        </Border.StrokeShape>
-                        <Label Text="🏠" FontSize="15"
-                               HorizontalOptions="Center" VerticalOptions="Center" />
+            <Border Grid.Column="0" Style="{StaticResource PopPillLight}" Padding="4"
+                    HorizontalOptions="End" HeightRequest="60">
+                <HorizontalStackLayout Spacing="4">
+                    <Border Style="{StaticResource PopCircle}" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNavHomeClicked" />
+                        </Border.GestureRecognizers>
+                        <Image Source="ic_home_ink.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
-                    <Label Text="Home" FontFamily="MadimiOne" FontSize="10"
-                           FontAttributes="Bold" TextColor="#5B3FD1"
-                           HorizontalOptions="Center" />
-                </VerticalStackLayout>
-
-                <!-- Stats -->
-                <VerticalStackLayout Grid.Column="1" Spacing="1"
-                                     HorizontalOptions="Center" VerticalOptions="Center">
-                    <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavStatsClicked" />
-                    </VerticalStackLayout.GestureRecognizers>
-                    <Border BackgroundColor="Transparent"
-                            StrokeThickness="0"
-                            WidthRequest="50" HeightRequest="30"
-                            Padding="0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="15" />
-                        </Border.StrokeShape>
-                        <Label Text="🏆" FontSize="15"
-                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Border Style="{StaticResource PopCircle}" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNavStatsClicked" />
+                        </Border.GestureRecognizers>
+                        <Image Source="ic_trophy_ink.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
-                    <Label Text="Stats" FontFamily="MadimiOne" FontSize="10"
-                           FontAttributes="Bold" TextColor="#7C6A8E"
-                           HorizontalOptions="Center" />
-                </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Border>
 
-                <!-- Settings -->
-                <VerticalStackLayout Grid.Column="2" Spacing="1"
-                                     HorizontalOptions="Center" VerticalOptions="Center">
-                    <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavSettingsClicked" />
-                    </VerticalStackLayout.GestureRecognizers>
-                    <Border BackgroundColor="Transparent"
-                            StrokeThickness="0"
-                            WidthRequest="50" HeightRequest="30"
-                            Padding="0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="15" />
-                        </Border.StrokeShape>
-                        <Label Text="⚙️" FontSize="15"
-                               HorizontalOptions="Center" VerticalOptions="Center" />
+            <Border Grid.Column="1" BackgroundColor="{StaticResource PopInk}" StrokeThickness="0"
+                    WidthRequest="64" HeightRequest="64" Padding="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="32" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#000000" Offset="0,8" Radius="16" Opacity="0.25" />
+                </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavHomeClicked" />
+                </Border.GestureRecognizers>
+                <Image Source="ic_grid_white.png" WidthRequest="26" HeightRequest="26" />
+            </Border>
+
+            <Border Grid.Column="2" Style="{StaticResource PopPillLight}" Padding="4"
+                    HorizontalOptions="Start" HeightRequest="60">
+                <HorizontalStackLayout Spacing="4">
+                    <Border Style="{StaticResource PopCircle}" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNavSettingsClicked" />
+                        </Border.GestureRecognizers>
+                        <Image Source="ic_gear_ink.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
-                    <Label Text="Settings" FontFamily="MadimiOne" FontSize="10"
-                           FontAttributes="Bold" TextColor="#7C6A8E"
-                           HorizontalOptions="Center" />
-                </VerticalStackLayout>
-
-                <!-- Profile -->
-                <VerticalStackLayout Grid.Column="3" Spacing="1"
-                                     HorizontalOptions="Center" VerticalOptions="Center">
-                    <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavProfileClicked" />
-                    </VerticalStackLayout.GestureRecognizers>
-                    <Border BackgroundColor="Transparent"
-                            StrokeThickness="0"
-                            WidthRequest="50" HeightRequest="30"
-                            Padding="0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="15" />
-                        </Border.StrokeShape>
-                        <Label Text="👤" FontSize="15"
-                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Border Style="{StaticResource PopCircle}" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNavProfileClicked" />
+                        </Border.GestureRecognizers>
+                        <Image Source="ic_user_ink.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
-                    <Label Text="Profile" FontFamily="MadimiOne" FontSize="10"
-                           FontAttributes="Bold" TextColor="#7C6A8E"
-                           HorizontalOptions="Center" />
-                </VerticalStackLayout>
-            </Grid>
-        </Border>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
 
-        <controls:SettingsPopup x:Name="SettingsPopup" IsVisible="False" Grid.RowSpan="3" />
-        <controls:ProfilePopup x:Name="ProfilePopup" IsVisible="False" Grid.RowSpan="3" />
-        <controls:ProfilePickerPopup x:Name="ProfilePicker" IsVisible="False" Grid.RowSpan="3" />
-        <controls:EditProfilePopup x:Name="EditProfilePopup" IsVisible="False" Grid.RowSpan="3" />
-        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False" Grid.RowSpan="3" />
-        <controls:StatsPopup x:Name="StatsPopup" IsVisible="False" Grid.RowSpan="3" />
-        <controls:UpdatePopup x:Name="UpdatePopup" IsVisible="False" Grid.RowSpan="3" />
-
+        <controls:SettingsPopup x:Name="SettingsPopup" IsVisible="False" Grid.RowSpan="2" />
+        <controls:ProfilePopup x:Name="ProfilePopup" IsVisible="False" Grid.RowSpan="2" />
+        <controls:ProfilePickerPopup x:Name="ProfilePicker" IsVisible="False" Grid.RowSpan="2" />
+        <controls:EditProfilePopup x:Name="EditProfilePopup" IsVisible="False" Grid.RowSpan="2" />
+        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False" Grid.RowSpan="2" />
+        <controls:StatsPopup x:Name="StatsPopup" IsVisible="False" Grid.RowSpan="2" />
+        <controls:UpdatePopup x:Name="UpdatePopup" IsVisible="False" Grid.RowSpan="2" />
     </Grid>
 </ContentPage>

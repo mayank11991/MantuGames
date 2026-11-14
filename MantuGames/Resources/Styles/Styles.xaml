@@ -5,9 +5,9 @@
     x:Class="MantuGames.Resources.Styles.Styles">
 
     <!-- ══════════════════════════════════════════════════════════════
-         Mantu Games — Claymorphism styles
-         Rounded Baloo 2 type, pastel surfaces, white rims and soft
-         plum shadows. MadimiOne is aliased to Baloo 2 in MauiProgram.
+         Mantu Games — "Pop" styles (see Colors.xaml).
+         Display type: Anton ("Display"). Body: Baloo 2; MadimiOne and
+         other legacy font names are aliased to Baloo 2 in MauiProgram.
          ══════════════════════════════════════════════════════════════ -->
 
     <Style TargetType="Page" ApplyToDerivedTypes="True">
@@ -29,86 +29,96 @@
     </Style>
 
     <!-- ── Typography ────────────────────────────────────────────── -->
+    <!-- Display = Anton (tall condensed). Body = Baloo 2 (MadimiOne alias). -->
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="{StaticResource ColorText}" />
+        <Setter Property="TextColor" Value="{StaticResource PopInk}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="MadimiOne" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="LineHeight" Value="1.12" />
     </Style>
 
-    <Style TargetType="Label" x:Key="DisplayLabel">
-        <Setter Property="FontFamily" Value="Baloo2Bold" />
-        <Setter Property="FontSize" Value="34" />
-        <Setter Property="TextColor" Value="{StaticResource ColorText}" />
-        <Setter Property="LineHeight" Value="1.05" />
+    <Style TargetType="Label" x:Key="PopHero">
+        <Setter Property="FontFamily" Value="Display" />
+        <Setter Property="FontSize" Value="56" />
+        <Setter Property="TextColor" Value="{StaticResource PopInk}" />
+        <Setter Property="LineHeight" Value="0.95" />
     </Style>
-
-    <Style TargetType="Label" x:Key="Headline">
-        <Setter Property="FontFamily" Value="Baloo2Bold" />
+    <Style TargetType="Label" x:Key="PopTitle">
+        <Setter Property="FontFamily" Value="Display" />
         <Setter Property="FontSize" Value="30" />
-        <Setter Property="TextColor" Value="{StaticResource ColorText}" />
-        <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="TextColor" Value="{StaticResource PopInk}" />
+        <Setter Property="LineHeight" Value="1" />
+    </Style>
+    <Style TargetType="Label" x:Key="PopSection">
+        <Setter Property="FontFamily" Value="Baloo2ExtraBold" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="TextColor" Value="{StaticResource PopInk}" />
+    </Style>
+    <Style TargetType="Label" x:Key="PopBody">
+        <Setter Property="FontFamily" Value="Baloo2Medium" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextColor" Value="{StaticResource PopInkSoft}" />
+    </Style>
+    <Style TargetType="Label" x:Key="PopMutedLabel">
+        <Setter Property="FontFamily" Value="Baloo2Medium" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource PopMuted}" />
+    </Style>
+    <Style TargetType="Label" x:Key="NightTitle">
+        <Setter Property="FontFamily" Value="Display" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="TextColor" Value="{StaticResource NightText}" />
         <Setter Property="CharacterSpacing" Value="0.5" />
     </Style>
-
-    <Style TargetType="Label" x:Key="SubHeadline">
+    <Style TargetType="Label" x:Key="NightBody">
         <Setter Property="FontFamily" Value="Baloo2SemiBold" />
-        <Setter Property="FontSize" Value="17" />
-        <Setter Property="TextColor" Value="{StaticResource ColorMuted}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource NightMuted}" />
+    </Style>
+
+    <!-- Legacy label keys, restyled -->
+    <Style TargetType="Label" x:Key="DisplayLabel" BasedOn="{StaticResource PopTitle}">
+        <Setter Property="FontSize" Value="36" />
+    </Style>
+    <Style TargetType="Label" x:Key="Headline" BasedOn="{StaticResource PopTitle}">
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
     </Style>
-
+    <Style TargetType="Label" x:Key="SubHeadline" BasedOn="{StaticResource PopBody}">
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
     <Style TargetType="Label" x:Key="KickerLabel">
         <Setter Property="FontFamily" Value="Baloo2Bold" />
         <Setter Property="FontSize" Value="11" />
-        <Setter Property="TextColor" Value="{StaticResource ColorAccent}" />
+        <Setter Property="TextColor" Value="{StaticResource PopMuted}" />
         <Setter Property="CharacterSpacing" Value="2" />
     </Style>
-
-    <Style TargetType="Label" x:Key="MutedLabel">
-        <Setter Property="TextColor" Value="{StaticResource ColorMuted}" />
-        <Setter Property="FontFamily" Value="MadimiOne" />
-    </Style>
-
-    <Style TargetType="Label" x:Key="ClayTitle">
-        <Setter Property="FontFamily" Value="Baloo2ExtraBold" />
-        <Setter Property="FontSize" Value="32" />
-        <Setter Property="TextColor" Value="{StaticResource ColorText}" />
-    </Style>
-
-    <Style TargetType="Label" x:Key="ClaySubtitle">
-        <Setter Property="FontFamily" Value="Baloo2SemiBold" />
-        <Setter Property="FontSize" Value="15" />
-        <Setter Property="TextColor" Value="{StaticResource ColorMuted}" />
-    </Style>
+    <Style TargetType="Label" x:Key="MutedLabel" BasedOn="{StaticResource PopMutedLabel}" />
+    <Style TargetType="Label" x:Key="ClayTitle" BasedOn="{StaticResource PopTitle}" />
+    <Style TargetType="Label" x:Key="ClaySubtitle" BasedOn="{StaticResource PopBody}" />
 
     <!-- ── Buttons ───────────────────────────────────────────────── -->
     <Style TargetType="Button">
-        <Setter Property="TextColor" Value="{StaticResource ColorText}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel}" />
+        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PopInk}" />
         <Setter Property="FontFamily" Value="Baloo2Bold" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="BorderColor" Value="{StaticResource ColorLine}" />
-        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="BorderWidth" Value="0" />
         <Setter Property="CornerRadius" Value="999" />
-        <Setter Property="Padding" Value="18,12" />
-        <Setter Property="MinimumHeightRequest" Value="48" />
-        <Setter Property="MinimumWidthRequest" Value="48" />
-        <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,6" Radius="14" Opacity="0.30" />
-        </Setter>
+        <Setter Property="Padding" Value="20,12" />
+        <Setter Property="MinimumHeightRequest" Value="50" />
+        <Setter Property="MinimumWidthRequest" Value="50" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{StaticResource Gray500}" />
-                            <Setter Property="BackgroundColor" Value="{StaticResource Gray900}" />
-                            <Setter Property="Shadow" Value="{x:Null}" />
+                            <Setter Property="TextColor" Value="{StaticResource Gray400}" />
+                            <Setter Property="BackgroundColor" Value="{StaticResource PopPaperSoft}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver" />
@@ -116,136 +126,192 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
-
     <Style TargetType="Button" x:Key="AccentButton">
-        <Setter Property="TextColor" Value="{StaticResource ColorText}" />
-        <Setter Property="FontFamily" Value="Baloo2Bold" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="BorderColor" Value="{StaticResource ColorLine}" />
+        <Setter Property="TextColor" Value="{StaticResource PopInk}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PopLime}" />
+        <Setter Property="FontFamily" Value="Baloo2ExtraBold" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="BorderColor" Value="{StaticResource PopInk}" />
         <Setter Property="BorderWidth" Value="2" />
         <Setter Property="CornerRadius" Value="999" />
-        <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,6" Radius="14" Opacity="0.30" />
-        </Setter>
-
-        <Setter Property="BackgroundColor" Value="{StaticResource ColorCta}" />
         <Setter Property="Padding" Value="22,14" />
         <Setter Property="MinimumHeightRequest" Value="52" />
-        <Setter Property="CharacterSpacing" Value="0.5" />
     </Style>
-
     <Style TargetType="Button" x:Key="GhostButton">
-        <Setter Property="TextColor" Value="{StaticResource ColorText}" />
+        <Setter Property="TextColor" Value="{StaticResource PopInk}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PopPaper}" />
         <Setter Property="FontFamily" Value="Baloo2Bold" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="BorderColor" Value="{StaticResource ColorLine}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="BorderColor" Value="{StaticResource PopInk}" />
         <Setter Property="BorderWidth" Value="2" />
         <Setter Property="CornerRadius" Value="999" />
-        <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,6" Radius="14" Opacity="0.30" />
-        </Setter>
-
-        <Setter Property="BackgroundColor" Value="#CCFFFFFF" />
-        <Setter Property="BorderColor" Value="{StaticResource ColorLine}" />
-        <Setter Property="BorderWidth" Value="2" />
         <Setter Property="Padding" Value="22,14" />
-        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="MinimumHeightRequest" Value="50" />
     </Style>
-
     <Style TargetType="Button" x:Key="ClayPrimaryButton">
         <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PopInk}" />
         <Setter Property="FontFamily" Value="Baloo2Bold" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="BorderColor" Value="{StaticResource ColorLine}" />
-        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="BorderWidth" Value="0" />
         <Setter Property="CornerRadius" Value="999" />
-        <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,6" Radius="14" Opacity="0.30" />
-        </Setter>
-
-        <Setter Property="BackgroundColor" Value="{StaticResource ColorAccent}" />
         <Setter Property="Padding" Value="22,14" />
         <Setter Property="MinimumHeightRequest" Value="52" />
     </Style>
 
     <!-- ── Cards / panels ────────────────────────────────────────── -->
     <Style TargetType="Border">
-        <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel}" />
-        <Setter Property="Stroke" Value="{StaticResource ColorLine}" />
-        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PopPaper}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="StrokeShape">
             <RoundRectangle CornerRadius="24" />
         </Setter>
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,8" Radius="18" Opacity="0.28" />
+            <Shadow Brush="{StaticResource PopShadow}" Offset="0,8" Radius="18" Opacity="0.12" />
         </Setter>
     </Style>
-
-    <!-- Former <Frame> panels (Frame is obsolete since .NET 9): same fill, corners and clay shadow, no stroke. -->
+    <!-- Former <Frame> panels. -->
     <Style TargetType="Border" x:Key="ClayFrame">
-        <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PopPaper}" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="StrokeShape">
             <RoundRectangle CornerRadius="20" />
         </Setter>
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,6" Radius="14" Opacity="0.26" />
+            <Shadow Brush="{StaticResource PopShadow}" Offset="0,6" Radius="14" Opacity="0.12" />
         </Setter>
     </Style>
-
-    <Style TargetType="Border" x:Key="PanelCard">
-        <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel}" />
-        <Setter Property="Stroke" Value="{StaticResource ColorLine}" />
-        <Setter Property="StrokeThickness" Value="2" />
+    <Style TargetType="Border" x:Key="PopCard">
+        <Setter Property="BackgroundColor" Value="{StaticResource PopPaper}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="StrokeShape">
-            <RoundRectangle CornerRadius="24" />
+            <RoundRectangle CornerRadius="28" />
         </Setter>
         <Setter Property="Padding" Value="16" />
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,8" Radius="18" Opacity="0.28" />
+            <Shadow Brush="{StaticResource PopShadow}" Offset="0,10" Radius="22" Opacity="0.14" />
         </Setter>
     </Style>
-
-    <Style TargetType="Border" x:Key="ClayCard" BasedOn="{StaticResource PanelCard}" />
-
-    <Style TargetType="Border" x:Key="ClayCardPink" BasedOn="{StaticResource PanelCard}">
-        <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel3}" />
+    <!-- Black pill (primary action / active nav) -->
+    <Style TargetType="Border" x:Key="PopPillDark">
+        <Setter Property="BackgroundColor" Value="{StaticResource PopInk}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="Padding" Value="18,12" />
+        <Setter Property="Shadow">
+            <Shadow Brush="#000000" Offset="0,8" Radius="16" Opacity="0.22" />
+        </Setter>
     </Style>
-
-    <Style TargetType="Border" x:Key="ClayCardMint" BasedOn="{StaticResource PanelCard}">
-        <Setter Property="BackgroundColor" Value="#DDFBF2" />
-    </Style>
-
-    <Style TargetType="Border" x:Key="ClayCardSky" BasedOn="{StaticResource PanelCard}">
-        <Setter Property="BackgroundColor" Value="#E2F6FF" />
-    </Style>
-
-    <Style TargetType="Border" x:Key="ClayPill">
-        <Setter Property="BackgroundColor" Value="#D9FFFFFF" />
-        <Setter Property="Stroke" Value="{StaticResource ColorLine}" />
-        <Setter Property="StrokeThickness" Value="2" />
+    <!-- White pill with ink outline -->
+    <Style TargetType="Border" x:Key="PopPillLight">
+        <Setter Property="BackgroundColor" Value="{StaticResource PopPaper}" />
+        <Setter Property="Stroke" Value="{StaticResource PopInk}" />
+        <Setter Property="StrokeThickness" Value="2.5" />
         <Setter Property="StrokeShape">
             <RoundRectangle CornerRadius="999" />
         </Setter>
         <Setter Property="Padding" Value="14,8" />
-        <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,4" Radius="10" Opacity="0.22" />
-        </Setter>
+        <Setter Property="Shadow" Value="{x:Null}" />
     </Style>
-
-    <Style TargetType="Border" x:Key="ClayIconPill">
-        <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel}" />
-        <Setter Property="Stroke" Value="{StaticResource ColorLine}" />
-        <Setter Property="StrokeThickness" Value="2" />
+    <!-- Round icon button (white, ink outline) -->
+    <Style TargetType="Border" x:Key="PopCircle">
+        <Setter Property="BackgroundColor" Value="{StaticResource PopPaper}" />
+        <Setter Property="Stroke" Value="{StaticResource PopInk}" />
+        <Setter Property="StrokeThickness" Value="2.5" />
         <Setter Property="StrokeShape">
             <RoundRectangle CornerRadius="999" />
         </Setter>
+        <Setter Property="WidthRequest" Value="52" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow" Value="{x:Null}" />
+    </Style>
+    <!-- Soft white round button (no outline) -->
+    <Style TargetType="Border" x:Key="PopCircleSoft">
+        <Setter Property="BackgroundColor" Value="#E6FFFFFF" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="WidthRequest" Value="48" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource PopShadow}" Offset="0,4" Radius="10" Opacity="0.12" />
+        </Setter>
+    </Style>
+
+    <!-- Night (game) surfaces -->
+    <Style TargetType="Border" x:Key="NightCard">
+        <Setter Property="BackgroundColor" Value="{StaticResource NightSurface}" />
+        <Setter Property="Stroke" Value="{StaticResource NightLine}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="24" />
+        </Setter>
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Shadow">
+            <Shadow Brush="#000000" Offset="0,10" Radius="22" Opacity="0.35" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="NightPill">
+        <Setter Property="BackgroundColor" Value="{StaticResource NightSurface}" />
+        <Setter Property="Stroke" Value="{StaticResource NightLine}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="Padding" Value="14,7" />
+        <Setter Property="Shadow" Value="{x:Null}" />
+    </Style>
+    <Style TargetType="Border" x:Key="NightCircle">
+        <Setter Property="BackgroundColor" Value="{StaticResource NightSurface}" />
+        <Setter Property="Stroke" Value="{StaticResource NightLine}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="WidthRequest" Value="46" />
+        <Setter Property="HeightRequest" Value="46" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow" Value="{x:Null}" />
+    </Style>
+    <Style TargetType="Border" x:Key="NightAction">
+        <Setter Property="BackgroundColor" Value="{StaticResource NightGold}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="Padding" Value="20,12" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource NightGold}" Offset="0,0" Radius="18" Opacity="0.35" />
+        </Setter>
+    </Style>
+
+    <!-- Legacy card keys -->
+    <Style TargetType="Border" x:Key="PanelCard" BasedOn="{StaticResource PopCard}" />
+    <Style TargetType="Border" x:Key="ClayCard" BasedOn="{StaticResource PopCard}" />
+    <Style TargetType="Border" x:Key="ClayCardPink" BasedOn="{StaticResource PopCard}">
+        <Setter Property="BackgroundColor" Value="#FFF0F6" />
+    </Style>
+    <Style TargetType="Border" x:Key="ClayCardMint" BasedOn="{StaticResource PopCard}">
+        <Setter Property="BackgroundColor" Value="#E6FAEF" />
+    </Style>
+    <Style TargetType="Border" x:Key="ClayCardSky" BasedOn="{StaticResource PopCard}">
+        <Setter Property="BackgroundColor" Value="#DDEBFF" />
+    </Style>
+    <Style TargetType="Border" x:Key="ClayPill" BasedOn="{StaticResource PopPillLight}" />
+    <Style TargetType="Border" x:Key="ClayIconPill" BasedOn="{StaticResource PopCircle}">
         <Setter Property="WidthRequest" Value="44" />
         <Setter Property="HeightRequest" Value="44" />
-        <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource ColorClayShadow}" Offset="0,4" Radius="10" Opacity="0.24" />
-        </Setter>
     </Style>
 
     <!-- ── Inputs ────────────────────────────────────────────────── -->
@@ -311,7 +377,7 @@
     </Style>
 
     <Style TargetType="Switch">
-        <Setter Property="OnColor" Value="{StaticResource ColorMint}" />
+        <Setter Property="OnColor" Value="{StaticResource PopGreen}" />
         <Setter Property="ThumbColor" Value="#FFFFFF" />
     </Style>
 

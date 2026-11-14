@@ -5,76 +5,113 @@
     x:Class="MantuGames.Resources.Styles.Colors">
 
     <!-- ══════════════════════════════════════════════════════════════
-         Mantu Games — Claymorphism design system
-         Soft pastel surfaces, puffy white highlights, plum shadows.
+         Mantu Games — "Pop" design system
+         App shell (dashboard, level map, popups): bright lime / yellow /
+         sky gradients, black ink, white cards, black pill navigation,
+         Anton display type.
+         Game screens: "Night" board — deep indigo surfaces with gold coin
+         and blue gem accents so the puzzle stays the focus.
          ══════════════════════════════════════════════════════════════ -->
 
-    <!-- ── Surfaces ─────────────────────────────────────────────── -->
-    <Color x:Key="ColorBg">#F7EFFF</Color>
-    <Color x:Key="ColorBg2">#FFF4E8</Color>
-    <Color x:Key="ColorBg3">#EAF9FF</Color>
-    <Color x:Key="ColorPanel">#FFFDFA</Color>
-    <Color x:Key="ColorPanel2">#F4E9FF</Color>
-    <Color x:Key="ColorPanel3">#FFE9F2</Color>
-    <Color x:Key="ColorLine">#B3FFFFFF</Color>
-    <Color x:Key="ColorLineStrong">#40B49CCF</Color>
-    <Color x:Key="ColorClayShadow">#8A6FA8</Color>
-    <Color x:Key="ColorOverlay">#663D2C4E</Color>
+    <!-- ── Ink / paper (shell) ──────────────────────────────────── -->
+    <Color x:Key="PopInk">#111114</Color>
+    <Color x:Key="PopInkSoft">#3A3A46</Color>
+    <Color x:Key="PopMuted">#6E6E7C</Color>
+    <Color x:Key="PopPaper">#FFFFFF</Color>
+    <Color x:Key="PopPaperSoft">#F5F6FA</Color>
+    <Color x:Key="PopLine">#E6E7EE</Color>
+    <Color x:Key="PopShadow">#2A2E45</Color>
 
-    <!-- ── Text ─────────────────────────────────────────────────── -->
-    <Color x:Key="ColorText">#3D2C4E</Color>
-    <Color x:Key="ColorMuted">#7C6A8E</Color>
-    <Color x:Key="ColorOnDark">#3D2C4E</Color>
+    <!-- ── Bright accents (shell) ───────────────────────────────── -->
+    <Color x:Key="PopLime">#D9F84A</Color>
+    <Color x:Key="PopYellow">#F6F75C</Color>
+    <Color x:Key="PopSky">#5AA6FF</Color>
+    <Color x:Key="PopSkySoft">#DDEBFF</Color>
+    <Color x:Key="PopMint">#7BE8B0</Color>
+    <Color x:Key="PopPink">#FF8FC0</Color>
+    <Color x:Key="PopOrange">#FF9A3D</Color>
+    <Color x:Key="PopRed">#FF4F6D</Color>
+    <Color x:Key="PopGreen">#20B26B</Color>
 
-    <!-- ── Accents ──────────────────────────────────────────────── -->
-    <Color x:Key="ColorAccent">#7C5CFF</Color>
-    <Color x:Key="ColorAccent2">#FF8FB1</Color>
-    <Color x:Key="ColorCta">#FFB86B</Color>
-    <Color x:Key="ColorCtaEnd">#FF8FB1</Color>
-    <Color x:Key="ColorCtaHover">#FFC98A</Color>
-    <Color x:Key="ColorMint">#4FD1B5</Color>
-    <Color x:Key="ColorYellow">#FFD166</Color>
-    <Color x:Key="ColorSky">#7FD8FF</Color>
+    <!-- ── Night board (games) ──────────────────────────────────── -->
+    <Color x:Key="NightBg">#130F2B</Color>
+    <Color x:Key="NightBg2">#221B4D</Color>
+    <Color x:Key="NightSurface">#2B2459</Color>
+    <Color x:Key="NightSurface2">#3A3175</Color>
+    <Color x:Key="NightLine">#4D4495</Color>
+    <Color x:Key="NightText">#F6F4FF</Color>
+    <Color x:Key="NightMuted">#AAA4D8</Color>
+    <Color x:Key="NightGold">#FFC83D</Color>
+    <Color x:Key="NightGem">#4C8DFF</Color>
+    <Color x:Key="NightPurple">#9B6BFF</Color>
+    <Color x:Key="NightSuccess">#35D49A</Color>
+    <Color x:Key="NightDanger">#FF5C7A</Color>
+    <Color x:Key="NightCell">#F4F1FF</Color>
 
-    <!-- ── Per-game clays ───────────────────────────────────────── -->
-    <Color x:Key="ColorGameSudoku">#7C5CFF</Color>
-    <Color x:Key="ColorGameWordFinder">#FF8FB1</Color>
-    <Color x:Key="ColorGameMath">#FFC857</Color>
-    <Color x:Key="ColorGameHanoi">#FF9F7A</Color>
-    <Color x:Key="ColorGameCardMemory">#4FD1B5</Color>
-    <Color x:Key="ColorGamePuzzlePets">#FF9FCF</Color>
-    <Color x:Key="ColorGameBlockPuzzle">#7FD8FF</Color>
-    <Color x:Key="ColorGameMazeRunner">#A78BFA</Color>
-    <Color x:Key="ColorGameConnectTheDots">#5EEAD4</Color>
-    <Color x:Key="ColorGameNumberMatch">#FFD166</Color>
-    <Color x:Key="ColorGameArrowLines">#FF9F7A</Color>
+    <!-- ── Legacy surface/text keys, remapped to Pop ────────────── -->
+    <Color x:Key="ColorBg">#FFFFFF</Color>
+    <Color x:Key="ColorBg2">#F5F6FA</Color>
+    <Color x:Key="ColorBg3">#DDEBFF</Color>
+    <Color x:Key="ColorPanel">#FFFFFF</Color>
+    <Color x:Key="ColorPanel2">#F5F6FA</Color>
+    <Color x:Key="ColorPanel3">#FFF0F6</Color>
+    <Color x:Key="ColorLine">#E6E7EE</Color>
+    <Color x:Key="ColorLineStrong">#C9CBD8</Color>
+    <Color x:Key="ColorClayShadow">#2A2E45</Color>
+    <Color x:Key="ColorOverlay">#99111114</Color>
+
+    <Color x:Key="ColorText">#111114</Color>
+    <Color x:Key="ColorMuted">#6E6E7C</Color>
+    <Color x:Key="ColorOnDark">#F6F4FF</Color>
+
+    <Color x:Key="ColorAccent">#111114</Color>
+    <Color x:Key="ColorAccent2">#FF8FC0</Color>
+    <Color x:Key="ColorCta">#111114</Color>
+    <Color x:Key="ColorCtaEnd">#3A3A46</Color>
+    <Color x:Key="ColorCtaHover">#3A3A46</Color>
+    <Color x:Key="ColorMint">#20B26B</Color>
+    <Color x:Key="ColorYellow">#F6F75C</Color>
+    <Color x:Key="ColorSky">#5AA6FF</Color>
+
+    <!-- ── Per-game accents ───────────────────────────────────────── -->
+    <Color x:Key="ColorGameSudoku">#5AA6FF</Color>
+    <Color x:Key="ColorGameWordFinder">#FF8FC0</Color>
+    <Color x:Key="ColorGameMath">#F6C93C</Color>
+    <Color x:Key="ColorGameHanoi">#FF9A3D</Color>
+    <Color x:Key="ColorGameCardMemory">#7BE8B0</Color>
+    <Color x:Key="ColorGamePuzzlePets">#C79BFF</Color>
+    <Color x:Key="ColorGameBlockPuzzle">#4FD2F5</Color>
+    <Color x:Key="ColorGameMazeRunner">#9AE04A</Color>
+    <Color x:Key="ColorGameConnectTheDots">#3FE0C5</Color>
+    <Color x:Key="ColorGameNumberMatch">#FFB547</Color>
+    <Color x:Key="ColorGameArrowLines">#FF7A59</Color>
 
     <!-- ══════════════════════════════════════════════════════════════
          Legacy keys kept so existing pages keep working, remapped to
          the light clay palette.
          ══════════════════════════════════════════════════════════════ -->
 
-    <Color x:Key="Primary">#7C5CFF</Color>
-    <Color x:Key="PrimaryDark">#5B3FD1</Color>
+    <Color x:Key="Primary">#111114</Color>
+    <Color x:Key="PrimaryDark">#000000</Color>
     <Color x:Key="PrimaryDarkText">#FFFFFF</Color>
-    <Color x:Key="Secondary">#FF8FB1</Color>
-    <Color x:Key="SecondaryDarkText">#3D2C4E</Color>
-    <Color x:Key="Tertiary">#FFB86B</Color>
+    <Color x:Key="Secondary">#FF8FC0</Color>
+    <Color x:Key="SecondaryDarkText">#111114</Color>
+    <Color x:Key="Tertiary">#F6F75C</Color>
 
     <Color x:Key="White">#FFFFFF</Color>
-    <Color x:Key="Black">#3D2C4E</Color>
+    <Color x:Key="Black">#111114</Color>
     <Color x:Key="Magenta">#FF8FB1</Color>
-    <Color x:Key="MidnightBlue">#3D2C4E</Color>
-    <Color x:Key="OffBlack">#F7EFFF</Color>
+    <Color x:Key="MidnightBlue">#111114</Color>
+    <Color x:Key="OffBlack">#F5F6FA</Color>
 
-    <Color x:Key="Gray100">#3D2C4E</Color>
-    <Color x:Key="Gray200">#5F4C73</Color>
-    <Color x:Key="Gray300">#7C6A8E</Color>
-    <Color x:Key="Gray400">#9B8AAC</Color>
-    <Color x:Key="Gray500">#8A78A0</Color>
-    <Color x:Key="Gray600">#D8CAE8</Color>
-    <Color x:Key="Gray900">#F4E9FF</Color>
-    <Color x:Key="Gray950">#FFFDFA</Color>
+    <Color x:Key="Gray100">#111114</Color>
+    <Color x:Key="Gray200">#3A3A46</Color>
+    <Color x:Key="Gray300">#6E6E7C</Color>
+    <Color x:Key="Gray400">#9A9AA8</Color>
+    <Color x:Key="Gray500">#8A8A98</Color>
+    <Color x:Key="Gray600">#D5D6DF</Color>
+    <Color x:Key="Gray900">#F5F6FA</Color>
+    <Color x:Key="Gray950">#FFFFFF</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
@@ -93,6 +130,24 @@
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
 
     <!-- Soft light fade used over thumbnails -->
+    <!-- Shell gradients (top → bottom) -->
+    <LinearGradientBrush x:Key="GradLime" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#E9F95A" />
+        <GradientStop Offset="0.55" Color="#F7FBC0" />
+        <GradientStop Offset="1" Color="#FFFFFF" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GradSky" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#5AA6FF" />
+        <GradientStop Offset="0.6" Color="#BFDCFF" />
+        <GradientStop Offset="1" Color="#F4F8FF" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GradNight" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#221B4D" />
+        <GradientStop Offset="1" Color="#130F2B" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="InkBrush" Color="#111114" />
+    <SolidColorBrush x:Key="NightSurfaceBrush" Color="#2B2459" />
+
     <LinearGradientBrush x:Key="CardOverlayGradient" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Offset="0" Color="#00FFFFFF" />
         <GradientStop Offset="0.55" Color="#33FFFFFF" />

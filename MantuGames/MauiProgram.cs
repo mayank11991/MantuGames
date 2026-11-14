@@ -15,7 +15,10 @@ public static class MauiProgram
             .UseMauiMTAdmob()
             .ConfigureFonts(fonts =>
             {
-                // Claymorphism type: Baloo 2 (rounded, soft, friendly)
+                // Display type: Anton (tall condensed headings, OFL — see licenses/Anton-OFL.txt)
+                fonts.AddFont("Anton-Regular.ttf", "Display");
+
+                // Body type: Baloo 2 (rounded, friendly)
                 fonts.AddFont("Baloo2-Regular.ttf", "Baloo2");
                 fonts.AddFont("Baloo2-Medium.ttf", "Baloo2Medium");
                 fonts.AddFont("Baloo2-SemiBold.ttf", "Baloo2SemiBold");

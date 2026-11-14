@@ -112,9 +112,26 @@ public partial class DashboardPage : ContentPage
         SettingsPopup.RefreshProfile();
 
         var active = ProfileService.Active;
-        HeaderAvatar.Source = string.IsNullOrEmpty(active?.AvatarImage) ? "a1.png" : active!.AvatarImage;
+        string avatar = string.IsNullOrEmpty(active?.AvatarImage) ? "a1.png" : active!.AvatarImage;
+        HeaderAvatar.Source = avatar;
+        HeroAvatar.Source = avatar;
         HeaderPlayerName.Text = string.IsNullOrWhiteSpace(active?.Name) ? "Player" : active!.Name;
         CoinBalanceLabel.Text = CoinService.GetTotalCoins().ToString();
+
+        // Progress strip: stars, wins and completed levels across all games
+        int stars = 0, levels = 0;
+        foreach (var g in DashboardViewModel.Games)
+        {
+            foreach (var lp in ProgressService.Instance.GetLevels(g.Id, 50))
+            {
+                if (!lp.IsCompleted) continue;
+                levels++;
+                stars += lp.Stars;
+            }
+        }
+        StarsStat.Text = stars.ToString();
+        LevelsStat.Text = levels.ToString();
+        WinsStat.Text = StatsService.GetTotals().Won.ToString();
     }
 
     private void OnProgressReset(object? sender, EventArgs e)
@@ -207,7 +224,8 @@ public partial class DashboardPage : ContentPage
     private void PopulateGamesFlex(string filter = "")
     {
         GamesFlex.Children.Clear();
-        var games = DashboardViewModel.Games.ToList();
+        var all = DashboardViewModel.Games.ToList();
+        var games = all;
         if (!string.IsNullOrEmpty(filter))
         {
             games = games.Where(g =>
@@ -215,122 +233,116 @@ public partial class DashboardPage : ContentPage
                 g.Id.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        const int cols = 3;
-        const double spacing = 12;
-        const double sideMargin = 28; // ScrollView left + right margin (14 + 14)
+        if (games.Count == 0)
+        {
+            GamesFlex.Children.Add(new Label
+            {
+                Text = "No game matches that search.",
+                Style = (Style)Application.Current!.Resources["PopMutedLabel"],
+                FontSize = 15,
+                HorizontalOptions = LayoutOptions.Center,
+                Margin = new Thickness(0, 20),
+            });
+            return;
+        }
+
+        const int cols = 2;
+        const double spacing = 14;
+        const double sideMargin = 40; // page padding 20 + 20
 
         double screenDp = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
-        double cardW = Math.Min((screenDp - sideMargin - spacing * (cols - 1)) / cols, 210);
-        double thumbH = cardW * 0.68;
-        double cardH = thumbH + 40;
-
-        // Pastel accents shown behind each thumbnail, shuffled every load.
-        var pastelPool = new List<string>
-        {
-            "#FFD6E0", "#C5E8FF", "#D9F2D0", "#FFF3B0", "#E6D6FF",
-            "#FFDCC5", "#D6F5F5", "#F3D1F4", "#E2F0CB", "#FFE4B8", "#D9E2FF"
-        };
-        var rng = new Random();
-        var pastels = pastelPool.OrderBy(_ => rng.Next()).ToList();
+        double cardW = Math.Min((screenDp - sideMargin - spacing * (cols - 1)) / cols, 240);
+        // Thumbnails are 3:4 portrait art with their own title band: show them whole.
+        double thumbH = (cardW - 20) * 4 / 3;
 
         for (int i = 0; i < games.Count; i += cols)
         {
-            var rowGames = games.Skip(i).Take(cols).ToList();
-            int actualCols = rowGames.Count;
+            var row = new Grid { ColumnSpacing = spacing };
+            for (int c = 0; c < cols; c++)
+                row.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
 
-            var grid = new Grid
+            foreach (var (game, c) in games.Skip(i).Take(cols).Select((g, idx) => (g, idx)))
             {
-                ColumnSpacing = spacing,
-                HorizontalOptions = LayoutOptions.Center,
-                WidthRequest = actualCols * cardW + (actualCols - 1) * spacing
-            };
-            for (int c = 0; c < actualCols; c++)
-                grid.ColumnDefinitions.Add(new ColumnDefinition(cardW));
-
-            for (int c = 0; c < actualCols; c++)
-            {
-                var game = rowGames[c];
-
-                var thumbImg = new Image
-                {
-                    Source = game.ImageName,
-                    Aspect = Aspect.AspectFill,
-                    HorizontalOptions = LayoutOptions.Fill,
-                    VerticalOptions = LayoutOptions.Fill
-                };
-
-                var thumbBorder = new Border
-                {
-                    Stroke = new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
-                    StrokeThickness = 2,
-                    StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 16 },
-                    BackgroundColor = Color.FromArgb(pastels[(i + c) % pastels.Count]),
-                    HeightRequest = thumbH,
-                    Content = thumbImg
-                };
-
-                var nameLabel = new Label
-                {
-                    Text = game.Title,
-                    FontFamily = "MadimiOne",
-                    FontSize = 10.5,
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = Color.FromArgb("#3D2C4E"),
-                    HorizontalOptions = LayoutOptions.Center,
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalOptions = LayoutOptions.Center,
-                    MaxLines = 2,
-                    LineBreakMode = LineBreakMode.WordWrap
-                };
-
-                var labelBar = new Grid
-                {
-                    HeightRequest = 34,
-                    Padding = new Thickness(2, 2, 2, 2),
-                    Children = { nameLabel }
-                };
-
-                var cardContent = new Grid
-                {
-                    Padding = new Thickness(6, 6, 6, 0),
-                    RowDefinitions =
-                    {
-                        new RowDefinition { Height = thumbH },
-                        new RowDefinition { Height = GridLength.Star }
-                    }
-                };
-                Grid.SetRow(thumbBorder, 0);
-                cardContent.Children.Add(thumbBorder);
-                Grid.SetRow(labelBar, 1);
-                cardContent.Children.Add(labelBar);
-
-                var card = new Border
-                {
-                    Padding = new Thickness(0),
-                    Stroke = new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
-                    StrokeThickness = 2,
-                    StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 22 },
-                    WidthRequest = cardW,
-                    HeightRequest = cardH,
-                    BackgroundColor = Color.FromArgb("#FFFDFA"),
-                    Content = cardContent,
-                    Shadow = new Shadow { Brush = Color.FromArgb("#8A6FA8"), Offset = new Point(0, 8), Opacity = 0.30f, Radius = 14 }
-                };
-
-                var tap = new TapGestureRecognizer();
-                tap.Tapped += async (s, e) =>
-                {
-                    AudioService.Instance.Play("tap");
-                    VibrationHelper.Click();
-                    await Shell.Current.GoToAsync($"levelmap?gameId={game.Id}");
-                };
-                card.GestureRecognizers.Add(tap);
+                int number = all.IndexOf(game) + 1;
+                var card = BuildGameCard(game, number, thumbH);
                 Grid.SetColumn(card, c);
-
-                grid.Children.Add(card);
+                row.Children.Add(card);
             }
 
-            GamesFlex.Children.Add(grid);
+            GamesFlex.Children.Add(row);
         }
+    }
+
+    /// <summary>White card: tilted thumbnail on the game's accent colour, a big
+    /// Anton number breaking its corner, then title and tagline.</summary>
+    private View BuildGameCard(GameInfo game, int number, double thumbH)
+    {
+        var accent = Color.FromArgb(game.CardColor);
+
+        var thumb = new Border
+        {
+            BackgroundColor = accent,
+            StrokeThickness = 0,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 22 },
+            HeightRequest = thumbH,
+            Padding = 0,
+            Shadow = null,
+            Content = new Image { Source = game.ImageName, Aspect = Aspect.AspectFill },
+        };
+
+        var numberLabel = new Label
+        {
+            Text = number.ToString(),
+            FontFamily = "Display",
+            FontSize = 46,
+            TextColor = Color.FromArgb("#2F6BFF"),
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.End,
+            Margin = new Thickness(-2, 0, 0, -26),
+            Shadow = new Shadow { Brush = Colors.White, Offset = new Point(2, 2), Radius = 0, Opacity = 1 },
+        };
+
+        var title = new Label
+        {
+            Text = game.Title,
+            FontFamily = "Baloo2ExtraBold",
+            FontSize = 17,
+            TextColor = Color.FromArgb("#111114"),
+            LineBreakMode = LineBreakMode.TailTruncation,
+            MaxLines = 1,
+            Margin = new Thickness(30, 4, 2, 0),
+        };
+
+        var tagline = new Label
+        {
+            Text = game.Description,
+            FontFamily = "Baloo2Medium",
+            FontSize = 12.5,
+            TextColor = Color.FromArgb("#6E6E7C"),
+            MaxLines = 2,
+            LineBreakMode = LineBreakMode.TailTruncation,
+            Margin = new Thickness(30, -2, 2, 2),
+        };
+
+        var thumbHost = new Grid { Children = { thumb, numberLabel } };
+
+        var card = new Border
+        {
+            Style = (Style)Application.Current!.Resources["PopCard"],
+            Padding = new Thickness(10, 10, 10, 12),
+            Content = new VerticalStackLayout { Spacing = 0, Children = { thumbHost, title, tagline } },
+        };
+
+        var tap = new TapGestureRecognizer();
+        tap.Tapped += async (s, e) =>
+        {
+            AudioService.Instance.Play("tap");
+            VibrationHelper.Click();
+            await card.ScaleToAsync(0.96, 70);
+            await card.ScaleToAsync(1, 90);
+            await Shell.Current.GoToAsync($"levelmap?gameId={game.Id}");
+        };
+        card.GestureRecognizers.Add(tap);
+        return card;
     }
 }
