@@ -24,13 +24,8 @@
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
-                       Padding="16,6"
-                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
-                           FontSize="20" FontFamily="Display" HorizontalOptions="Center" />
-                </Border>
-                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
+                <controls:ThinkingBuddy Grid.Column="1" Text="{Binding LevelDisplay}" />
+                <Border Style="{StaticResource CtaCircleOrange}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
@@ -40,7 +35,7 @@
             </Grid>
 
             <!-- 8x8 NUMBER GRID -->
-            <Border Grid.Row="2" BackgroundColor="#3A3175" StrokeThickness="2" Stroke="#4D4495"
+            <Border Grid.Row="2" BackgroundColor="#FFFFFF" StrokeThickness="2" Stroke="#D6E4F0"
                     Padding="6" Margin="4,0">
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <CollectionView x:Name="NumberGrid"
@@ -56,7 +51,7 @@
                         <DataTemplate>
                             <Border BackgroundColor="{Binding CellBg}"
                                     StrokeThickness="1"
-                                    Stroke="#4D4495"
+                                    Stroke="#D6E4F0"
                                     HeightRequest="44"
                                     WidthRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
@@ -79,20 +74,20 @@
             </Border>
 
             <!-- SCORE -->
-            <Border Grid.Row="3" BackgroundColor="#2B2459" StrokeThickness="0"
+            <Border Grid.Row="3" BackgroundColor="#FFFFFF" StrokeThickness="0"
                     Padding="16,8" Margin="40,0">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                 <Grid ColumnDefinitions="*,Auto,*">
                     <StackLayout Grid.Column="0" Spacing="0">
-                        <Label Text="SCORE" TextColor="#AAA4D8" FontSize="9" FontFamily="MadimiOne"
+                        <Label Text="SCORE" TextColor="#6B7A90" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Score}" TextColor="#FFC83D"
+                        <Label Text="{Binding Score}" TextColor="#FF8A3D"
                                FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Grid.Column="2" Spacing="0">
-                        <Label Text="MOVES" TextColor="#AAA4D8" FontSize="9" FontFamily="MadimiOne"
+                        <Label Text="MOVES" TextColor="#6B7A90" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Moves}" TextColor="#FFC83D"
+                        <Label Text="{Binding Moves}" TextColor="#FF8A3D"
                                FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                 </Grid>

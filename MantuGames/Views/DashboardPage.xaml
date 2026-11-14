@@ -50,11 +50,11 @@
                         </HorizontalStackLayout>
                     </Border>
 
-                    <Border Grid.Column="3" Style="{StaticResource PopCircleSoft}" VerticalOptions="Center">
+                    <Border Grid.Column="3" Style="{StaticResource CtaCircleBlue}" VerticalOptions="Center">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnSettingsClicked" />
                         </Border.GestureRecognizers>
-                        <Image Source="ic_gear_ink.png" WidthRequest="24" HeightRequest="24" />
+                        <Image Source="ic_gear_white.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
                 </Grid>
 
@@ -153,52 +153,46 @@
                 </LinearGradientBrush>
             </Grid.Background>
 
-            <Border Grid.Column="0" Style="{StaticResource PopPillLight}" Padding="4"
-                    HorizontalOptions="End" HeightRequest="60">
+            <Border Grid.Column="0" Style="{StaticResource PopPillLight}" Padding="6,5,6,10"
+                    HorizontalOptions="End" HeightRequest="72">
                 <HorizontalStackLayout Spacing="4">
-                    <Border Style="{StaticResource PopCircle}" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                    <Border Style="{StaticResource CtaCircleGreen}" WidthRequest="50" HeightRequest="50">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnNavHomeClicked" />
                         </Border.GestureRecognizers>
-                        <Image Source="ic_home_ink.png" WidthRequest="24" HeightRequest="24" />
+                        <Image Source="ic_home_white.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
-                    <Border Style="{StaticResource PopCircle}" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                    <Border Style="{StaticResource CtaCircleYellow}" WidthRequest="50" HeightRequest="50">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnNavStatsClicked" />
                         </Border.GestureRecognizers>
-                        <Image Source="ic_trophy_ink.png" WidthRequest="24" HeightRequest="24" />
+                        <Image Source="ic_trophy_white.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
                 </HorizontalStackLayout>
             </Border>
 
-            <Border Grid.Column="1" BackgroundColor="{StaticResource PopInk}" StrokeThickness="0"
-                    WidthRequest="64" HeightRequest="64" Padding="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="32" />
-                </Border.StrokeShape>
-                <Border.Shadow>
-                    <Shadow Brush="#000000" Offset="0,8" Radius="16" Opacity="0.25" />
-                </Border.Shadow>
+            <Border Grid.Column="1" Style="{StaticResource CtaCircleOrange}"
+                    WidthRequest="66" HeightRequest="66" StrokeThickness="4" Margin="0,0,0,6">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnNavHomeClicked" />
                 </Border.GestureRecognizers>
-                <Image Source="ic_grid_white.png" WidthRequest="26" HeightRequest="26" />
+                <Image Source="ic_grid_white.png" WidthRequest="30" HeightRequest="30" />
             </Border>
 
-            <Border Grid.Column="2" Style="{StaticResource PopPillLight}" Padding="4"
-                    HorizontalOptions="Start" HeightRequest="60">
+            <Border Grid.Column="2" Style="{StaticResource PopPillLight}" Padding="6,5,6,10"
+                    HorizontalOptions="Start" HeightRequest="72">
                 <HorizontalStackLayout Spacing="4">
-                    <Border Style="{StaticResource PopCircle}" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                    <Border Style="{StaticResource CtaCircleBlue}" WidthRequest="50" HeightRequest="50">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnNavSettingsClicked" />
                         </Border.GestureRecognizers>
-                        <Image Source="ic_gear_ink.png" WidthRequest="24" HeightRequest="24" />
+                        <Image Source="ic_gear_white.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
-                    <Border Style="{StaticResource PopCircle}" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                    <Border Style="{StaticResource CtaCirclePink}" WidthRequest="50" HeightRequest="50">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnNavProfileClicked" />
                         </Border.GestureRecognizers>
-                        <Image Source="ic_user_ink.png" WidthRequest="24" HeightRequest="24" />
+                        <Image Source="ic_user_white.png" WidthRequest="24" HeightRequest="24" />
                     </Border>
                 </HorizontalStackLayout>
             </Border>

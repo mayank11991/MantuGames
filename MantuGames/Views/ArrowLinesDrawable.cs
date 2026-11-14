@@ -18,10 +18,10 @@ public class ArrowLinesDrawable : IDrawable
 
     private readonly Dictionary<int, Color> _arrowColors = new()
     {
-        { 0, Color.FromArgb("#4C8DFF") }, // Up
-        { 1, Color.FromArgb("#FFC83D") }, // Down
-        { 2, Color.FromArgb("#C79BFF") }, // Left
-        { 3, Color.FromArgb("#35D49A") }, // Right
+        { 0, Color.FromArgb("#2F8CFF") }, // Up
+        { 1, Color.FromArgb("#FF8A3D") }, // Down
+        { 2, Color.FromArgb("#9B6BFF") }, // Left
+        { 3, Color.FromArgb("#3DC86A") }, // Right
     };
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -42,13 +42,13 @@ public class ArrowLinesDrawable : IDrawable
 
     private void DrawGridBackground(ICanvas canvas)
     {
-        canvas.FillColor = Color.FromArgb("#1B1640");
+        canvas.FillColor = Color.FromArgb("#EAF2FB");
         canvas.FillRoundedRectangle(0, 0, Cols * CellSize, Rows * CellSize, 12);
     }
 
     private void DrawWalls(ICanvas canvas)
     {
-        canvas.StrokeColor = Color.FromArgb("#3A3175");
+        canvas.StrokeColor = Color.FromArgb("#FFFFFF");
         canvas.StrokeSize = WallThickness;
         canvas.StrokeLineCap = LineCap.Round;
 
@@ -78,7 +78,7 @@ public class ArrowLinesDrawable : IDrawable
         }
 
         // Outer border
-        canvas.StrokeColor = Color.FromArgb("#4D4495");
+        canvas.StrokeColor = Color.FromArgb("#D6E4F0");
         canvas.StrokeSize = WallThickness + 2;
         canvas.DrawRoundedRectangle(
             -WallThickness / 2, -WallThickness / 2,
@@ -124,7 +124,7 @@ public class ArrowLinesDrawable : IDrawable
         }
 
         // Circle
-        canvas.FillColor = Color.FromArgb("#2B2459").WithAlpha(alpha);
+        canvas.FillColor = Color.FromArgb("#FFFFFF").WithAlpha(alpha);
         canvas.FillCircle(sx, sy, size + 2);
         canvas.StrokeColor = color.WithAlpha(alpha);
         canvas.StrokeSize = 2;
@@ -148,7 +148,7 @@ public class ArrowLinesDrawable : IDrawable
 
             var color = _arrowColors.ContainsKey((int)arrow.Direction)
                 ? _arrowColors[(int)arrow.Direction]
-                : Color.FromArgb("#F6F4FF");
+                : Color.FromArgb("#1F2A44");
 
             bool isHighlighted = arrow == HighlightedArrow;
 
@@ -162,17 +162,18 @@ public class ArrowLinesDrawable : IDrawable
                 }
             }
 
-            // Cell background circle
-            canvas.FillColor = Color.FromArgb("#2B2459");
-            canvas.FillCircle(cx, cy, size + 2);
+            // Candy token: darker lip, coloured face, white rim, white arrow
+            canvas.FillColor = color.WithLuminosity(Math.Max(0f, color.GetLuminosity() - 0.15f));
+            canvas.FillCircle(cx, cy + 3, size + 4);
+            canvas.FillColor = color;
+            canvas.FillCircle(cx, cy, size + 4);
 
-            // Border circle
-            canvas.StrokeColor = isHighlighted ? color : color.WithAlpha(0.6f);
-            canvas.StrokeSize = 2;
-            canvas.DrawCircle(cx, cy, size + 2);
+            canvas.StrokeColor = Colors.White;
+            canvas.StrokeSize = isHighlighted ? 3 : 2;
+            canvas.DrawCircle(cx, cy, size + 4);
 
             // Arrow character
-            canvas.FontColor = color;
+            canvas.FontColor = Colors.White;
             canvas.FontSize = CellSize * 0.45f;
             canvas.DrawString(arrow.Symbol.ToString(), cx - CellSize * 0.2f, cy - CellSize * 0.25f, CellSize * 0.4f, CellSize * 0.5f, HorizontalAlignment.Center, VerticalAlignment.Center);
         }

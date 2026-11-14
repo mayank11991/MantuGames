@@ -139,8 +139,8 @@ public partial class MathGamePage : ContentPage
         var label = new Label
         {
             Text = choice.Value.ToString(),
-            FontSize = 26,
-            FontAttributes = FontAttributes.Bold,
+            FontSize = 30,
+            FontFamily = "Display",
             TextColor = Colors.White,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -149,17 +149,20 @@ public partial class MathGamePage : ContentPage
 
         var frame = new Border
         {
-            Style = ClayStyles.ClayFrame,
-            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 18 },
+            Stroke = Colors.White,
+            StrokeThickness = 3,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 20 },
             Padding = new Thickness(0),
             HeightRequest = 70,
             BackgroundColor = Color.FromArgb(choice.BgColor),
+            Shadow = new Shadow { Brush = Color.FromArgb(choice.LipColor), Offset = new Point(0, 6), Radius = 0, Opacity = 1 },
             Content = label
         };
 
         void UpdateColor()
         {
             frame.BackgroundColor = Color.FromArgb(choice.BgColor);
+            frame.Shadow = new Shadow { Brush = Color.FromArgb(choice.LipColor), Offset = new Point(0, 6), Radius = 0, Opacity = 1 };
         }
 
         choice.PropertyChanged += (s, e) =>

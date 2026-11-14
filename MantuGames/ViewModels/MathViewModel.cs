@@ -138,7 +138,7 @@ public class MathViewModel : INotifyPropertyChanged
 
         _choices.Clear();
         foreach (var c in q.Choices)
-            _choices.Add(new ChoiceViewModel { Value = c, State = ChoiceState.Normal });
+            _choices.Add(new ChoiceViewModel { Value = c, Slot = _choices.Count, State = ChoiceState.Normal });
 
         _answerRevealed = false;
 
@@ -248,6 +248,19 @@ public class ChoiceViewModel : INotifyPropertyChanged
     private ChoiceState _state = ChoiceState.Normal;
     public int Value { get; set; }
 
+    /// <summary>Slot in the 2x2 grid; picks the candy colour of the button.</summary>
+    public int Slot { get; set; }
+
+    private static readonly string[] Faces = { "#2F8CFF", "#9B6BFF", "#3DC86A", "#FF8A3D" };
+    private static readonly string[] Lips = { "#1A62C9", "#6E43D6", "#239448", "#D4611A" };
+
+    public string LipColor => State switch
+    {
+        ChoiceState.Correct => "#168A50",
+        ChoiceState.Wrong => "#C93A55",
+        _ => Lips[Slot % Lips.Length]
+    };
+
     public ChoiceState State
     {
         get => _state;
@@ -257,6 +270,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
             OnPropertyChanged();
             OnPropertyChanged(nameof(BgColor));
             OnPropertyChanged(nameof(TextColor));
+            OnPropertyChanged(nameof(LipColor));
         }
     }
 
@@ -264,7 +278,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
     {
         ChoiceState.Correct => "#20B26B",
         ChoiceState.Wrong => "#FF5C7A",
-        _ => "#3A3175"
+        _ => Faces[Slot % Faces.Length]
     };
 
     public string TextColor => "#FFFFFF";

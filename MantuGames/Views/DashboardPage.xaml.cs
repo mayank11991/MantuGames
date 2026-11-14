@@ -326,11 +326,33 @@ public partial class DashboardPage : ContentPage
 
         var thumbHost = new Grid { Children = { thumb, numberLabel } };
 
+        // Chunky green "PLAY" call-to-action, like a candy button with a darker lip.
+        var play = new Border
+        {
+            BackgroundColor = Color.FromArgb("#3DC86A"),
+            StrokeThickness = 0,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 999 },
+            Padding = new Thickness(14, 6, 16, 7),
+            Margin = new Thickness(0, 8, 0, 4),
+            HorizontalOptions = LayoutOptions.Fill,
+            Shadow = new Shadow { Brush = Color.FromArgb("#239448"), Offset = new Point(0, 4), Radius = 0, Opacity = 1 },
+            Content = new HorizontalStackLayout
+            {
+                Spacing = 6,
+                HorizontalOptions = LayoutOptions.Center,
+                Children =
+                {
+                    new Image { Source = "ic_play_white.png", WidthRequest = 16, HeightRequest = 16, VerticalOptions = LayoutOptions.Center },
+                    new Label { Text = "PLAY", FontFamily = "Display", FontSize = 17, TextColor = Colors.White, VerticalOptions = LayoutOptions.Center },
+                },
+            },
+        };
+
         var card = new Border
         {
             Style = (Style)Application.Current!.Resources["PopCard"],
             Padding = new Thickness(10, 10, 10, 12),
-            Content = new VerticalStackLayout { Spacing = 0, Children = { thumbHost, title, tagline } },
+            Content = new VerticalStackLayout { Spacing = 0, Children = { thumbHost, title, tagline, play } },
         };
 
         var tap = new TapGestureRecognizer();

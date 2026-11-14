@@ -16,5 +16,10 @@
                  WidthRequest="360" HeightRequest="360"
                  HorizontalOptions="Start" VerticalOptions="End"
                  Margin="-200,0,0,-120" />
+        <!-- Storybook scenery: drifting clouds up top, rolling hills at the bottom -->
+        <Image x:Name="Clouds" Source="scene_clouds.png" Aspect="AspectFill"
+               HeightRequest="130" VerticalOptions="Start" Margin="0,40,0,0" />
+        <Image x:Name="Hills" Source="scene_hills.png" Aspect="AspectFill"
+               HeightRequest="210" VerticalOptions="End" />
     </Grid>
 </ContentView>

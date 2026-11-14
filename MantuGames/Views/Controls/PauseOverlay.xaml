@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid x:Name="Overlay"
-          BackgroundColor="#B3130F2B"
+          BackgroundColor="#991F2A44"
           InputTransparent="False">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />

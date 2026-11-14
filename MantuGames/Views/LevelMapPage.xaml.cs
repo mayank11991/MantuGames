@@ -66,11 +66,10 @@ public partial class LevelMapPage : ContentPage
         StarsLabel.Text = stars.ToString();
     }
 
-    // Tile states: completed = white + ink outline + stars; current = solid ink;
+    // Tile states: completed = white + green candy lip + stars; current = orange CTA;
     // locked = translucent white with a lock.
     private LevelTileViewModel CreateLevelTileViewModel(LevelProgress lp)
     {
-        var ink = Color.FromArgb("#111114");
         bool current = lp.IsUnlocked && !lp.IsCompleted;
 
         var vm = new LevelTileViewModel
@@ -80,11 +79,12 @@ public partial class LevelMapPage : ContentPage
             IsCompleted = lp.IsCompleted,
             IsCurrent = current,
             Stars = lp.IsCompleted ? lp.Stars : 0,
-            BgColor = lp.IsLocked ? Color.FromArgb("#80FFFFFF") : current ? ink : Colors.White,
-            StrokeColor = lp.IsLocked ? Colors.Transparent : ink,
+            BgColor = lp.IsLocked ? Color.FromArgb("#80FFFFFF") : current ? Color.FromArgb("#FF8A3D") : Colors.White,
+            StrokeColor = lp.IsLocked ? Colors.Transparent : current ? Colors.White : Color.FromArgb("#3DC86A"),
             FaceColor = Colors.Transparent,
             FaceOpacity = lp.IsLocked ? 0.75 : 1.0,
-            ShadowBrush = lp.IsLocked ? Brush.Transparent : new SolidColorBrush(current ? _gameAccentColor : ink),
+            // Candy-button lip: orange for "play me next", green for cleared levels.
+            ShadowBrush = lp.IsLocked ? Brush.Transparent : new SolidColorBrush(Color.FromArgb(current ? "#D4611A" : "#239448")),
             ShowStars = lp.IsCompleted,
             LevelText = lp.LevelNumber.ToString(),
         };

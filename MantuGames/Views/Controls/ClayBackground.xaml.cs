@@ -53,21 +53,40 @@ public partial class ClayBackground : ContentView
             _page.Appearing += (s, a) => ApplySystemBars();
     }
 
+    private bool _drifting;
+
+    private async void StartCloudDrift()
+    {
+        if (_drifting) return;
+        _drifting = true;
+        try
+        {
+            await Task.Delay(300);
+            while (Handler != null)
+            {
+                await Clouds.TranslateToAsync(18, 0, 6000, Easing.SinInOut);
+                await Clouds.TranslateToAsync(-18, 0, 6000, Easing.SinInOut);
+            }
+        }
+        catch { /* torn down */ }
+        finally { _drifting = false; }
+    }
+
     public void ApplySystemBars()
     {
         switch (Variant)
         {
             case BackdropVariant.Night:
-                Helpers.SystemBars.Apply(Color.FromArgb("#221B4D"), Color.FromArgb("#130F2B"), darkIcons: false);
+                Helpers.SystemBars.Apply(Color.FromArgb("#6EC6FF"), Color.FromArgb("#5DB83A"), darkIcons: true);
                 break;
             case BackdropVariant.Accent:
-                Helpers.SystemBars.Apply(AccentColor, Color.FromArgb("#FFFFFF"), darkIcons: true);
+                Helpers.SystemBars.Apply(AccentColor, Color.FromArgb("#5DB83A"), darkIcons: true);
                 break;
             case BackdropVariant.Sky:
                 Helpers.SystemBars.Apply(Color.FromArgb("#5AA6FF"), Color.FromArgb("#F4F8FF"), darkIcons: true);
                 break;
             default:
-                Helpers.SystemBars.Apply(Color.FromArgb("#E9F95A"), Color.FromArgb("#FFFFFF"), darkIcons: true);
+                Helpers.SystemBars.Apply(Color.FromArgb("#8FE3B4"), Color.FromArgb("#FFFFFF"), darkIcons: true);
                 break;
         }
     }
@@ -97,7 +116,7 @@ public partial class ClayBackground : ContentView
 
         (Color g1, Color g2) = Variant switch
         {
-            BackdropVariant.Night => (Color.FromArgb("#339B6BFF"), Color.FromArgb("#264C8DFF")),
+            BackdropVariant.Night => (Color.FromArgb("#66FFFFFF"), Color.FromArgb("#40FFF3A0")),
             BackdropVariant.Sky => (Color.FromArgb("#40FFFFFF"), Color.FromArgb("#30D9F84A")),
             _ => (Color.FromArgb("#55FFFFFF"), Color.FromArgb("#3373E6FF")),
         };
@@ -110,6 +129,11 @@ public partial class ClayBackground : ContentView
             new GradientStop(g2, 0f), new GradientStop(Colors.Transparent, 1f),
         });
 
+        // Dashboard (Lime) keeps a clean bottom for its nav; everything else gets the full scene.
+        Hills.IsVisible = Variant != BackdropVariant.Lime;
+        Clouds.Opacity = Variant == BackdropVariant.Accent ? 0.7 : 1.0;
+
         if (IsLoaded) ApplySystemBars();
+        StartCloudDrift();
     }
 }

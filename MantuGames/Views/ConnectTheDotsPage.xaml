@@ -25,13 +25,8 @@
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
-                       Padding="16,6"
-                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
-                           FontSize="20" FontFamily="Display" HorizontalOptions="Center" />
-                </Border>
-                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
+                <controls:ThinkingBuddy Grid.Column="1" Text="{Binding LevelDisplay}" />
+                <Border Style="{StaticResource CtaCircleOrange}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
@@ -53,13 +48,13 @@
 
             <!-- DIFFICULTY -->
             <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" Spacing="10">
-                <Border BackgroundColor="#2B2459" StrokeThickness="0"
+                <Border BackgroundColor="#FFFFFF" StrokeThickness="0"
                         Padding="12,6" VerticalOptions="Center">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
                     <StackLayout Spacing="0">
-                        <Label Text="DIFFICULTY" TextColor="#AAA4D8" FontSize="9" FontFamily="MadimiOne"
+                        <Label Text="DIFFICULTY" TextColor="#6B7A90" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Difficulty}" TextColor="#FFC83D"
+                        <Label Text="{Binding Difficulty}" TextColor="#FF8A3D"
                                FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                 </Border>

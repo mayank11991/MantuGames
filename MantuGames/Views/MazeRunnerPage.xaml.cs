@@ -19,8 +19,8 @@ internal sealed class MazeDrawable : IDrawable
     public float OffsetX { get; private set; }
     public float OffsetY { get; private set; }
 
-    private static readonly Color WallColor = Color.FromArgb("#3A3175");
-    private static readonly Color FloorColor = Color.FromArgb("#ECE8FF");
+    private static readonly Color WallColor = Color.FromArgb("#5DB83A");
+    private static readonly Color FloorColor = Color.FromArgb("#FFEFC2");
     private static readonly Color TrailColor = Color.FromArgb("#FFC83D");
 
     public void Draw(ICanvas canvas, RectF bounds)
@@ -173,7 +173,7 @@ public partial class MazeRunnerPage : ContentPage
 
         DestinationImage.IsVisible = true;
 
-        LevelLabel.Text = $"Level {_level}  ({_maze.Rows}×{_maze.Cols})";
+        LevelLabel.Text = $"Level {_level}";
         MovesLabel.Text = "Moves: 0";
 
         _drawable = new MazeDrawable

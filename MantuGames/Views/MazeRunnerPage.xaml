@@ -27,17 +27,9 @@
                                  Clicked="OnBackClicked" />
                 </Border>
 
-                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
-                       Padding="16,6"
-                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label x:Name="LevelLabel"
-                           FontFamily="Display"
-                           FontSize="20"
-                           TextColor="#FFC83D"
-                           HorizontalOptions="Center" />
-                </Border>
+                <controls:ThinkingBuddy x:Name="LevelLabel" Grid.Column="1" />
 
-                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
+                <Border Style="{StaticResource CtaCircleOrange}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
@@ -55,16 +47,16 @@
                    Text="Moves: 0"
                    FontFamily="MadimiOne"
                    FontSize="13"
-                   TextColor="#AAA4D8"
+                   TextColor="#6B7A90"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    Margin="0,2,0,0" />
 
             <!-- Row 3 : maze canvas -->
             <Border Grid.Row="3"
-                    BackgroundColor="#2B2459"
+                    BackgroundColor="#FFFFFF"
                     StrokeThickness="1.5"
-                    Stroke="#4D4495"
+                    Stroke="#D6E4F0"
                     Margin="16,8"
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
@@ -94,7 +86,7 @@
 
             <!-- Row 4 : Show Solution -->
             <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="60,4,60,12">
-                <Button x:Name="SolutionCoinLabel"
+                <Button x:Name="SolutionCoinLabel" Style="{StaticResource CtaButtonYellow}"
                         FontSize="14" FontAttributes="Bold"
                         TextColor="#111114" BackgroundColor="#FFC83D"
                         CornerRadius="24" HeightRequest="50"

@@ -251,16 +251,123 @@
     <!-- Night (game) surfaces -->
     <Style TargetType="Border" x:Key="NightCard">
         <Setter Property="BackgroundColor" Value="{StaticResource NightSurface}" />
-        <Setter Property="Stroke" Value="{StaticResource NightLine}" />
-        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="StrokeShape">
             <RoundRectangle CornerRadius="24" />
         </Setter>
         <Setter Property="Padding" Value="12" />
         <Setter Property="Shadow">
-            <Shadow Brush="#000000" Offset="0,10" Radius="22" Opacity="0.35" />
+            <Shadow Brush="#2A6FB8" Offset="0,6" Radius="0" Opacity="0.25" />
         </Setter>
     </Style>
+    <Style TargetType="Border" x:Key="NightCircle">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaBlue}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="WidthRequest" Value="48" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaBlueLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="NightAction">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaYellow}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="Padding" Value="20,12" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaYellowLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="CtaCircleBlue">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaBlue}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="WidthRequest" Value="52" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaBlueLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="CtaCircleYellow">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaYellow}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="WidthRequest" Value="52" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaYellowLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="CtaCircleGreen">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaGreen}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="WidthRequest" Value="52" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaGreenLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="CtaCirclePink">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaPink}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="WidthRequest" Value="52" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaPinkLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="CtaCircleOrange">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaOrange}" />
+        <Setter Property="Stroke" Value="#FFFFFF" />
+        <Setter Property="StrokeThickness" Value="3" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="999" />
+        </Setter>
+        <Setter Property="WidthRequest" Value="52" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaOrangeLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+    <Style TargetType="Button" x:Key="CtaButtonYellow">
+        <Setter Property="BackgroundColor" Value="{StaticResource CtaYellow}" />
+        <Setter Property="TextColor" Value="#1F2A44" />
+        <Setter Property="FontFamily" Value="Baloo2ExtraBold" />
+        <Setter Property="BorderColor" Value="#FFFFFF" />
+        <Setter Property="BorderWidth" Value="3" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource CtaYellowLip}" Offset="0,5" Radius="0" Opacity="1" />
+        </Setter>
+    </Style>
+
     <Style TargetType="Border" x:Key="NightPill">
         <Setter Property="BackgroundColor" Value="{StaticResource NightSurface}" />
         <Setter Property="Stroke" Value="{StaticResource NightLine}" />
@@ -270,30 +377,6 @@
         </Setter>
         <Setter Property="Padding" Value="14,7" />
         <Setter Property="Shadow" Value="{x:Null}" />
-    </Style>
-    <Style TargetType="Border" x:Key="NightCircle">
-        <Setter Property="BackgroundColor" Value="{StaticResource NightSurface}" />
-        <Setter Property="Stroke" Value="{StaticResource NightLine}" />
-        <Setter Property="StrokeThickness" Value="1.5" />
-        <Setter Property="StrokeShape">
-            <RoundRectangle CornerRadius="999" />
-        </Setter>
-        <Setter Property="WidthRequest" Value="46" />
-        <Setter Property="HeightRequest" Value="46" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Shadow" Value="{x:Null}" />
-    </Style>
-    <Style TargetType="Border" x:Key="NightAction">
-        <Setter Property="BackgroundColor" Value="{StaticResource NightGold}" />
-        <Setter Property="Stroke" Value="Transparent" />
-        <Setter Property="StrokeThickness" Value="0" />
-        <Setter Property="StrokeShape">
-            <RoundRectangle CornerRadius="999" />
-        </Setter>
-        <Setter Property="Padding" Value="20,12" />
-        <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource NightGold}" Offset="0,0" Radius="18" Opacity="0.35" />
-        </Setter>
     </Style>
 
     <!-- Legacy card keys -->

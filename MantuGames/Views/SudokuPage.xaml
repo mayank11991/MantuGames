@@ -31,13 +31,8 @@
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
-                       Padding="16,6"
-                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
-                           FontSize="20" FontFamily="Display" HorizontalOptions="Center" />
-                </Border>
-                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
+                <controls:ThinkingBuddy Grid.Column="1" Text="{Binding LevelDisplay}" />
+                <Border Style="{StaticResource CtaCircleOrange}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
@@ -51,7 +46,7 @@
                                     SecondsRemaining="{Binding TimeRemainingSec}" />
 
             <!-- SUDOKU GRID -->
-            <Border StrokeThickness="1.5" Stroke="#4D4495" Grid.Row="3" BackgroundColor="#2B2459"
+            <Border StrokeThickness="1.5" Stroke="#D6E4F0" Grid.Row="3" BackgroundColor="#FFFFFF"
                     Padding="6" Margin="4,0"
                     VerticalOptions="Center" HorizontalOptions="Center">
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
@@ -94,14 +89,14 @@
                 <Border Style="{StaticResource NightCard}" Grid.Column="5" StrokeShape="RoundRectangle 14"
                        Padding="0" WidthRequest="58" HeightRequest="58">
                     <Button Text="⌫" FontSize="28" FontAttributes="Bold"
-                            TextColor="#F6F4FF" BackgroundColor="Transparent"
+                            TextColor="#1F2A44" BackgroundColor="Transparent"
                             Padding="0" Command="{Binding EraseCommand}" />
                 </Border>
             </Grid>
 
             <!-- SHOW SOLUTION -->
             <VerticalStackLayout Grid.Row="5" Spacing="2" Margin="60,0">
-                <Button x:Name="SolutionCoinLabel"
+                <Button x:Name="SolutionCoinLabel" Style="{StaticResource CtaButtonYellow}"
                         FontSize="15" FontAttributes="Bold"
                         TextColor="#111114" BackgroundColor="#FFC83D"
                         CornerRadius="24" HeightRequest="50"

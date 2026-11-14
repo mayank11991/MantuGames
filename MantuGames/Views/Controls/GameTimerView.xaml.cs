@@ -54,7 +54,7 @@ public partial class GameTimerView : ContentView
         {
             barColor = Color.FromArgb("#4C8DFF");
             glowColor = Color.FromArgb("#4C8DFF");
-            TimerLabel.TextColor = Color.FromArgb("#F6F4FF");
+            TimerLabel.TextColor = Color.FromArgb("#1F2A44");
             TimerHint.TextColor = barColor;
         }
         else if (progress > 0.25)

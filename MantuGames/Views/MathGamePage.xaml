@@ -28,13 +28,8 @@
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
-                       Padding="16,6"
-                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
-                           FontSize="20" FontFamily="Display" HorizontalOptions="Center" />
-                </Border>
-                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
+                <controls:ThinkingBuddy Grid.Column="1" Text="{Binding LevelDisplay}" />
+                <Border Style="{StaticResource CtaCircleOrange}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
@@ -49,7 +44,7 @@
 
             <!-- PROGRESS BAR -->
             <Border Grid.Row="3"
-                    BackgroundColor="#2B2459" StrokeThickness="0"
+                    BackgroundColor="#FFFFFF" StrokeThickness="0"
                     Padding="14,10" Margin="20,2">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="16" />
@@ -58,12 +53,12 @@
                     <Label Grid.Row="0" Grid.Column="0"
                            Text="Questions"
                            FontSize="14" FontFamily="MadimiOne" FontAttributes="Bold"
-                           TextColor="#AAA4D8"
+                           TextColor="#6B7A90"
                            VerticalOptions="Center" />
                     <Label Grid.Row="0" Grid.Column="1"
                            Text="{Binding ProgressText}"
                            FontSize="12" FontFamily="MadimiOne" FontAttributes="Bold"
-                           TextColor="#AAA4D8"
+                           TextColor="#6B7A90"
                            VerticalOptions="Center" />
                     <Border Style="{StaticResource ClayFrame}" Grid.Row="1" Grid.ColumnSpan="2"
                            BackgroundColor="#80FFFFFF" StrokeShape="RoundRectangle 8"
@@ -84,7 +79,7 @@
                     <Label x:Name="QuestionLabel"
                            Text="{Binding QuestionText}"
                            FontSize="20" FontFamily="MadimiOne" FontAttributes="Bold"
-                           TextColor="#F6F4FF"
+                           TextColor="#1F2A44"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center"
                            LineBreakMode="WordWrap"
@@ -102,7 +97,7 @@
 
             <!-- SHOW SOLUTION -->
             <VerticalStackLayout Grid.Row="5" Spacing="2" Margin="60,0">
-                <Button x:Name="SolutionCoinLabel"
+                <Button x:Name="SolutionCoinLabel" Style="{StaticResource CtaButtonYellow}"
                         FontSize="15" FontAttributes="Bold"
                         TextColor="#111114" BackgroundColor="#FFC83D"
                         CornerRadius="24" HeightRequest="50"

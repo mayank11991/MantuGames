@@ -20,11 +20,11 @@
 
                     <!-- Top bar: back · coins -->
                     <Grid ColumnDefinitions="Auto,*,Auto">
-                        <Border Style="{StaticResource PopCircleSoft}">
+                        <Border Style="{StaticResource CtaCircleBlue}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnBackClicked" />
                             </Border.GestureRecognizers>
-                            <Image Source="ic_back_ink.png" WidthRequest="24" HeightRequest="24" />
+                            <Image Source="ic_back_white.png" WidthRequest="24" HeightRequest="24" />
                         </Border>
                         <Border Grid.Column="2" Style="{StaticResource PopPillDark}" Padding="12,8,16,8" VerticalOptions="Center">
                             <HorizontalStackLayout Spacing="6">
@@ -68,11 +68,8 @@
                     <!-- How to play -->
                     <Border Style="{StaticResource PopCard}" Margin="0,22,0,0" Padding="16,14">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                            <Border BackgroundColor="{StaticResource PopInk}" StrokeThickness="0"
-                                    WidthRequest="40" HeightRequest="40" Padding="0" VerticalOptions="Start">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="20" />
-                                </Border.StrokeShape>
+                            <Border Style="{StaticResource CtaCircleYellow}"
+                                    WidthRequest="42" HeightRequest="42" VerticalOptions="Start">
                                 <Image Source="ic_bulb_white.png" WidthRequest="22" HeightRequest="22" />
                             </Border>
                             <VerticalStackLayout Grid.Column="1" Spacing="2">
@@ -110,7 +107,7 @@
                                 <RoundRectangle CornerRadius="20" />
                             </Border.StrokeShape>
                             <Border.Shadow>
-                                <Shadow Brush="{Binding ShadowBrush}" Offset="0,5" Radius="10" Opacity="0.35" />
+                                <Shadow Brush="{Binding ShadowBrush}" Offset="0,5" Radius="0" Opacity="1" />
                             </Border.Shadow>
                         </Border>
                         <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="1"

@@ -23,13 +23,8 @@
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
-                       Padding="16,6"
-                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
-                           FontSize="20" FontFamily="Display" HorizontalOptions="Center"/>
-                </Border>
-                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
+                <controls:ThinkingBuddy Grid.Column="1" Text="{Binding LevelDisplay}" />
+                <Border Style="{StaticResource CtaCircleOrange}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
@@ -43,23 +38,23 @@
                                     SecondsRemaining="{Binding TimeRemainingSec}" />
 
             <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="10">
-                <Border BackgroundColor="#2B2459" StrokeThickness="0"
+                <Border BackgroundColor="#FFFFFF" StrokeThickness="0"
                         Padding="10,5" VerticalOptions="Center">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                     <StackLayout Spacing="0">
-                        <Label Text="SCORE" TextColor="#AAA4D8" FontSize="9" FontFamily="MadimiOne"
+                        <Label Text="SCORE" TextColor="#6B7A90" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center"/>
-                        <Label Text="{Binding Score}" TextColor="#F6F4FF"
+                        <Label Text="{Binding Score}" TextColor="#1F2A44"
                                FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center"/>
                     </StackLayout>
                 </Border>
-                <Border BackgroundColor="#2B2459" StrokeThickness="0"
+                <Border BackgroundColor="#FFFFFF" StrokeThickness="0"
                         Padding="10,5" VerticalOptions="Center">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                     <StackLayout Spacing="0">
-                        <Label Text="LINES" TextColor="#AAA4D8" FontSize="9" FontFamily="MadimiOne"
+                        <Label Text="LINES" TextColor="#6B7A90" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center"/>
-                        <Label Text="{Binding LinesDisplay}" TextColor="#FFC83D"
+                        <Label Text="{Binding LinesDisplay}" TextColor="#FF8A3D"
                                FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center"/>
                     </StackLayout>
                 </Border>
@@ -67,7 +62,7 @@
 
             <!-- GAME AREA -->
             <Border Grid.Row="3" x:Name="BoardContainer"
-                    BackgroundColor="#2B2459" StrokeThickness="1.5" Stroke="#4D4495"
+                    BackgroundColor="#FFFFFF" StrokeThickness="1.5" Stroke="#D6E4F0"
                     VerticalOptions="Fill" HorizontalOptions="Fill">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
                 <Border.GestureRecognizers>
@@ -82,18 +77,18 @@
             <!-- BOTTOM PANEL: Next piece + Show Solution -->
             <VerticalStackLayout Grid.Row="4" Spacing="6">
                 <Border x:Name="NextPieceOverlay"
-                        BackgroundColor="#3A3175" StrokeThickness="1" Stroke="#4D4495"
+                        BackgroundColor="#FFFFFF" StrokeThickness="1" Stroke="#D6E4F0"
                         HorizontalOptions="Center" Padding="10,6">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
                     <HorizontalStackLayout Spacing="12">
-                        <Label Text="NEXT" TextColor="#AAA4D8" FontSize="12" FontFamily="MadimiOne"
+                        <Label Text="NEXT" TextColor="#6B7A90" FontSize="12" FontFamily="MadimiOne"
                                FontAttributes="Bold" VerticalOptions="Center"/>
                         <Grid x:Name="NextPieceGrid" RowSpacing="0" ColumnSpacing="0"
                               HorizontalOptions="Center"/>
                     </HorizontalStackLayout>
                 </Border>
                 <VerticalStackLayout Spacing="2" Margin="60,0">
-                    <Button x:Name="SolutionCoinLabel"
+                    <Button x:Name="SolutionCoinLabel" Style="{StaticResource CtaButtonYellow}"
                             FontSize="14" FontAttributes="Bold"
                             TextColor="#111114" BackgroundColor="#FFC83D"
                             CornerRadius="24" HeightRequest="50"

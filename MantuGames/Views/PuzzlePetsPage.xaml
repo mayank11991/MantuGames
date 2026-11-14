@@ -24,14 +24,8 @@
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
-                       Padding="16,6"
-                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label x:Name="LevelLabel" Text="Level 1"
-                           FontSize="20" FontFamily="Display"
-                           TextColor="#FFC83D" HorizontalOptions="Center" />
-                </Border>
-                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
+                <controls:ThinkingBuddy x:Name="LevelLabel" Grid.Column="1" Text="Level 1" />
+                <Border Style="{StaticResource CtaCircleOrange}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
@@ -46,8 +40,8 @@
             <!-- Row 2: Puzzle grid -->
             <ScrollView Grid.Row="2" Orientation="Vertical" VerticalScrollBarVisibility="Never">
                 <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
-                    <Border StrokeThickness="1.5" Stroke="#4D4495"
-                            Padding="6" BackgroundColor="#2B2459"
+                    <Border StrokeThickness="1.5" Stroke="#D6E4F0"
+                            Padding="6" BackgroundColor="#FFFFFF"
                             HorizontalOptions="Center">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="14" />
@@ -68,7 +62,7 @@
 
             <!-- Row 3: Piece tray -->
             <Border Grid.Row="3"
-                    BackgroundColor="#3A3175" StrokeThickness="0"
+                    BackgroundColor="#FFFFFF" StrokeThickness="0"
                     Padding="8,8" Margin="8,2,8,4">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="16" />
@@ -82,7 +76,7 @@
 
             <!-- Row 4: Show Solution -->
             <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="50,0,50,4">
-                <Button x:Name="SolutionCoinLabel"
+                <Button x:Name="SolutionCoinLabel" Style="{StaticResource CtaButtonYellow}"
                        
                         FontSize="14" FontAttributes="Bold"
                         TextColor="#111114" BackgroundColor="#FFC83D"

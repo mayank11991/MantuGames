@@ -23,13 +23,8 @@
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
-                       Padding="16,6"
-                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
-                           FontSize="20" FontFamily="Display" HorizontalOptions="Center" />
-                </Border>
-                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
+                <controls:ThinkingBuddy Grid.Column="1" Text="{Binding LevelDisplay}" />
+                <Border Style="{StaticResource CtaCircleOrange}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
@@ -53,7 +48,7 @@
                           VerticalOptions="Center" />
 
                     <VerticalStackLayout Spacing="2" Margin="60,0">
-                        <Button x:Name="SolutionCoinLabel"
+                        <Button x:Name="SolutionCoinLabel" Style="{StaticResource CtaButtonYellow}"
                                 FontSize="15" FontAttributes="Bold"
                                 TextColor="#111114" BackgroundColor="#FFC83D"
                                 CornerRadius="24" HeightRequest="50"

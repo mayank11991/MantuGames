@@ -127,7 +127,7 @@ public partial class BlockPuzzlePage : ContentPage
             {
                 var bv = new BoxView
                 {
-                    Color        = Color.FromArgb("#1B1640"),
+                    Color        = Color.FromArgb("#EAF2FB"),
                     CornerRadius = 2,
                     Margin       = new Thickness(0.5)
                 };
@@ -150,7 +150,7 @@ public partial class BlockPuzzlePage : ContentPage
             for (int c = 0; c < BlockPuzzleViewModel.Cols; c++)
                 _cells[r, c].Color = _vm.Board[r, c]
                     ? _vm.BoardColors[r, c]
-                    : Color.FromArgb("#1B1640");
+                    : Color.FromArgb("#EAF2FB");
 
         var piece = _vm.CurrentPiece;
         if (piece == null || _vm.IsGameOver) return;

@@ -25,13 +25,8 @@
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Border>
-                <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 20"
-                       Padding="16,6"
-                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#FFC83D"
-                           FontSize="20" FontFamily="Display" HorizontalOptions="Center" />
-                </Border>
-                <Border Style="{StaticResource NightCircle}" Grid.Column="2"
+                <controls:ThinkingBuddy Grid.Column="1" Text="{Binding LevelDisplay}" />
+                <Border Style="{StaticResource CtaCircleOrange}" Grid.Column="2"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="ic_pause_white.png" HeightRequest="24" WidthRequest="24"
@@ -41,14 +36,14 @@
             </Grid>
 
             <!-- Row 1: Status + Hearts -->
-            <Border Grid.Row="1" BackgroundColor="#2B2459" StrokeThickness="0"
+            <Border Grid.Row="1" BackgroundColor="#FFFFFF" StrokeThickness="0"
                     Padding="12,8" Margin="40,0">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                 <Grid ColumnDefinitions="*,Auto,*">
                     <StackLayout Grid.Column="0" Spacing="0">
-                        <Label Text="CLEARED" TextColor="#AAA4D8" FontSize="9" FontFamily="MadimiOne"
+                        <Label Text="CLEARED" TextColor="#6B7A90" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding ArrowsCleared}" TextColor="#FFC83D"
+                        <Label Text="{Binding ArrowsCleared}" TextColor="#FF8A3D"
                                FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                     <Label Grid.Column="1" x:Name="HeartsLabel"
@@ -58,9 +53,9 @@
                            VerticalOptions="Center"
                            Margin="8,0,0,0" />
                     <StackLayout Grid.Column="2" Spacing="0">
-                        <Label Text="MOVES" TextColor="#AAA4D8" FontSize="9" FontFamily="MadimiOne"
+                        <Label Text="MOVES" TextColor="#6B7A90" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Moves}" TextColor="#FFC83D"
+                        <Label Text="{Binding Moves}" TextColor="#FF8A3D"
                                FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                 </Grid>
@@ -74,13 +69,13 @@
                           BackgroundColor="Transparent" />
 
             <!-- Row 3: Remaining -->
-            <Label Grid.Row="3" Text="{Binding RemainingText}" TextColor="#AAA4D8"
+            <Label Grid.Row="3" Text="{Binding RemainingText}" TextColor="#6B7A90"
                    FontSize="13" FontFamily="MadimiOne"
                    HorizontalOptions="Center" HorizontalTextAlignment="Center" />
 
             <!-- Row 4: Show Solution -->
             <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="60,0">
-                <Button x:Name="SolutionCoinLabel"
+                <Button x:Name="SolutionCoinLabel" Style="{StaticResource CtaButtonYellow}"
                         Text="💡 Show Solution"
                         FontSize="14" FontAttributes="Bold"
                         TextColor="#111114" BackgroundColor="#FFC83D"
