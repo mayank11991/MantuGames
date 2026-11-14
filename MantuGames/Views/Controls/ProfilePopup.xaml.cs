@@ -60,9 +60,9 @@ public partial class ProfilePopup : ContentView
                 BackgroundColor = Colors.White,
                 StrokeThickness = 0,
                 StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
-                WidthRequest = 60,
-                HeightRequest = 60,
-                Padding = new Thickness(4),
+                WidthRequest = 58,
+                HeightRequest = 58,
+                Padding = new Thickness(3),
             };
 
             var img = new Image

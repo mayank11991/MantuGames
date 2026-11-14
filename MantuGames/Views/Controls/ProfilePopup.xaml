@@ -5,19 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid x:Name="Overlay"
-          BackgroundColor="#99111114"
+          BackgroundColor="#991F2A44"
           InputTransparent="False">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
 
         <Border Background="#FFFFFF"
-                Stroke="#111114"
+                Stroke="#1F2A44"
                 StrokeThickness="3"
-                Padding="28"
+                Padding="22,24"
                 WidthRequest="320"
-                MaximumHeightRequest="480"
-                HorizontalOptions="Center"
+                                HorizontalOptions="Center"
                 VerticalOptions="Center">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="24" />
@@ -26,7 +25,6 @@
                 <Shadow Brush="#2A2E45" Offset="0,6" Radius="20" Opacity="0.3" />
             </Border.Shadow>
 
-            <ScrollView>
                 <VerticalStackLayout Spacing="16">
 
                     <Label Text="Create Profile"
@@ -68,9 +66,8 @@
 
                     <!-- Avatar Picker Grid (A1-A7) -->
                     <Grid x:Name="AvatarPickerGrid"
-                          ColumnDefinitions="*,*,*,*" ColumnSpacing="10"
-                          RowDefinitions="*,*" RowSpacing="10"
-                          HeightRequest="140">
+                          ColumnDefinitions="*,*,*,*" ColumnSpacing="8" HorizontalOptions="Center"
+                          RowDefinitions="Auto,Auto" RowSpacing="8">
                     </Grid>
 
                     <!-- Done / Cancel Buttons -->
@@ -88,7 +85,6 @@
                     </HorizontalStackLayout>
 
                 </VerticalStackLayout>
-            </ScrollView>
         </Border>
     </Grid>
 
