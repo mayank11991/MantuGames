@@ -36,7 +36,7 @@ public partial class MathGamePage : ContentPage
         _vm.QuestionChanged += BuildChoices;
 
         int coins = CoinService.GetCoins("mathchallenge");
-        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+        SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
         this.Loaded += (s, e) =>
         {
             BuildChoices();

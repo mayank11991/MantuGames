@@ -6,8 +6,7 @@
              x:Class="MantuGames.Views.CardMemoryPage"
 >
     <AbsoluteLayout>
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <!-- MAIN CONTENT -->
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,Auto,*"
@@ -17,20 +16,20 @@
 
             <!-- TOP BAR: back | level badge | pause -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#34D399"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#1F8A70"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
@@ -54,17 +53,16 @@
                           VerticalOptions="Center" />
 
                     <VerticalStackLayout Spacing="2" Margin="60,0">
-                        <Button x:Name="SolutionButton"
-                                Text="💡 Show Solution"
+                        <Button x:Name="SolutionCoinLabel"
                                 FontSize="15" FontAttributes="Bold"
-                                TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                                TextColor="#3D2C4E" BackgroundColor="#FFA94D"
                                 CornerRadius="24" HeightRequest="50"
                                 Clicked="OnShowSolutionClicked" />
-                        <Label x:Name="SolutionCoinLabel"
-                               FontFamily="MomoTrustDisplay"
-                               FontSize="11"
-                               TextColor="#DBD748"
-                               HorizontalOptions="Center" />
+                        <!-- <Label x:Name="SolutionCoinLabel" -->
+                        <!--        FontFamily="MadimiOne" -->
+                        <!--        FontSize="11" -->
+                        <!--        TextColor="#D9A400" -->
+                        <!--        HorizontalOptions="Center" /> -->
                     </VerticalStackLayout>
                 </VerticalStackLayout>
             </Grid>

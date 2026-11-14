@@ -9,10 +9,12 @@
     BackgroundColor="{StaticResource ColorBg}">
 
     <Grid RowDefinitions="Auto,Auto,*">
+        <!-- Clay background -->
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
 
         <!-- Nebula background effect -->
         <Grid x:Name="NebulaContainer" Grid.RowSpan="3" InputTransparent="True">
-            <Grid.Opacity>0.5</Grid.Opacity>
+            <Grid.Opacity>0.22</Grid.Opacity>
             <Grid>
                 <Ellipse x:Name="Nebula1"
                          WidthRequest="520" HeightRequest="520"
@@ -31,7 +33,7 @@
                          Margin="-160,0,0,-160">
                     <Ellipse.Fill>
                         <RadialGradientBrush>
-                            <GradientStop Offset="0" Color="#22D3EE" />
+                            <GradientStop Offset="0" Color="#6D4AFF" />
                             <GradientStop Offset="0.65" Color="Transparent" />
                         </RadialGradientBrush>
                     </Ellipse.Fill>
@@ -42,7 +44,7 @@
                          Margin="0,0,0,0">
                     <Ellipse.Fill>
                         <RadialGradientBrush>
-                            <GradientStop Offset="0" Color="#FF9F1C" />
+                            <GradientStop Offset="0" Color="#FFA94D" />
                             <GradientStop Offset="0.65" Color="Transparent" />
                         </RadialGradientBrush>
                     </Ellipse.Fill>
@@ -61,10 +63,10 @@
 
             <Label x:Name="GameTitleLabel"
                    Grid.Column="1"
-                   FontFamily="MomoTrustDisplay"
+                   FontFamily="MadimiOne"
                    FontSize="18"
                    FontAttributes="Bold"
-                   TextColor="{StaticResource ColorText}"
+                   TextColor="#3D2C4E"
                    HorizontalOptions="Center"
                    VerticalOptions="Center" />
 
@@ -75,22 +77,29 @@
                 <Image Source="coin.png"
                        WidthRequest="22" HeightRequest="22" />
                 <Label x:Name="CoinsLabel"
-                       FontFamily="MomoTrustDisplay"
+                       FontFamily="MadimiOne"
                        FontSize="22"
-                       TextColor="#FF9F1C"
+                       TextColor="#C77A1A"
                        VerticalOptions="Center" />
             </HorizontalStackLayout>
         </Grid>
 
         <!-- Row 1: Instructions (center-aligned) -->
         <Border Grid.Row="1" 
-                BackgroundColor="Transparent"
-                StrokeThickness="0"
-                Padding="20,12,20,8">
+                BackgroundColor="#D9FFFFFF"
+                Stroke="#B3FFFFFF"
+                StrokeThickness="2"
+                Padding="20,10"
+                Margin="18,4"
+                HorizontalOptions="Fill">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="22" />
+            </Border.StrokeShape>
             <Label x:Name="InstructionsLabel"
-                   FontFamily="MomoTrustDisplay"
+                   FontFamily="MadimiOne"
                    FontSize="20"
-                   TextColor="{StaticResource ColorText}"
+                   FontAttributes="Bold"
+                   TextColor="#3D2C4E"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center" />
         </Border>

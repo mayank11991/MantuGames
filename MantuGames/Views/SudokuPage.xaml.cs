@@ -42,7 +42,7 @@ namespace MantuGames.Views
             _vm.GameEnded += OnGameEnded;
 
             int coins = CoinService.GetCoins("sudoku");
-            SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+            SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
             this.Loaded += (s, e) => BuildSudokuGrid();
 
@@ -163,8 +163,8 @@ namespace MantuGames.Views
 
             void UpdateBackground()
             {
-                if (cell.IsSelected) border.BackgroundColor = Color.FromArgb("#FFE066");
-                else if (cell.IsError) border.BackgroundColor = Color.FromArgb("#FF6B6B");
+                if (cell.IsSelected) border.BackgroundColor = Color.FromArgb("#FFD166");
+                else if (cell.IsError) border.BackgroundColor = Color.FromArgb("#FF7A90");
                 else if (cell.IsRevealed) border.BackgroundColor = Color.FromArgb("#EDE7F6");
                 else if (cell.IsFixed) border.BackgroundColor = Color.FromArgb("#B8E4FF");
                 else if (cell.IsHighlighted) border.BackgroundColor = Color.FromArgb("#EEF6FF");

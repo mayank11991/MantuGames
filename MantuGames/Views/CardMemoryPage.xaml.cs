@@ -32,7 +32,7 @@ public partial class CardMemoryPage : ContentPage
         this.Loaded += (s, e) => BuildCards();
 
         int coins = CoinService.GetCoins("cardmemory");
-        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+        SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         this.Opacity = 0;
         this.FadeTo(1, 400);
@@ -75,7 +75,7 @@ public partial class CardMemoryPage : ContentPage
         int coins = CoinService.GetCoins("cardmemory");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
-        SolutionButton.IsEnabled = false;
+        SolutionCoinLabel.IsEnabled = false;
         _vm.RevealAll();
         _ = RevealThenEndAsync();
     }
@@ -219,7 +219,7 @@ public partial class CardMemoryPage : ContentPage
         var border = new Border
         {
             StrokeThickness = 0,
-            BackgroundColor = Color.FromArgb("#3949AB"),
+            BackgroundColor = Color.FromArgb("#7C5CFF"),
             HeightRequest = size,
             WidthRequest = size,
             Content = contentGrid
@@ -238,21 +238,21 @@ public partial class CardMemoryPage : ContentPage
         {
             if (card.IsMatched)
             {
-                border.BackgroundColor = Color.FromArgb("#4CAF50");
+                border.BackgroundColor = Color.FromArgb("#4FD1B5");
                 cardImage.Source = ImageSource.FromFile(card.Image);
                 questionMark.IsVisible = false;
                 SetScrewsVisible(false);
             }
             else if (card.IsFlipped)
             {
-                border.BackgroundColor = Color.FromArgb("#7C4DFF");
+                border.BackgroundColor = Color.FromArgb("#9B7BFF");
                 cardImage.Source = ImageSource.FromFile(card.Image);
                 questionMark.IsVisible = false;
                 SetScrewsVisible(false);
             }
             else
             {
-                border.BackgroundColor = Color.FromArgb("#3949AB");
+                border.BackgroundColor = Color.FromArgb("#7C5CFF");
                 cardImage.Source = null;
                 questionMark.IsVisible = true;
                 SetScrewsVisible(true);
@@ -318,7 +318,7 @@ public partial class CardMemoryPage : ContentPage
         _vm = new CardMemoryViewModel(_startLevel);
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
-        SolutionButton.IsEnabled = true;
+        SolutionCoinLabel.IsEnabled = true;
         int coins = CoinService.GetCoins("cardmemory");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildCards();
@@ -330,7 +330,7 @@ public partial class CardMemoryPage : ContentPage
         _vm = new CardMemoryViewModel(_startLevel);
         BindingContext = _vm;
         _vm.GameEnded += OnGameEnded;
-        SolutionButton.IsEnabled = true;
+        SolutionCoinLabel.IsEnabled = true;
         int coins = CoinService.GetCoins("cardmemory");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildCards();

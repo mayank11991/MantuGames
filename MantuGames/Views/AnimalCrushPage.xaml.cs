@@ -131,7 +131,7 @@ public partial class AnimalCrushPage : ContentPage
 
         var border = new Border
         {
-            BackgroundColor = Color.FromArgb("#182136"),
+            BackgroundColor = Color.FromArgb("#FFFDFA"),
             StrokeThickness = 0,
             WidthRequest = size,
             HeightRequest = size,
@@ -247,7 +247,7 @@ public partial class AnimalCrushPage : ContentPage
         if (_cellBorders.TryGetValue((r, c), out var border))
         {
             border.StrokeThickness = on ? 3 : 0;
-            border.Stroke = on ? new SolidColorBrush(Color.FromArgb("#FF9F1C")) : null;
+            border.Stroke = on ? new SolidColorBrush(Color.FromArgb("#FFA94D")) : null;
         }
     }
 
@@ -382,7 +382,7 @@ public partial class AnimalCrushPage : ContentPage
         _activePowerUp = kind;
         _selectedPowerUpBorder = button;
         button.StrokeThickness = 3;
-        button.Stroke = new SolidColorBrush(Color.FromArgb("#FF9F1C"));
+        button.Stroke = new SolidColorBrush(Color.FromArgb("#FFA94D"));
     }
 
     private void DeselectPowerUp()
@@ -718,7 +718,7 @@ public partial class AnimalCrushPage : ContentPage
     {
         // Quick beam flash
         var originalBg = cell.BackgroundColor;
-        cell.BackgroundColor = Color.FromArgb("#FF9F1C");
+        cell.BackgroundColor = Color.FromArgb("#FFA94D");
         await Task.Delay(60);
         cell.BackgroundColor = originalBg;
         
@@ -811,7 +811,7 @@ public partial class AnimalCrushPage : ContentPage
             if (child is Border b)
             {
                 b.StrokeThickness = isHint ? 3 : 0;
-                b.Stroke = isHint ? new SolidColorBrush(Color.FromArgb("#22D3EE")) : null;
+                b.Stroke = isHint ? new SolidColorBrush(Color.FromArgb("#6D4AFF")) : null;
             }
         }
     }

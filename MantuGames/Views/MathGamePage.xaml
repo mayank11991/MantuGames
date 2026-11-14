@@ -11,8 +11,7 @@
     </ContentPage.Resources>
 
     <AbsoluteLayout>
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <!-- MAIN CONTENT -->
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
@@ -22,20 +21,20 @@
 
             <!-- TOP BAR -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#F59E0B"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#F09A2E"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
@@ -50,7 +49,7 @@
 
             <!-- PROGRESS BAR -->
             <Border Grid.Row="3"
-                    BackgroundColor="#182136" StrokeThickness="0"
+                    BackgroundColor="#FFFDFA" StrokeThickness="0"
                     Padding="14,10" Margin="20,2">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="16" />
@@ -58,16 +57,16 @@
                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="6">
                     <Label Grid.Row="0" Grid.Column="0"
                            Text="Questions"
-                           FontSize="14" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
-                           TextColor="#9AA7BD"
+                           FontSize="14" FontFamily="MadimiOne" FontAttributes="Bold"
+                           TextColor="#7C6A8E"
                            VerticalOptions="Center" />
                     <Label Grid.Row="0" Grid.Column="1"
                            Text="{Binding ProgressText}"
-                           FontSize="12" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
-                           TextColor="#9AA7BD"
+                           FontSize="12" FontFamily="MadimiOne" FontAttributes="Bold"
+                           TextColor="#7C6A8E"
                            VerticalOptions="Center" />
                     <Frame Grid.Row="1" Grid.ColumnSpan="2"
-                           BackgroundColor="#33FFFFFF" CornerRadius="8"
+                           BackgroundColor="#80FFFFFF" CornerRadius="8"
                            Padding="0" HeightRequest="10">
                         <BoxView x:Name="ProgressBar" BackgroundColor="Transparent"
                                  Color="{Binding ProgressBarColor}" HeightRequest="10"
@@ -79,13 +78,13 @@
             <!-- QUESTION + CHOICES -->
             <StackLayout Grid.Row="4" Spacing="16" VerticalOptions="Center">
                 <!-- Question card -->
-                <Frame BackgroundColor="#182136" CornerRadius="24"
+                <Frame BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="24,20" HasShadow="True"
                        HorizontalOptions="Center" WidthRequest="300">
                     <Label x:Name="QuestionLabel"
                            Text="{Binding QuestionText}"
-                           FontSize="20" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
-                           TextColor="#E7ECF5"
+                           FontSize="20" FontFamily="MadimiOne" FontAttributes="Bold"
+                           TextColor="#3D2C4E"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center"
                            LineBreakMode="WordWrap"
@@ -103,17 +102,16 @@
 
             <!-- SHOW SOLUTION -->
             <VerticalStackLayout Grid.Row="5" Spacing="2" Margin="60,0">
-                <Button x:Name="SolutionButton"
-                        Text="💡 Show Solution"
+                <Button x:Name="SolutionCoinLabel"
                         FontSize="15" FontAttributes="Bold"
-                        TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                        TextColor="#3D2C4E" BackgroundColor="#FFA94D"
                         CornerRadius="24" HeightRequest="50"
                         Clicked="OnShowSolutionClicked" />
-                <Label x:Name="SolutionCoinLabel"
-                       FontFamily="MomoTrustDisplay"
-                       FontSize="11"
-                       TextColor="#DBD748"
-                       HorizontalOptions="Center" />
+                <!-- <Label x:Name="SolutionCoinLabel" -->
+                <!--        FontFamily="MadimiOne" -->
+                <!--        FontSize="11" -->
+                <!--        TextColor="#D9A400" -->
+                <!--        HorizontalOptions="Center" /> -->
             </VerticalStackLayout>
 
         </Grid>

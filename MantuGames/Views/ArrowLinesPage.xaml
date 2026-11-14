@@ -9,8 +9,7 @@
 >
 
     <AbsoluteLayout>
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,*,Auto,Auto"
               Padding="12,16,12,8" RowSpacing="6"
@@ -19,20 +18,20 @@
 
             <!-- Row 0: Top bar -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#F97316"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#FF8C5A"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
@@ -42,27 +41,27 @@
             </Grid>
 
             <!-- Row 1: Status + Hearts -->
-            <Border Grid.Row="1" BackgroundColor="#182136" StrokeThickness="0"
+            <Border Grid.Row="1" BackgroundColor="#FFFDFA" StrokeThickness="0"
                     Padding="12,8" Margin="40,0">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                 <Grid ColumnDefinitions="*,Auto,*">
                     <StackLayout Grid.Column="0" Spacing="0">
-                        <Label Text="CLEARED" TextColor="#9AA7BD" FontSize="9" FontFamily="MomoTrustDisplay"
+                        <Label Text="CLEARED" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding ArrowsCleared}" TextColor="#22D3EE"
-                               FontSize="18" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label Text="{Binding ArrowsCleared}" TextColor="#6D4AFF"
+                               FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                     <Label Grid.Column="1" x:Name="HeartsLabel"
-                           FontFamily="MomoTrustDisplay"
+                           FontFamily="MadimiOne"
                            FontSize="18"
-                           TextColor="#F43F5E"
+                           TextColor="#E0566F"
                            VerticalOptions="Center"
                            Margin="8,0,0,0" />
                     <StackLayout Grid.Column="2" Spacing="0">
-                        <Label Text="MOVES" TextColor="#9AA7BD" FontSize="9" FontFamily="MomoTrustDisplay"
+                        <Label Text="MOVES" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Moves}" TextColor="#F97316"
-                               FontSize="18" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label Text="{Binding Moves}" TextColor="#FF8C5A"
+                               FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                 </Grid>
             </Border>
@@ -75,23 +74,18 @@
                           BackgroundColor="Transparent" />
 
             <!-- Row 3: Remaining -->
-            <Label Grid.Row="3" Text="{Binding RemainingText}" TextColor="#9AA7BD"
-                   FontSize="13" FontFamily="MomoTrustDisplay"
+            <Label Grid.Row="3" Text="{Binding RemainingText}" TextColor="#7C6A8E"
+                   FontSize="13" FontFamily="MadimiOne"
                    HorizontalOptions="Center" HorizontalTextAlignment="Center" />
 
             <!-- Row 4: Show Solution -->
             <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="60,0">
-                <Button x:Name="SolutionButton"
+                <Button x:Name="SolutionCoinLabel"
                         Text="💡 Show Solution"
                         FontSize="14" FontAttributes="Bold"
-                        TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                        TextColor="#3D2C4E" BackgroundColor="#FFA94D"
                         CornerRadius="24" HeightRequest="50"
                         Clicked="OnShowSolution" />
-                <Label x:Name="SolutionCoinLabel"
-                       FontFamily="MomoTrustDisplay"
-                       FontSize="11"
-                       TextColor="#DBD748"
-                       HorizontalOptions="Center" />
             </VerticalStackLayout>
 
         </Grid>
@@ -109,6 +103,10 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
 
         <controls:ConfirmPopup x:Name="ConfirmPopup" IsVisible="False"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1" />
+
+        <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False"
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1" />
     </AbsoluteLayout>

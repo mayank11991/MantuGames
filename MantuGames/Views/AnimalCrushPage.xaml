@@ -6,8 +6,7 @@
              x:Class="MantuGames.Views.AnimalCrushPage"
 >
     <AbsoluteLayout>
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <!-- MAIN CONTENT -->
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,Auto,Auto,*"
@@ -17,20 +16,20 @@
 
             <!-- TOP BAR: back | level badge | pause -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#F43F5E"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#E0566F"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
@@ -46,13 +45,13 @@
 
             <!-- SCORE / TARGET -->
             <HorizontalStackLayout Grid.Row="2" Spacing="10" HorizontalOptions="Center">
-                <Border BackgroundColor="#182136" StrokeThickness="0" Padding="10,5">
+                <Border BackgroundColor="#FFFDFA" StrokeThickness="0" Padding="10,5">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                     <StackLayout Spacing="0">
-                        <Label Text="SCORE" TextColor="#9AA7BD" FontSize="9" FontFamily="MomoTrustDisplay"
+                        <Label Text="SCORE" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center"/>
-                        <Label Text="{Binding ScoreDisplay}" TextColor="#F43F5E"
-                               FontSize="14" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center"/>
+                        <Label Text="{Binding ScoreDisplay}" TextColor="#E0566F"
+                               FontSize="14" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center"/>
                     </StackLayout>
                 </Border>
             </HorizontalStackLayout>
@@ -61,7 +60,7 @@
             <Grid Grid.Row="3" ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="18"
                   HorizontalOptions="Center">
                 <Border x:Name="HammerButton" Grid.Column="0"
-                        BackgroundColor="#182136" Padding="12,6"
+                        BackgroundColor="#FFFDFA" Padding="12,6"
                         StrokeThickness="0">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                     <Border.GestureRecognizers>
@@ -70,13 +69,13 @@
                     <HorizontalStackLayout Spacing="6">
                         <Image Source="hammer.png" WidthRequest="24" HeightRequest="24"
                                VerticalOptions="Center" />
-                        <Label Text="{Binding HammerCount}" TextColor="#9AA7BD"
-                               FontSize="13" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
+                        <Label Text="{Binding HammerCount}" TextColor="#7C6A8E"
+                               FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold"
                                VerticalOptions="Center" />
                     </HorizontalStackLayout>
                 </Border>
                 <Border x:Name="RocketButton" Grid.Column="1"
-                        BackgroundColor="#182136" Padding="12,6"
+                        BackgroundColor="#FFFDFA" Padding="12,6"
                         StrokeThickness="0">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                     <Border.GestureRecognizers>
@@ -85,13 +84,13 @@
                     <HorizontalStackLayout Spacing="6">
                         <Image Source="rocket.png" WidthRequest="24" HeightRequest="24"
                                VerticalOptions="Center" />
-                        <Label Text="{Binding RocketCount}" TextColor="#9AA7BD"
-                               FontSize="13" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
+                        <Label Text="{Binding RocketCount}" TextColor="#7C6A8E"
+                               FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold"
                                VerticalOptions="Center" />
                     </HorizontalStackLayout>
                 </Border>
                 <Border x:Name="BombButton" Grid.Column="2"
-                        BackgroundColor="#182136" Padding="12,6"
+                        BackgroundColor="#FFFDFA" Padding="12,6"
                         StrokeThickness="0">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                     <Border.GestureRecognizers>
@@ -100,8 +99,8 @@
                     <HorizontalStackLayout Spacing="6">
                         <Image Source="bomb.png" WidthRequest="24" HeightRequest="24"
                                VerticalOptions="Center" />
-                        <Label Text="{Binding BombCount}" TextColor="#9AA7BD"
-                               FontSize="13" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
+                        <Label Text="{Binding BombCount}" TextColor="#7C6A8E"
+                               FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold"
                                VerticalOptions="Center" />
                     </HorizontalStackLayout>
                 </Border>
@@ -123,13 +122,13 @@
                     <Button x:Name="SolutionButton"
                             Text="💡 Show Solution"
                             FontSize="15" FontAttributes="Bold"
-                            TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                            TextColor="#3D2C4E" BackgroundColor="#FFA94D"
                             CornerRadius="24" HeightRequest="50"
                             Clicked="OnShowSolutionClicked" />
                     <Label x:Name="SolutionCoinLabel"
-                           FontFamily="MomoTrustDisplay"
+                           FontFamily="MadimiOne"
                            FontSize="11"
-                           TextColor="#6B7280"
+                           TextColor="#7C6A8E"
                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </VerticalStackLayout>

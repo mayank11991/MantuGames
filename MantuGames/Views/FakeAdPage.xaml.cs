@@ -39,7 +39,7 @@ public class FakeAdPage : ContentPage
         var progress = new ProgressBar
         {
             Progress = 0,
-            ProgressColor = Color.FromArgb("#22D3EE"),
+            ProgressColor = Color.FromArgb("#6D4AFF"),
             WidthRequest = 250,
             HeightRequest = 8,
             HorizontalOptions = LayoutOptions.Center,

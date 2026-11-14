@@ -2,6 +2,27 @@ using Plugin.InAppBilling;
 
 namespace MantuGames.Services;
 
+public enum PurchaseOutcome
+{
+    Purchased,
+    /// <summary>Payment not confirmed yet (e.g. cash / slow card / family approval). Delivered on a later launch.</summary>
+    Pending,
+    Failed,
+}
+
+/// <summary>
+/// Google Play purchases.
+///
+/// Coin packs are made loss-proof:
+///   1. On a Purchased state, coins are credited to a persisted "unassigned" bank
+///      exactly once per purchase token (token is remembered).
+///   2. Only then is the purchase consumed. If the app dies in between, the next
+///      launch finds the unconsumed purchase, skips the (already done) credit and
+///      retries the consume — no lost coins, no double credit.
+///   3. Pending purchases are picked up by <see cref="ProcessOutstandingAsync"/>
+///      once Play reports them as Purchased.
+/// The player then moves unassigned coins into a game of their choice.
+/// </summary>
 public static class IapService
 {
     public const string RemoveAdsId = "remove_ads";
@@ -17,73 +38,161 @@ public static class IapService
     };
 
     private const string RemoveAdsOwnedKey = "remove_ads_owned";
+    private const string UnassignedCoinsKey = "iap_unassigned_coins";
+    private const string CreditedTokensKey = "iap_credited_tokens";
+
+    private static readonly SemaphoreSlim _billingLock = new(1, 1);
+    private static readonly object _creditLock = new();
+
+    /// <summary>Raised (any thread) when purchased coins land in the unassigned bank.</summary>
+    public static event EventHandler? UnassignedCoinsChanged;
 
     public static bool RemoveAdsOwned => Preferences.Default.Get(RemoveAdsOwnedKey, false);
 
     public static void SetRemoveAdsOwned(bool value) => Preferences.Default.Set(RemoveAdsOwnedKey, value);
 
-    /// <summary>Purchases a product. Coins packs are consumed; remove_ads is non-consumable.</summary>
-    public static async Task<bool> PurchaseAsync(string productId)
+    /// <summary>Purchased coins not yet moved into a game. Device-wide, survives restarts.</summary>
+    public static int UnassignedCoins => Preferences.Default.Get(UnassignedCoinsKey, 0);
+
+    /// <summary>Moves all unassigned coins into the given game. Returns how many were moved.</summary>
+    public static int AssignUnassignedCoins(string gameId)
     {
-        IInAppBilling? billing = null;
-        try
+        lock (_creditLock)
         {
-            billing = CrossInAppBilling.Current;
-            bool connected = await billing.ConnectAsync();
-            if (!connected) return false;
-
-            bool consumable = productId != RemoveAdsId;
-            var purchase = await billing.PurchaseAsync(productId, ItemType.InAppPurchase,
-                obfuscatedAccountId: "mantugames", obfuscatedProfileId: "");
-
-            if (purchase == null) return false;
-
-            // v7: check for Purchased state; also handle Pending (e.g. parental approval)
-            if (purchase.State == PurchaseState.Purchased)
-            {
-                if (consumable)
-                    await billing.ConsumePurchaseAsync(purchase.PurchaseToken, "mantugames");
-                else
-                    await billing.FinalizePurchaseAsync(new[] { purchase.PurchaseToken });
-
-                if (!consumable)
-                    SetRemoveAdsOwned(true);
-
-                return true;
-            }
-
-            return false;
-        }
-        catch
-        {
-            return false;
-        }
-        finally
-        {
-            try { if (billing != null) await billing.DisconnectAsync(); } catch { }
+            int amount = UnassignedCoins;
+            if (amount <= 0) return 0;
+            CoinService.AddCoins(gameId, amount);
+            Preferences.Default.Set(UnassignedCoinsKey, 0);
+            return amount;
         }
     }
 
-    /// <summary>Restores previously bought non-consumables (e.g. after reinstall).</summary>
-    public static async Task RestoreOwnedAsync()
+    private static int CoinsFor(string productId) =>
+        CoinPacks.FirstOrDefault(p => p.ProductId == productId).Coins;
+
+    /// <summary>Credits a coin purchase once per token. Returns true if it was newly credited.</summary>
+    private static bool CreditOnce(string token, int coins)
     {
+        if (string.IsNullOrEmpty(token) || coins <= 0) return false;
+        lock (_creditLock)
+        {
+            var tokens = Preferences.Default.Get(CreditedTokensKey, "")
+                .Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+            if (tokens.Contains(token)) return false;
+
+            Preferences.Default.Set(UnassignedCoinsKey, UnassignedCoins + coins);
+            tokens.Add(token);
+            // Keep the list bounded; consumed tokens never come back from Play.
+            if (tokens.Count > 200) tokens = tokens.Skip(tokens.Count - 200).ToList();
+            Preferences.Default.Set(CreditedTokensKey, string.Join('\n', tokens));
+        }
+        UnassignedCoinsChanged?.Invoke(null, EventArgs.Empty);
+        return true;
+    }
+
+    /// <summary>Delivers a purchase that Play reports as Purchased (credit + consume / acknowledge).</summary>
+    private static async Task DeliverAsync(IInAppBilling billing, InAppBillingPurchase purchase)
+    {
+        if (purchase.State != PurchaseState.Purchased) return;
+
+        if (purchase.ProductId == RemoveAdsId)
+        {
+            SetRemoveAdsOwned(true);
+            if (purchase.IsAcknowledged != true)
+                await billing.FinalizePurchaseAsync(new[] { purchase.PurchaseToken });
+            return;
+        }
+
+        int coins = CoinsFor(purchase.ProductId);
+        if (coins <= 0) return; // unknown product
+
+        CreditOnce(purchase.PurchaseToken, coins);
+        await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken);
+    }
+
+    /// <summary>Buys a product. Coin packs go to the unassigned bank; remove_ads is non-consumable.</summary>
+    public static async Task<PurchaseOutcome> PurchaseAsync(string productId)
+    {
+        await _billingLock.WaitAsync();
         IInAppBilling? billing = null;
         try
         {
             billing = CrossInAppBilling.Current;
-            bool connected = await billing.ConnectAsync();
-            if (!connected) return;
+            if (!await billing.ConnectAsync()) return PurchaseOutcome.Failed;
 
-            var purchases = await billing.GetPurchasesAsync(ItemType.InAppPurchase);
-            if (purchases?.Any(p => p.ProductId == RemoveAdsId && p.State == PurchaseState.Purchased) == true)
-                SetRemoveAdsOwned(true);
+            var purchase = await billing.PurchaseAsync(productId, ItemType.InAppPurchase);
+            if (purchase == null) return PurchaseOutcome.Failed;
+
+            if (purchase.State == PurchaseState.PaymentPending || purchase.State == PurchaseState.Deferred)
+                return PurchaseOutcome.Pending;
+
+            if (purchase.State != PurchaseState.Purchased) return PurchaseOutcome.Failed;
+
+            try
+            {
+                await DeliverAsync(billing, purchase);
+            }
+            catch (Exception ex)
+            {
+                // Coins are already credited; consume/ack is retried on next launch.
+                CrashGuardService.Log(ex);
+            }
+            return PurchaseOutcome.Purchased;
         }
-        catch
+        catch (InAppBillingPurchaseException ex) when (ex.PurchaseError == PurchaseError.AlreadyOwned)
         {
+            // An earlier purchase of this pack was never consumed: deliver it now.
+            try { await ProcessOutstandingCoreAsync(billing); }
+            catch (Exception inner) { CrashGuardService.Log(inner); return PurchaseOutcome.Failed; }
+            return productId == RemoveAdsId || UnassignedCoins > 0 ? PurchaseOutcome.Purchased : PurchaseOutcome.Failed;
+        }
+        catch (Exception ex)
+        {
+            CrashGuardService.Log(ex);
+            return PurchaseOutcome.Failed;
         }
         finally
         {
             try { if (billing != null) await billing.DisconnectAsync(); } catch { }
+            _billingLock.Release();
+        }
+    }
+
+    /// <summary>
+    /// Run at startup: restores remove_ads after reinstall and delivers any coin
+    /// purchases that were paid but not consumed (crash, pending payment, old bug).
+    /// </summary>
+    public static async Task ProcessOutstandingAsync()
+    {
+        await _billingLock.WaitAsync();
+        IInAppBilling? billing = null;
+        try
+        {
+            billing = CrossInAppBilling.Current;
+            if (!await billing.ConnectAsync()) return;
+            await ProcessOutstandingCoreAsync(billing);
+        }
+        catch (Exception ex)
+        {
+            CrashGuardService.Log(ex);
+        }
+        finally
+        {
+            try { if (billing != null) await billing.DisconnectAsync(); } catch { }
+            _billingLock.Release();
+        }
+    }
+
+    private static async Task ProcessOutstandingCoreAsync(IInAppBilling? billing)
+    {
+        if (billing == null) return;
+        var purchases = await billing.GetPurchasesAsync(ItemType.InAppPurchase);
+        if (purchases == null) return;
+
+        foreach (var p in purchases)
+        {
+            try { await DeliverAsync(billing, p); }
+            catch (Exception ex) { CrashGuardService.Log(ex); }
         }
     }
 }

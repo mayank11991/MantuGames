@@ -14,10 +14,10 @@ public partial class TowerOfHanoiPage : ContentPage
     // disc size (1=smallest) → color — fixed, never changes during gameplay
     private static readonly Color[] DiscColors =
     {
-        Color.FromArgb("#EF5350"), // size 1 smallest = red
-        Color.FromArgb("#FF9800"), // size 2 = orange
+        Color.FromArgb("#E0566F"), // size 1 smallest = red
+        Color.FromArgb("#FF9F43"), // size 2 = orange
         Color.FromArgb("#FDD835"), // size 3 = yellow
-        Color.FromArgb("#66BB6A"), // size 4 = green
+        Color.FromArgb("#2F9E7F"), // size 4 = green
         Color.FromArgb("#42A5F5"), // size 5 largest = blue
     };
 
@@ -72,7 +72,7 @@ public partial class TowerOfHanoiPage : ContentPage
         _dragFromPole = null;
 
         int coins = CoinService.GetCoins("towerofhanoi");
-        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+        SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         // Determine number of poles based on level
         int poleCount = _startLevel <= 5 ? 3 : _startLevel <= 15 ? 4 : 5;
@@ -150,7 +150,7 @@ public partial class TowerOfHanoiPage : ContentPage
         bool isGoal = poleIndex == _vm.Puzzle.GoalPole;
         var rod = new Border
         {
-            BackgroundColor = isGoal ? Color.FromArgb("#34D399") : Color.FromArgb("#FACF93"),
+            BackgroundColor =  Color.FromArgb("#FACF93"),
             StrokeThickness = 0,
             WidthRequest = 16,
             HeightRequest = 200,
@@ -183,7 +183,7 @@ public partial class TowerOfHanoiPage : ContentPage
         // Base bar
         var baseBar = new Border
         {
-            BackgroundColor = isGoal ? Color.FromArgb("#34D399") : Color.FromArgb("#FACF93"),
+            BackgroundColor = isGoal ? Color.FromArgb("#1F8A70") : Color.FromArgb("#FACF93"),
             StrokeThickness = 0,
             HeightRequest = 14,
             HorizontalOptions = LayoutOptions.Fill,
@@ -203,7 +203,7 @@ public partial class TowerOfHanoiPage : ContentPage
             FontSize = 12,
             FontFamily = "BrickSans",
             FontAttributes = FontAttributes.Bold,
-            TextColor = isGoal ? Color.FromArgb("#34D399") : Color.FromArgb("#8D6E63"),
+            TextColor = isGoal ? Color.FromArgb("#1F8A70") : Color.FromArgb("#8D6E63"),
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
             AutomationId = $"label_{poleIndex}"
@@ -257,7 +257,7 @@ public partial class TowerOfHanoiPage : ContentPage
             // Highlight base bar when selected — pole highlight, not disc color change
             if (baseBar != null)
                 baseBar.BackgroundColor = isSelected
-                    ? Color.FromArgb("#FF9800")
+                    ? Color.FromArgb("#FF9F43")
                     : Color.FromArgb("#795548");
 
             var pile = _vm.Puzzle.GetPileBottomToTop(p);

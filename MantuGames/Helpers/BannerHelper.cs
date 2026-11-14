@@ -4,7 +4,8 @@ namespace MantuGames.Helpers;
 
 public static class BannerHelper
 {
-    private static readonly List<Grid> _bannerContainers = new();
+    // Weak references so pages that were popped can be garbage-collected.
+    private static readonly List<WeakReference<Grid>> _bannerContainers = new();
 
     public static void AddBannerAd(this ContentPage page)
     {
@@ -15,18 +16,12 @@ public static class BannerHelper
 
         page.Content = null;
 
-        var banner = new Plugin.MauiMtAdmob.Controls.MTAdView
-        {
-            AdsId = AppConfig.BannerAdUnitId,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.End,
-        };
+        // Collapsed until an ad is actually attached (no empty strip before consent).
         var bannerContainer = new Grid
         {
-            HeightRequest = 60,
+            HeightRequest = 0,
             VerticalOptions = LayoutOptions.End,
         };
-        bannerContainer.Children.Add(banner);
 
         var wrapper = new Grid
         {
@@ -42,17 +37,62 @@ public static class BannerHelper
 
         page.Content = wrapper;
 
-        _bannerContainers.Add(bannerContainer);
+        lock (_bannerContainers)
+        {
+            _bannerContainers.RemoveAll(w => !w.TryGetTarget(out _));
+            _bannerContainers.Add(new WeakReference<Grid>(bannerContainer));
+        }
+
+        if (ConsentService.CanRequestAds)
+        {
+            AttachBanner(bannerContainer);
+        }
+        else
+        {
+            // Consent still being gathered: attach once ads are allowed.
+            var weak = new WeakReference<Grid>(bannerContainer);
+            EventHandler? handler = null;
+            handler = (s, e) =>
+            {
+                ConsentService.AdsAllowed -= handler;
+                if (weak.TryGetTarget(out var container))
+                    MainThread.BeginInvokeOnMainThread(() => AttachBanner(container));
+            };
+            ConsentService.AdsAllowed += handler;
+        }
+    }
+
+    private static void AttachBanner(Grid container)
+    {
+        try
+        {
+            if (IapService.RemoveAdsOwned || container.Children.Count > 0) return;
+
+            container.Children.Add(new Plugin.MauiMtAdmob.Controls.MTAdView
+            {
+                AdsId = AppConfig.BannerAdUnitId,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.End,
+            });
+            container.HeightRequest = 60;
+        }
+        catch (Exception ex)
+        {
+            CrashGuardService.Log(ex);
+        }
     }
 
     /// <summary>Removes all live banner ad containers (called after Remove Ads purchase).</summary>
     public static void RemoveBanner()
     {
-        foreach (var container in _bannerContainers)
+        lock (_bannerContainers)
         {
-            if (container.Parent is Grid wrapper)
-                wrapper.Children.Remove(container);
+            foreach (var weak in _bannerContainers)
+            {
+                if (weak.TryGetTarget(out var container) && container.Parent is Grid wrapper)
+                    wrapper.Children.Remove(container);
+            }
+            _bannerContainers.Clear();
         }
-        _bannerContainers.Clear();
     }
 }

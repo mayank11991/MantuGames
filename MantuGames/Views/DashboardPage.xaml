@@ -7,208 +7,237 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:conv="clr-namespace:MantuGames.Converters"
     xmlns:controls="clr-namespace:MantuGames.Views.Controls"
-    BackgroundColor="Transparent"
+    BackgroundColor="{StaticResource ColorBg}"
     Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
         <conv:StringToColorConverter x:Key="StringToColor" />
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,Auto,*">
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               Grid.RowSpan="3" InputTransparent="True" />
+    <!-- Clay background is drawn by ClayBackground; page stays soft lavender. -->
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Soft clay background -->
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
 
-        <!-- Nebula background effect (similar to website) -->
-        <Grid x:Name="NebulaContainer" Grid.RowSpan="3" InputTransparent="True">
-            <Grid.Opacity>0.5</Grid.Opacity>
-            <Grid>
-                <Ellipse x:Name="Nebula1"
-                         WidthRequest="520" HeightRequest="520"
-                         HorizontalOptions="End" VerticalOptions="Start"
-                         Margin="-120,-120,0,0">
-                    <Ellipse.Fill>
-                        <RadialGradientBrush>
-                            <GradientStop Offset="0" Color="#AA55F7" />
-                            <GradientStop Offset="0.65" Color="Transparent" />
-                        </RadialGradientBrush>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <Ellipse x:Name="Nebula2"
-                         WidthRequest="460" HeightRequest="460"
-                         HorizontalOptions="Start" VerticalOptions="End"
-                         Margin="-160,0,0,-160">
-                    <Ellipse.Fill>
-                        <RadialGradientBrush>
-                            <GradientStop Offset="0" Color="#22D3EE" />
-                            <GradientStop Offset="0.65" Color="Transparent" />
-                        </RadialGradientBrush>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <Ellipse x:Name="Nebula3"
-                         WidthRequest="340" HeightRequest="340"
-                         HorizontalOptions="Center" VerticalOptions="Center"
-                         Margin="0,0,0,0">
-                    <Ellipse.Fill>
-                        <RadialGradientBrush>
-                            <GradientStop Offset="0" Color="#FF9F1C" />
-                            <GradientStop Offset="0.65" Color="Transparent" />
-                        </RadialGradientBrush>
-                    </Ellipse.Fill>
-                </Ellipse>
+        <!-- ── HEADER ── -->
+        <Grid Grid.Row="0" Padding="18,8,18,4"
+              RowDefinitions="Auto,Auto,Auto">
+
+            <!-- Utility row: profile avatar + coin balance -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+                <Border Grid.Column="0"
+                        BackgroundColor="#FFFFFF"
+                        Stroke="#80FFFFFF"
+                        StrokeThickness="1"
+                        Padding="3,3,12,3"
+                        VerticalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="19" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#8A6FA8" Offset="0,2" Radius="5" Opacity="0.18" />
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSwitchProfile" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="7" VerticalOptions="Center">
+                        <Border WidthRequest="30" HeightRequest="30"
+                                BackgroundColor="#E9DEFF"
+                                Stroke="#FFFFFF"
+                                StrokeThickness="2"
+                                Padding="0"
+                                VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15" />
+                            </Border.StrokeShape>
+                            <Image x:Name="HeaderAvatar"
+                                   Source="a1.png"
+                                   Aspect="AspectFit"
+                                   WidthRequest="26" HeightRequest="26"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <Label x:Name="HeaderPlayerName"
+                               Text="Player"
+                               FontFamily="MadimiOne"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               TextColor="#3D2C4E"
+                               MaximumWidthRequest="120"
+                               LineBreakMode="TailTruncation"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Border Grid.Column="2"
+                        BackgroundColor="#FFFFFF"
+                        Stroke="#80FFFFFF"
+                        StrokeThickness="1"
+                        Padding="10,5"
+                        VerticalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#8A6FA8" Offset="0,2" Radius="5" Opacity="0.15" />
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCoinShopClicked" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                        <Image Source="coin.png"
+                               WidthRequest="18" HeightRequest="18"
+                               VerticalOptions="Center" />
+                        <Label x:Name="CoinBalanceLabel"
+                               Text="0"
+                               FontFamily="MadimiOne"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               TextColor="#3D2C4E"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
             </Grid>
-        </Grid>
 
-        <!-- ── TOP BAR ── -->
-        <Grid Grid.Row="0" Padding="20,14,20,6" ColumnDefinitions="*,Auto,Auto,Auto,Auto">
-            <Label x:Name="PlayerNameLabel"
-                   Grid.Column="0"
-                   FontFamily="MomoTrustDisplay"
-                   FontSize="15"
-                   CharacterSpacing="1"
-                   TextColor="{StaticResource ColorText}"
-                   VerticalOptions="Center" />
-            <Label x:Name="PointsLabel"
-                   Grid.Column="1"
-                   FontFamily="MomoTrustDisplay"
+            <!-- Clay title -->
+            <Grid Grid.Row="1" Margin="0,2,0,0">
+                <Label Text="Mantu Games"
+                       FontFamily="Baloo2ExtraBold"
+                       FontSize="40"
+                       CharacterSpacing="0.5"
+                       TextColor="#3D2C4E"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center">
+                    <Label.Shadow>
+                        <Shadow Brush="#FFFFFF" Offset="0,3" Radius="2" Opacity="0.9" />
+                    </Label.Shadow>
+                </Label>
+            </Grid>
+
+            <Label Grid.Row="2"
+                   Text="Play  •  Learn  •  Explore"
+                   FontFamily="MadimiOne"
                    FontSize="12"
                    FontAttributes="Bold"
-                   TextColor="{StaticResource ColorCta}"
-                   VerticalOptions="Center"
-                   Margin="0,0,10,0" />
-            <Label x:Name="CoinBalanceLabel"
-                   Grid.Column="2"
-                   FontFamily="MomoTrustDisplay"
-                   FontSize="15"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource ColorAccent}"
-                   VerticalOptions="Center"
-                   Margin="0,0,8,0" />
-            <ImageButton Grid.Column="3"
-                         HeightRequest="20" WidthRequest="20"
-                         Source="coin.png" Scale="0.7"
-                         BackgroundColor="Transparent" Padding="0"
-                         Margin="0,0,10,0"
-                         SemanticProperties.Description="Coin shop"
-                         Clicked="OnCoinShopClicked"
-                         VerticalOptions="Center" />
-            <ImageButton Grid.Column="4"
-                         HeightRequest="20" WidthRequest="20"
-                         Source="gear" Scale="0.7"
-                         BackgroundColor="Transparent" Padding="0"
-                         SemanticProperties.Description="Settings"
-                         Clicked="OnSettingsClicked"
-                         VerticalOptions="Center" />
+                   CharacterSpacing="1"
+                   TextColor="#7C6A8E"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,0,0,2" />
         </Grid>
 
-        <!-- ── HERO (matches website .hero-content) ── -->
-        <VerticalStackLayout Grid.Row="1" Spacing="8" Padding="24,8,24,18">
-            <Label Text="MANTU GAMES STUDIO"
-                   FontFamily="MomoTrustDisplay"
-                   FontSize="10"
-                   CharacterSpacing="4"
-                   TextColor="{StaticResource ColorAccent}"
-                   HorizontalOptions="Center"
-                   Padding="14,6"
-                   HorizontalTextAlignment="Center">
-                <Label.BackgroundColor>
-                    <Color>#1422D3EE</Color>
-                </Label.BackgroundColor>
-            </Label>
-            <Label FontFamily="MomoTrustDisplay" FontSize="26" FontAttributes="Bold"
-                   HorizontalOptions="Center" HorizontalTextAlignment="Center"
-                   CharacterSpacing="1" TextColor="{StaticResource ColorText}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="PLAY. LEARN. " />
-                        <Span Text="EXPLORE." TextColor="{StaticResource ColorAccent}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-            <Label Text="Fun games that make learning exciting!"
-                   FontFamily="MomoTrustDisplay"
-                   FontSize="13"
-                   TextColor="{StaticResource ColorMuted}"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center" />
-            <Border BackgroundColor="{StaticResource ColorPanel}"
-                    Stroke="{StaticResource ColorLine}"
-                    StrokeThickness="1"
-                    Padding="14,2"
-                    Margin="0,6,0,0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="14" />
-                </Border.StrokeShape>
-                <Entry x:Name="SearchEntry"
-                       Placeholder="Search games by name or ID"
-                       PlaceholderColor="{StaticResource ColorMuted}"
-                       TextColor="{StaticResource ColorText}"
-                       FontFamily="MomoTrustDisplay"
-                       FontSize="13"
-                       BackgroundColor="Transparent"
-                       SemanticProperties.Description="Search games by name or ID"
-                       TextChanged="OnSearchTextChanged" />
-            </Border>
-        </VerticalStackLayout>
+        <!-- ── GAME GRID ── -->
+        <ScrollView x:Name="GamesScroll"
+                    Grid.Row="1"
+                    Margin="14,6,14,4"
+                    VerticalOptions="Fill">
+            <VerticalStackLayout x:Name="GamesFlex"
+                                 Spacing="12"
+                                 HorizontalOptions="Center"
+                                 Margin="0,0,0,8" />
+        </ScrollView>
 
-        <!-- ── GAME GRID (matches website .game-grid) ── -->
-        <CollectionView Grid.Row="2"
-                        x:Name="GamesCollectionView"
-                        ItemsSource="{Binding GamesList}"
-                        SelectionMode="None"
-                        Margin="12,0,12,8"
-                        VerticalOptions="Fill">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical"
-                                 Span="2"
-                                 HorizontalItemSpacing="10"
-                                 VerticalItemSpacing="10" />
-            </CollectionView.ItemsLayout>
+        <!-- ── BOTTOM NAVIGATION ── -->
+        <Border Grid.Row="2"
+                Margin="16,0,16,10"
+                BackgroundColor="#FFFFFF"
+                Stroke="#40FFFFFF"
+                StrokeThickness="1"
+                Padding="6,6">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="26" />
+            </Border.StrokeShape>
+            <Border.Shadow>
+                <Shadow Brush="#8A6FA8" Offset="0,4" Radius="14" Opacity="0.20" />
+            </Border.Shadow>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Style="{StaticResource PanelCard}"
-                           Padding="0"
-                          
-                           BorderColor="Transparent"
-                           CornerRadius="16"
-                           HeightRequest="160">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.NavigateCommand}"
-                                CommandParameter="{Binding .}" />
-                        </Frame.GestureRecognizers>
-                        <Grid>
-                            <!-- Full-bleed game icon as background -->
-                            <Image Source="{Binding ImageName}"
-                                   Aspect="AspectFill"
-                                   HorizontalOptions="Fill"
-                                   VerticalOptions="Fill" />
-                            <!-- Dark gradient overlay for readability -->
-                            <BoxView Background="{StaticResource CardOverlayGradient}"
-                                     HorizontalOptions="Fill"
-                                     VerticalOptions="Fill" />
-                            <!-- Title + Description -->
-                            <VerticalStackLayout VerticalOptions="End"
-                                                 Padding="14,0,14,14"
-                                                 Spacing="2">
-                                <Label Text="{Binding Title}"
-                                       FontFamily="MomoTrustDisplay"
-                                       FontSize="15"
-                                       FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="Center"
-                                       TextColor="White"
-                                       CharacterSpacing="0.5" />
-                                <Label Text="{Binding Description}"
-                                       FontFamily="MomoTrustDisplay"
-                                       FontSize="11" HorizontalTextAlignment="Center" HorizontalOptions="Center"
-                                       TextColor="#CCFFFFFF"
-                                       LineBreakMode="TailTruncation"
-                                       MaxLines="2" />
-                            </VerticalStackLayout>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <Grid ColumnDefinitions="*,*,*,*">
+
+                <!-- Home (active) -->
+                <VerticalStackLayout Grid.Column="0" Spacing="1"
+                                     HorizontalOptions="Center" VerticalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavHomeClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="#E9DEFF"
+                            StrokeThickness="0"
+                            WidthRequest="50" HeightRequest="30"
+                            Padding="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15" />
+                        </Border.StrokeShape>
+                        <Label Text="🏠" FontSize="15"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Home" FontFamily="MadimiOne" FontSize="10"
+                           FontAttributes="Bold" TextColor="#5B3FD1"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Stats -->
+                <VerticalStackLayout Grid.Column="1" Spacing="1"
+                                     HorizontalOptions="Center" VerticalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavStatsClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="Transparent"
+                            StrokeThickness="0"
+                            WidthRequest="50" HeightRequest="30"
+                            Padding="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15" />
+                        </Border.StrokeShape>
+                        <Label Text="🏆" FontSize="15"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Stats" FontFamily="MadimiOne" FontSize="10"
+                           FontAttributes="Bold" TextColor="#7C6A8E"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Settings -->
+                <VerticalStackLayout Grid.Column="2" Spacing="1"
+                                     HorizontalOptions="Center" VerticalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavSettingsClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="Transparent"
+                            StrokeThickness="0"
+                            WidthRequest="50" HeightRequest="30"
+                            Padding="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15" />
+                        </Border.StrokeShape>
+                        <Label Text="⚙️" FontSize="15"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Settings" FontFamily="MadimiOne" FontSize="10"
+                           FontAttributes="Bold" TextColor="#7C6A8E"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Profile -->
+                <VerticalStackLayout Grid.Column="3" Spacing="1"
+                                     HorizontalOptions="Center" VerticalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNavProfileClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Border BackgroundColor="Transparent"
+                            StrokeThickness="0"
+                            WidthRequest="50" HeightRequest="30"
+                            Padding="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15" />
+                        </Border.StrokeShape>
+                        <Label Text="👤" FontSize="15"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Profile" FontFamily="MadimiOne" FontSize="10"
+                           FontAttributes="Bold" TextColor="#7C6A8E"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
 
         <controls:SettingsPopup x:Name="SettingsPopup" IsVisible="False" Grid.RowSpan="3" />
         <controls:ProfilePopup x:Name="ProfilePopup" IsVisible="False" Grid.RowSpan="3" />

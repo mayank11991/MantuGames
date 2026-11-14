@@ -27,7 +27,8 @@ public partial class CoinShopPopup : ContentView
         BalanceLabel.Text = $"Total: {CoinService.GetTotalCoins()} coins";
         PickerTitle.IsVisible = true;
         GamesLayout.IsVisible = true;
-        ShowStatus("");
+        BuildGames();
+        ShowUnassignedHint();
         AnimateIn();
     }
 
@@ -42,6 +43,16 @@ public partial class CoinShopPopup : ContentView
         PickerTitle.IsVisible = false;
         GamesLayout.IsVisible = false;
         ShowStatus("");
+
+        // Purchased coins still waiting in the bank go straight to the game that needs them.
+        int moved = IapService.AssignUnassignedCoins(gameId);
+        if (moved > 0)
+        {
+            BalanceLabel.Text = $"{gameName}: {CoinService.GetCoins(gameId)} coins";
+            ShowStatus($"{moved} purchased coins added to {gameName}!", ok: true);
+            CoinsChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         AnimateIn();
     }
 
@@ -68,10 +79,19 @@ public partial class CoinShopPopup : ContentView
         });
     }
 
+    private void ShowUnassignedHint()
+    {
+        int waiting = IapService.UnassignedCoins;
+        if (waiting > 0)
+            ShowStatus($"{waiting} purchased coins are waiting. Tap a game to add them.", ok: true);
+        else
+            ShowStatus("");
+    }
+
     private void ShowStatus(string text, bool ok = true)
     {
         StatusLabel.Text = text;
-        StatusLabel.TextColor = ok ? Color.FromArgb("#34D399") : Color.FromArgb("#EF4444");
+        StatusLabel.TextColor = ok ? Color.FromArgb("#1F8A70") : Color.FromArgb("#E0566F");
     }
 
     // ── Coin packs ─────────────────────────────────────────────────────────
@@ -82,8 +102,8 @@ public partial class CoinShopPopup : ContentView
         {
             var row = new Border
             {
-                BackgroundColor = Color.FromArgb("#131A29"),
-                Stroke = new SolidColorBrush(Color.FromArgb("#2EFFFFFF")),
+                BackgroundColor = Color.FromArgb("#FFF4E8"),
+                Stroke = new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
                 StrokeThickness = 1,
                 Padding = new Thickness(14, 8),
             };
@@ -101,17 +121,17 @@ public partial class CoinShopPopup : ContentView
             var coinLabel = new Label
             {
                 Text = $"{coins} Coins",
-                FontFamily = "MomoTrustDisplay",
+                FontFamily = "MadimiOne",
                 FontSize = 15,
                 FontAttributes = FontAttributes.Bold,
-                TextColor = Color.FromArgb("#E7ECF5"),
+                TextColor = Color.FromArgb("#3D2C4E"),
                 VerticalOptions = LayoutOptions.Center,
             };
             rowGrid.Children.Add(coinLabel);
 
             var buy = new Border
             {
-                BackgroundColor = Color.FromArgb("#FF9F1C"),
+                BackgroundColor = Color.FromArgb("#FFA94D"),
                 StrokeThickness = 0,
                 Padding = new Thickness(12, 5),
                 VerticalOptions = LayoutOptions.Center,
@@ -121,10 +141,10 @@ public partial class CoinShopPopup : ContentView
             buy.Content = new Label
             {
                 Text = "BUY",
-                FontFamily = "MomoTrustDisplay",
+                FontFamily = "MadimiOne",
                 FontSize = 12,
                 FontAttributes = FontAttributes.Bold,
-                TextColor = Color.FromArgb("#160D02"),
+                TextColor = Color.FromArgb("#3D2C4E"),
                 HorizontalOptions = LayoutOptions.Center,
             };
             Grid.SetColumn(buy, 1);
@@ -146,34 +166,42 @@ public partial class CoinShopPopup : ContentView
     {
         if (_busy) return;
         _busy = true;
-        ShowStatus("Connecting to Google Play…", ok: true);
-        bool purchased = await IapService.PurchaseAsync(productId);
-
-        if (purchased)
+        try
         {
-            if (_targetGameId != null)
+            ShowStatus("Connecting to Google Play…", ok: true);
+            var outcome = await IapService.PurchaseAsync(productId);
+
+            if (outcome == PurchaseOutcome.Purchased)
             {
-                var info = DashboardViewModel.Games.FirstOrDefault(g => g.Id == _targetGameId);
-                CoinService.AddCoins(_targetGameId, coins);
-                BalanceLabel.Text = $"{info?.Title ?? _targetGameId}: {CoinService.GetCoins(_targetGameId)} coins";
-                ShowStatus($"{coins} coins added to {info?.Title ?? _targetGameId}!", ok: true);
+                // Coins are already saved in the unassigned bank by IapService.
+                if (_targetGameId != null)
+                {
+                    var info = DashboardViewModel.Games.FirstOrDefault(g => g.Id == _targetGameId);
+                    int moved = IapService.AssignUnassignedCoins(_targetGameId);
+                    BalanceLabel.Text = $"{info?.Title ?? _targetGameId}: {CoinService.GetCoins(_targetGameId)} coins";
+                    ShowStatus($"{moved} coins added to {info?.Title ?? _targetGameId}!", ok: true);
+                }
+                else
+                {
+                    BuildGames();
+                    ShowStatus($"{IapService.UnassignedCoins} coins ready! Tap a game to add them.", ok: true);
+                }
                 CoinsChanged?.Invoke(this, EventArgs.Empty);
+            }
+            else if (outcome == PurchaseOutcome.Pending)
+            {
+                ShowStatus("Payment pending. Coins will be added automatically once Google Play confirms it.", ok: true);
             }
             else
             {
-                _pendingCoins = coins;
-                ShowStatus($"{coins} coins purchased! Now tap a game to transfer them.", ok: true);
+                ShowStatus("Purchase not completed. You were not charged for this attempt.", ok: false);
             }
         }
-        else
+        finally
         {
-            ShowStatus("Purchase unavailable right now. Please try again.", ok: false);
+            _busy = false;
         }
-
-        _busy = false;
     }
-
-    private int _pendingCoins;
 
     // ── Game picker ─────────────────────────────────────────────────────────
     private void BuildGames()
@@ -184,8 +212,8 @@ public partial class CoinShopPopup : ContentView
         {
             var chip = new Border
             {
-                BackgroundColor = Color.FromArgb("#131A29"),
-                Stroke = new SolidColorBrush(Color.FromArgb("#2EFFFFFF")),
+                BackgroundColor = Color.FromArgb("#FFF4E8"),
+                Stroke = new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
                 StrokeThickness = 1,
                 Padding = new Thickness(10, 8),
                 Margin = new Thickness(3),
@@ -201,10 +229,10 @@ public partial class CoinShopPopup : ContentView
             stack.Children.Add(new Label
             {
                 Text = g.Title,
-                FontFamily = "MomoTrustDisplay",
+                FontFamily = "MadimiOne",
                 FontSize = 12,
                 FontAttributes = FontAttributes.Bold,
-                TextColor = Color.FromArgb("#E7ECF5"),
+                TextColor = Color.FromArgb("#3D2C4E"),
                 HorizontalOptions = LayoutOptions.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
             });
@@ -224,9 +252,9 @@ public partial class CoinShopPopup : ContentView
                     new Label
                     {
                         Text = CoinService.GetCoins(g.Id).ToString(),
-                        FontFamily = "MomoTrustDisplay",
+                        FontFamily = "MadimiOne",
                         FontSize = 11,
-                        TextColor = Color.FromArgb("#22D3EE"),
+                        TextColor = Color.FromArgb("#6D4AFF"),
                         HorizontalOptions = LayoutOptions.Center,
                         VerticalOptions = LayoutOptions.Center,
                     },
@@ -247,17 +275,16 @@ public partial class CoinShopPopup : ContentView
 
     private void OnGameTapped(string gameId, Label balanceLabel)
     {
-        if (_pendingCoins <= 0)
+        if (IapService.UnassignedCoins <= 0)
         {
             ShowStatus("Buy a coin pack first, then pick a game.", ok: false);
             return;
         }
 
         var info = DashboardViewModel.Games.FirstOrDefault(g => g.Id == gameId);
-        CoinService.AddCoins(gameId, _pendingCoins);
+        int moved = IapService.AssignUnassignedCoins(gameId);
         balanceLabel.Text = CoinService.GetCoins(gameId).ToString();
-        ShowStatus($"{_pendingCoins} coins added to {info?.Title ?? gameId}!", ok: true);
-        _pendingCoins = 0;
+        ShowStatus($"{moved} coins added to {info?.Title ?? gameId}!", ok: true);
         CoinsChanged?.Invoke(this, EventArgs.Empty);
     }
 

@@ -8,8 +8,7 @@
 >
 
     <AbsoluteLayout>
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <!-- MAIN CONTENT -->
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,*,Auto"
@@ -19,20 +18,20 @@
 
             <!-- TOP BAR: Back + Level + Pause -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#F97316"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#FF8C5A"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
@@ -54,14 +53,14 @@
 
             <!-- DIFFICULTY -->
             <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" Spacing="10">
-                <Border BackgroundColor="#182136" StrokeThickness="0"
+                <Border BackgroundColor="#FFFDFA" StrokeThickness="0"
                         Padding="12,6" VerticalOptions="Center">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
                     <StackLayout Spacing="0">
-                        <Label Text="DIFFICULTY" TextColor="#9AA7BD" FontSize="9" FontFamily="MomoTrustDisplay"
+                        <Label Text="DIFFICULTY" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Difficulty}" TextColor="#F97316"
-                               FontSize="13" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label Text="{Binding Difficulty}" TextColor="#FF8C5A"
+                               FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                 </Border>
             </HorizontalStackLayout>

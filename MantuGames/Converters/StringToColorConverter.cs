@@ -26,7 +26,7 @@ public class StringToColorConverter : IValueConverter
             }
         }
 
-        return Color.FromArgb("#7C4DFF");
+        return Color.FromArgb("#7C5CFF");
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

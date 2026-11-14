@@ -6,14 +6,13 @@ namespace MantuGames.Views.Controls;
 public partial class ProfilePopup : ContentView
 {
     private bool _submitted;
-    private int _selectedColorIndex = 0;
+    private int _selectedAvatarIndex = 0;
 
     public event EventHandler<PlayerProfile>? ProfileCreated;
 
-    private static readonly string[] AvatarPalette =
+    private static readonly string[] AvatarImages =
     {
-        "#22D3EE", "#A855F7", "#FF9F1C", "#34D399",
-        "#F43F5E", "#3B82F6", "#FACC15", "#EC4899",
+        "a1.png", "a2.png", "a3.png", "a4.png", "a5.png", "a6.png", "a7.png"
     };
 
     public ProfilePopup()
@@ -24,11 +23,11 @@ public partial class ProfilePopup : ContentView
     public void Show()
     {
         _submitted = false;
-        _selectedColorIndex = 0;
+        _selectedAvatarIndex = 0;
         NameEntry.Text = "";
         NameEntry.PlaceholderColor = Color.FromArgb("#DCC8A8");
-        BuildColorPicker();
-        UpdateColorSelection();
+        BuildAvatarPicker();
+        UpdateAvatarSelection();
         IsVisible = true;
         Opacity = 0;
         Scale = 0.8;
@@ -50,46 +49,59 @@ public partial class ProfilePopup : ContentView
         });
     }
 
-    private void BuildColorPicker()
+    private void BuildAvatarPicker()
     {
-        ColorPickerGrid.Children.Clear();
-        for (int i = 0; i < AvatarPalette.Length; i++)
+        AvatarPickerGrid.Children.Clear();
+        for (int i = 0; i < AvatarImages.Length; i++)
         {
             int idx = i;
             var border = new Border
             {
-                BackgroundColor = Color.FromArgb(AvatarPalette[i]),
+                BackgroundColor = Colors.White,
                 StrokeThickness = 0,
+                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
                 WidthRequest = 60,
-                HeightRequest = 50,
+                HeightRequest = 60,
+                Padding = new Thickness(4),
             };
-            border.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 };
+
+            var img = new Image
+            {
+                Source = AvatarImages[i],
+                Aspect = Aspect.AspectFit,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill
+            };
+            border.Content = img;
+
             border.GestureRecognizers.Add(new TapGestureRecognizer
             {
-                Command = new Command(() => SelectColor(idx))
+                Command = new Command(() => SelectAvatar(idx))
             });
             Grid.SetRow(border, i / 4);
             Grid.SetColumn(border, i % 4);
-            ColorPickerGrid.Children.Add(border);
+            AvatarPickerGrid.Children.Add(border);
         }
     }
 
-    private void SelectColor(int index)
+    private void SelectAvatar(int index)
     {
-        _selectedColorIndex = index;
-        UpdateColorSelection();
+        _selectedAvatarIndex = index;
+        UpdateAvatarSelection();
         AudioService.Instance.Play("tap");
     }
 
-    private void UpdateColorSelection()
+    private void UpdateAvatarSelection()
     {
-        foreach (var child in ColorPickerGrid.Children)
+        foreach (var child in AvatarPickerGrid.Children)
         {
-            int idx = ColorPickerGrid.Children.IndexOf(child);
+            int idx = AvatarPickerGrid.Children.IndexOf(child);
             if (child is Border b)
             {
-                b.StrokeThickness = idx == _selectedColorIndex ? 4 : 0;
-                b.Stroke = idx == _selectedColorIndex ? new SolidColorBrush(Color.FromArgb("#FF9F1C")) : null;
+                b.StrokeThickness = idx == _selectedAvatarIndex ? 3 : 0;
+                b.Stroke = idx == _selectedAvatarIndex
+                    ? new SolidColorBrush(Color.FromArgb("#3D2C4E"))
+                    : null;
             }
         }
     }
@@ -97,6 +109,11 @@ public partial class ProfilePopup : ContentView
     private void OnOverlayTapped(object sender, TappedEventArgs e)
     {
         // Consume tap to prevent passing through
+    }
+
+    private void OnCancel(object sender, TappedEventArgs e)
+    {
+        Hide();
     }
 
     private void OnSubmit(object sender, TappedEventArgs e)
@@ -112,8 +129,7 @@ public partial class ProfilePopup : ContentView
         _submitted = true;
 
         var profile = ProfileService.AddProfile(name);
-        // Override the auto-assigned color with user's selection
-        profile.Color = AvatarPalette[_selectedColorIndex];
+        profile.AvatarImage = AvatarImages[_selectedAvatarIndex];
         ProfileService.Save();
 
         AudioService.Instance.Play("win");

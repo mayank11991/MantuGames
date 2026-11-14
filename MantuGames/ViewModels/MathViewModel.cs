@@ -165,7 +165,7 @@ public class MathViewModel : INotifyPropertyChanged
         }
 
         if (correct) _correctCount++;
-        ProgressBarColor = correct ? "#4CAF50" : "#EF5350";
+        ProgressBarColor = correct ? "#2F9E7F" : "#E0566F";
 
         // Wait briefly so player sees the result, then advance
         await System.Threading.Tasks.Task.Delay(800);
@@ -263,9 +263,9 @@ public class ChoiceViewModel : INotifyPropertyChanged
 
     public string BgColor => State switch
     {
-        ChoiceState.Correct => "#4CAF50",
-        ChoiceState.Wrong => "#EF4444",
-        _ => "#A855F7"
+        ChoiceState.Correct => "#2F9E7F",
+        ChoiceState.Wrong => "#E0566F",
+        _ => "#9B7BFF"
     };
 
     public string TextColor => "#FFFFFF";

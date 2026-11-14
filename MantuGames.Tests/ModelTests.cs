@@ -87,12 +87,13 @@ public class WordPuzzleTests
     public void CheckSelection_RejectsWrongCells()
     {
         var puzzle = WordPuzzle.Generate(1);
-        var pw = puzzle.Words[0];
 
-        // Take the word's cells and shift them (if possible) to a wrong path
-        var cells = puzzle.GetWordCells(pw);
-        var shifted = cells.Select(c => c.Col + 1 < 9 ? (c.Row, c.Col + 1) : (c.Row, c.Col)).ToList();
-        var found = puzzle.CheckSelection(shifted);
+        // A 2-cell selection can never match: every word in the bank is 3+ letters,
+        // so the spelled string cannot equal any placed word. Deterministic rejection.
+        var cells = puzzle.GetWordCells(puzzle.Words[0]).Take(2).ToList();
+        Assert.Equal(2, cells.Count);
+
+        var found = puzzle.CheckSelection(cells);
 
         Assert.Null(found);
     }
@@ -108,8 +109,9 @@ public class HanoiPuzzleTests
     public void Generate_CreatesValidScatteredState(int level)
     {
         var p = HanoiPuzzle.Generate(level);
+        int expectedPoles = level <= 5 ? 3 : level <= 15 ? 4 : 5;
         Assert.InRange(p.DiscCount, 3, 5);
-        Assert.Equal(3, p.Poles.Count);
+        Assert.Equal(expectedPoles, p.Poles.Count);
         Assert.Equal(p.DiscCount, p.Poles.Sum(pole => pole.Count));
         Assert.False(p.IsSolved());
     }

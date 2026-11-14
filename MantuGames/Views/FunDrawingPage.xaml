@@ -6,7 +6,7 @@
     xmlns:controls="clr-namespace:MantuGames.Views.Controls"
     Shell.NavBarIsVisible="False">
     <ContentPage.BackgroundColor>
-        <AppThemeBinding Light="#0B0E14" Dark="#0B0E14" />
+        <AppThemeBinding Light="#F7EFFF" Dark="#F7EFFF" />
     </ContentPage.BackgroundColor>
 
     <AbsoluteLayout>
@@ -27,14 +27,14 @@
                         VerticalOptions="Center" />
 
                 <Frame Grid.Column="1"
-                       BackgroundColor="#182136" CornerRadius="20"
+                       BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="12,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label x:Name="LevelLabel"
-                           FontFamily="MomoTrustDisplay"
+                           FontFamily="MadimiOne"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="#FF6B6B"
+                           TextColor="#FF7A90"
                            HorizontalOptions="Center" />
                 </Frame>
 
@@ -49,9 +49,9 @@
 
             <!-- Row 1: Drawing canvas -->
             <Border Grid.Row="1"
-                    BackgroundColor="#0F1420"
+                    BackgroundColor="#F4E9FF"
                     StrokeThickness="1"
-                    Stroke="#2EFFFFFF"
+                    Stroke="#B3FFFFFF"
                     Margin="12,8"
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
@@ -71,10 +71,10 @@
             <!-- Row 2: Footer -->
             <Label Grid.Row="2"
                    Text="Draw with your finger!"
-                   FontFamily="MomoTrustDisplay"
+                   FontFamily="MadimiOne"
                    FontSize="13"
                    FontAttributes="Bold"
-                   TextColor="#6B7280"
+                   TextColor="#7C6A8E"
                    HorizontalOptions="Center"
                    Margin="0,4,0,12" />
 

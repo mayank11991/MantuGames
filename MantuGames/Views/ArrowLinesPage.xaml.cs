@@ -35,11 +35,11 @@ public partial class ArrowLinesPage : ContentPage
     {
         base.OnAppearing();
         AudioService.Instance.StartMusic();
+        ArrowGraphics.SizeChanged += OnGraphicsSizeChanged;
         InitGame(_startLevel);
         PauseOverlay.Resumed += OnResumeGame;
 
-        int coins = CoinService.GetCoins("arrowlines");
-        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+        RefreshSolutionText();
 
         this.Opacity = 0;
         this.FadeTo(1, 400);
@@ -48,6 +48,7 @@ public partial class ArrowLinesPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+        ArrowGraphics.SizeChanged -= OnGraphicsSizeChanged;
         PauseOverlay.Resumed -= OnResumeGame;
         if (_vm != null)
         {
@@ -76,10 +77,20 @@ public partial class ArrowLinesPage : ContentPage
         _drawable.Arrows = _vm.Arrows;
         _drawable.Rows = _vm.GridRows;
         _drawable.Cols = _vm.GridCols;
+        // Fit board with side margins (24dp each side) instead of edge-to-edge
+        double availW = ArrowGraphics.Width - 48;
+        double availH = ArrowGraphics.Height - 32;
+        if (availW > 0 && availH > 0 && _vm.GridCols > 0 && _vm.GridRows > 0)
+            _drawable.CellSize = (float)Math.Min(Math.Min(availW / _vm.GridCols, availH / _vm.GridRows), 56);
         _drawable.HighlightedArrow = null;
         _drawable.SlideArrow = null;
         _drawable.SlideProgress = 0;
         ArrowGraphics.Invalidate();
+    }
+
+    private void OnGraphicsSizeChanged(object sender, EventArgs e)
+    {
+        RefreshDrawable();
     }
 
     private void OnGraphicsTapped(object sender, TappedEventArgs e)
@@ -210,51 +221,58 @@ public partial class ArrowLinesPage : ContentPage
 
         if (CoinService.GetCoins("arrowlines") < CoinService.SolutionCost)
         {
-            AudioService.Instance.Play("tap");
+            CoinShopPopup.ShowForGame("arrowlines");
             return;
         }
         CoinService.SpendCoins("arrowlines", CoinService.SolutionCost);
-
-        int coins = CoinService.GetCoins("arrowlines");
-        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+        RefreshSolutionText();
 
         _vm.IsShowSolutionActive = true;
-        SolutionButton.IsEnabled = false;
+        SolutionCoinLabel.IsEnabled = false;
 
-        // Keep looping until all arrows cleared or no progress can be made
-        int maxPasses = 20;
+        // Solve one escapable arrow per pass until board clears or deadlocks
+        int maxPasses = 30;
         for (int pass = 0; pass < maxPasses; pass++)
         {
             if (_vm.IsGameOver) break;
 
-            var remaining = _vm.Arrows.Where(a => !a.IsCleared).ToList();
-            if (remaining.Count == 0) break;
-
-            bool clearedAny = false;
-            foreach (var arrow in remaining)
+            var target = _vm.Arrows.FirstOrDefault(a => !a.IsCleared && _vm.CanEscape(a));
+            if (target == null)
             {
-                if (_vm.IsGameOver) break;
-                if (arrow.IsCleared) continue;
-
-                int clearedBefore = _vm.ArrowsCleared;
-                _vm.ArrowTappedCommand.Execute(arrow);
-                await Task.Delay(100);
-
-                // Wait for animation to finish
-                while (_isAnimating)
-                    await Task.Delay(50);
-
-                if (_vm.ArrowsCleared > clearedBefore)
-                    clearedAny = true;
-
-                await Task.Delay(250);
+                SolutionCoinLabel.Text = "No moves possible!";
+                _ = RestoreSolutionTextAsync();
+                break;
             }
 
-            if (!clearedAny) break; // No progress = deadlock, stop
+            int clearedBefore = _vm.ArrowsCleared;
+            _vm.ArrowTappedCommand.Execute(target);
+            await Task.Delay(100);
+
+            // Wait for animation to finish
+            while (_isAnimating)
+                await Task.Delay(50);
+
+            if (_vm.ArrowsCleared <= clearedBefore)
+                break; // safety: no progress
+
+            await Task.Delay(250);
         }
 
         _vm.IsShowSolutionActive = false;
-        SolutionButton.IsEnabled = true;
+        SolutionCoinLabel.IsEnabled = true;
+        RefreshSolutionText();
+    }
+
+    private void RefreshSolutionText()
+    {
+        int coins = CoinService.GetCoins("arrowlines");
+        SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
+    }
+
+    private async Task RestoreSolutionTextAsync()
+    {
+        await Task.Delay(1500);
+        MainThread.BeginInvokeOnMainThread(RefreshSolutionText);
     }
 
     protected override bool OnBackButtonPressed()

@@ -8,8 +8,7 @@
 >
 
     <AbsoluteLayout x:Name="RootLayout">
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,Auto,*,Auto,Auto"
               Padding="12,16,12,8" RowSpacing="4"
@@ -18,21 +17,21 @@
 
             <!-- Row 0: Top bar -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
                     <Label x:Name="LevelLabel" Text="Level 1"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold"
                            TextColor="#F472B6" HorizontalOptions="Center" />
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
@@ -47,8 +46,8 @@
             <!-- Row 2: Puzzle grid -->
             <ScrollView Grid.Row="2" Orientation="Vertical" VerticalScrollBarVisibility="Never">
                 <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
-                    <Border StrokeThickness="2" Stroke="#2E3A5F"
-                            Padding="6" BackgroundColor="#0F1420"
+                    <Border StrokeThickness="2" Stroke="#D8CAE8"
+                            Padding="6" BackgroundColor="#33B49CCF"
                             HorizontalOptions="Center">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="14" />
@@ -60,7 +59,7 @@
 
                     <Label x:Name="StatusLabel"
                            Text="Drag pieces from the tray to their spots!" HorizontalOptions="Center" HorizontalTextAlignment="Center"
-                           FontFamily="MomoTrustDisplay"
+                           FontFamily="MadimiOne"
                            FontSize="13"
                            FontAttributes="Bold"
                            TextColor="#F472B6"/>
@@ -69,7 +68,7 @@
 
             <!-- Row 3: Piece tray -->
             <Border Grid.Row="3"
-                    BackgroundColor="#182136" StrokeThickness="0"
+                    BackgroundColor="#F4E9FF" StrokeThickness="0"
                     Padding="8,8" Margin="8,2,8,4">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="16" />
@@ -83,17 +82,17 @@
 
             <!-- Row 4: Show Solution -->
             <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="50,0,50,4">
-                <Button x:Name="SolutionButton"
-                        Text="💡 Show Solution"
+                <Button x:Name="SolutionCoinLabel"
+                       
                         FontSize="14" FontAttributes="Bold"
-                        TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                        TextColor="#3D2C4E" BackgroundColor="#FFA94D"
                         CornerRadius="24" HeightRequest="50"
                         Clicked="OnShowSolution" />
-                <Label x:Name="SolutionCoinLabel"
-                       FontFamily="MomoTrustDisplay"
-                       FontSize="11"
-                       TextColor="#DBD748"
-                       HorizontalOptions="Center" />
+                <!-- <Label x:Name="SolutionCoinLabel" -->
+                <!--        FontFamily="MadimiOne" -->
+                <!--        FontSize="11" -->
+                <!--        TextColor="#D9A400" -->
+                <!--        HorizontalOptions="Center" /> -->
             </VerticalStackLayout>
         </Grid>
 

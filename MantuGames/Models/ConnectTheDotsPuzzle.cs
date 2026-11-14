@@ -36,16 +36,16 @@ public class CtdPuzzle
         var rng = new Random(level * 7919);
         var colors = new[]
         {
-            Color.FromArgb("#fe0000"), // Red
-            Color.FromArgb("#fdfe02"), // Yellow
-            Color.FromArgb("#0bff01"), // Green
-            Color.FromArgb("#011efe"), // Blue
-            Color.FromArgb("#fe00f6"), // Magenta
-            Color.FromArgb("#7d12ff"), // Purple
-            Color.FromArgb("#cfff04"), // Lime
-            Color.FromArgb("#ff00aa"), // Pink
-            Color.FromArgb("#aa00ff"), // Violet
-            Color.FromArgb("#00ffbc"), // Teal
+            Color.FromArgb("#E0566F"), // Coral
+            Color.FromArgb("#FFD166"), // Yellow
+            Color.FromArgb("#4FD1B5"), // Mint
+            Color.FromArgb("#6D9BFF"), // Blue
+            Color.FromArgb("#FF8FB1"), // Pink
+            Color.FromArgb("#9B7BFF"), // Purple
+            Color.FromArgb("#B8E986"), // Lime
+            Color.FromArgb("#F49AC2"), // Rose
+            Color.FromArgb("#B39DFF"), // Lavender
+            Color.FromArgb("#5ED0C0"), // Teal
         };
 
         for (int attempt = 0; attempt < 500; attempt++)

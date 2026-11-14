@@ -70,7 +70,7 @@ public partial class BlockPuzzlePage : ContentPage
         _vm.LinesClearing += OnLinesClearing;
         BlockTimer.TotalSeconds = BlockPuzzleViewModel.LevelTimerSeconds;
         int coins = CoinService.GetCoins("blockpuzzle");
-        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+        SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
         BuildBoard();
         BuildNextPreview();
     }
@@ -127,7 +127,7 @@ public partial class BlockPuzzlePage : ContentPage
             {
                 var bv = new BoxView
                 {
-                    Color        = Color.FromArgb("#0D1B2A"),
+                    Color        = Color.FromArgb("#FFF4E8"),
                     CornerRadius = 2,
                     Margin       = new Thickness(0.5)
                 };
@@ -150,7 +150,7 @@ public partial class BlockPuzzlePage : ContentPage
             for (int c = 0; c < BlockPuzzleViewModel.Cols; c++)
                 _cells[r, c].Color = _vm.Board[r, c]
                     ? _vm.BoardColors[r, c]
-                    : Color.FromArgb("#0D1B2A");
+                    : Color.FromArgb("#FFF4E8");
 
         var piece = _vm.CurrentPiece;
         if (piece == null || _vm.IsGameOver) return;
@@ -310,8 +310,8 @@ public partial class BlockPuzzlePage : ContentPage
 
     private async void OnPieceLocked()
     {
-        if (SolutionButton != null)
-            SolutionButton.IsEnabled = true;
+        if (SolutionCoinLabel != null)
+            SolutionCoinLabel.IsEnabled = true;
 
         AudioService.Instance.Play("slide");
         try
@@ -328,8 +328,8 @@ public partial class BlockPuzzlePage : ContentPage
     {
         try
         {
-            if (SolutionButton != null)
-                SolutionButton.IsEnabled = true;
+            if (SolutionCoinLabel != null)
+                SolutionCoinLabel.IsEnabled = true;
             int stars  = isWin ? 3 : 1;
             int points = _vm?.Score ?? 0;
             int elapsed = _vm != null
@@ -369,7 +369,7 @@ public partial class BlockPuzzlePage : ContentPage
         int coins = CoinService.GetCoins("blockpuzzle");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
-        SolutionButton.IsEnabled = false;
+        SolutionCoinLabel.IsEnabled = false;
         _ = AutoPlaceBestAsync();
     }
 
@@ -394,7 +394,7 @@ public partial class BlockPuzzlePage : ContentPage
                 }
             }
 
-            if (bestY < 0) { SolutionButton.IsEnabled = true; return; }
+            if (bestY < 0) { SolutionCoinLabel.IsEnabled = true; return; }
 
             while (_vm.CurrentX > bestX)
             {
@@ -412,7 +412,7 @@ public partial class BlockPuzzlePage : ContentPage
         catch (Exception ex)
         {
             Console.WriteLine($"Error in AutoPlaceBestAsync: {ex.Message}");
-            SolutionButton.IsEnabled = true;
+            SolutionCoinLabel.IsEnabled = true;
         }
     }
 

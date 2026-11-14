@@ -6,8 +6,7 @@
              xmlns:controls="clr-namespace:MantuGames.Views.Controls"
              Shell.NavBarIsVisible="False">
     <AbsoluteLayout>
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
 
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,*,Auto,Auto"
@@ -21,11 +20,11 @@
                         BackgroundColor="Transparent"
                        
                         Clicked="OnBackClicked" VerticalOptions="Center"/>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="12,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#EF4444"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#E0566F"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
                 <ImageButton Grid.Column="2" Source="pause.svg"
                              HeightRequest="24" WidthRequest="24"
@@ -51,22 +50,21 @@
             <!-- MOVES -->
             <Label Grid.Row="3"
                    Text="{Binding MovesDisplay}"
-                   FontSize="15" FontFamily="MomoTrustDisplay" FontAttributes="Bold"
-                   TextColor="#9AA7BD" HorizontalOptions="Center" />
+                   FontSize="15" FontFamily="MadimiOne" FontAttributes="Bold"
+                   TextColor="#7C6A8E" HorizontalOptions="Center" />
 
             <!-- SHOW SOLUTION -->
             <VerticalStackLayout Grid.Row="4" Spacing="2" Margin="40,0">
-                <Button x:Name="SolutionButton"
-                        Text="Show Solution"
+                <Button x:Name="SolutionCoinLabel"
                         FontSize="15" FontAttributes="Bold"
-                        TextColor="#160D02" BackgroundColor="#FF9F1C"
+                        TextColor="#3D2C4E" BackgroundColor="#FFA94D"
                         CornerRadius="20" HeightRequest="44"
                         Clicked="OnShowSolutionClicked" />
-                <Label x:Name="SolutionCoinLabel"
-                       FontFamily="MomoTrustDisplay"
-                       FontSize="10"
-                       TextColor="#DBD748"
-                       HorizontalOptions="Center" />
+                <!-- <Label x:Name="SolutionCoinLabel" -->
+                <!--        FontFamily="MadimiOne" -->
+                <!--        FontSize="10" -->
+                <!--        TextColor="#D9A400" -->
+                <!--        HorizontalOptions="Center" /> -->
             </VerticalStackLayout>
         </Grid>
 

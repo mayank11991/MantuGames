@@ -18,10 +18,10 @@ public class ArrowLinesDrawable : IDrawable
 
     private readonly Dictionary<int, Color> _arrowColors = new()
     {
-        { 0, Colors.Cyan },       // Up
-        { 1, Colors.Orange },     // Down
-        { 2, Color.FromArgb("#A855F7") }, // Left
-        { 3, Color.FromArgb("#34D399") }, // Right
+        { 0, Color.FromArgb("#7C5CFF") }, // Up
+        { 1, Color.FromArgb("#FFA94D") }, // Down
+        { 2, Color.FromArgb("#9B7BFF") }, // Left
+        { 3, Color.FromArgb("#1F8A70") }, // Right
     };
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -42,13 +42,13 @@ public class ArrowLinesDrawable : IDrawable
 
     private void DrawGridBackground(ICanvas canvas)
     {
-        canvas.FillColor = Color.FromArgb("#0A0D14");
+        canvas.FillColor = Color.FromArgb("#F4E9FF");
         canvas.FillRoundedRectangle(0, 0, Cols * CellSize, Rows * CellSize, 12);
     }
 
     private void DrawWalls(ICanvas canvas)
     {
-        canvas.StrokeColor = Color.FromArgb("#1E293B");
+        canvas.StrokeColor = Color.FromArgb("#FFFFFF");
         canvas.StrokeSize = WallThickness;
         canvas.StrokeLineCap = LineCap.Round;
 
@@ -78,7 +78,7 @@ public class ArrowLinesDrawable : IDrawable
         }
 
         // Outer border
-        canvas.StrokeColor = Color.FromArgb("#334155");
+        canvas.StrokeColor = Color.FromArgb("#D8CAE8");
         canvas.StrokeSize = WallThickness + 2;
         canvas.DrawRoundedRectangle(
             -WallThickness / 2, -WallThickness / 2,
@@ -124,7 +124,7 @@ public class ArrowLinesDrawable : IDrawable
         }
 
         // Circle
-        canvas.FillColor = Color.FromArgb("#0F172A").WithAlpha(alpha);
+        canvas.FillColor = Color.FromArgb("#FFFDFA").WithAlpha(alpha);
         canvas.FillCircle(sx, sy, size + 2);
         canvas.StrokeColor = color.WithAlpha(alpha);
         canvas.StrokeSize = 2;
@@ -148,7 +148,7 @@ public class ArrowLinesDrawable : IDrawable
 
             var color = _arrowColors.ContainsKey((int)arrow.Direction)
                 ? _arrowColors[(int)arrow.Direction]
-                : Colors.White;
+                : Color.FromArgb("#3D2C4E");
 
             bool isHighlighted = arrow == HighlightedArrow;
 
@@ -163,7 +163,7 @@ public class ArrowLinesDrawable : IDrawable
             }
 
             // Cell background circle
-            canvas.FillColor = Color.FromArgb("#0F172A");
+            canvas.FillColor = Color.FromArgb("#FFFDFA");
             canvas.FillCircle(cx, cy, size + 2);
 
             // Border circle

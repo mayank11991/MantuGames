@@ -9,8 +9,8 @@ public class CardColorToGradientConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var baseColor = value is string hex && !string.IsNullOrEmpty(hex)
-            ? Color.FromArgb("#222A39")
-            : Color.FromArgb("#222A39");
+            ? Color.FromArgb("#F4E9FF")
+            : Color.FromArgb("#F4E9FF");
 
         var light = baseColor.AddLuminosity(0.14f);
         var dark = baseColor.AddLuminosity(-0.10f);
@@ -35,8 +35,8 @@ public class CardColorToGlowBrushConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var baseColor = value is string hex && !string.IsNullOrEmpty(hex)
-            ? Color.FromArgb("#222A39")
-            : Color.FromArgb("#222A39");
+            ? Color.FromArgb("#F4E9FF")
+            : Color.FromArgb("#F4E9FF");
 
         return new SolidColorBrush(baseColor.WithAlpha(0.55f));
     }

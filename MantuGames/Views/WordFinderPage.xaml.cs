@@ -39,7 +39,7 @@ public partial class WordFinderPage : ContentPage
         _vm.GameEnded += OnGameEnded;
 
         int coins = CoinService.GetCoins("wordfinder");
-        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+        SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
         this.Loaded += (s, e) => BuildGrid();
         this.Opacity = 0;
         this.FadeTo(1, 400);
@@ -110,8 +110,9 @@ public partial class WordFinderPage : ContentPage
         double screenW = info.Width / info.Density;
         double screenH = info.Height / info.Density;
         // Reserve space for top bar/title/timer (~160), word list panel (~120), solution row (~56), padding
+        // + 28dp side margins so the letter grid never touches screen edges
         double availableH = screenH - 160 - 120 - 56 - 24;
-        double availableW = screenW - 24;
+        double availableW = screenW - 56;
         _cellSize = (int)Math.Min(Math.Min(availableW / size, availableH / size), 44);
 
         for (int i = 0; i < size; i++)
@@ -140,7 +141,7 @@ public partial class WordFinderPage : ContentPage
             VerticalOptions = LayoutOptions.Center,
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalTextAlignment = TextAlignment.Center,
-            TextColor = Color.FromArgb("#1B5E20"),
+            TextColor = Color.FromArgb("#3D2C4E"),
             InputTransparent = true
         };
 
@@ -160,7 +161,7 @@ public partial class WordFinderPage : ContentPage
         {
             if (cell.IsFound)
             {
-                frame.BackgroundColor = Color.FromArgb("#4CAF50");
+                frame.BackgroundColor = Color.FromArgb("#2F9E7F");
                 label.TextColor = Colors.White;
             }
             else if (cell.IsHinted)
@@ -170,13 +171,13 @@ public partial class WordFinderPage : ContentPage
             }
             else if (cell.IsSelected)
             {
-                frame.BackgroundColor = Color.FromArgb("#FFE066");
+                frame.BackgroundColor = Color.FromArgb("#FFD166");
                 label.TextColor = Color.FromArgb("#333333");
             }
             else
             {
                 frame.BackgroundColor = Color.FromArgb("#F1F8E9");
-                label.TextColor = Color.FromArgb("#1B5E20");
+                label.TextColor = Color.FromArgb("#3D2C4E");
             }
         }
 

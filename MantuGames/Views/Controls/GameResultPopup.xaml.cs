@@ -33,6 +33,11 @@ public partial class GameResultPopup : ContentView
 
         StatsService.RecordGame(gameId, isWin, coins);
 
+        // Save progress immediately on win, before any ad or button tap,
+        // so closing the app on this screen can never lose a solved level.
+        if (isWin && !string.IsNullOrEmpty(gameId))
+            ProgressService.Instance.CompleteLevel(gameId, levelNumber, stars);
+
         AudioService.Instance.Play(isWin ? "win" : "lose");
         if (isWin) VibrationHelper.LongPress();
         else VibrationHelper.Click();
@@ -47,7 +52,7 @@ public partial class GameResultPopup : ContentView
             StarImg3.Source = stars >= 3 ? "star_kawaii_filled" : "star_kawaii_empty";
 
             TitleLabel.Text      = "You Won!";
-            TitleLabel.TextColor = Color.FromArgb("#34D399");
+            TitleLabel.TextColor = Color.FromArgb("#1F8A70");
 
             if (coins > 0)
             {
@@ -59,7 +64,7 @@ public partial class GameResultPopup : ContentView
 
             MessageLabel.Text = $"Level {levelNumber} solved in {elapsedSeconds / 60}:{elapsedSeconds % 60:D2}";
 
-            PrimaryBorder.BackgroundColor = Color.FromArgb("#34D399");
+            PrimaryBorder.BackgroundColor = Color.FromArgb("#1F8A70");
             PrimaryIcon.Source            = "icon_next";
             PrimaryLabel.Text             = "Next Level";
             SecondaryBorder.IsVisible     = true;
@@ -74,11 +79,11 @@ public partial class GameResultPopup : ContentView
             PointsBadge.IsVisible = false;
 
             TitleLabel.Text      = reason ?? "Time's Up!";
-            TitleLabel.TextColor = Color.FromArgb("#EF4444");
+            TitleLabel.TextColor = Color.FromArgb("#E0566F");
 
             MessageLabel.Text = "Don't worry — you can do it!\nGive it another try!";
 
-            PrimaryBorder.BackgroundColor = Color.FromArgb("#EF4444");
+            PrimaryBorder.BackgroundColor = Color.FromArgb("#E0566F");
             PrimaryIcon.Source            = "icon_retry";
             PrimaryLabel.Text             = "Try Again";
             SecondaryBorder.IsVisible     = false;
@@ -149,17 +154,24 @@ public partial class GameResultPopup : ContentView
         {
             if (IapService.RemoveAdsOwned) return;
             _adService ??= IPlatformApplication.Current!.Services.GetRequiredService<AdService>();
-            _adService.PreloadRewarded();
             _adService.PreloadInterstitial();
         }
         catch { }
     }
 
-    private void CompleteLevelAndProceed()
+    // Natural break between levels: a frequency-capped interstitial (never forced
+    // rewarded ads, never for Remove Ads owners — AdService enforces both).
+    private async Task MaybeShowInterstitialAsync()
     {
-        if (!string.IsNullOrEmpty(_gameId))
-            ProgressService.Instance.CompleteLevel(_gameId, _levelNumber, _completionStars);
-        NextLevelRequested?.Invoke(this, EventArgs.Empty);
+        try
+        {
+            _adService ??= IPlatformApplication.Current!.Services.GetRequiredService<AdService>();
+            await _adService.MaybeShowInterstitialAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Interstitial error: {ex.Message}");
+        }
     }
 
     private async void OnPrimaryClicked(object sender, TappedEventArgs e)
@@ -172,40 +184,19 @@ public partial class GameResultPopup : ContentView
             VibrationHelper.Click();
 
             Hide();
-
-            _adService ??= IPlatformApplication.Current!.Services.GetRequiredService<AdService>();
+            await MaybeShowInterstitialAsync();
 
             if (_isWin)
-            {
-                if (IapService.RemoveAdsOwned)
-                {
-                    CompleteLevelAndProceed();
-                    _isProcessing = false;
-                    return;
-                }
-
-                bool rewarded = await _adService.ShowRewardedAd();
-                if (!rewarded)
-                {
-                    _isProcessing = false;
-                    IsVisible = true;
-                    return;
-                }
-                await _adService.ShowInterstitial();
-                CompleteLevelAndProceed();
-            }
+                NextLevelRequested?.Invoke(this, EventArgs.Empty);
             else
-            {
-                if (!IapService.RemoveAdsOwned)
-                    await _adService.ShowInterstitial();
                 RetryRequested?.Invoke(this, EventArgs.Empty);
-            }
-
-            _isProcessing = false;
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error in OnPrimaryClicked: {ex.Message}");
+        }
+        finally
+        {
             _isProcessing = false;
         }
     }
@@ -220,15 +211,15 @@ public partial class GameResultPopup : ContentView
             VibrationHelper.Click();
             Hide();
 
-            _adService ??= IPlatformApplication.Current!.Services.GetRequiredService<AdService>();
-            await _adService.ShowInterstitial();
-
+            await MaybeShowInterstitialAsync();
             RetryRequested?.Invoke(this, EventArgs.Empty);
-            _isProcessing = false;
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error in OnSecondaryClicked: {ex.Message}");
+        }
+        finally
+        {
             _isProcessing = false;
         }
     }

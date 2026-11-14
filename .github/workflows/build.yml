@@ -31,8 +31,21 @@ jobs:
       - name: Run unit tests
         run: dotnet test MantuGames.Tests/MantuGames.Tests.csproj -c Release
 
+      # The keystore is NOT in the repo. Store it as a base64 secret:
+      #   base64 -i mantugames.keystore | pbcopy   ->  repo secret ANDROID_KEYSTORE_BASE64
+      - name: Decode signing keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "ANDROID_KEYSTORE_BASE64 secret is missing" >&2
+            exit 1
+          fi
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/mantugames.keystore"
+
       - name: Build (Release)
         env:
           ANDROID_KEY_PASS: ${{ secrets.ANDROID_KEY_PASS }}
           ANDROID_STORE_PASS: ${{ secrets.ANDROID_STORE_PASS }}
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/mantugames.keystore
         run: dotnet build MantuGames/MantuGames.csproj -c Release -f net10.0-android --no-restore

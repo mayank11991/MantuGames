@@ -66,26 +66,6 @@ public partial class SplashPage : ContentPage
         Loaded += OnLoaded;
     }
 
-    private async Task AnimateHammerAsync()
-    {
-        try
-        {
-            await Task.Delay(150);
-            SlothImage.Opacity = 1;
-            SlothImage.TranslationY = -Root.Height;
-            AudioService.Instance.Play("whoosh");
-
-            await SlothImage.TranslateTo(0, 0, 800, Easing.CubicIn);
-
-            AudioService.Instance.Play("thud");
-            await ShakeScreenAsync();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error in AnimateHammerAsync: {ex.Message}");
-        }
-    }
-
     private async Task ShakeScreenAsync()
     {
         int shakeCount = 6;
@@ -125,7 +105,7 @@ public partial class SplashPage : ContentPage
 
             await Task.Delay(100);
 
-            // ── PHASE 1: Letters drop one by one ──────────────────────
+            // ── PHASE 1: Letters drop one by one (no shake) ──────────────
             for (int i = 0; i < MantuLetters.Length; i++)
             {
                 await Task.Delay(100);
@@ -140,17 +120,16 @@ public partial class SplashPage : ContentPage
 
             await Task.Delay(300);
 
-            // ── PHASE 2: GAMINGS drops in from below ──────────────────
-            AudioService.Instance.Play("thud");
+            // ── PHASE 2: GAMINGS drops from top with thud + screen shake ────
+            
             GamingsLabel.TranslationX = 0;
-            GamingsLabel.TranslationY = 80;
+            GamingsLabel.TranslationY = -200;
             GamingsLabel.Opacity = 1;
-            await GamingsLabel.TranslateTo(0, 0, 400, Easing.CubicOut);
+            await GamingsLabel.TranslateTo(0, 0, 400, Easing.CubicIn);
+            AudioService.Instance.Play("thud");
+            await ShakeScreenAsync();
 
-            // ── PHASE 3: Hammer drops below GAMINGS ───────────────────
-            await AnimateHammerAsync();
-
-            // ── PHASE 4: Wait for dust, then fade ─────────────────────
+            // ── PHASE 3: Wait for dust, then fade ─────────────────────
             while (!_dust.IsEmpty)
                 await Task.Delay(50);
 
@@ -159,7 +138,6 @@ public partial class SplashPage : ContentPage
 
             await MantuRow.FadeTo(0, 200, Easing.CubicIn);
             await GamingsLabel.FadeTo(0, 200, Easing.CubicIn);
-            await SlothImage.FadeTo(0, 200, Easing.CubicIn);
             Application.Current!.Windows[0].Page = new AppShell();
         }
         catch (Exception ex)

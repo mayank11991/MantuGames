@@ -6,12 +6,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4" Padding="0,4,0,0">
-        <Label x:Name="TimerLabel" Grid.Row="0" TextColor="#E7ECF5"
-               FontSize="20" FontAttributes="Bold" FontFamily="MomoTrustDisplay"
+        <Label x:Name="TimerLabel" Grid.Row="0" TextColor="#3D2C4E"
+               FontSize="20" FontAttributes="Bold" FontFamily="MadimiOne"
                HorizontalOptions="Center" Text="3:30"
                CharacterSpacing="1"/>
         <Border Grid.Row="1" x:Name="BarTrack"
-                BackgroundColor="#131A29"
+                BackgroundColor="#FFF4E8"
                 StrokeThickness="0"
                 HeightRequest="10"
                 HorizontalOptions="Fill"
@@ -21,7 +21,7 @@
             </Border.StrokeShape>
             <Grid>
                 <Border x:Name="BarFill"
-                        BackgroundColor="#22D3EE"
+                        BackgroundColor="#6D4AFF"
                         StrokeThickness="0"
                         HeightRequest="10"
                         HorizontalOptions="Start"
@@ -30,7 +30,7 @@
                         <RoundRectangle CornerRadius="5"/>
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="#22D3EE" Offset="0,0" Radius="8" Opacity="0.6"/>
+                        <Shadow Brush="#6D4AFF" Offset="0,0" Radius="8" Opacity="0.6"/>
                     </Border.Shadow>
                 </Border>
             </Grid>

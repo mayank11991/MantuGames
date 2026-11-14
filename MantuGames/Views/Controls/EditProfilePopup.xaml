@@ -6,7 +6,7 @@
 
     <Grid RowDefinitions="*">
         <!-- Dark overlay -->
-        <BoxView x:Name="Overlay" Color="#99000000" IsVisible="False">
+        <BoxView x:Name="Overlay" Color="#663D2C4E" IsVisible="False">
             <BoxView.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnOverlayTapped" />
             </BoxView.GestureRecognizers>
@@ -14,8 +14,9 @@
 
         <!-- Bottom sheet -->
         <Border x:Name="Sheet"
-                BackgroundColor="#160D02"
-                StrokeThickness="0"
+                BackgroundColor="#FFFDFA"
+                Stroke="#B3FFFFFF"
+                StrokeThickness="2"
                 VerticalOptions="End"
                 Padding="24,20"
                 IsVisible="False">
@@ -23,14 +24,14 @@
                 <RoundRectangle CornerRadius="20,20,0,0" />
             </Border.StrokeShape>
 
-            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="16">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="12">
 
                 <Label Grid.Row="0"
                        Text="EDIT PROFILE"
-                       FontFamily="MomoTrustDisplay"
+                       FontFamily="MadimiOne"
                        FontSize="20"
                        FontAttributes="Bold"
-                       TextColor="#E7ECF5"
+                       TextColor="#3D2C4E"
                        HorizontalOptions="Center" />
 
                 <!-- Avatar preview -->
@@ -40,12 +41,10 @@
                         HeightRequest="72"
                         StrokeThickness="0"
                         StrokeShape="RoundRectangle 36"
-                        HorizontalOptions="Center">
-                    <Label x:Name="InitialLabel"
-                           FontFamily="MomoTrustDisplay"
-                           FontSize="30"
-                           FontAttributes="Bold"
-                           TextColor="#0B0E14"
+                        HorizontalOptions="Center"
+                        BackgroundColor="White">
+                    <Image x:Name="AvatarImage"
+                           Aspect="AspectFit"
                            HorizontalOptions="Center"
                            VerticalOptions="Center" />
                 </Border>
@@ -54,43 +53,42 @@
                 <Entry x:Name="NameEntry"
                        Grid.Row="2"
                        Placeholder="Enter name"
-                       PlaceholderColor="#6B7280"
-                       FontFamily="MomoTrustDisplay"
+                       PlaceholderColor="#7C6A8E"
+                       FontFamily="MadimiOne"
                        FontSize="16"
-                       TextColor="#E7ECF5"
-                       BackgroundColor="#1E293B"
+                       TextColor="#3D2C4E"
+                       BackgroundColor="#F4E9FF"
                        MaxLength="20" />
 
-                <!-- Color palette -->
+                <!-- Avatar picker (A1-A7) -->
                 <VerticalStackLayout Grid.Row="3" Spacing="8">
-                    <Label Text="Choose color"
-                           FontFamily="MomoTrustDisplay"
+                    <Label Text="Choose avatar"
+                           FontFamily="MadimiOne"
                            FontSize="14"
-                           TextColor="#9AA7BD" />
-                    <HorizontalStackLayout x:Name="ColorPalette"
+                           TextColor="#7C6A8E" />
+                    <HorizontalStackLayout x:Name="AvatarPalette"
                                            Spacing="10"
                                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
 
                 <!-- Save button -->
                 <Border Grid.Row="4"
-                        BackgroundColor="#22D3EE"
+                        BackgroundColor="#3D2C4E"
                         StrokeThickness="0"
                         Padding="12,12"
                         HorizontalOptions="Fill">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSave" />
+                    </Border.GestureRecognizers>
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="12" />
                     </Border.StrokeShape>
                     <Label Text="SAVE"
-                           FontFamily="MomoTrustDisplay"
+                           FontFamily="MadimiOne"
                            FontSize="16"
                            FontAttributes="Bold"
-                           TextColor="#0B0E14"
-                           HorizontalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnSave" />
-                        </Label.GestureRecognizers>
-                    </Label>
+                           TextColor="White"
+                           HorizontalOptions="Center" />
                 </Border>
 
             </Grid>

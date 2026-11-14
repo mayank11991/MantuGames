@@ -7,8 +7,7 @@
 >
 
     <AbsoluteLayout>
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <Grid x:Name="PageRoot" RowDefinitions="Auto,Auto,Auto,*,Auto"
               Padding="12,16,12,8" RowSpacing="6"
               AbsoluteLayout.LayoutFlags="All"
@@ -17,20 +16,20 @@
             <!-- TOP BAR: back | level badge | pause -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6"
                   Padding="4,0">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#F97316"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    <Label Text="{Binding LevelDisplay}" TextColor="#FF8C5A"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center"/>
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
@@ -44,31 +43,31 @@
                                     SecondsRemaining="{Binding TimeRemainingSec}" />
 
             <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="10">
-                <Border BackgroundColor="#182136" StrokeThickness="0"
+                <Border BackgroundColor="#FFFDFA" StrokeThickness="0"
                         Padding="10,5" VerticalOptions="Center">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                     <StackLayout Spacing="0">
-                        <Label Text="SCORE" TextColor="#9AA7BD" FontSize="9" FontFamily="MomoTrustDisplay"
+                        <Label Text="SCORE" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center"/>
-                        <Label Text="{Binding Score}" TextColor="#E7ECF5"
-                               FontSize="13" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center"/>
+                        <Label Text="{Binding Score}" TextColor="#3D2C4E"
+                               FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center"/>
                     </StackLayout>
                 </Border>
-                <Border BackgroundColor="#182136" StrokeThickness="0"
+                <Border BackgroundColor="#FFFDFA" StrokeThickness="0"
                         Padding="10,5" VerticalOptions="Center">
                     <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                     <StackLayout Spacing="0">
-                        <Label Text="LINES" TextColor="#9AA7BD" FontSize="9" FontFamily="MomoTrustDisplay"
+                        <Label Text="LINES" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center"/>
-                        <Label Text="{Binding LinesDisplay}" TextColor="#F97316"
-                               FontSize="13" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center"/>
+                        <Label Text="{Binding LinesDisplay}" TextColor="#FF8C5A"
+                               FontSize="13" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center"/>
                     </StackLayout>
                 </Border>
             </HorizontalStackLayout>
 
             <!-- GAME AREA -->
             <Border Grid.Row="3" x:Name="BoardContainer"
-                    BackgroundColor="#0F1420" StrokeThickness="2" Stroke="#2E3A5F"
+                    BackgroundColor="#33B49CCF" StrokeThickness="2" Stroke="#D8CAE8"
                     VerticalOptions="Fill" HorizontalOptions="Fill">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
                 <Border.GestureRecognizers>
@@ -83,28 +82,27 @@
             <!-- BOTTOM PANEL: Next piece + Show Solution -->
             <VerticalStackLayout Grid.Row="4" Spacing="6">
                 <Border x:Name="NextPieceOverlay"
-                        BackgroundColor="#131A29" StrokeThickness="1" Stroke="#2E3A5F"
+                        BackgroundColor="#FFF4E8" StrokeThickness="1" Stroke="#D8CAE8"
                         HorizontalOptions="Center" Padding="10,6">
                     <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
                     <HorizontalStackLayout Spacing="12">
-                        <Label Text="NEXT" TextColor="#9AA7BD" FontSize="12" FontFamily="MomoTrustDisplay"
+                        <Label Text="NEXT" TextColor="#7C6A8E" FontSize="12" FontFamily="MadimiOne"
                                FontAttributes="Bold" VerticalOptions="Center"/>
                         <Grid x:Name="NextPieceGrid" RowSpacing="0" ColumnSpacing="0"
                               HorizontalOptions="Center"/>
                     </HorizontalStackLayout>
                 </Border>
                 <VerticalStackLayout Spacing="2" Margin="60,0">
-                    <Button x:Name="SolutionButton"
-                            Text="💡 Show Solution"
+                    <Button x:Name="SolutionCoinLabel"
                             FontSize="14" FontAttributes="Bold"
-                            TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                            TextColor="#3D2C4E" BackgroundColor="#FFA94D"
                             CornerRadius="24" HeightRequest="50"
                             Clicked="OnShowSolutionClicked" />
-                    <Label x:Name="SolutionCoinLabel"
-                           FontFamily="MomoTrustDisplay"
-                           FontSize="11"
-                           TextColor="#DBD748"
-                           HorizontalOptions="Center" />
+                    <!-- <Label x:Name="SolutionCoinLabel" -->
+                    <!--        FontFamily="MadimiOne" -->
+                    <!--        FontSize="11" -->
+                    <!--        TextColor="#D9A400" -->
+                    <!--        HorizontalOptions="Center" /> -->
                 </VerticalStackLayout>
             </VerticalStackLayout>
 

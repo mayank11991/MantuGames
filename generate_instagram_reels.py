@@ -58,7 +58,7 @@ GAME_META = {
     "math": {"name": "Math Challenge", "emoji": "🧮", "color": "#f59e0b", "hashtags": ["math", "challenge", "arithmetic", "brain"]},
     "hanoi": {"name": "Tower of Hanoi", "emoji": "🗼", "color": "#ef4444", "hashtags": ["hanoi", "tower", "puzzle", "strategy"]},
     "puzzlepets": {"name": "Puzzle Pets", "emoji": "🐾", "color": "#f472b6", "hashtags": ["puzzle", "pets", "cute", "slide"]},
-    "block": {"name": "Block Puzzle", "emoji": "🧱", "color": "#f97316", "hashtags": ["block", "puzzle", "tetris", "stack"]},
+    "block": {"name": "Block Puzzle", "emoji": "🧱", "color": "#f97316", "hashtags": ["block", "puzzle", "blockstack", "stack"]},
     "animalcrush": {"name": "Animal Crush", "emoji": "🦁", "color": "#ef4444", "hashtags": ["match3", "animals", "crush", "combo"]},
 }
 

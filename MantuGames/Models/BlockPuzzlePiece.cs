@@ -27,7 +27,7 @@ public class BlockPiece
         new BlockPiece
         {
             Name = "I",
-            PieceColor = Color.FromArgb("#00BCD4"),
+            PieceColor = Color.FromArgb("#7FD8FF"),
             Shape = new int[,]
             {
                 { 1, 1, 1, 1 }
@@ -37,7 +37,7 @@ public class BlockPiece
         new BlockPiece
         {
             Name = "O",
-            PieceColor = Color.FromArgb("#FFEB3B"),
+            PieceColor = Color.FromArgb("#FFD166"),
             Shape = new int[,]
             {
                 { 1, 1 },
@@ -48,7 +48,7 @@ public class BlockPiece
         new BlockPiece
         {
             Name = "T",
-            PieceColor = Color.FromArgb("#9C27B0"),
+            PieceColor = Color.FromArgb("#B39DFF"),
             Shape = new int[,]
             {
                 { 0, 1, 0 },
@@ -59,7 +59,7 @@ public class BlockPiece
         new BlockPiece
         {
             Name = "S",
-            PieceColor = Color.FromArgb("#4CAF50"),
+            PieceColor = Color.FromArgb("#7BDCB5"),
             Shape = new int[,]
             {
                 { 0, 1, 1 },
@@ -70,7 +70,7 @@ public class BlockPiece
         new BlockPiece
         {
             Name = "Z",
-            PieceColor = Color.FromArgb("#F44336"),
+            PieceColor = Color.FromArgb("#FF8FA3"),
             Shape = new int[,]
             {
                 { 1, 1, 0 },
@@ -81,7 +81,7 @@ public class BlockPiece
         new BlockPiece
         {
             Name = "L",
-            PieceColor = Color.FromArgb("#FF9800"),
+            PieceColor = Color.FromArgb("#FFB36B"),
             Shape = new int[,]
             {
                 { 1, 0 },
@@ -93,7 +93,7 @@ public class BlockPiece
         new BlockPiece
         {
             Name = "J",
-            PieceColor = Color.FromArgb("#2196F3"),
+            PieceColor = Color.FromArgb("#6D9BFF"),
             Shape = new int[,]
             {
                 { 0, 1 },

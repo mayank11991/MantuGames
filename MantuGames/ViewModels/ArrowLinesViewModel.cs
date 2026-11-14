@@ -69,6 +69,8 @@ public class ArrowLinesViewModel : INotifyPropertyChanged
 
     public List<ArrowCell> Arrows => _puzzle?.Arrows ?? new();
 
+    public bool CanEscape(ArrowCell arrow) => _puzzle?.CanEscape(arrow) ?? false;
+
     public int GridRows => _puzzle?.Rows ?? 5;
     public int GridCols => _puzzle?.Cols ?? 5;
 

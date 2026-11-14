@@ -60,7 +60,7 @@ public class ProgressService
     public int GetHighestUnlocked(string gameId)
     {
         int highest = 1;
-        for (int i = 1; i <= 200; i++)
+        for (int i = 1; i <= 50; i++)
         {
             var state = (LevelState)Preferences.Get(Key(gameId, i), (int)LevelState.Locked);
             if (i == 1 && state == LevelState.Locked) state = LevelState.Unlocked;

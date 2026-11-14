@@ -31,7 +31,7 @@ public static class CoinService
 
     public static int GetTotalCoins()
     {
-        int total = 0;
+        int total = IapService.UnassignedCoins;
         foreach (var g in DashboardViewModel.Games)
             total += GetCoins(g.Id);
         return total;

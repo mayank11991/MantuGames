@@ -26,3 +26,11 @@ Thumbs.db
 # NuGet
 packages/
 *.nupkg
+# Signing secrets (never commit)
+*.keystore
+*.jks
+signing.local.props
+
+# Test build outputs
+MantuGames.Tests/bin/
+MantuGames.Tests/obj/

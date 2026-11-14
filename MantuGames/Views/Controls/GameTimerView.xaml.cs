@@ -52,23 +52,23 @@ public partial class GameTimerView : ContentView
 
         if (progress > 0.5)
         {
-            barColor = Color.FromArgb("#22D3EE");
-            glowColor = Color.FromArgb("#22D3EE");
+            barColor = Color.FromArgb("#6D4AFF");
+            glowColor = Color.FromArgb("#6D4AFF");
             TimerLabel.TextColor = barColor;
             TimerHint.TextColor = barColor;
         }
         else if (progress > 0.25)
         {
-            barColor = Color.FromArgb("#F59E0B");
-            glowColor = Color.FromArgb("#F59E0B");
+            barColor = Color.FromArgb("#F09A2E");
+            glowColor = Color.FromArgb("#F09A2E");
             TimerLabel.TextColor = barColor;
             TimerHint.TextColor = barColor;
             hint = "HURRY UP!";
         }
         else
         {
-            barColor = Color.FromArgb("#EF4444");
-            glowColor = Color.FromArgb("#F87171");
+            barColor = Color.FromArgb("#E0566F");
+            glowColor = Color.FromArgb("#FF8A9A");
             TimerLabel.TextColor = barColor;
             TimerHint.TextColor = barColor;
             hint = "TIME IS RUNNING OUT!";

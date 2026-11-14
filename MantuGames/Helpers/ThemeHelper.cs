@@ -4,7 +4,7 @@ public static class ThemeHelper
 {
     public static bool IsDarkMode
     {
-        get => Preferences.Get("dark_mode", true);
+        get => Preferences.Get("dark_mode", false);
         set
         {
             Preferences.Set("dark_mode", value);
@@ -14,7 +14,9 @@ public static class ThemeHelper
 
     public static void Init()
     {
-        ApplyTheme(IsDarkMode);
+        // Claymorphism is a light theme; always start in light mode.
+        Preferences.Set("dark_mode", false);
+        ApplyTheme(false);
     }
 
     public static void ApplyTheme(bool dark)

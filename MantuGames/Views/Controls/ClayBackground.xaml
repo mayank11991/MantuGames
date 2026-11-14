@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="MantuGames.Views.Controls.ClayBackground"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    InputTransparent="True">
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="#F7EFFF" />
+                <GradientStop Offset="0.5" Color="#FFF4E8" />
+                <GradientStop Offset="1" Color="#EAF9FF" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Ellipse Fill="#66FFB3D1"
+                 WidthRequest="360" HeightRequest="360"
+                 HorizontalOptions="Start" VerticalOptions="Start"
+                 Margin="-140,-120,0,0" />
+        <Ellipse Fill="#665FD8FF"
+                 WidthRequest="420" HeightRequest="420"
+                 HorizontalOptions="End" VerticalOptions="End"
+                 Margin="0,0,-160,-140" />
+        <Ellipse Fill="#66FFD98A"
+                 WidthRequest="300" HeightRequest="300"
+                 HorizontalOptions="Center" VerticalOptions="Center"
+                 Margin="0,180,0,0" />
+        <Ellipse Fill="#66B9A6FF"
+                 WidthRequest="240" HeightRequest="240"
+                 HorizontalOptions="End" VerticalOptions="Start"
+                 Margin="0,120,-80,0" />
+    </Grid>
+</ContentView>

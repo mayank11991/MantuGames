@@ -15,8 +15,8 @@ namespace MantuGames.Converters
             bool isError = values[2] is bool e && e;
             bool isHighlighted = values[3] is bool h && h;
 
-            if (isSelected) return new SolidColorBrush(Color.FromArgb("#FFE066"));
-            if (isError) return new SolidColorBrush(Color.FromArgb("#FF6B6B"));
+            if (isSelected) return new SolidColorBrush(Color.FromArgb("#FFD166"));
+            if (isError) return new SolidColorBrush(Color.FromArgb("#FF7A90"));
             if (isFixed) return new SolidColorBrush(Color.FromArgb("#B8E4FF"));
             if (isHighlighted) return new SolidColorBrush(Color.FromArgb("#E8F5FF"));
             return new SolidColorBrush(Color.FromArgb("#FFFFFF")); // white
@@ -34,9 +34,9 @@ namespace MantuGames.Converters
             bool isFixed = values[0] is bool f && f;
             bool isError = values[1] is bool e && e;
 
-            if (isError) return Color.FromArgb("#FFFFFF");
-            if (isFixed) return Color.FromArgb("#1565C0"); // deep blue for fixed
-            return Color.FromArgb("#2E7D32"); // green for player input
+            if (isError) return Color.FromArgb("#3D2C4E");
+            if (isFixed) return Color.FromArgb("#3D2C4E");
+            return Color.FromArgb("#6D4AFF");
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -50,12 +50,12 @@ namespace MantuGames.Converters
         {
             if (value is double progress)
             {
-                if (progress > 0.5) return Color.FromArgb("#4CAF50");
-                if (progress > 0.25) return Color.FromArgb("#FF9800");
-                return Color.FromArgb("#F44336");
+                if (progress > 0.5) return Color.FromArgb("#2F9E7F");
+                if (progress > 0.25) return Color.FromArgb("#FF9F43");
+                return Color.FromArgb("#E0566F");
             }
 
-            return Color.FromArgb("#4CAF50");
+            return Color.FromArgb("#2F9E7F");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

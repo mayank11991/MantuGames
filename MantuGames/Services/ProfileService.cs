@@ -148,6 +148,13 @@ public static class ProfileService
         ProfilesChanged?.Invoke(null, EventArgs.Empty);
     }
 
+    public static void ChangeAvatar(PlayerProfile profile, string avatarImage)
+    {
+        profile.AvatarImage = avatarImage;
+        Save();
+        ProfilesChanged?.Invoke(null, EventArgs.Empty);
+    }
+
     public static void Save()
     {
         Preferences.Default.Set(ProfilesKey, JsonSerializer.Serialize(_profiles));

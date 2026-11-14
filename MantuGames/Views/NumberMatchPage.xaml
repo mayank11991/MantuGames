@@ -8,8 +8,7 @@
 >
 
     <AbsoluteLayout>
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,0,*,Auto,Auto"
               Padding="12,16,12,8" RowSpacing="6"
@@ -18,20 +17,20 @@
 
             <!-- TOP BAR -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#F97316"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#FF8C5A"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
@@ -41,7 +40,7 @@
             </Grid>
 
             <!-- 8x8 NUMBER GRID -->
-            <Border Grid.Row="2" BackgroundColor="#111827" StrokeThickness="2" Stroke="#2E3A5F"
+            <Border Grid.Row="2" BackgroundColor="#F4E9FF" StrokeThickness="2" Stroke="#D8CAE8"
                     Padding="6" Margin="4,0">
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <CollectionView x:Name="NumberGrid"
@@ -57,7 +56,7 @@
                         <DataTemplate>
                             <Border BackgroundColor="{Binding CellBg}"
                                     StrokeThickness="1"
-                                    Stroke="#2E3A5F"
+                                    Stroke="#D8CAE8"
                                     HeightRequest="44"
                                     WidthRequest="44">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="8" /></Border.StrokeShape>
@@ -68,7 +67,7 @@
                                 <Label Text="{Binding Value}"
                                        TextColor="{Binding ValueTextColor}"
                                        FontSize="18"
-                                       FontFamily="MomoTrustDisplay"
+                                       FontFamily="MadimiOne"
                                        FontAttributes="Bold"
                                        IsVisible="{Binding TextVisibility}"
                                        HorizontalOptions="Center"
@@ -80,21 +79,21 @@
             </Border>
 
             <!-- SCORE -->
-            <Border Grid.Row="3" BackgroundColor="#182136" StrokeThickness="0"
+            <Border Grid.Row="3" BackgroundColor="#FFFDFA" StrokeThickness="0"
                     Padding="16,8" Margin="40,0">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12" /></Border.StrokeShape>
                 <Grid ColumnDefinitions="*,Auto,*">
                     <StackLayout Grid.Column="0" Spacing="0">
-                        <Label Text="SCORE" TextColor="#9AA7BD" FontSize="9" FontFamily="MomoTrustDisplay"
+                        <Label Text="SCORE" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Score}" TextColor="#22D3EE"
-                               FontSize="18" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label Text="{Binding Score}" TextColor="#6D4AFF"
+                               FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                     <StackLayout Grid.Column="2" Spacing="0">
-                        <Label Text="MOVES" TextColor="#9AA7BD" FontSize="9" FontFamily="MomoTrustDisplay"
+                        <Label Text="MOVES" TextColor="#7C6A8E" FontSize="9" FontFamily="MadimiOne"
                                FontAttributes="Bold" HorizontalOptions="Center" />
-                        <Label Text="{Binding Moves}" TextColor="#F97316"
-                               FontSize="18" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label Text="{Binding Moves}" TextColor="#FF8C5A"
+                               FontSize="18" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                     </StackLayout>
                 </Grid>
             </Border>
@@ -110,8 +109,8 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnAddNumbers" />
                 </Border.GestureRecognizers>
-                <Label Text="{Binding AddButtonText}" TextColor="White"
-                       FontSize="14" FontFamily="MomoTrustDisplay" FontAttributes="Bold" />
+                <Label Text="{Binding AddButtonText}" TextColor="#3D2C4E"
+                       FontSize="14" FontFamily="MadimiOne" FontAttributes="Bold" />
             </Border>
 
         </Grid>

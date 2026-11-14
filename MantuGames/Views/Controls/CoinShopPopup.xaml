@@ -4,15 +4,15 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Grid x:Name="Overlay" BackgroundColor="#CC0B0E14" InputTransparent="False">
+    <Grid x:Name="Overlay" BackgroundColor="#663D2C4E" InputTransparent="False">
         <ScrollView VerticalOptions="Center" HorizontalOptions="Center"
                     InputTransparent="False">
             <Grid Padding="28"
                   WidthRequest="340"
                   InputTransparent="False">
 
-                <Border Background="#182136"
-                        Stroke="#2EFFFFFF"
+                <Border Background="#FFFDFA"
+                        Stroke="#B3FFFFFF"
                         StrokeThickness="1"
                         Padding="24"
                         HorizontalOptions="Fill"
@@ -21,33 +21,33 @@
                         <RoundRectangle CornerRadius="24" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="#000000" Offset="0,8" Radius="24" Opacity="0.25" />
+                        <Shadow Brush="#8A6FA8" Offset="0,8" Radius="24" Opacity="0.25" />
                     </Border.Shadow>
 
                     <VerticalStackLayout Spacing="16">
 
                         <Label Text="COIN SHOP"
-                               FontFamily="MomoTrustDisplay"
+                               FontFamily="MadimiOne"
                                FontSize="22"
                                FontAttributes="Bold"
-                               TextColor="#E7ECF5"
+                               TextColor="#3D2C4E"
                                HorizontalOptions="Center" />
 
                         <Label x:Name="MessageLabel"
-                               FontFamily="MomoTrustDisplay"
+                               FontFamily="MadimiOne"
                                FontSize="13"
-                               TextColor="#9AA7BD"
+                               TextColor="#7C6A8E"
                                HorizontalTextAlignment="Center"
                                HorizontalOptions="Center" />
 
                         <Label x:Name="BalanceLabel"
-                               FontFamily="MomoTrustDisplay"
+                               FontFamily="MadimiOne"
                                FontSize="13"
                                FontAttributes="Bold"
-                               TextColor="#22D3EE"
+                               TextColor="#6D4AFF"
                                HorizontalOptions="Center" />
 
-                        <BoxView HeightRequest="1" Color="#2EFFFFFF" />
+                        <BoxView HeightRequest="1" Color="#B3FFFFFF" />
 
                         <!-- Coin packs (built in code-behind) -->
                         <VerticalStackLayout x:Name="PacksLayout" Spacing="10" />
@@ -55,10 +55,10 @@
                         <!-- Game picker (transfer target) -->
                         <Label x:Name="PickerTitle"
                                Text="Transfer coins to game:"
-                               FontFamily="MomoTrustDisplay"
+                               FontFamily="MadimiOne"
                                FontSize="13"
                                FontAttributes="Bold"
-                               TextColor="#E7ECF5"
+                               TextColor="#3D2C4E"
                                HorizontalOptions="Center" />
                         <FlexLayout x:Name="GamesLayout"
                                     Wrap="Wrap"
@@ -67,15 +67,15 @@
                                     AlignContent="Center" />
 
                         <Label x:Name="StatusLabel"
-                               FontFamily="MomoTrustDisplay"
+                               FontFamily="MadimiOne"
                                FontSize="13"
                                FontAttributes="Bold"
-                               TextColor="#34D399"
+                               TextColor="#1F8A70"
                                HorizontalTextAlignment="Center"
                                HorizontalOptions="Center" />
 
                         <!-- Close Button -->
-                        <Border BackgroundColor="#FF9F1C"
+                        <Border BackgroundColor="#FFA94D"
                                 StrokeThickness="0"
                                 Padding="12,8"
                                 HorizontalOptions="Center">
@@ -83,10 +83,10 @@
                                 <RoundRectangle CornerRadius="12" />
                             </Border.StrokeShape>
                             <Label Text="CLOSE"
-                                   FontFamily="MomoTrustDisplay"
+                                   FontFamily="MadimiOne"
                                    FontSize="14"
                                    FontAttributes="Bold"
-                                   TextColor="#160D02"
+                                   TextColor="#3D2C4E"
                                    HorizontalOptions="Center">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnClose" />

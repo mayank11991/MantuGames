@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Plugin.MauiMtAdmob;
+using AndroidX.Core.View;
 
 namespace MantuGames;
 
@@ -11,24 +11,58 @@ namespace MantuGames;
                            ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
 public class MainActivity : MauiAppCompatActivity
 {
-    protected override void OnCreate(Bundle savedInstanceState)
+    protected override void OnCreate(Bundle? savedInstanceState)
     {
+        // Workaround for MAUI Shell "No view found for id italic" crash
+        if (savedInstanceState != null)
+        {
+            savedInstanceState.Remove("android:support:fragments");
+            savedInstanceState.Remove("android:fragments");
+        }
+
         // Opt in to edge-to-edge before the base theme is applied
         // (fixes Play Console edge-to-edge warnings; see styles.xml).
         SetTheme(Resource.Style.MainThemeEdgeToEdge);
 
         base.OnCreate(savedInstanceState);
 
-        CrossMauiMTAdmob.Current.Init(
-            activity: this,
-            appId: AppConfig.AdMobAppId,
-#if DEBUG
-            forceTesting: true,
-            debugMode: true
-#else
-            forceTesting: false,
-            debugMode: false
-#endif
-        );
+        ApplyClaySystemBars();
+
+        // Gather UMP consent first; ads SDK is initialised only once consent allows it.
+        MantuGames.Services.ConsentService.Gather(this);
+    }
+
+    private void ApplyClaySystemBars()
+    {
+        try
+        {
+            var clay = Android.Graphics.Color.ParseColor("#F7EFFF");
+            Window?.SetStatusBarColor(clay);
+            Window?.SetNavigationBarColor(clay);
+
+            if (Window is not null)
+            {
+                var controller = WindowCompat.GetInsetsController(Window, Window.DecorView);
+                controller.AppearanceLightStatusBars = true;
+                controller.AppearanceLightNavigationBars = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Android.Util.Log.Warn("MantuGames", $"System bar theming failed: {ex.Message}");
+        }
+    }
+
+    protected override void OnStart()
+    {
+        try
+        {
+            base.OnStart();
+        }
+        catch (Java.Lang.IllegalArgumentException ex) when (ex.Message?.Contains("italic") == true)
+        {
+            // MAUI Shell NavigationRootManager fragment bug - ignore, app still works
+            Android.Util.Log.Warn("MantuGames", $"Shell italic crash suppressed: {ex.Message}");
+        }
     }
 }

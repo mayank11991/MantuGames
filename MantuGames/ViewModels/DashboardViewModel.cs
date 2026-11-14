@@ -8,22 +8,21 @@ namespace MantuGames.ViewModels;
 
 public class DashboardViewModel
 {
-    // Matches the website game grid (mayank11991.github.io): per-game accent colors,
-    // image icons and taglines from the site's game cards.
+    // Matches the reference dashboard: 2-column grid, each card has
+    // a large thumbnail on top and a bottom bar with colored icon + bold name.
     public static readonly ObservableCollection<GameInfo> Games = new()
     {
-        new GameInfo { Id = "sudoku",        Title = "Sudoku",         ImageName = "sudoku.png",        CardColor = "#FFC704", Route = "sudoku",        Description = "Classic sudoku logic, jungle touch" },
-        new GameInfo { Id = "wordfinder",    Title = "Word Finder",    ImageName = "wordfinder.png",    CardColor = "#B3DA5D", Route = "wordfinder",    Description = "Hunt hidden words, expand your vocabulary" },
-        new GameInfo { Id = "mathchallenge", Title = "Math Challenge", ImageName = "mathchallenge.png", CardColor = "#188C8A", Route = "mathchallenge", Description = "Rapid-fire arithmetic" },
-        new GameInfo { Id = "towerofhanoi",  Title = "Tower of Hanoi", ImageName = "towerofhanoi.png",  CardColor = "#FFC704", Route = "towerofhanoi",  Description = "Puzzle of strategy, patience and precision." },
-        new GameInfo { Id = "cardmemory",    Title = "Card Memory",    ImageName = "cardmemory.png",    CardColor = "#B3DA5D", Route = "cardmemory",    Description = "Flip, match and train your memory" },
-        new GameInfo { Id = "puzzlepets",    Title = "Puzzle Pets",    ImageName = "puzzlegame.png",    CardColor = "#EC6C28", Route = "puzzlepets",    Description = "Adorable pet puzzles" },
-        new GameInfo { Id = "blockpuzzle",   Title = "Block Puzzle",   ImageName = "tetris.png",        CardColor = "#FFC704", Route = "blockpuzzle",   Description = "Slide, stack and clear" },
-        new GameInfo { Id = "mazerunner",       Title = "Maze Runner",       ImageName = "mazerunner.png",    CardColor = "#EC6C28", Route = "mazerunner",       Description = "Blaze through twisting mazes" },
-        new GameInfo { Id = "connectthedots",  Title = "Connect the Dots",  ImageName = "connectthedots.png", CardColor = "#188C8A", Route = "connectthedots",  Description = "Draw paths to connect matching pairs" },
-        new GameInfo { Id = "numbermatch",     Title = "Number Match",     ImageName = "numbermatch.png",    CardColor = "#B3DA5D", Route = "numbermatch",     Description = "Match identical numbers or pairs that add up to 10" },
-        new GameInfo { Id = "arrowlines",      Title = "Arrow Lines",      ImageName = "arrow_lines.png",     CardColor = "#3B82F6", Route = "arrowlines",      Description = "Clear the board by tapping arrows in their direction" },
-        // new GameInfo { Id = "animalcrush",   Title = "Animal Crush",   ImageName = "animalcrush.png",   CardColor = "#F43F5E", Route = "animalcrush",   Description = "Match adorable critters in a colorful, satisfying combo rush." }, // Paused: not in 8-game release
+        new GameInfo { Id = "sudoku",           Title = "Sudoku",           ImageName = "sudoku.png",      CardColor = "#7C5CFF", Route = "sudoku",           Description = "Classic sudoku logic",              IconEmoji = "🔢", IconColor = "#2F9E7F" },
+        new GameInfo { Id = "wordfinder",       Title = "Word Search",      ImageName = "wordfinder.png",         CardColor = "#FF8FB1", Route = "wordfinder",       Description = "Hunt hidden words",                 IconEmoji = "Aa", IconColor = "#3D8BFD" },
+        new GameInfo { Id = "mathchallenge",    Title = "Math Challenge",   ImageName = "mathchallenge.png",      CardColor = "#FFC857", Route = "mathchallenge",    Description = "Rapid-fire arithmetic",             IconEmoji = "🧮", IconColor = "#7C5CFF" },
+        new GameInfo { Id = "towerofhanoi",     Title = "Tower of Hanoi",    ImageName = "towerofhanoi.png",       CardColor = "#FF9F7A", Route = "towerofhanoi",     Description = "Puzzle of strategy",                IconEmoji = "🔺", IconColor = "#F09A2E" },
+        new GameInfo { Id = "cardmemory",       Title = "Memory Match",     ImageName = "cardmemory.png",         CardColor = "#4FD1B5", Route = "cardmemory",       Description = "Flip, match and train memory",      IconEmoji = "🃏", IconColor = "#E0568F" },
+        new GameInfo { Id = "puzzlepets",       Title = "Puzzle Pets",    ImageName = "puzzlepets.png",         CardColor = "#FF9FCF", Route = "puzzlepets",       Description = "Adorable pet puzzles",              IconEmoji = "🧩", IconColor = "#9B7BFF" },
+        new GameInfo { Id = "blockpuzzle",      Title = "Block Stack",ImageName = "blockpuzzle.png",        CardColor = "#7FD8FF", Route = "blockpuzzle",      Description = "Slide, stack and clear",            IconEmoji = "🟦", IconColor = "#1FA8C9" },
+        new GameInfo { Id = "mazerunner",       Title = "Maze Adventure",   ImageName = "mazerunner.png",         CardColor = "#A78BFA", Route = "mazerunner",       Description = "Blaze through twisting mazes",      IconEmoji = "🗺️", IconColor = "#2F9E7F" },
+        new GameInfo { Id = "connectthedots",   Title = "Connect Dots",     ImageName = "connectdots.png",        CardColor = "#5EEAD4", Route = "connectthedots",   Description = "Draw paths to connect pairs",       IconEmoji = "🎨", IconColor = "#E0568F" },
+        new GameInfo { Id = "numbermatch",      Title = "Number Matching",     ImageName = "numbermatch.png",        CardColor = "#FFD166", Route = "numbermatch",      Description = "Match numbers that add to 10",      IconEmoji = "⭐", IconColor = "#3D8BFD" },
+        new GameInfo { Id = "arrowlines",       Title = "Arrow Lines",       ImageName = "arrowlines.png",         CardColor = "#FF9F7A", Route = "arrowlines",       Description = "Clear the board with arrows",       IconEmoji = "🎮", IconColor = "#9B7BFF" },
     };
 
     // Instance copy for binding

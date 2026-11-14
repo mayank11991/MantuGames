@@ -19,8 +19,8 @@ internal sealed class MazeDrawable : IDrawable
     public float OffsetX { get; private set; }
     public float OffsetY { get; private set; }
 
-    private static readonly Color WallColor = Color.FromArgb("#E65100");
-    private static readonly Color FloorColor = Color.FromArgb("#0F1420");
+    private static readonly Color WallColor = Color.FromArgb("#66E65100");
+    private static readonly Color FloorColor = Color.FromArgb("#F4E9FF");
     private static readonly Color TrailColor = Color.FromArgb("#FFB74D");
 
     public void Draw(ICanvas canvas, RectF bounds)
@@ -166,12 +166,10 @@ public partial class MazeRunnerPage : ContentPage
         _remainSec = _totalSec;
         _startTime = DateTime.Now;
 
-        if (SolutionButton != null)
-        {
-            SolutionButton.IsEnabled = true;
+      
             int coins = CoinService.GetCoins("mazerunner");
-            SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
-        }
+            SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
+      
 
         DestinationImage.IsVisible = true;
 
@@ -225,7 +223,7 @@ public partial class MazeRunnerPage : ContentPage
         int coins = CoinService.GetCoins("mazerunner");
         SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
-        SolutionButton.IsEnabled = false;
+        SolutionCoinLabel.IsEnabled = false;
         _ = RevealPathAsync();
     }
 

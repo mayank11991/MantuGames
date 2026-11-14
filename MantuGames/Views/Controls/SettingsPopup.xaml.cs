@@ -9,6 +9,8 @@ public partial class SettingsPopup : ContentView
     public event EventHandler ProgressReset;
     public event EventHandler StatisticsRequested;
     public event EventHandler UpdateCheckRequested;
+    public event EventHandler ProfileSwitchRequested;
+    public event EventHandler CoinShopRequested;
 
     public SettingsPopup()
     {
@@ -23,12 +25,23 @@ public partial class SettingsPopup : ContentView
     {
         RemoveAdsStatus.Text = IapService.RemoveAdsOwned ? "Purchased" : "BUY";
         RemoveAdsStatus.TextColor = IapService.RemoveAdsOwned
-            ? Color.FromArgb("#34D399")
-            : Color.FromArgb("#FF9F1C");
+            ? Color.FromArgb("#1F8A70")
+            : Color.FromArgb("#FFA94D");
+    }
+
+    /// <summary>Refreshes the profile + coins section (called on Show and when data changes).</summary>
+    public void RefreshProfile()
+    {
+        var active = ProfileService.Active;
+        PopupPlayerName.Text = active?.Name ?? "Player";
+        PopupAvatarImage.Source = string.IsNullOrEmpty(active?.AvatarImage) ? "a1.png" : active!.AvatarImage;
+        PopupCoinBalance.Text = CoinService.GetTotalCoins() > 0 ? $"{CoinService.GetTotalCoins()}" : "0";
     }
 
     public void Show()
     {
+        RefreshProfile();
+        PrivacyChoicesLabel.IsVisible = ConsentService.IsPrivacyOptionsRequired;
         IsVisible = true;
         Opacity = 0;
         Scale = 0.8;
@@ -68,6 +81,18 @@ public partial class SettingsPopup : ContentView
     private void OnOverlayTapped(object sender, TappedEventArgs e)
     {
         // Consume tap to prevent passing through to views underneath
+    }
+
+    private void OnSwitchProfile(object sender, TappedEventArgs e)
+    {
+        Hide();
+        ProfileSwitchRequested?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnOpenCoinShop(object sender, TappedEventArgs e)
+    {
+        Hide();
+        CoinShopRequested?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnEditProfile(object sender, TappedEventArgs e)
@@ -136,6 +161,18 @@ public partial class SettingsPopup : ContentView
         }
     }
 
+    private async void OnPrivacyChoices(object sender, TappedEventArgs e)
+    {
+        try
+        {
+            await ConsentService.ShowPrivacyOptionsAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error opening privacy choices: {ex.Message}");
+        }
+    }
+
     private async void OnRateUs(object sender, TappedEventArgs e)
     {
         try
@@ -155,11 +192,15 @@ public partial class SettingsPopup : ContentView
             if (IapService.RemoveAdsOwned) return;
 
             RemoveAdsStatus.Text = "…";
-            bool purchased = await IapService.PurchaseAsync(IapService.RemoveAdsId);
-            if (purchased)
+            var outcome = await IapService.PurchaseAsync(IapService.RemoveAdsId);
+            if (outcome == PurchaseOutcome.Purchased)
             {
                 BannerHelper.RemoveBanner();
                 UpdateRemoveAdsStatus();
+            }
+            else if (outcome == PurchaseOutcome.Pending)
+            {
+                RemoveAdsStatus.Text = "Pending";
             }
             else
             {

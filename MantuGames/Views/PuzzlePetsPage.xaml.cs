@@ -34,12 +34,12 @@ public partial class PuzzlePetsPage : ContentPage
 
     private static readonly Color[] PiecePalette =
     {
-        Color.FromArgb("#E91E63"), Color.FromArgb("#2196F3"),
-        Color.FromArgb("#4CAF50"), Color.FromArgb("#FF5722"),
-        Color.FromArgb("#9C27B0"), Color.FromArgb("#00BCD4"),
-        Color.FromArgb("#FF9800"), Color.FromArgb("#3F51B5"),
+        Color.FromArgb("#E0568F"), Color.FromArgb("#3D8BFD"),
+        Color.FromArgb("#2F9E7F"), Color.FromArgb("#FF5722"),
+        Color.FromArgb("#7C5CFF"), Color.FromArgb("#1FA8C9"),
+        Color.FromArgb("#FF9F43"), Color.FromArgb("#3F51B5"),
         Color.FromArgb("#8BC34A"), Color.FromArgb("#FF4081"),
-        Color.FromArgb("#7C4DFF"), Color.FromArgb("#00E676"),
+        Color.FromArgb("#7C5CFF"), Color.FromArgb("#00E676"),
     };
 
     public string Level
@@ -96,7 +96,7 @@ public partial class PuzzlePetsPage : ContentPage
         _pieceSize = Math.Max(44, Math.Min(_pieceSize, 76));
 
         int coins = CoinService.GetCoins("puzzlepets");
-        SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
+        SolutionCoinLabel.Text = $" Show Solution \n* Costs {CoinService.SolutionCost} coins — you have {coins}";
 
         BuildGrid();
         BuildTray();
@@ -313,8 +313,8 @@ public partial class PuzzlePetsPage : ContentPage
             {
                 bool isCorrect = _puzzle.PiecePositions[_dragPieceId] == cellUnder;
                 var cell = _gridCells[cellUnder];
-                cell.BackgroundColor = isCorrect ? GetPieceColor(_dragPieceId).WithAlpha(0.3f) : Color.FromArgb("#B71C1C44");
-                cell.Stroke = isCorrect ? Color.FromArgb("#66BB6A") : Color.FromArgb("#EF5350");
+                cell.BackgroundColor = isCorrect ? GetPieceColor(_dragPieceId).WithAlpha(0.3f) : Color.FromArgb("#33E0566F");
+                cell.Stroke = isCorrect ? Color.FromArgb("#2F9E7F") : Color.FromArgb("#E0566F");
                 cell.StrokeDashArray = isCorrect ? null : new DoubleCollection { 2, 2 };
             }
         }
@@ -613,7 +613,7 @@ public partial class PuzzlePetsPage : ContentPage
             }
             CoinService.SpendCoins("puzzlepets", CoinService.SolutionCost);
 
-            SolutionButton.IsEnabled = false;
+            SolutionCoinLabel.IsEnabled = false;
             StatusLabel.Text = "Placing pieces...";
 
             for (int pos = 0; pos < _puzzle.TotalPieces; pos++)
@@ -655,7 +655,7 @@ public partial class PuzzlePetsPage : ContentPage
             else
             {
                 StatusLabel.Text = "Puzzle complete!";
-                SolutionButton.IsEnabled = true;
+                SolutionCoinLabel.IsEnabled = true;
                 int coins = CoinService.GetCoins("puzzlepets");
                 SolutionCoinLabel.Text = $"* Costs {CoinService.SolutionCost} coins — you have {coins}";
             }

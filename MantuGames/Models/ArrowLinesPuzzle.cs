@@ -353,6 +353,37 @@ public class ArrowLinesPuzzle
         return path;
     }
 
+    /// <summary>Non-mutating check: can this arrow escape the board right now?</summary>
+    public bool CanEscape(ArrowCell arrow)
+    {
+        if (arrow.IsCleared) return false;
+
+        var occupied = new HashSet<(int, int)>();
+        foreach (var a in Arrows)
+        {
+            if (!a.IsCleared && a != arrow)
+                occupied.Add((a.Row, a.Col));
+        }
+
+        int r = arrow.Row, c = arrow.Col;
+        while (true)
+        {
+            int dr = 0, dc = 0;
+            if (arrow.Direction == ArrowDirection.Up) dr = -1;
+            else if (arrow.Direction == ArrowDirection.Down) dr = 1;
+            else if (arrow.Direction == ArrowDirection.Left) dc = -1;
+            else if (arrow.Direction == ArrowDirection.Right) dc = 1;
+
+            int nr = r + dr, nc = c + dc;
+            if (nr < 0 || nr >= Rows || nc < 0 || nc >= Cols)
+                return true;
+            if (occupied.Contains((nr, nc)))
+                return false;
+            r = nr;
+            c = nc;
+        }
+    }
+
     public int ClearedCount => Arrows.Count(a => a.IsCleared);
     public bool AllCleared => Arrows.All(a => a.IsCleared);
     public int RemainingCount => Arrows.Count(a => !a.IsCleared);

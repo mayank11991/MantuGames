@@ -9,12 +9,12 @@
     -->
     <style name="MainThemeEdgeToEdge" parent="Maui.MainTheme.NoActionBar">
         <item name="maui_edgetoedge_optout">false</item>
-        <!-- Dark system bars matching the app palette. On API 35+ these are
+        <!-- Dark system bars matching the clay palette. On API 35+ these are
              transparent and the dark window background shows through. -->
         <item name="android:windowBackground">@color/statusBarColor</item>
         <item name="android:statusBarColor">@color/statusBarColor</item>
         <item name="android:navigationBarColor">@color/navigationBarColor</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>

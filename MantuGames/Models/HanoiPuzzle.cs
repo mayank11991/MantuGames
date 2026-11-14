@@ -82,9 +82,8 @@ private void Build(int level)
   
         public bool IsSolved()
         {
-            for (int p = 0; p < 3; p++)
-                if (p == GoalPole && Poles[p].Count == DiscCount) return true;
-            return false;
+            if (GoalPole < 0 || GoalPole >= Poles.Count) return false;
+            return Poles[GoalPole].Count == DiscCount;
         }
 
         /// <summary>Deep copy of the puzzle state (used by the solver and tests).</summary>
@@ -96,7 +95,7 @@ private void Build(int level)
                 StartPole = StartPole,
                 GoalPole = GoalPole,
                 MoveCount = MoveCount,
-                Poles = new List<Stack<int>> { new(Poles[0].Reverse()), new(Poles[1].Reverse()), new(Poles[2].Reverse()) },
+                Poles = Poles.Select(p => new Stack<int>(p.Reverse())).ToList(),
             };
             return copy;
         }

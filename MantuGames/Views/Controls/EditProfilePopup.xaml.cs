@@ -6,12 +6,11 @@ namespace MantuGames.Views.Controls;
 public partial class EditProfilePopup : ContentView
 {
     private PlayerProfile? _profile;
-    private string _selectedColor = "#22D3EE";
+    private string _selectedAvatar = "a1.png";
 
-    private static readonly string[] Palette =
+    private static readonly string[] AvatarImages =
     {
-        "#22D3EE", "#A855F7", "#FF9F1C", "#34D399",
-        "#F43F5E", "#3B82F6", "#FACC15", "#EC4899",
+        "a1.png", "a2.png", "a3.png", "a4.png", "a5.png", "a6.png", "a7.png"
     };
 
     public event EventHandler? ProfileUpdated;
@@ -19,13 +18,13 @@ public partial class EditProfilePopup : ContentView
     public EditProfilePopup()
     {
         InitializeComponent();
-        BuildPalette();
+        BuildAvatarPalette();
     }
 
     public void Show(PlayerProfile profile)
     {
         _profile = profile;
-        _selectedColor = profile.Color;
+        _selectedAvatar = string.IsNullOrEmpty(profile.AvatarImage) ? "a1.png" : profile.AvatarImage;
         NameEntry.Text = profile.Name;
         UpdateAvatar();
         UpdatePaletteSelection();
@@ -59,54 +58,66 @@ public partial class EditProfilePopup : ContentView
         });
     }
 
-    private void BuildPalette()
+    private void BuildAvatarPalette()
     {
-        ColorPalette.Children.Clear();
-        foreach (var c in Palette)
+        AvatarPalette.Children.Clear();
+        foreach (var img in AvatarImages)
         {
             var border = new Border
             {
-                WidthRequest = 36,
-                HeightRequest = 36,
-                StrokeThickness = 3,
-                Stroke = new SolidColorBrush(Colors.Transparent),
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 18 },
-                BackgroundColor = Color.FromArgb(c),
+                WidthRequest = 44,
+                HeightRequest = 44,
+                StrokeThickness = 0,
+                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 22 },
+                BackgroundColor = Colors.White,
+                Padding = new Thickness(3),
                 Margin = new Thickness(2),
             };
 
+            var image = new Image
+            {
+                Source = img,
+                Aspect = Aspect.AspectFit,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill
+            };
+            border.Content = image;
+
             var tap = new TapGestureRecognizer();
-            var color = c;
+            var avatar = img;
             tap.Tapped += (s, e) =>
             {
-                _selectedColor = color;
+                _selectedAvatar = avatar;
                 UpdatePaletteSelection();
                 UpdateAvatar();
             };
             border.GestureRecognizers.Add(tap);
-            ColorPalette.Children.Add(border);
+            AvatarPalette.Children.Add(border);
         }
     }
 
     private void UpdatePaletteSelection()
     {
-        foreach (var child in ColorPalette.Children)
+        foreach (var child in AvatarPalette.Children)
         {
             if (child is Border b)
             {
-                var bg = b.BackgroundColor?.ToHex() ?? "";
-                b.Stroke = bg.Equals(_selectedColor, StringComparison.OrdinalIgnoreCase)
-                    ? new SolidColorBrush(Colors.White)
-                    : new SolidColorBrush(Colors.Transparent);
+                // Check if this border contains the selected avatar image
+                if (b.Content is Image img && img.Source is FileImageSource fis)
+                {
+                    var isSelected = fis.File == _selectedAvatar;
+                    b.StrokeThickness = isSelected ? 3 : 0;
+                    b.Stroke = isSelected
+                        ? new SolidColorBrush(Color.FromArgb("#3D2C4E"))
+                        : new SolidColorBrush(Colors.Transparent);
+                }
             }
         }
     }
 
     private void UpdateAvatar()
     {
-        AvatarPreview.BackgroundColor = Color.FromArgb(_selectedColor);
-        var name = NameEntry.Text?.Trim();
-        InitialLabel.Text = string.IsNullOrEmpty(name) ? "?" : name.Substring(0, 1).ToUpperInvariant();
+        AvatarImage.Source = _selectedAvatar;
     }
 
     private void OnOverlayTapped(object sender, TappedEventArgs e) { }
@@ -119,7 +130,7 @@ public partial class EditProfilePopup : ContentView
         if (string.IsNullOrEmpty(name)) name = "Player";
 
         ProfileService.RenameProfile(_profile, name);
-        ProfileService.ChangeColor(_profile, _selectedColor);
+        ProfileService.ChangeAvatar(_profile, _selectedAvatar);
         ProfileService.Activate(_profile);
 
         AudioService.Instance.Play("pop");

@@ -26,9 +26,9 @@ public class NmCell : INotifyPropertyChanged
     private bool _isSelected;
     public bool IsSelected { get => _isSelected; set { _isSelected = value; OnPropertyChanged(); OnPropertyChanged(nameof(CellBg)); } }
 
-    public string CellBg => IsEliminated ? "#1A2940" : IsSelected ? "#F97316" : "#1E293B";
+    public string CellBg => IsEliminated ? "#E9DEFF" : IsSelected ? "#FFD166" : "#F4E9FF";
     public bool TextVisibility => true;
-    public string ValueTextColor => IsEliminated ? "#3A5070" : "#E2E8F0";
+    public string ValueTextColor => IsEliminated ? "#9B8AAE" : "#3D2C4E";
 
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string n = null)
@@ -64,7 +64,7 @@ public class NumberMatchViewModel : INotifyPropertyChanged
 
     public string AddButtonText => RemainingAdds > 0 ? $"+ ADD ROWS ({RemainingAdds})" : "NO ADDS LEFT";
     public bool CanAddNumbers => RemainingAdds > 0 && !IsGameOver;
-    public string AddButtonColor => CanAddNumbers ? "#F97316" : "#475569";
+    public string AddButtonColor => CanAddNumbers ? "#FFA94D" : "#D8CAE8";
 
     public int CurrentLevel { get; private set; }
 

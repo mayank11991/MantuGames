@@ -3,15 +3,22 @@ using MantuGames.Services;
 
 namespace MantuGames.Views.Controls;
 
-/// <summary>
-/// Netflix-style profile picker. Shown from the bottom of the screen;
-/// the user must select an existing profile or create a new one —
-/// there is no skip.
-/// </summary>
 public partial class ProfilePickerPopup : ContentView
 {
     public event EventHandler<PlayerProfile>? ProfileSelected;
     public event EventHandler? AddProfileRequested;
+
+    // Avatar images A1-A7
+    private static readonly string[] CharacterImages =
+    {
+        "a1.png", "a2.png", "a3.png", "a4.png", "a5.png", "a6.png", "a7.png"
+    };
+
+    private static readonly string[] PillColors =
+    {
+        "#7C5CFF", "#FF8FB1", "#4FD1B5", "#FFB86B", "#7FD8FF",
+        "#A78BFA", "#FFD166"
+    };
 
     public ProfilePickerPopup()
     {
@@ -24,23 +31,20 @@ public partial class ProfilePickerPopup : ContentView
         Rebuild();
         IsVisible = true;
         Overlay.IsVisible = true;
-        Opacity = 1;
-        Sheet.TranslationY = 0;
         Sheet.Opacity = 0;
+        Sheet.Scale = 0.85;
 
-        // Wait for layout so the sheet has a real height, then slide it up.
         this.Dispatcher.Dispatch(() =>
         {
             if (!IsVisible) return;
-            Sheet.TranslationY = Math.Max(Sheet.Height, 400);
             Sheet.Opacity = 1;
-            Sheet.TranslateTo(0, 0, 320, Easing.CubicOut);
+            Sheet.ScaleTo(1.0, 250, Easing.CubicOut);
         });
     }
 
     public void Hide()
     {
-        Sheet.TranslateTo(0, 500, 240, Easing.CubicIn).ContinueWith(_ =>
+        Sheet.ScaleTo(0.85, 200, Easing.CubicIn).ContinueWith(_ =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -54,110 +58,217 @@ public partial class ProfilePickerPopup : ContentView
     {
         ProfilesLayout.Children.Clear();
 
+        int idx = 0;
         foreach (var p in ProfileService.Profiles)
         {
-            ProfilesLayout.Children.Add(BuildProfileTile(p));
+            ProfilesLayout.Children.Add(BuildProfileTile(p, idx));
+            idx++;
         }
 
         ProfilesLayout.Children.Add(BuildAddTile());
     }
 
-    private View BuildProfileTile(PlayerProfile p)
+    private View BuildProfileTile(PlayerProfile p, int index)
     {
-        var tile = new VerticalStackLayout
+        string img = !string.IsNullOrEmpty(p.AvatarImage) ? p.AvatarImage : CharacterImages[index % CharacterImages.Length];
+        string pillColor = PillColors[index % PillColors.Length];
+        bool isActive = ProfileService.Active?.Id == p.Id;
+
+        // Outer container with padding for overflow elements
+        var outer = new Grid
         {
-            Spacing = 8,
-            Margin = new Thickness(14, 6),
-            HorizontalOptions = LayoutOptions.Center,
+            WidthRequest = 110,
+            HeightRequest = 140,
+            Margin = new Thickness(6)
         };
 
-        var avatar = new Border
+        // Card (square) - centered vertically in outer grid
+        var tile = new Border
+        {
+            WidthRequest = 100,
+            HeightRequest = 100,
+            BackgroundColor = Color.FromArgb("#FFFDFA"),
+            StrokeThickness = isActive ? 3 : 2,
+            Stroke = isActive ? new SolidColorBrush(Color.FromArgb("#7C5CFF")) : new SolidColorBrush(Color.FromArgb("#B3FFFFFF")),
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 16 },
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
+        tile.Shadow = new Shadow { Brush = Color.FromArgb("#8A6FA8"), Offset = new Point(0, 6), Opacity = 0.26f, Radius = 10 };
+
+        var inner = new Grid();
+
+        // Avatar circle
+        var avatarBorder = new Border
         {
             WidthRequest = 72,
             HeightRequest = 72,
-            BackgroundColor = Color.FromArgb(p.Color),
+            BackgroundColor = Color.FromArgb(pillColor),
             StrokeThickness = 0,
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 36 },
-        };
-        avatar.Content = new Label
-        {
-            Text = p.Initial,
-            FontFamily = "MomoTrustDisplay",
-            FontSize = 30,
-            FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#0B0E14"),
             HorizontalOptions = LayoutOptions.Center,
-            VerticalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
         };
 
-        var name = new Label
+        var avatarImg = new Image
+        {
+            Source = img,
+            Aspect = Aspect.AspectFit,
+            WidthRequest = 56,
+            HeightRequest = 56,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
+        avatarBorder.Content = avatarImg;
+        inner.Children.Add(avatarBorder);
+        tile.Content = inner;
+
+        // Name pill - half on card bottom border, half outside
+        // Card bottom is at ~120px in outer (70 center + 50 half-height)
+        // Pill center should be at card bottom edge
+        var pill = new Border
+        {
+            BackgroundColor = Color.FromArgb(pillColor),
+            StrokeThickness = 0,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
+            Padding = new Thickness(8, 2, 8, 2),
+            HeightRequest = 24,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Margin = new Thickness(0, 58, 0, 0)  // 58 = half of card (50) + half pill (12) - small gap
+        };
+        pill.Content = new Label
         {
             Text = p.Name,
-            FontFamily = "MomoTrustDisplay",
-            FontSize = 13,
+            FontFamily = "MadimiOne",
+            FontSize = 11,
             FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#E7ECF5"),
+            TextColor = Color.FromArgb("#3D2C4E"),
+            HorizontalTextAlignment = TextAlignment.Center,
+            VerticalTextAlignment = TextAlignment.Center,
             HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
             MaxLines = 1,
-            LineBreakMode = LineBreakMode.TailTruncation,
+            LineBreakMode = LineBreakMode.TailTruncation
         };
+
+        // Green tick - half on card top border, half outside
+        var check = new Border
+        {
+            WidthRequest = 24,
+            HeightRequest = 24,
+            BackgroundColor = Color.FromArgb("#3D2C4E"),
+            StrokeThickness = 0,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
+            HorizontalOptions = LayoutOptions.End,
+            VerticalOptions = LayoutOptions.Center,
+            Margin = new Thickness(0, -58, -4, 0)  // -58 = opposite direction from pill
+        };
+        check.Content = new Label
+        {
+            Text = "✓",
+            FontSize = 13,
+            TextColor = Colors.White,
+            FontAttributes = FontAttributes.Bold,
+            HorizontalTextAlignment = TextAlignment.Center,
+            VerticalTextAlignment = TextAlignment.Center,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
+
+        // Add children to outer grid
+        outer.Children.Add(tile);
+        outer.Children.Add(pill);
+        if (isActive)
+            outer.Children.Add(check);
 
         var tap = new TapGestureRecognizer();
         tap.Tapped += (s, e) => OnProfileTapped(p);
-        tile.GestureRecognizers.Add(tap);
+        outer.GestureRecognizers.Add(tap);
 
-        tile.Children.Add(avatar);
-        tile.Children.Add(name);
-        return tile;
+        return outer;
     }
 
     private View BuildAddTile()
     {
-        var tile = new VerticalStackLayout
+        var outer = new Grid
         {
-            Spacing = 8,
-            Margin = new Thickness(14, 6),
-            HorizontalOptions = LayoutOptions.Center,
+            WidthRequest = 110,
+            HeightRequest = 140,
+            Margin = new Thickness(6)
         };
 
-        var avatar = new Border
+        var tile = new Border
+        {
+            WidthRequest = 100,
+            HeightRequest = 100,
+            BackgroundColor = Colors.White,
+            StrokeThickness = 0,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 16 },
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
+        tile.Shadow = new Shadow { Brush = Color.FromArgb("#8A6FA8"), Offset = new Point(0, 6), Opacity = 0.26f, Radius = 10 };
+
+        var avatarBorder = new Border
         {
             WidthRequest = 72,
             HeightRequest = 72,
-            BackgroundColor = Color.FromArgb("#0F1420"),
+            BackgroundColor = Color.FromArgb("#F4E9FF"),
             StrokeThickness = 2,
-            StrokeDashArray = new double[] { 6, 4 },
-            Stroke = new SolidColorBrush(Color.FromArgb("#3A4A63")),
+            StrokeDashArray = new double[] { 5, 3 },
+            Stroke = new SolidColorBrush(Color.FromArgb("#7C5CFF")),
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 36 },
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
         };
-        avatar.Content = new Label
+        avatarBorder.Content = new Label
         {
             Text = "+",
-            FontFamily = "MomoTrustDisplay",
-            FontSize = 36,
+            FontFamily = "MadimiOne",
+            FontSize = 28,
             FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#9AA7BD"),
+            TextColor = Color.FromArgb("#7C5CFF"),
+            HorizontalTextAlignment = TextAlignment.Center,
+            VerticalTextAlignment = TextAlignment.Center,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
+        tile.Content = avatarBorder;
+
+        // "Add" label - half on card bottom border, half outside
+        var pill = new Border
+        {
+            BackgroundColor = Color.FromArgb("#D8CAE8"),
+            StrokeThickness = 0,
+            StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 12 },
+            Padding = new Thickness(8, 2, 8, 2),
+            HeightRequest = 24,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
+            Margin = new Thickness(0, 58, 0, 0)
+        };
+        pill.Content = new Label
+        {
+            Text = "Add",
+            FontFamily = "MadimiOne",
+            FontSize = 11,
+            FontAttributes = FontAttributes.Bold,
+            TextColor = Color.FromArgb("#3D2C4E"),
+            HorizontalTextAlignment = TextAlignment.Center,
+            VerticalTextAlignment = TextAlignment.Center,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
         };
 
-        var name = new Label
-        {
-            Text = "Add profile",
-            FontFamily = "MomoTrustDisplay",
-            FontSize = 13,
-            FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#9AA7BD"),
-            HorizontalOptions = LayoutOptions.Center,
-        };
+        outer.Children.Add(tile);
+        outer.Children.Add(pill);
 
         var tap = new TapGestureRecognizer();
         tap.Tapped += OnAddTapped;
-        tile.GestureRecognizers.Add(tap);
+        outer.GestureRecognizers.Add(tap);
 
-        tile.Children.Add(avatar);
-        tile.Children.Add(name);
-        return tile;
+        return outer;
     }
 
     private void OnProfileTapped(PlayerProfile p)

@@ -14,8 +14,7 @@
     </ContentPage.Resources>
 
     <AbsoluteLayout>
-        <Image Source="app_bg.png" Aspect="AspectFill"
-               AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
         <!-- MAIN CONTENT -->
         <Grid x:Name="RootGrid"
               RowDefinitions="Auto,Auto,Auto,*,Auto,Auto"
@@ -25,20 +24,20 @@
 
             <!-- TOP BAR: Back + Level + Pause -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="icon_back_round.svg" HeightRequest="28" WidthRequest="28"
                                  BackgroundColor="Transparent" Padding="0"
                                  Clicked="OnBackClicked" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="20"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="20"
                        Padding="16,6"
                        HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="{Binding LevelDisplay}" TextColor="#22D3EE"
-                           FontSize="16" FontFamily="MomoTrustDisplay" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding LevelDisplay}" TextColor="#6D4AFF"
+                           FontSize="16" FontFamily="MadimiOne" FontAttributes="Bold" HorizontalOptions="Center" />
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="24"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="24"
                        Padding="0" WidthRequest="48" HeightRequest="48"
                        VerticalOptions="Center">
                     <ImageButton Source="pause.svg" HeightRequest="24" WidthRequest="24"
@@ -52,7 +51,7 @@
                                     SecondsRemaining="{Binding TimeRemainingSec}" />
 
             <!-- SUDOKU GRID -->
-            <Border Grid.Row="3" BackgroundColor="#0F1420"
+            <Border Grid.Row="3" BackgroundColor="#33B49CCF"
                     Padding="6" Margin="4,0"
                     VerticalOptions="Center" HorizontalOptions="Center">
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
@@ -62,57 +61,56 @@
             <!-- NUMBER BUTTONS with animal images -->
             <Grid Grid.Row="4" ColumnDefinitions="*,*,*,*,*,Auto"
                   ColumnSpacing="6" Padding="4,6">
-                <Frame Grid.Column="0" BackgroundColor="#182136" CornerRadius="14"
+                <Frame Grid.Column="0" BackgroundColor="#FFFDFA" CornerRadius="14"
                        Padding="0">
                     <ImageButton Source="cat.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="1" />
                 </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#182136" CornerRadius="14"
+                <Frame Grid.Column="1" BackgroundColor="#FFFDFA" CornerRadius="14"
                        Padding="0">
                     <ImageButton Source="elephant.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="2" />
                 </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#182136" CornerRadius="14"
+                <Frame Grid.Column="2" BackgroundColor="#FFFDFA" CornerRadius="14"
                        Padding="0">
                     <ImageButton Source="lion.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="3" />
                 </Frame>
-                <Frame Grid.Column="3" BackgroundColor="#182136" CornerRadius="14"
+                <Frame Grid.Column="3" BackgroundColor="#FFFDFA" CornerRadius="14"
                        Padding="0">
                     <ImageButton Source="owl.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="4" />
                 </Frame>
-                <Frame Grid.Column="4" BackgroundColor="#182136" CornerRadius="14"
+                <Frame Grid.Column="4" BackgroundColor="#FFFDFA" CornerRadius="14"
                        Padding="0">
                     <ImageButton Source="butterfly.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="5" />
                 </Frame>
-                <Frame Grid.Column="5" BackgroundColor="#182136" CornerRadius="14"
+                <Frame Grid.Column="5" BackgroundColor="#FFFDFA" CornerRadius="14"
                        Padding="0" WidthRequest="58" HeightRequest="58">
                     <Button Text="⌫" FontSize="28" FontAttributes="Bold"
-                            TextColor="#E7ECF5" BackgroundColor="Transparent"
+                            TextColor="#3D2C4E" BackgroundColor="Transparent"
                             Padding="0" Command="{Binding EraseCommand}" />
                 </Frame>
             </Grid>
 
             <!-- SHOW SOLUTION -->
             <VerticalStackLayout Grid.Row="5" Spacing="2" Margin="60,0">
-                <Button x:Name="SolutionButton"
-                        Text="💡 Show Solution"
+                <Button x:Name="SolutionCoinLabel"
                         FontSize="15" FontAttributes="Bold"
-                        TextColor="#1E1B4B" BackgroundColor="#F5A623"
+                        TextColor="#3D2C4E" BackgroundColor="#FFA94D"
                         CornerRadius="24" HeightRequest="50"
                         Clicked="OnShowSolutionClicked" />
-                <Label x:Name="SolutionCoinLabel"
-                       FontFamily="MomoTrustDisplay"
-                       FontSize="11"
-                       TextColor="#DBD748"
-                       HorizontalOptions="Center" />
+                <!-- <Label x:Name="SolutionCoinLabel" -->
+                <!--        FontFamily="MadimiOne" -->
+                <!--        FontSize="11" -->
+                <!--        TextColor="#D9A400" -->
+                <!--        HorizontalOptions="Center" /> -->
             </VerticalStackLayout>
 
         </Grid>

@@ -15,29 +15,34 @@ public static class MauiProgram
             .UseMauiMTAdmob()
             .ConfigureFonts(fonts =>
             {
-                // Primary font: MomoTrustDisplay for all screens
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "MomoTrustDisplay");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Milkyway");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Orbitron");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Inter");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "InterMedium");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "InterSemiBold");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "InterBold");
+                // Claymorphism type: Baloo 2 (rounded, soft, friendly)
+                fonts.AddFont("Baloo2-Regular.ttf", "Baloo2");
+                fonts.AddFont("Baloo2-Medium.ttf", "Baloo2Medium");
+                fonts.AddFont("Baloo2-SemiBold.ttf", "Baloo2SemiBold");
+                fonts.AddFont("Baloo2-Bold.ttf", "Baloo2Bold");
+                fonts.AddFont("Baloo2-ExtraBold.ttf", "Baloo2ExtraBold");
 
-                // Legacy aliases mapped to MomoTrustDisplay for backward compatibility
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "OpenSansSemibold");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "PressStart2P");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Baloo2");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Baloo2SemiBold");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Baloo2Bold");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Fredoka");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "FredokaSemiBold");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "Nunito");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "NunitoBold");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "NunitoExtraBold");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "BrickSans");
-                fonts.AddFont("MomoTrustDisplay-Regular.ttf", "SagoMini");
+                // Legacy alias: every XAML page uses MadimiOne
+                fonts.AddFont("Baloo2-Medium.ttf", "MadimiOne");
+
+                // Legacy aliases remapped to the clay type family
+                fonts.AddFont("Baloo2-Medium.ttf", "MomoTrustDisplay");
+                fonts.AddFont("Baloo2-Medium.ttf", "Milkyway");
+                fonts.AddFont("Baloo2-SemiBold.ttf", "Orbitron");
+                fonts.AddFont("Baloo2-Regular.ttf", "Inter");
+                fonts.AddFont("Baloo2-Medium.ttf", "InterMedium");
+                fonts.AddFont("Baloo2-SemiBold.ttf", "InterSemiBold");
+                fonts.AddFont("Baloo2-Bold.ttf", "InterBold");
+                fonts.AddFont("Baloo2-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("Baloo2-SemiBold.ttf", "OpenSansSemibold");
+                fonts.AddFont("Baloo2-ExtraBold.ttf", "PressStart2P");
+                fonts.AddFont("Baloo2-Medium.ttf", "Fredoka");
+                fonts.AddFont("Baloo2-SemiBold.ttf", "FredokaSemiBold");
+                fonts.AddFont("Baloo2-Regular.ttf", "Nunito");
+                fonts.AddFont("Baloo2-Bold.ttf", "NunitoBold");
+                fonts.AddFont("Baloo2-ExtraBold.ttf", "NunitoExtraBold");
+                fonts.AddFont("Baloo2-SemiBold.ttf", "BrickSans");
+                fonts.AddFont("Baloo2-Medium.ttf", "SagoMini");
             });
 
         builder.AddAudio();

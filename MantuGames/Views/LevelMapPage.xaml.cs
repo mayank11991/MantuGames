@@ -38,7 +38,7 @@ public partial class LevelMapPage : ContentPage
         this.AddBannerAd();
     }
 
-    private Color _gameAccentColor = Color.FromArgb("#8ECCCC");
+    private Color _gameAccentColor = Color.FromArgb("#7C5CFF");
 
     private void BuildMap()
     {
@@ -65,7 +65,7 @@ public partial class LevelMapPage : ContentPage
         Levels.Clear();
 
         int highest = ProgressService.Instance.GetHighestUnlocked(_gameId);
-        int show = highest + 5;
+        int show = Math.Min(highest + 50, 50); // Show up to 50 levels
 
         var levels = ProgressService.Instance.GetLevels(_gameId, show);
         foreach (var lp in levels)
@@ -85,11 +85,11 @@ public partial class LevelMapPage : ContentPage
             IsLocked = lp.IsLocked,
             IsCompleted = lp.IsCompleted,
             Stars = lp.IsCompleted ? lp.Stars : 0,
-            BgColor = Color.FromArgb("#182136"),
+            BgColor = Color.FromArgb("#FFFDFA"),
             StrokeColor = accent,
             FaceColor = accent,
             FaceOpacity = lp.IsLocked ? 0.6 : 1.0,
-            ShadowBrush = lp.IsLocked ? Brush.Transparent : new SolidColorBrush(Color.FromArgb("#882D2A3D")),
+            ShadowBrush = lp.IsLocked ? Brush.Transparent : new SolidColorBrush(Color.FromArgb("#668A6FA8")),
             ShowStars = lp.IsCompleted,
             LevelText = lp.LevelNumber.ToString(),
         };
@@ -243,10 +243,10 @@ public class LevelTileViewModel : INotifyPropertyChanged
         : new Label
         {
             Text = LevelText,
-            FontFamily = "MomoTrustDisplay",
+            FontFamily = "MadimiOne",
             FontSize = 28,
             FontAttributes = FontAttributes.Bold,
-            TextColor = Color.FromArgb("#160D02"),
+            TextColor = Color.FromArgb("#3D2C4E"),
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
