@@ -129,9 +129,33 @@ public class CtdDrawable : IDrawable
         float cx = _offsetX + c * _cellSize + _cellSize / 2;
         float cy = _offsetY + r * _cellSize + _cellSize / 2;
 
-        // Solid dot
+        // Glossy candy marble: soft drop shadow, darker lip, white ring, bright face with a
+        // radial glow, and a white shine in the top-left (same look as the CTA buttons).
+        float r0 = radius * 0.92f;
+        var dark = color.WithLuminosity(color.GetLuminosity() * 0.7f);
+        var light = color.WithLuminosity(Math.Min(0.92f, color.GetLuminosity() * 1.3f));
+
+        canvas.FillColor = Color.FromArgb("#2A1F2A44");
+        canvas.FillEllipse(cx - r0 * 0.9f, cy + r0 * 0.7f, r0 * 1.8f, r0 * 0.5f);
+
+        canvas.FillColor = dark;
+        canvas.FillCircle(cx, cy + r0 * 0.12f, r0);
+        canvas.FillColor = Colors.White;
+        canvas.FillCircle(cx, cy, r0);
+
+        float face = r0 * 0.84f;
+        // Fake radial glow with stacked circles (a gradient paint leaks into later fills on Android).
         canvas.FillColor = color;
-        canvas.FillCircle(cx, cy, radius);
+        canvas.FillCircle(cx, cy, face);
+        canvas.FillColor = light.WithAlpha(0.55f);
+        canvas.FillCircle(cx - face * 0.12f, cy - face * 0.14f, face * 0.72f);
+        canvas.FillColor = light.WithAlpha(0.6f);
+        canvas.FillCircle(cx - face * 0.2f, cy - face * 0.24f, face * 0.45f);
+
+        canvas.FillColor = Colors.White.WithAlpha(0.75f);
+        canvas.FillEllipse(cx - face * 0.6f, cy - face * 0.68f, face * 0.62f, face * 0.36f);
+        canvas.FillColor = Colors.White.WithAlpha(0.9f);
+        canvas.FillCircle(cx + face * 0.42f, cy - face * 0.34f, Math.Max(1.2f, face * 0.09f));
     }
 
     public (int r, int c) HitTest(float x, float y)

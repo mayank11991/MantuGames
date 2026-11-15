@@ -65,10 +65,10 @@ public partial class ThinkingBuddy : ContentView
         {
             while (IsLoaded)
             {
-                await AvatarRing.RotateToAsync(-6, 700, Easing.SinInOut);
-                await AvatarRing.RotateToAsync(6, 700, Easing.SinInOut);
+                await Bubble.TranslateToAsync(0, -3, 900, Easing.SinInOut);
+                await Bubble.TranslateToAsync(0, 0, 900, Easing.SinInOut);
             }
-            AvatarRing.Rotation = 0;
+            Bubble.TranslationY = 0;
         }
         catch { /* view torn down */ }
         finally { _bobbing = false; }

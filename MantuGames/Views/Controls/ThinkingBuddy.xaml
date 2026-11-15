@@ -8,7 +8,8 @@
 
     <Grid ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="0">
         <!-- Avatar -->
-        <Border x:Name="AvatarRing" Grid.Column="0"
+        <!-- Avatar and thought dots are hidden: the header shows only the level bubble. -->
+        <Border x:Name="AvatarRing" Grid.Column="0" IsVisible="False"
                 WidthRequest="52" HeightRequest="52" Padding="0"
                 BackgroundColor="#FFFFFF" Stroke="#FFFFFF" StrokeThickness="3"
                 VerticalOptions="End">
@@ -18,7 +19,7 @@
         </Border>
 
         <!-- Trailing thought dots -->
-        <Image Grid.Column="1" Source="thought_dots.png" WidthRequest="18" HeightRequest="18"
+        <Image Grid.Column="1" Source="thought_dots.png" IsVisible="False" WidthRequest="18" HeightRequest="18"
                VerticalOptions="Start" Margin="-2,2,-2,0" />
 
         <!-- Bubble -->
