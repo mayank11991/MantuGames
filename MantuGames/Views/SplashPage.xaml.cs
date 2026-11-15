@@ -58,7 +58,7 @@ public partial class SplashPage : ContentPage
 {
     private readonly DustEffect _dust = new();
     private IDispatcherTimer? _dustTimer;
-    private Label[] MantuLetters = null!;
+    private View[] MantuLetters = null!;
 
     public SplashPage()
     {
@@ -111,7 +111,7 @@ public partial class SplashPage : ContentPage
                 await Task.Delay(100);
                 MantuLetters[i].Opacity = 1;
                 AudioService.Instance.Play("thud");
-                await MantuLetters[i].TranslateToAsync(0, 0, 250, Easing.CubicOut);
+                await MantuLetters[i].TranslateToAsync(0, 0, 320, Easing.BounceOut);
 
                 double screenX = MantuRow.Bounds.X + MantuLetters[i].X + MantuLetters[i].Bounds.Width / 2 + CenterStack.Bounds.X;
                 double screenY = MantuRow.Bounds.Y + MantuLetters[i].Y + MantuLetters[i].Bounds.Height / 2 + CenterStack.Bounds.Y;

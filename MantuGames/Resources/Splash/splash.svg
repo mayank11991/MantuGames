@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Launch logo: four candy blocks (same style as the Block Stack icon) on the sky splash colour.
+     Kept inside the centre circle so Android 12+ never crops it. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <!-- Solid black fill — invisible against Color="#000000" splash background.
-       Replaces the .NET logo so no icon appears during the native OS splash. -->
-  <rect width="128" height="128" fill="#000000"/>
+  <ellipse cx="64" cy="98" rx="30" ry="4" fill="#1F2A44" opacity="0.15"/>
+  <g>
+    <rect x="34" y="37" width="28" height="28" rx="8" fill="#D4611A"/>
+    <rect x="34" y="34" width="28" height="28" rx="8" fill="#FF8A3D"/>
+    <rect x="39" y="38" width="9" height="4" rx="2" fill="#FFFFFF" opacity="0.6"/>
+
+    <rect x="66" y="37" width="28" height="28" rx="8" fill="#1A62C9"/>
+    <rect x="66" y="34" width="28" height="28" rx="8" fill="#2F8CFF"/>
+    <rect x="71" y="38" width="9" height="4" rx="2" fill="#FFFFFF" opacity="0.6"/>
+
+    <rect x="34" y="69" width="28" height="28" rx="8" fill="#239448"/>
+    <rect x="34" y="66" width="28" height="28" rx="8" fill="#3DC86A"/>
+    <rect x="39" y="70" width="9" height="4" rx="2" fill="#FFFFFF" opacity="0.6"/>
+
+    <rect x="66" y="69" width="28" height="28" rx="8" fill="#D99A00"/>
+    <rect x="66" y="66" width="28" height="28" rx="8" fill="#FFC83D"/>
+    <rect x="71" y="70" width="9" height="4" rx="2" fill="#FFFFFF" opacity="0.6"/>
+  </g>
 </svg>

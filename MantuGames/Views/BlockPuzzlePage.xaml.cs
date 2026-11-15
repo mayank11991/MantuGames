@@ -12,7 +12,8 @@ public partial class BlockPuzzlePage : ContentPage
     private BlockPuzzleViewModel _vm = null!;
     private int _startLevel = 1;
     private int _prevLinesCleared;
-    private BoxView[,] _cells = null!;
+    private GlossyBlock[,] _cells = null!;
+    private static readonly Color EmptyCell = Color.FromArgb("#EAF2FB");
     private double _cellSize = 24;
 
     // Gesture tracking
@@ -94,7 +95,7 @@ public partial class BlockPuzzlePage : ContentPage
         BoardGrid.RowDefinitions.Clear();
         BoardGrid.ColumnDefinitions.Clear();
 
-        _cells = new BoxView[BlockPuzzleViewModel.Rows, BlockPuzzleViewModel.Cols];
+        _cells = new GlossyBlock[BlockPuzzleViewModel.Rows, BlockPuzzleViewModel.Cols];
 
         // Size from BoardContainer's own measured bounds (it fills whatever
         // space is left in the "*" row after the top bar/score row/next-piece
@@ -127,12 +128,7 @@ public partial class BlockPuzzlePage : ContentPage
         for (int r = 0; r < BlockPuzzleViewModel.Rows; r++)
             for (int c = 0; c < BlockPuzzleViewModel.Cols; c++)
             {
-                var bv = new BoxView
-                {
-                    Color        = Color.FromArgb("#EAF2FB"),
-                    CornerRadius = 4,
-                    Margin       = new Thickness(0.5)
-                };
+                var bv = new GlossyBlock(cell, EmptyCell);
                 Grid.SetRow(bv, r);
                 Grid.SetColumn(bv, c);
                 BoardGrid.Children.Add(bv);
@@ -152,7 +148,7 @@ public partial class BlockPuzzlePage : ContentPage
             for (int c = 0; c < BlockPuzzleViewModel.Cols; c++)
                 _cells[r, c].Color = _vm.Board[r, c]
                     ? _vm.BoardColors[r, c]
-                    : Color.FromArgb("#EAF2FB");
+                    : EmptyCell;
 
         var piece = _vm.CurrentPiece;
         if (piece == null || _vm.IsGameOver) return;
@@ -200,7 +196,7 @@ public partial class BlockPuzzlePage : ContentPage
         for (int r = 0; r < N; r++)
             for (int c = 0; c < N; c++)
             {
-                var bv = new BoxView { Color = Colors.Transparent, Margin = new Thickness(0.5) };
+                var bv = new GlossyBlock(PS, Colors.Transparent);
                 Grid.SetRow(bv, r); Grid.SetColumn(bv, c);
                 NextPieceGrid.Children.Add(bv);
             }
@@ -214,7 +210,7 @@ public partial class BlockPuzzlePage : ContentPage
 
         const int N = 4;
         foreach (var ch in NextPieceGrid.Children)
-            if (ch is BoxView bv) bv.Color = Colors.Transparent;
+            if (ch is GlossyBlock bv) bv.Color = Colors.Transparent;
 
         int sr = next.Shape.GetLength(0), sc = next.Shape.GetLength(1);
         int or = (N - sr) / 2, oc = (N - sc) / 2;
@@ -224,7 +220,7 @@ public partial class BlockPuzzlePage : ContentPage
                 if (next.Shape[r, c] == 0) continue;
                 int idx = (or + r) * N + (oc + c);
                 if (idx >= 0 && idx < NextPieceGrid.Children.Count
-                    && NextPieceGrid.Children[idx] is BoxView bv)
+                    && NextPieceGrid.Children[idx] is GlossyBlock bv)
                     bv.Color = next.PieceColor;
             }
     }
@@ -319,8 +315,9 @@ public partial class BlockPuzzlePage : ContentPage
 
                     for (int c = 0; c < cols; c++)
                     {
-                        var shard = new BoxView { Color = colors[c], CornerRadius = 4 };
-                        AbsoluteLayout.SetLayoutBounds(shard, new Rect(c * cs + 0.5, row * cs + 0.5, cs - 1, cs - 1));
+                        if (colors[c].Alpha < 0.5f) continue;
+                        var shard = new GlossyBlock(cs, EmptyCell) { Color = colors[c] };
+                        AbsoluteLayout.SetLayoutBounds(shard, new Rect(c * cs, row * cs, cs, cs));
                         FxLayer.Children.Add(shard);
                         // Burst away from the row's centre; outer blocks fly further.
                         double dir = (c - (cols - 1) / 2.0) / ((cols - 1) / 2.0);
@@ -361,7 +358,7 @@ public partial class BlockPuzzlePage : ContentPage
         await flash.FadeToAsync(0, 220, Easing.CubicIn);
     }
 
-    private static async Task BurstAsync(BoxView shard, double dx, double dy, int delay)
+    private static async Task BurstAsync(VisualElement shard, double dx, double dy, int delay)
     {
         if (delay > 0) await Task.Delay(delay);
         await shard.ScaleToAsync(1.18, 80, Easing.CubicOut);

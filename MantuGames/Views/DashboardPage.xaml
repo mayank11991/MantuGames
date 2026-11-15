@@ -73,31 +73,20 @@
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <!-- Stats strip -->
-                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,18,0,0">
+                <!-- Stats strip: progress only. Coins live in the wallet pill above;
+                     stars are per game and shown on each game's level screen. -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,18,0,0">
                     <Border Grid.Column="0" Style="{StaticResource PopCard}" Padding="12,10">
-                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
-                            <VerticalStackLayout Spacing="-4" VerticalOptions="Center">
-                                <Label x:Name="StarsStat" Text="0" FontFamily="Display" FontSize="22" />
-                                <Label Text="stars" Style="{StaticResource PopMutedLabel}" FontSize="11" />
-                            </VerticalStackLayout>
-                        </HorizontalStackLayout>
+                        <VerticalStackLayout Spacing="-4" HorizontalOptions="Center">
+                            <Label x:Name="LevelsStat" Text="0" FontFamily="Display" FontSize="22" HorizontalOptions="Center" />
+                            <Label Text="levels done" Style="{StaticResource PopMutedLabel}" FontSize="11" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
                     </Border>
                     <Border Grid.Column="1" Style="{StaticResource PopCard}" Padding="12,10">
-                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
-                            <VerticalStackLayout Spacing="-4" VerticalOptions="Center">
-                                <Label x:Name="WinsStat" Text="0" FontFamily="Display" FontSize="22" />
-                                <Label Text="wins" Style="{StaticResource PopMutedLabel}" FontSize="11" />
-                            </VerticalStackLayout>
-                        </HorizontalStackLayout>
-                    </Border>
-                    <Border Grid.Column="2" Style="{StaticResource PopCard}" Padding="12,10">
-                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
-                            <VerticalStackLayout Spacing="-4" VerticalOptions="Center">
-                                <Label x:Name="LevelsStat" Text="0" FontFamily="Display" FontSize="22" />
-                                <Label Text="levels" Style="{StaticResource PopMutedLabel}" FontSize="11" />
-                            </VerticalStackLayout>
-                        </HorizontalStackLayout>
+                        <VerticalStackLayout Spacing="-4" HorizontalOptions="Center">
+                            <Label x:Name="WinsStat" Text="0" FontFamily="Display" FontSize="22" HorizontalOptions="Center" />
+                            <Label Text="games won" Style="{StaticResource PopMutedLabel}" FontSize="11" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
                     </Border>
                 </Grid>
 

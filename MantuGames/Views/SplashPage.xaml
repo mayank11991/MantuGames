@@ -4,11 +4,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:MantuGames.Views.Controls"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="#E9F95A"
+             BackgroundColor="#BFE8FF"
              x:Class="MantuGames.Views.SplashPage">
 
+    <!-- Same sky / clouds / hills scene as the games, so launch flows straight into the app. -->
     <Grid x:Name="Root" HorizontalOptions="Fill" VerticalOptions="Fill">
-        <controls:ClayBackground AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.RowSpan="3" />
+        <controls:ClayBackground Variant="Night" />
         <GraphicsView x:Name="DustCanvas"
                       HorizontalOptions="Fill"
                       VerticalOptions="Fill"
@@ -16,48 +17,56 @@
         <VerticalStackLayout x:Name="CenterStack"
                              HorizontalOptions="Center"
                              VerticalOptions="Center"
-                             Spacing="10">
-            <Grid x:Name="MantuRow"
-                  HorizontalOptions="Center"
-                  ColumnSpacing="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="58" />
-                    <ColumnDefinition Width="58" />
-                    <ColumnDefinition Width="58" />
-                    <ColumnDefinition Width="58" />
-                    <ColumnDefinition Width="58" />
-                </Grid.ColumnDefinitions>
-                <Label x:Name="L0" Text="M" Grid.Column="0"
-                       FontFamily="Display" FontSize="92"
-                       TextColor="#111114"
-                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                <Label x:Name="L1" Text="A" Grid.Column="1"
-                       FontFamily="Display" FontSize="92"
-                       TextColor="#111114"
-                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                <Label x:Name="L2" Text="N" Grid.Column="2"
-                       FontFamily="Display" FontSize="92"
-                       TextColor="#111114"
-                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                <Label x:Name="L3" Text="T" Grid.Column="3"
-                       FontFamily="Display" FontSize="92"
-                       TextColor="#111114"
-                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-                <Label x:Name="L4" Text="U" Grid.Column="4"
-                       FontFamily="Display" FontSize="92"
-                       TextColor="#111114"
-                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                             Margin="0,0,0,80"
+                             Spacing="18">
+            <!-- MANTU: one candy block per letter -->
+            <Grid x:Name="MantuRow" HorizontalOptions="Center" ColumnSpacing="6"
+                  ColumnDefinitions="Auto,Auto,Auto,Auto,Auto">
+                <Border x:Name="L0" Grid.Column="0" WidthRequest="58" HeightRequest="64"
+                        BackgroundColor="#FF8A3D" Stroke="#FFFFFF" StrokeThickness="3"
+                        Rotation="-6" Margin="0,0,0,7">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                    <Border.Shadow><Shadow Brush="#D4611A" Offset="0,6" Radius="0" Opacity="1" /></Border.Shadow>
+                    <Label Text="M" FontFamily="Display" FontSize="44" TextColor="#FFFFFF"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                </Border>
+                <Border x:Name="L1" Grid.Column="1" WidthRequest="58" HeightRequest="64"
+                        BackgroundColor="#2F8CFF" Stroke="#FFFFFF" StrokeThickness="3"
+                        Rotation="4" Margin="0,0,0,7">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                    <Border.Shadow><Shadow Brush="#1A62C9" Offset="0,6" Radius="0" Opacity="1" /></Border.Shadow>
+                    <Label Text="A" FontFamily="Display" FontSize="44" TextColor="#FFFFFF"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                </Border>
+                <Border x:Name="L2" Grid.Column="2" WidthRequest="58" HeightRequest="64"
+                        BackgroundColor="#FFC83D" Stroke="#FFFFFF" StrokeThickness="3"
+                        Rotation="-3" Margin="0,0,0,7">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                    <Border.Shadow><Shadow Brush="#D99A00" Offset="0,6" Radius="0" Opacity="1" /></Border.Shadow>
+                    <Label Text="N" FontFamily="Display" FontSize="44" TextColor="#FFFFFF"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                </Border>
+                <Border x:Name="L3" Grid.Column="3" WidthRequest="58" HeightRequest="64"
+                        BackgroundColor="#3DC86A" Stroke="#FFFFFF" StrokeThickness="3"
+                        Rotation="5" Margin="0,0,0,7">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                    <Border.Shadow><Shadow Brush="#239448" Offset="0,6" Radius="0" Opacity="1" /></Border.Shadow>
+                    <Label Text="T" FontFamily="Display" FontSize="44" TextColor="#FFFFFF"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                </Border>
+                <Border x:Name="L4" Grid.Column="4" WidthRequest="58" HeightRequest="64"
+                        BackgroundColor="#FF6FA5" Stroke="#FFFFFF" StrokeThickness="3"
+                        Rotation="-5" Margin="0,0,0,7">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                    <Border.Shadow><Shadow Brush="#D2437A" Offset="0,6" Radius="0" Opacity="1" /></Border.Shadow>
+                    <Label Text="U" FontFamily="Display" FontSize="44" TextColor="#FFFFFF"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                </Border>
             </Grid>
-            <Label x:Name="GamingsLabel"
-                   Text="GAMES"
-                   FontFamily="Baloo2ExtraBold"
-                   FontSize="18"
-                   TextColor="#FFFFFF"
-                   BackgroundColor="#111114"
-                   HorizontalOptions="Center"
-                   CharacterSpacing="10"
-                   Opacity="0"
-                   Padding="22,6,12,4" />
+            <Border x:Name="GamingsLabel" Style="{StaticResource CtaPillBlue}"
+                    HorizontalOptions="Center" Opacity="0" Padding="26,8">
+                <Label Text="GAMES" Style="{StaticResource CtaPillLabel}" FontSize="20" CharacterSpacing="8" />
+            </Border>
         </VerticalStackLayout>
     </Grid>
 

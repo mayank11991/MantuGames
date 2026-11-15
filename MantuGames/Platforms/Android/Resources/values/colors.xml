@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Mantu Games claymorphism palette -->
-    <color name="colorPrimary">#F7EFFF</color>
-    <color name="colorPrimaryDark">#F7EFFF</color>
-    <color name="colorAccent">#7C5CFF</color>
-    <color name="statusBarColor">#F7EFFF</color>
-    <color name="navigationBarColor">#F7EFFF</color>
+    <color name="colorPrimary">#BFE8FF</color>
+    <color name="colorPrimaryDark">#BFE8FF</color>
+    <color name="colorAccent">#2F8CFF</color>
+    <color name="statusBarColor">#BFE8FF</color>
+    <color name="navigationBarColor">#BFE8FF</color>
 </resources>

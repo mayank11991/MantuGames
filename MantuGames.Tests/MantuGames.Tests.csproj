@@ -20,6 +20,7 @@
     <Compile Include="..\MantuGames\Models\HanoiSolver.cs" Link="Models\HanoiSolver.cs" />
     <Compile Include="..\MantuGames\Models\AnimalCrushPuzzle.cs" Link="Models\AnimalCrushPuzzle.cs" />
     <Compile Include="..\MantuGames\Models\ArrowLinesPuzzle.cs" Link="Models\ArrowLinesPuzzle.cs" />
+    <Compile Include="..\MantuGames\Models\MazePuzzle.cs" Link="Models\MazePuzzle.cs" />
   </ItemGroup>
 
 </Project>

@@ -20,6 +20,7 @@ internal sealed class MazeDrawable : IDrawable
     public float OffsetY { get; private set; }
 
     private static readonly Color WallColor = Color.FromArgb("#5DB83A");
+    private static readonly Color RimColor = Color.FromArgb("#3E8E25");
     private static readonly Color FloorColor = Color.FromArgb("#FFEFC2");
     private static readonly Color TrailColor = Color.FromArgb("#FFC83D");
 
@@ -29,50 +30,46 @@ internal sealed class MazeDrawable : IDrawable
 
         var (ox, oy, cs) = Layout(bounds);
 
-        // 1) Fill entire area with wall color
-        canvas.FillColor = WallColor;
-        canvas.FillRectangle(bounds);
+        // 1) The picture: a dark rim, then the green hedge, drawn only under the shape's cells
+        //    (each cell slightly oversized so neighbours melt into one smooth silhouette).
+        DrawSilhouette(canvas, ox, oy, cs, cs * 0.2f, RimColor);
+        DrawSilhouette(canvas, ox, oy, cs, cs * 0.1f, WallColor);
 
-        // 2) Draw each cell as a circle (the open area)
+        // 2) Each open cell is a round clearing
         canvas.FillColor = FloorColor;
         float radius = cs * 0.38f;
         for (int r = 0; r < Maze.Rows; r++)
         for (int c = 0; c < Maze.Cols; c++)
         {
-            float cx = ox + c * cs + cs / 2f;
-            float cy = oy + r * cs + cs / 2f;
-            canvas.FillCircle(cx, cy, radius);
+            if (!Maze.Active[r, c]) continue;
+            canvas.FillCircle(ox + c * cs + cs / 2f, oy + r * cs + cs / 2f, radius);
         }
 
-        // 3) For each open passage, draw a rounded rectangle connecting the two cell centers
-        canvas.FillColor = FloorColor;
-        float pw = cs * 0.36f; // passage width
+        // 3) Passages join neighbouring clearings
+        float pw = cs * 0.36f;
         for (int r = 0; r < Maze.Rows; r++)
         for (int c = 0; c < Maze.Cols; c++)
         {
-            var cell = Maze.Cells[r, c];
+            if (!Maze.Active[r, c]) continue;
             float cx = ox + c * cs + cs / 2f;
             float cy = oy + r * cs + cs / 2f;
-
-            if (!cell.WallRight && c + 1 < Maze.Cols)
-            {
-                // Horizontal passage to the right
-                float nx = ox + (c + 1) * cs + cs / 2f;
-                float left = cx;
-                float top = cy - pw / 2f;
-                float width = nx - cx;
-                canvas.FillRoundedRectangle(left, top, width, pw, pw / 2f);
-            }
-            if (!cell.WallBottom && r + 1 < Maze.Rows)
-            {
-                // Vertical passage downward
-                float ny = oy + (r + 1) * cs + cs / 2f;
-                float left = cx - pw / 2f;
-                float top = cy;
-                float height = ny - cy;
-                canvas.FillRoundedRectangle(left, top, pw, height, pw / 2f);
-            }
+            if (Maze.CanMove(r, c, 0, 1))
+                canvas.FillRoundedRectangle(cx, cy - pw / 2f, cs, pw, pw / 2f);
+            if (Maze.CanMove(r, c, 1, 0))
+                canvas.FillRoundedRectangle(cx - pw / 2f, cy, pw, cs, pw / 2f);
         }
+
+        // Entrance marker: a small orange arrow under the start clearing.
+        var (sr, sc) = Maze.Start;
+        float sx = ox + sc * cs + cs / 2f, sy = oy + sr * cs + cs / 2f;
+        var arrow = new PathF();
+        float a = cs * 0.22f;
+        arrow.MoveTo(sx, sy + cs * 0.52f);
+        arrow.LineTo(sx - a, sy + cs * 0.52f + a);
+        arrow.LineTo(sx + a, sy + cs * 0.52f + a);
+        arrow.Close();
+        canvas.FillColor = Color.FromArgb("#FF8A3D");
+        canvas.FillPath(arrow);
 
         // 4) Breadcrumb trail — tiny dots
         canvas.FillColor = TrailColor;
@@ -92,12 +89,24 @@ internal sealed class MazeDrawable : IDrawable
         canvas.FillCircle(px, py + 2, pr * 1.1f);
     }
 
+    private void DrawSilhouette(ICanvas canvas, float ox, float oy, float cs, float grow, Color color)
+    {
+        canvas.FillColor = color;
+        for (int r = 0; r < Maze!.Rows; r++)
+        for (int c = 0; c < Maze.Cols; c++)
+        {
+            if (!Maze.Active[r, c]) continue;
+            canvas.FillRoundedRectangle(ox + c * cs - grow, oy + r * cs - grow, cs + grow * 2, cs + grow * 2, cs * 0.3f);
+        }
+    }
+
     public (float ox, float oy, float cs) Layout(RectF bounds)
     {
         if (Maze == null) return (0, 0, 0);
-        CellSize = Math.Min(bounds.Width / Maze.Cols, bounds.Height / Maze.Rows);
+        // Half a cell of margin on every side for the rim, plus room for the entrance arrow.
+        CellSize = Math.Min(bounds.Width / (Maze.Cols + 0.6f), bounds.Height / (Maze.Rows + 1.2f));
         OffsetX = (bounds.Width - CellSize * Maze.Cols) / 2f;
-        OffsetY = (bounds.Height - CellSize * Maze.Rows) / 2f;
+        OffsetY = (bounds.Height - CellSize * (Maze.Rows + 0.6f)) / 2f + CellSize * 0.1f;
         return (OffsetX, OffsetY, CellSize);
     }
 }
@@ -158,8 +167,7 @@ public partial class MazeRunnerPage : ContentPage
     private void StartLevel()
     {
         _maze = MazePuzzle.ForLevel(_level);
-        _playerRow = 0;
-        _playerCol = 0;
+        (_playerRow, _playerCol) = _maze.Start;
         _moves = 0;
         _gameEnded = false;
         _totalSec = ProgressService.GetTimerSeconds(_level);
@@ -173,16 +181,16 @@ public partial class MazeRunnerPage : ContentPage
 
         DestinationImage.IsVisible = true;
 
-        LevelLabel.Text = $"Level {_level}";
+        LevelLabel.Text = $"Level {_level} · {_maze.ShapeName}";
         MovesLabel.Text = "Moves: 0";
 
         _drawable = new MazeDrawable
         {
             Maze = _maze,
-            PlayerRow = 0f,
-            PlayerCol = 0f,
+            PlayerRow = _playerRow,
+            PlayerCol = _playerCol,
         };
-        _drawable.Trail.Add((0, 0));
+        _drawable.Trail.Add(_maze.Start);
         MazeCanvas.Drawable = _drawable;
 
         // Reset destination image state from previous win animation
@@ -261,51 +269,8 @@ public partial class MazeRunnerPage : ContentPage
         }
     }
 
-    private List<(int r, int c)>? SolvePath()
-    {
-        if (_maze == null) return null;
-
-        var prev = new Dictionary<(int r, int c), (int r, int c)>();
-        var queue = new Queue<(int r, int c)>();
-        prev[((0, 0))] = ((-1, -1));
-        queue.Enqueue(((0, 0)));
-
-        (int, int)[] dirs = { (-1, 0), (0, 1), (1, 0), (0, -1) };
-
-        while (queue.Count > 0)
-        {
-            var (r, c) = queue.Dequeue();
-            if ((r, c) == _maze.End) break;
-
-            foreach (var (dr, dc) in dirs)
-            {
-                int nr = r + dr, nc = c + dc;
-                if (nr < 0 || nr >= _maze.Rows || nc < 0 || nc >= _maze.Cols) continue;
-                if (prev.ContainsKey(((nr, nc)))) continue;
-
-                if (dr == -1 && _maze.Cells[r, c].WallTop) continue;
-                if (dr == 1 && _maze.Cells[r, c].WallBottom) continue;
-                if (dc == -1 && _maze.Cells[r, c].WallLeft) continue;
-                if (dc == 1 && _maze.Cells[r, c].WallRight) continue;
-
-                prev[((nr, nc))] = ((r, c));
-                queue.Enqueue(((nr, nc)));
-            }
-        }
-
-        if (!prev.ContainsKey(_maze.End)) return null;
-
-        var path = new List<(int r, int c)>();
-        var cur = _maze.End;
-        while (cur != ((-1, -1)))
-        {
-            path.Add(cur);
-            cur = prev[cur];
-        }
-
-        path.Reverse();
-        return path;
-    }
+    private List<(int r, int c)>? SolvePath() =>
+        _maze?.PathTo((_playerRow, _playerCol), _maze.End);
 
     // ── Timers ──────────────────────────────────────────────────────────────
     private void StartTimers()
@@ -356,17 +321,17 @@ public partial class MazeRunnerPage : ContentPage
         float px = ox + _drawable.PlayerCol * cs + cs / 2f;
         float py = oy + _drawable.PlayerRow * cs + cs / 2f + _drawable.PlayerBob;
 
-        float imgHalf = cs * 0.20f;
-        PlayerImage.WidthRequest = cs * 0.40f;
-        PlayerImage.HeightRequest = cs * 0.40f;
+        float imgHalf = cs * 0.36f;
+        PlayerImage.WidthRequest = cs * 0.72f;
+        PlayerImage.HeightRequest = cs * 0.72f;
         PlayerImage.TranslationX = px - imgHalf;
         PlayerImage.TranslationY = py - imgHalf;
 
-        float dstHalf = cs * 0.22f;
-        float dx = ox + (_maze.Cols - 1) * cs + cs / 2f;
-        float dy = oy + (_maze.Rows - 1) * cs + cs / 2f;
-        DestinationImage.WidthRequest = cs * 0.44f;
-        DestinationImage.HeightRequest = cs * 0.44f;
+        float dstHalf = cs * 0.34f;
+        float dx = ox + _maze.End.c * cs + cs / 2f;
+        float dy = oy + _maze.End.r * cs + cs / 2f;
+        DestinationImage.WidthRequest = cs * 0.68f;
+        DestinationImage.HeightRequest = cs * 0.68f;
         DestinationImage.TranslationX = dx - dstHalf;
         DestinationImage.TranslationY = dy - dstHalf;
     }
@@ -415,11 +380,7 @@ public partial class MazeRunnerPage : ContentPage
 
     private float GetCellSize()
     {
-        if (_maze == null) return 0;
-        float w = (float)MazeCanvas.Width;
-        float h = (float)MazeCanvas.Height;
-        if (w <= 0 || h <= 0) return 0;
-        return Math.Min(w / _maze.Cols, h / _maze.Rows);
+        return _maze == null ? 0 : _drawable.CellSize;
     }
 
     private async Task TryMoveMultiple(int dr, int dc, int count)
@@ -436,11 +397,7 @@ public partial class MazeRunnerPage : ContentPage
     {
         if (_isMoving || _gameEnded || _maze == null) return;
 
-        var cell = _maze.Cells[_playerRow, _playerCol];
-        bool canMove = (dr == -1 && !cell.WallTop)
-                       || (dr == 1 && !cell.WallBottom)
-                       || (dc == -1 && !cell.WallLeft)
-                       || (dc == 1 && !cell.WallRight);
+        bool canMove = _maze.CanMove(_playerRow, _playerCol, dr, dc);
 
         if (!canMove)
         {

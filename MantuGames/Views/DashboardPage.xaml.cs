@@ -117,18 +117,11 @@ public partial class DashboardPage : ContentPage
         HeaderPlayerName.Text = string.IsNullOrWhiteSpace(active?.Name) ? "Player" : active!.Name;
         CoinBalanceLabel.Text = CoinService.Balance.ToString();
 
-        // Progress strip: stars, wins and completed levels across all games
-        int stars = 0, levels = 0;
+        // Progress strip: completed levels and wins across all games. Stars are per game
+        // (level screen) and coins are the wallet pill, so neither is repeated here.
+        int levels = 0;
         foreach (var g in DashboardViewModel.Games)
-        {
-            foreach (var lp in ProgressService.Instance.GetLevels(g.Id, 50))
-            {
-                if (!lp.IsCompleted) continue;
-                levels++;
-                stars += lp.Stars;
-            }
-        }
-        StarsStat.Text = stars.ToString();
+            levels += ProgressService.Instance.GetLevels(g.Id, 50).Count(lp => lp.IsCompleted);
         LevelsStat.Text = levels.ToString();
         WinsStat.Text = StatsService.GetTotals().Won.ToString();
     }

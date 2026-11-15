@@ -83,7 +83,7 @@ public partial class LevelMapPage : ContentPage
             Levels.Add(CreateLevelTileViewModel(lp));
         }
         ProgressLabel.Text = $"{done} / {levels.Count} levels";
-        StarsLabel.Text = stars.ToString();
+        StarsLabel.Text = $"{stars} / {levels.Count * 3}";
     }
 
     // Tile states: completed = white + green candy lip + stars; current = orange CTA;
