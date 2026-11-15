@@ -116,7 +116,7 @@ public class CtdDrawable : IDrawable
 
     private void DrawDots(ICanvas canvas, int rows, int cols)
     {
-        float radius = Math.Max(4, (_cellSize - 6) / 2f);
+        float radius = Math.Max(4, _cellSize * 0.33f);
         foreach (var pair in _vm.Pairs)
         {
             DrawDot(canvas, pair.R1, pair.C1, pair.Color, radius);
@@ -147,15 +147,18 @@ public class CtdDrawable : IDrawable
         // Fake radial glow with stacked circles (a gradient paint leaks into later fills on Android).
         canvas.FillColor = color;
         canvas.FillCircle(cx, cy, face);
-        canvas.FillColor = light.WithAlpha(0.55f);
-        canvas.FillCircle(cx - face * 0.12f, cy - face * 0.14f, face * 0.72f);
-        canvas.FillColor = light.WithAlpha(0.6f);
-        canvas.FillCircle(cx - face * 0.2f, cy - face * 0.24f, face * 0.45f);
+        canvas.FillColor = light.WithAlpha(0.45f);
+        canvas.FillCircle(cx - face * 0.1f, cy - face * 0.12f, face * 0.7f);
 
-        canvas.FillColor = Colors.White.WithAlpha(0.75f);
-        canvas.FillEllipse(cx - face * 0.6f, cy - face * 0.68f, face * 0.62f, face * 0.36f);
+        // Rim light along the bottom edge, then a big glossy highlight and a sparkle.
+        canvas.FillColor = Colors.White.WithAlpha(0.35f);
+        canvas.FillEllipse(cx - face * 0.5f, cy + face * 0.5f, face * 1.0f, face * 0.3f);
+        canvas.FillColor = color;
+        canvas.FillEllipse(cx - face * 0.58f, cy + face * 0.38f, face * 1.16f, face * 0.3f);
         canvas.FillColor = Colors.White.WithAlpha(0.9f);
-        canvas.FillCircle(cx + face * 0.42f, cy - face * 0.34f, Math.Max(1.2f, face * 0.09f));
+        canvas.FillEllipse(cx - face * 0.66f, cy - face * 0.74f, face * 0.86f, face * 0.5f);
+        canvas.FillColor = Colors.White;
+        canvas.FillCircle(cx + face * 0.4f, cy - face * 0.36f, Math.Max(1.4f, face * 0.12f));
     }
 
     public (int r, int c) HitTest(float x, float y)
