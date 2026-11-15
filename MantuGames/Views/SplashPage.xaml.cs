@@ -110,6 +110,7 @@ public partial class SplashPage : ContentPage
             {
                 await Task.Delay(100);
                 MantuLetters[i].Opacity = 1;
+                MantuLetters[i].IsVisible = true;
                 AudioService.Instance.Play("thud");
                 await MantuLetters[i].TranslateToAsync(0, 0, 320, Easing.BounceOut);
 
@@ -125,6 +126,7 @@ public partial class SplashPage : ContentPage
             GamingsLabel.TranslationX = 0;
             GamingsLabel.TranslationY = -200;
             GamingsLabel.Opacity = 1;
+            GamingsLabel.IsVisible = true;
             await GamingsLabel.TranslateToAsync(0, 0, 400, Easing.CubicIn);
             AudioService.Instance.Play("thud");
             await ShakeScreenAsync();
