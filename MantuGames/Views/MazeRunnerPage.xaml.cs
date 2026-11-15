@@ -73,7 +73,7 @@ internal sealed class MazeDrawable : IDrawable
 
         // 4) Breadcrumb trail — tiny dots
         canvas.FillColor = TrailColor;
-        float tr = cs * 0.08f;
+        float tr = cs * 0.11f;
         foreach (var (trr, tc) in Trail)
         {
             float cx = ox + tc * cs + cs / 2f;
@@ -81,12 +81,26 @@ internal sealed class MazeDrawable : IDrawable
             canvas.FillCircle(cx, cy, tr);
         }
 
-        // 5) Player glow
+        // 5) Goal badge: pulsing gold ring with a red disc, so the flag pops off the path.
+        var (er, ec) = Maze.End;
+        float gx = ox + ec * cs + cs / 2f, gy = oy + er * cs + cs / 2f;
+        float pulse = 1f + 0.08f * MathF.Sin(PlayerBob * 1.3f);
+        canvas.FillColor = Color.FromArgb("#55FFC83D");
+        canvas.FillCircle(gx, gy, cs * 0.62f * pulse);
+        canvas.FillColor = Color.FromArgb("#FFC83D");
+        canvas.FillCircle(gx, gy, cs * 0.46f);
+        canvas.FillColor = Colors.White;
+        canvas.FillCircle(gx, gy, cs * 0.38f);
+
+        // 6) Player badge: blue disc with a white ring and a soft shadow; the cat sits on top.
         float px = ox + PlayerCol * cs + cs / 2f;
         float py = oy + PlayerRow * cs + cs / 2f + PlayerBob;
-        float pr = cs * 0.22f;
-        canvas.FillColor = Color.FromArgb("#22B388FF");
-        canvas.FillCircle(px, py + 2, pr * 1.1f);
+        canvas.FillColor = Color.FromArgb("#331F2A44");
+        canvas.FillEllipse(px - cs * 0.4f, py + cs * 0.26f, cs * 0.8f, cs * 0.24f);
+        canvas.FillColor = Colors.White;
+        canvas.FillCircle(px, py, cs * 0.47f);
+        canvas.FillColor = Color.FromArgb("#2F8CFF");
+        canvas.FillCircle(px, py, cs * 0.40f);
     }
 
     private void DrawSilhouette(ICanvas canvas, float ox, float oy, float cs, float grow, Color color)
@@ -104,7 +118,7 @@ internal sealed class MazeDrawable : IDrawable
     {
         if (Maze == null) return (0, 0, 0);
         // Half a cell of margin on every side for the rim, plus room for the entrance arrow.
-        CellSize = Math.Min(bounds.Width / (Maze.Cols + 0.6f), bounds.Height / (Maze.Rows + 1.2f));
+        CellSize = Math.Min(bounds.Width / (Maze.Cols + 0.5f), bounds.Height / (Maze.Rows + 1.0f));
         OffsetX = (bounds.Width - CellSize * Maze.Cols) / 2f;
         OffsetY = (bounds.Height - CellSize * (Maze.Rows + 0.6f)) / 2f + CellSize * 0.1f;
         return (OffsetX, OffsetY, CellSize);
@@ -321,17 +335,17 @@ public partial class MazeRunnerPage : ContentPage
         float px = ox + _drawable.PlayerCol * cs + cs / 2f;
         float py = oy + _drawable.PlayerRow * cs + cs / 2f + _drawable.PlayerBob;
 
-        float imgHalf = cs * 0.36f;
-        PlayerImage.WidthRequest = cs * 0.72f;
-        PlayerImage.HeightRequest = cs * 0.72f;
+        float imgHalf = cs * 0.34f;
+        PlayerImage.WidthRequest = cs * 0.68f;
+        PlayerImage.HeightRequest = cs * 0.68f;
         PlayerImage.TranslationX = px - imgHalf;
         PlayerImage.TranslationY = py - imgHalf;
 
-        float dstHalf = cs * 0.34f;
+        float dstHalf = cs * 0.3f;
         float dx = ox + _maze.End.c * cs + cs / 2f;
         float dy = oy + _maze.End.r * cs + cs / 2f;
-        DestinationImage.WidthRequest = cs * 0.68f;
-        DestinationImage.HeightRequest = cs * 0.68f;
+        DestinationImage.WidthRequest = cs * 0.6f;
+        DestinationImage.HeightRequest = cs * 0.6f;
         DestinationImage.TranslationX = dx - dstHalf;
         DestinationImage.TranslationY = dy - dstHalf;
     }

@@ -224,12 +224,16 @@ public class MazePuzzle
     public static MazePuzzle ForLevel(int level)
     {
         level = Math.Max(1, level);
-        int size = level <= 4 ? 11 : level <= 12 ? 13 : level <= 24 ? 15 : 17;
+        // Small grids early so every cell is big and easy to see; star needs a bit more room.
+        int size = level <= 5 ? 9 : level <= 14 ? 11 : level <= 29 ? 13 : 15;
 
         var shape = MazeShape.All[(level - 1) % MazeShape.All.Length];
-        int rows = size, cols = size;
+        size = Math.Max(size, shape.MinSize);
+        // Phone screens are tall, so pictures are stretched a little vertically to use the
+        // whole play area instead of leaving empty bands above and below.
+        int rows = size + 3, cols = size;
         if (shape.Tall) rows += 2;
-        if (shape.Wide) cols += 2;
+        if (shape.Wide) { cols += 2; rows -= 2; }
 
         return new MazePuzzle(rows, cols, shape, seed: level * 137 + 42);
     }
@@ -240,6 +244,7 @@ public sealed class MazeShape
 {
     public string Name { get; }
     public bool Tall { get; init; }
+    public int MinSize { get; init; } = 9;
     public bool Wide { get; init; }
     private readonly Func<double, double, bool> _contains;
 
@@ -311,7 +316,7 @@ public sealed class MazeShape
             return Math.Abs(u) <= 0.72;
         }) { Tall = true },
         new("House", (u, v) => InPoly(u, v, HousePoly)),
-        new("Star", (u, v) => InPoly(u, v, StarPoly)),
+        new("Star", (u, v) => InPoly(u, v, StarPoly)) { MinSize = 13 },
         new("Plus", (u, v) => Math.Abs(u) <= 0.4 || Math.Abs(v) <= 0.4),
         new("Fish", (u, v) => Math.Pow((u + 0.15) / 0.68, 2) + Math.Pow(v / 0.64, 2) <= 1 || InPoly(u, v, FishTail)) { Wide = true },
         new("Tree", (u, v) => InPoly(u, v, TreePoly)) { Tall = true },

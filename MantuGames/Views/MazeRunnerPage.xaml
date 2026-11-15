@@ -46,7 +46,7 @@
                    x:Name="MovesLabel"
                    Text="Moves: 0"
                    FontFamily="MadimiOne"
-                   FontSize="13"
+                   FontSize="14"
                    TextColor="#6B7A90"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
@@ -54,12 +54,12 @@
 
             <!-- Row 3 : maze canvas -->
             <Border Grid.Row="3"
-                    BackgroundColor="#FFFFFF"
-                    StrokeThickness="1.5"
-                    Stroke="#D6E4F0"
-                    Margin="16,8"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
+                    BackgroundColor="Transparent"
+                    StrokeThickness="0"
+                    Margin="10,6"
+                    Padding="4"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill">
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <Grid x:Name="MazeOverlay">
                     <GraphicsView x:Name="MazeCanvas"
