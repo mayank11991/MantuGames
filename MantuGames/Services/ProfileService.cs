@@ -53,6 +53,35 @@ public static class ProfileService
 
         var activeId = Preferences.Default.Get(ActiveKey, "");
         _active = _profiles.FirstOrDefault(p => p.Id == activeId);
+
+        // One player per device now: older builds allowed several profiles, so keep
+        // using whichever was active (or the first one) and never ask again.
+        if (_active == null && _profiles.Count > 0 && Preferences.Default.Get(OnboardedKey, false))
+            _active = _profiles[0];
+    }
+
+    private const string OnboardedKey = "onboarding_done";
+
+    /// <summary>True once the first-launch setup (skin, name, age) has been completed.</summary>
+    public static bool IsOnboarded =>
+        Preferences.Default.Get(OnboardedKey, false)
+        || (_active != null && AgeService.IsKnown);
+
+    /// <summary>
+    /// Creates (or renames) the single player from the first-launch setup and makes it active.
+    /// </summary>
+    public static PlayerProfile SetUpPlayer(string name)
+    {
+        EnsureLoaded();
+        name = string.IsNullOrWhiteSpace(name) ? "Player" : name.Trim();
+        var profile = _active ?? _profiles.FirstOrDefault();
+        if (profile == null)
+            profile = AddProfile(name);
+        else
+            RenameProfile(profile, name);
+        Activate(profile);
+        Preferences.Default.Set(OnboardedKey, true);
+        return profile;
     }
 
     private static void MigrateLegacy()

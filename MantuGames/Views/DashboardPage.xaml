@@ -23,17 +23,13 @@
 
                 <!-- Top bar: avatar · coins · settings -->
                 <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10">
-                    <Border Grid.Column="0" Style="{StaticResource PopCircleSoft}"
+                    <Border x:Name="HeaderAvatarRing" Grid.Column="0" Style="{StaticResource PopCircleSoft}"
                             WidthRequest="54" HeightRequest="54" BackgroundColor="{StaticResource PopPaper}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnSwitchProfile" />
                         </Border.GestureRecognizers>
-                        <Image x:Name="HeaderAvatar" Source="a1.png" Aspect="AspectFill"
-                               WidthRequest="48" HeightRequest="48">
-                            <Image.Clip>
-                                <EllipseGeometry Center="24,24" RadiusX="24" RadiusY="24" />
-                            </Image.Clip>
-                        </Image>
+                        <Image x:Name="HeaderAvatar" Source="char_male_a.png" Aspect="AspectFit"
+                               WidthRequest="42" HeightRequest="42" />
                     </Border>
 
                     <!-- Skins: shows the current buddy, opens the skin shop -->
@@ -224,13 +220,11 @@
         </Grid>
 
         <controls:SettingsPopup x:Name="SettingsPopup" IsVisible="False" Grid.RowSpan="2" />
-        <controls:ProfilePopup x:Name="ProfilePopup" IsVisible="False" Grid.RowSpan="2" />
-        <controls:ProfilePickerPopup x:Name="ProfilePicker" IsVisible="False" Grid.RowSpan="2" />
         <controls:EditProfilePopup x:Name="EditProfilePopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:StatsPopup x:Name="StatsPopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:UpdatePopup x:Name="UpdatePopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:SkinShopPopup x:Name="SkinShop" IsVisible="False" Grid.RowSpan="2" />
-        <controls:AgeGatePopup x:Name="AgeGate" IsVisible="False" Grid.RowSpan="2" />
+        <controls:OnboardingPopup x:Name="Onboarding" IsVisible="False" Grid.RowSpan="2" />
     </Grid>
 </ContentPage>

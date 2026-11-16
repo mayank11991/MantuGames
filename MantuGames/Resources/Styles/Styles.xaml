@@ -264,7 +264,7 @@
     <Style TargetType="Border" x:Key="NightCircle">
         <!-- room for the hard-shadow lip so parents don't clip it -->
         <Setter Property="Margin" Value="0,0,0,7" />
-        <Setter Property="BackgroundColor" Value="{StaticResource CtaBlue}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SkinButton}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="StrokeShape">
@@ -274,7 +274,7 @@
         <Setter Property="HeightRequest" Value="48" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource CtaBlueLip}" Offset="0,5" Radius="0" Opacity="1" />
+            <Shadow Brush="{DynamicResource SkinButtonLipBrush}" Offset="0,5" Radius="0" Opacity="1" />
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="NightAction">
@@ -294,7 +294,7 @@
     <Style TargetType="Border" x:Key="CtaCircleBlue">
         <!-- room for the hard-shadow lip so parents don't clip it -->
         <Setter Property="Margin" Value="0,0,0,7" />
-        <Setter Property="BackgroundColor" Value="{StaticResource CtaBlue}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SkinButton}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="StrokeShape">
@@ -304,7 +304,7 @@
         <Setter Property="HeightRequest" Value="52" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource CtaBlueLip}" Offset="0,5" Radius="0" Opacity="1" />
+            <Shadow Brush="{DynamicResource SkinButtonLipBrush}" Offset="0,5" Radius="0" Opacity="1" />
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaCircleYellow">
@@ -385,7 +385,7 @@
     </Style>
 
     <Style TargetType="Border" x:Key="CtaPillBlue">
-        <Setter Property="BackgroundColor" Value="{StaticResource CtaBlue}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SkinButton}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="StrokeShape">
@@ -394,7 +394,7 @@
         <Setter Property="Padding" Value="18,11" />
         <Setter Property="Margin" Value="0,0,0,7" />
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource CtaBlueLip}" Offset="0,5" Radius="0" Opacity="1" />
+            <Shadow Brush="{DynamicResource SkinButtonLipBrush}" Offset="0,5" Radius="0" Opacity="1" />
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaPillOrange">

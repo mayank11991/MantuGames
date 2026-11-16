@@ -11,6 +11,8 @@ public partial class App : Application
         InitializeComponent();
         ThemeHelper.Init();
         CrashGuardService.Register();
+        ProfileService.EnsureLoaded();
+        SkinService.ApplyTheme();
     }
 
     protected override Window CreateWindow(IActivationState? activationState)

@@ -48,6 +48,9 @@
     <Color x:Key="NightDanger">#FF5C7A</Color>
     <!-- CTA "candy" buttons: face colour + darker lip drawn as a hard shadow -->
     <Color x:Key="CtaBlue">#2F8CFF</Color>
+    <!-- Primary (blue) buttons follow the player's skin; SkinService swaps these at runtime. -->
+    <Color x:Key="SkinButton">#2F8CFF</Color>
+    <SolidColorBrush x:Key="SkinButtonLipBrush" Color="#1A62C9" />
     <Color x:Key="CtaBlueLip">#1A62C9</Color>
     <Color x:Key="CtaYellow">#FFC83D</Color>
     <Color x:Key="CtaYellowLip">#D99A00</Color>

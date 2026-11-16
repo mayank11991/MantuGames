@@ -18,6 +18,9 @@ public sealed record Skin(
     string Accent)
 {
     public bool IsFree => ProductId == null;
+
+    /// <summary>Colour of the primary buttons. The classic skin keeps the original blue.</summary>
+    public string Button => Id == SkinCatalog.DefaultId ? "#2F8CFF" : Accent;
 }
 
 public static class SkinCatalog

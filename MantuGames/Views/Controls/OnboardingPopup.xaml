@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- First launch only: pick a skin, type a name, give a year of birth (neutral, nothing preselected). -->
+<ContentView
+    x:Class="MantuGames.Views.Controls.OnboardingPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls"
+    IsVisible="False">
+
+    <Grid x:Name="Root" BackgroundColor="#8FE3B4" InputTransparent="False">
+        <Border x:Name="Card"
+                BackgroundColor="#FFFFFF"
+                Stroke="#111114"
+                StrokeThickness="3"
+                Padding="20,22,20,18"
+                Margin="18,36"
+                MaximumWidthRequest="460"
+                VerticalOptions="Center">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="28" />
+            </Border.StrokeShape>
+            <Border.Shadow>
+                <Shadow Brush="#111114" Offset="6,8" Radius="0" Opacity="1" />
+            </Border.Shadow>
+
+            <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto" RowSpacing="12">
+                <!-- Step dots -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                    <BoxView x:Name="Dot1" WidthRequest="26" HeightRequest="8" CornerRadius="4" Color="#111114" />
+                    <BoxView x:Name="Dot2" WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#D5D7E0" />
+                    <BoxView x:Name="Dot3" WidthRequest="8" HeightRequest="8" CornerRadius="4" Color="#D5D7E0" />
+                </HorizontalStackLayout>
+
+                <controls:FitLabel Grid.Row="1" x:Name="TitleLabel" Text="PICK YOUR BUDDY"
+                                   FontFamily="Display" FontSize="28" MaxLines="1"
+                                   TextColor="#111114" HorizontalOptions="Center" />
+
+                <Label Grid.Row="2" x:Name="SubLabel"
+                       Text="Your buddy sets the colours of your whole app."
+                       FontFamily="Baloo2Medium" FontSize="14"
+                       TextColor="#6E6E7C" HorizontalTextAlignment="Center" />
+
+                <!-- Step 1: skins -->
+                <ScrollView Grid.Row="3" x:Name="SkinStep" MaximumHeightRequest="430">
+                    <VerticalStackLayout x:Name="SkinGrid" Spacing="10" />
+                </ScrollView>
+
+                <!-- Step 2: name -->
+                <VerticalStackLayout Grid.Row="3" x:Name="NameStep" IsVisible="False" Spacing="14" VerticalOptions="Center">
+                    <Border x:Name="NamePreview" WidthRequest="120" HeightRequest="120" StrokeThickness="0"
+                            HorizontalOptions="Center" BackgroundColor="#DDF8E8">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="60" /></Border.StrokeShape>
+                        <Image x:Name="NameMascot" Aspect="AspectFit" Margin="8" />
+                    </Border>
+                    <Border Stroke="#111114" StrokeThickness="2" Padding="14,2" BackgroundColor="#F5F6FA">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                        <Entry x:Name="NameEntry"
+                               Placeholder="Type your name"
+                               PlaceholderColor="#9AA3B2"
+                               TextColor="#111114"
+                               FontFamily="Display" FontSize="20"
+                               HorizontalTextAlignment="Center"
+                               MaxLength="20"
+                               TextChanged="OnNameChanged" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Step 3: year of birth -->
+                <VerticalStackLayout Grid.Row="3" x:Name="AgeStep" IsVisible="False" Spacing="14" VerticalOptions="Center">
+                    <Border x:Name="AgePreview" WidthRequest="120" HeightRequest="120" StrokeThickness="0"
+                            HorizontalOptions="Center" BackgroundColor="#DDF8E8">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="60" /></Border.StrokeShape>
+                        <Image x:Name="AgeMascot" Aspect="AspectFit" Margin="8" />
+                    </Border>
+                    <Border Stroke="#111114" StrokeThickness="2" Padding="12,2" BackgroundColor="#F5F6FA">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                        <Picker x:Name="YearPicker"
+                                Title="Choose a year"
+                                TitleColor="#9AA3B2"
+                                TextColor="#111114"
+                                FontFamily="Display"
+                                FontSize="20"
+                                HorizontalTextAlignment="Center"
+                                SelectedIndexChanged="OnYearChanged" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <Label Grid.Row="4" x:Name="HintLabel"
+                       FontFamily="Baloo2ExtraBold" FontSize="13"
+                       TextColor="#D4611A" HorizontalTextAlignment="Center" />
+
+                <Grid Grid.Row="5" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                    <Label x:Name="BackLabel" Text="BACK" FontFamily="Display" FontSize="17"
+                           TextColor="#6E6E7C" VerticalOptions="Center" Padding="6,0" IsVisible="False">
+                        <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnBack" /></Label.GestureRecognizers>
+                    </Label>
+                    <Border Grid.Column="1" x:Name="NextBorder" Style="{StaticResource CtaPillOrange}">
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnNext" /></Border.GestureRecognizers>
+                        <Label x:Name="NextLabel" Text="NEXT" Style="{StaticResource CtaPillLabel}" />
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

@@ -62,5 +62,22 @@ public static class SkinService
             .ToHashSet();
 
     private static void RaiseChanged() =>
-        MainThread.BeginInvokeOnMainThread(() => Changed?.Invoke(null, EventArgs.Empty));
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            ApplyTheme();
+            Changed?.Invoke(null, EventArgs.Empty);
+        });
+
+    /// <summary>
+    /// Points the app-wide primary button colours at the current skin. Styles read them
+    /// through DynamicResource, so every open screen repaints at once.
+    /// </summary>
+    public static void ApplyTheme()
+    {
+        var res = Application.Current?.Resources;
+        if (res == null) return;
+        var button = Color.FromArgb(Current.Button);
+        res["SkinButton"] = button;
+        res["SkinButtonLipBrush"] = new SolidColorBrush(button.WithLuminosity(Math.Max(0, button.GetLuminosity() - 0.15f)));
+    }
 }

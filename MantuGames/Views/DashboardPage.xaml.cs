@@ -19,12 +19,10 @@ public partial class DashboardPage : ContentPage
         SettingsPopup.StatisticsRequested += OnStatisticsRequested;
         SettingsPopup.UpdateCheckRequested += OnUpdateCheckRequested;
         SettingsPopup.ProfileSwitchRequested += OnSwitchProfile;
+        EditProfilePopup.SkinShopRequested += (s, e) => SkinShop.Show();
         SettingsPopup.CoinShopRequested += OnCoinShopClicked;
         CoinShopPopup.CoinsChanged += OnCoinsChanged;
         SkinService.Changed += (s, e) => RefreshSkin();
-        ProfilePicker.ProfileSelected += OnProfileSelected;
-        ProfilePicker.AddProfileRequested += (s, e) => ProfilePopup.Show();
-        ProfilePopup.ProfileCreated += (s, p) => ProfilePicker.Show();
         EditProfilePopup.ProfileUpdated += OnProfileUpdated;
 
         // Restore remove_ads after reinstall and deliver any paid-but-unconsumed coin packs
@@ -64,17 +62,16 @@ public partial class DashboardPage : ContentPage
         AudioService.Instance.StartMusic();
     }
 
-    // First the one-time age question (ads wait for it), then the profile gate.
+    // First launch only: pick a skin, a name and a year of birth (ads wait for the age).
     private async Task ShowStartGatesAsync()
     {
         try
         {
-            if (!AgeService.IsKnown && !AgeGate.IsVisible)
-                await AgeGate.ShowAsync();
-
-            // Netflix-style gate: a profile must be picked or created — no skip.
-            if (ProfileService.Active == null)
-                ProfilePicker.Show();
+            if (!ProfileService.IsOnboarded && !Onboarding.IsVisible)
+            {
+                await Onboarding.ShowAsync();
+                RefreshCoins();
+            }
         }
         catch (Exception ex)
         {
@@ -84,8 +81,8 @@ public partial class DashboardPage : ContentPage
 
     protected override bool OnBackButtonPressed()
     {
-        // Block the back key while a start gate is open — both answers are mandatory.
-        if (ProfilePicker.IsVisible || AgeGate.IsVisible)
+        // Block the back key during the first-launch setup: it can't be skipped.
+        if (Onboarding.IsVisible)
             return true;
         if (SkinShop.IsVisible)
         {
@@ -132,8 +129,9 @@ public partial class DashboardPage : ContentPage
         SettingsPopup.RefreshProfile();
 
         var active = ProfileService.Active;
-        string avatar = string.IsNullOrEmpty(active?.AvatarImage) ? "a1.png" : active!.AvatarImage;
-        HeaderAvatar.Source = avatar;
+        // The player's picture is their skin's character.
+        HeaderAvatar.Source = SkinService.Current.Mascot;
+        HeaderAvatarRing.BackgroundColor = Color.FromArgb(SkinService.Current.ShellMid);
         HeaderPlayerName.Text = string.IsNullOrWhiteSpace(active?.Name) ? "Player" : active!.Name;
         CoinBalanceLabel.Text = CoinService.Balance.ToString();
 
@@ -155,6 +153,9 @@ public partial class DashboardPage : ContentPage
         var skin = SkinService.Current;
         HeroMascot.Source = skin.Mascot;
         SkinPillMascot.Source = skin.Mascot;
+        HeaderAvatar.Source = skin.Mascot;
+        HeaderAvatarRing.BackgroundColor = Color.FromArgb(skin.ShellMid);
+        SettingsPopup.RefreshProfile();
     }
 
     private async void OnSkinsClicked(object? sender, TappedEventArgs e)
@@ -220,11 +221,6 @@ public partial class DashboardPage : ContentPage
         RefreshCoins();
     }
 
-    private void OnProfileSelected(object? sender, Models.PlayerProfile profile)
-    {
-        RefreshCoins();
-    }
-
     private void OnProfileUpdated(object? sender, EventArgs e)
     {
         RefreshCoins();
@@ -246,11 +242,18 @@ public partial class DashboardPage : ContentPage
         _ = CheckForUpdatesAsync(force: true);
     }
 
+    // One player per device: the avatar opens the name/skin editor.
+    private void OpenProfile()
+    {
+        if (ProfileService.Active != null)
+            EditProfilePopup.Show(ProfileService.Active);
+    }
+
     private void OnSwitchProfile(object? sender, EventArgs e)
     {
         AudioService.Instance.Play("tap");
         VibrationHelper.Click();
-        ProfilePicker.Show();
+        OpenProfile();
     }
 
     private void OnCoinShopClicked(object? sender, EventArgs e)
@@ -288,7 +291,7 @@ public partial class DashboardPage : ContentPage
     {
         AudioService.Instance.Play("tap");
         VibrationHelper.Click();
-        ProfilePicker.Show();
+        OpenProfile();
     }
 
     private void OnSearchTextChanged(object? sender, TextChangedEventArgs e)

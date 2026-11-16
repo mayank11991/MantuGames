@@ -40,8 +40,7 @@ public partial class ThinkingBuddy : ContentView
 
     public void RefreshAvatar()
     {
-        var img = ProfileService.Active?.AvatarImage;
-        AvatarImage.Source = string.IsNullOrEmpty(img) ? "a1.png" : img;
+        AvatarImage.Source = SkinService.Current.Mascot;
     }
 
     /// <summary>Show a random thinking phrase.</summary>

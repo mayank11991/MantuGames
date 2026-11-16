@@ -37,10 +37,10 @@
                 <!-- Avatar preview -->
                 <Border x:Name="AvatarPreview"
                         Grid.Row="1"
-                        WidthRequest="72"
-                        HeightRequest="72"
+                        WidthRequest="96"
+                        HeightRequest="96"
                         StrokeThickness="0"
-                        StrokeShape="RoundRectangle 36"
+                        StrokeShape="RoundRectangle 48"
                         HorizontalOptions="Center"
                         BackgroundColor="White">
                     <Image x:Name="AvatarImage"
@@ -60,16 +60,11 @@
                        BackgroundColor="#F5F6FA"
                        MaxLength="20" />
 
-                <!-- Avatar picker (A1-A7) -->
-                <VerticalStackLayout Grid.Row="3" Spacing="8">
-                    <Label Text="Choose avatar"
-                           FontFamily="MadimiOne"
-                           FontSize="14"
-                           TextColor="#6E6E7C" />
-                    <HorizontalStackLayout x:Name="AvatarPalette"
-                                           Spacing="10"
-                                           HorizontalOptions="Center" />
-                </VerticalStackLayout>
+                <!-- The picture is the skin's character: change it from the skin shop -->
+                <Border Grid.Row="3" Style="{StaticResource CtaPillBlue}" HorizontalOptions="Fill">
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChangeSkin" /></Border.GestureRecognizers>
+                    <Label Text="CHANGE SKIN" Style="{StaticResource CtaPillLabel}" />
+                </Border>
 
                 <!-- Save button -->
                 <Border Style="{StaticResource CtaPillGreen}" Grid.Row="4" HorizontalOptions="Fill">

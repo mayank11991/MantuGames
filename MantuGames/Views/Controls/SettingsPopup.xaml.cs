@@ -34,7 +34,7 @@ public partial class SettingsPopup : ContentView
     {
         var active = ProfileService.Active;
         PopupPlayerName.Text = active?.Name ?? "Player";
-        PopupAvatarImage.Source = string.IsNullOrEmpty(active?.AvatarImage) ? "a1.png" : active!.AvatarImage;
+        PopupAvatarImage.Source = SkinService.Current.Mascot;
         PopupCoinBalance.Text = CoinService.Balance > 0 ? $"{CoinService.Balance}" : "0";
     }
 
