@@ -29,12 +29,20 @@ public class AdService
 
     private static bool CanShowAds => AdsEnabled && ConsentService.CanRequestAds && IsConnected;
 
+    /// <summary>True when an opt-in rewarded ad can be requested right now.</summary>
+    public static bool CanShowRewarded => CanShowAds;
+
     // ════════════════════════════════════════════════════════════════
     //  REWARDED (opt-in only)
     // ════════════════════════════════════════════════════════════════
 
     private TaskCompletionSource<bool>? _rewardTcs;
     private bool _rewardEarned;
+    private volatile bool _rewardShown;
+
+    // Loading may take up to AdTimeoutSeconds; once the ad is on screen we wait for the
+    // player to close it (a rewarded ad runs 15-30 s), bounded so we can never hang.
+    private static readonly TimeSpan RewardedWatchLimit = TimeSpan.FromMinutes(2);
 
     public void PreloadRewarded()
     {
@@ -57,6 +65,7 @@ public class AdService
 
         _rewardTcs = new TaskCompletionSource<bool>();
         _rewardEarned = false;
+        _rewardShown = false;
 
         try
         {
@@ -66,6 +75,7 @@ public class AdService
 
             if (CrossMauiMTAdmob.Current.IsRewardedLoaded())
             {
+                _rewardShown = true;
                 CrossMauiMTAdmob.Current.ShowRewarded();
             }
             else
@@ -75,11 +85,13 @@ public class AdService
             }
 
             var completed = await Task.WhenAny(_rewardTcs.Task, Task.Delay(TimeSpan.FromSeconds(AdTimeoutSeconds)));
-            if (completed == _rewardTcs.Task)
-                return _rewardTcs.Task.Result;
+            if (completed != _rewardTcs.Task && _rewardShown)
+                completed = await Task.WhenAny(_rewardTcs.Task, Task.Delay(RewardedWatchLimit));
+            bool earned = completed == _rewardTcs.Task ? _rewardTcs.Task.Result : _rewardEarned;
 
-            // Timed out waiting for load/close: reward only if it was already earned.
-            return _rewardEarned;
+            // The player just chose to watch a full ad: give them a break from interstitials.
+            if (earned) _lastInterstitialUtc = DateTime.UtcNow;
+            return earned;
         }
         catch
         {
@@ -88,12 +100,16 @@ public class AdService
         finally
         {
             CleanupRewarded();
+            PreloadRewarded();
         }
     }
 
     private void OnAdLoaded(object? sender, EventArgs e)
     {
         CrossMauiMTAdmob.Current.OnRewardedLoaded -= OnAdLoaded;
+        // Loaded too late: the caller already gave up, so don't pop an ad over the game.
+        if (_rewardTcs == null || _rewardTcs.Task.IsCompleted) return;
+        _rewardShown = true;
         try { CrossMauiMTAdmob.Current.ShowRewarded(); }
         catch { _rewardTcs?.TrySetResult(false); }
     }

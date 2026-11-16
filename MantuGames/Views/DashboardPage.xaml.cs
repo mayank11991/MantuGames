@@ -138,6 +138,48 @@ public partial class DashboardPage : ContentPage
             levels += ProgressService.Instance.GetLevels(g.Id, 50).Count(lp => lp.IsCompleted);
         LevelsStat.Text = levels.ToString();
         WinsStat.Text = StatsService.GetTotals().Won.ToString();
+
+        RefreshDaily();
+    }
+
+    // ── Daily challenge card ────────────────────────────────────────────────
+    private void RefreshDaily()
+    {
+        var game = DailyService.TodayGame;
+        DailyThumb.BackgroundColor = Color.FromArgb(game.CardColor);
+        DailyImage.Source = game.ImageName;
+        StreakLabel.Text = $"🔥 {DailyService.CurrentStreak}";
+
+        if (DailyService.IsDoneToday)
+        {
+            DailyCard.BackgroundColor = Color.FromArgb("#CDF6E0");
+            DailyTitle.Text = "Done for today! ✓";
+            DailySub.Text = "A new challenge arrives tomorrow";
+        }
+        else
+        {
+            DailyCard.BackgroundColor = Color.FromArgb("#FFE0C2");
+            DailyTitle.Text = $"Win a level in {game.Title}";
+            DailySub.Text = DailyService.CurrentStreak > 0
+                ? $"+{DailyService.RewardForToday} coins · keep your streak going!"
+                : $"+{DailyService.RewardForToday} coins · start a streak!";
+        }
+    }
+
+    private async void OnDailyTapped(object? sender, TappedEventArgs e)
+    {
+        try
+        {
+            AudioService.Instance.Play("tap");
+            VibrationHelper.Click();
+            await DailyCard.ScaleToAsync(0.97, 70);
+            await DailyCard.ScaleToAsync(1, 90);
+            await Shell.Current.GoToAsync($"levelmap?gameId={DailyService.TodayGame.Id}");
+        }
+        catch (Exception ex)
+        {
+            CrashGuardService.Log(ex);
+        }
     }
 
     private void OnProgressReset(object? sender, EventArgs e)

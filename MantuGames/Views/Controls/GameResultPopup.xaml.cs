@@ -14,6 +14,7 @@ public partial class GameResultPopup : ContentView
     private int _levelNumber;
     private int _completionStars;
     private int _completionCoins;
+    private bool _doubled;
     private AdService? _adService;
 
     public GameResultPopup()
@@ -45,6 +46,10 @@ public partial class GameResultPopup : ContentView
 
         StatsService.RecordGame(gameId, isWin, coins);
 
+        // A solved level of today's featured game completes the daily challenge.
+        DailyReward? daily = isWin && !assisted ? DailyService.OnLevelWon(gameId) : null;
+        _doubled = false;
+
         AudioService.Instance.Play(isWin ? "win" : "lose");
         if (isWin) VibrationHelper.LongPress();
         else VibrationHelper.Click();
@@ -69,6 +74,17 @@ public partial class GameResultPopup : ContentView
             else
                 PointsBadge.IsVisible = false;
 
+            DailyBadge.IsVisible = daily != null;
+            if (daily != null)
+                DailyLabel.Text = daily.Streak > 1
+                    ? $"🔥 Daily challenge done! +{daily.Coins} coins · {daily.Streak}-day streak"
+                    : $"🔥 Daily challenge done! +{daily.Coins} coins";
+
+            // Opt-in only: offer to double the level's coins with a rewarded ad.
+            DoubleBorder.IsVisible = coins > 0 && RewardService.CanOffer && RewardService.CanDoubleToday;
+            DoubleLabel.Text = "WATCH AD: ×2 COINS";
+            if (DoubleBorder.IsVisible) RewardService.Preload();
+
             if (assisted)
                 MessageLabel.Text = $"Level {levelNumber} solved with Show Solution.\nSolve it yourself to earn stars!";
             else if (elapsedSeconds > 0)
@@ -89,6 +105,8 @@ public partial class GameResultPopup : ContentView
 
             StarsRow.IsVisible    = false;
             PointsBadge.IsVisible = false;
+            DailyBadge.IsVisible  = false;
+            DoubleBorder.IsVisible = false;
 
             TitleLabel.Text      = reason ?? "Time's Up!";
             TitleLabel.TextColor = Color.FromArgb("#FF4F6D");
@@ -185,6 +203,40 @@ public partial class GameResultPopup : ContentView
         catch (Exception ex)
         {
             Console.WriteLine($"Error in OnPrimaryClicked: {ex.Message}");
+        }
+        finally
+        {
+            _isProcessing = false;
+        }
+    }
+
+    private async void OnDoubleClicked(object? sender, TappedEventArgs e)
+    {
+        try
+        {
+            if (_isProcessing || _doubled || _completionCoins <= 0) return;
+            _isProcessing = true;
+            AudioService.Instance.Play("tap");
+            VibrationHelper.Click();
+            DoubleLabel.Text = "LOADING AD…";
+
+            if (await RewardService.WatchToDoubleAsync(_completionCoins))
+            {
+                _doubled = true;
+                PointsLabel.Text = $"+{_completionCoins * 2} coins (×2)";
+                DoubleBorder.IsVisible = false;
+                AudioService.Instance.Play("win");
+            }
+            else
+            {
+                DoubleLabel.Text = "NO REWARD THIS TIME";
+                await Task.Delay(1500);
+                DoubleBorder.IsVisible = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in OnDoubleClicked: {ex.Message}");
         }
         finally
         {

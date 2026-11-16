@@ -90,6 +90,43 @@
                     </Border>
                 </Grid>
 
+                <!-- Daily challenge: today's featured game + streak (filled in code-behind) -->
+                <Border x:Name="DailyCard" Style="{StaticResource PopCard}"
+                        BackgroundColor="#FFE0C2" Padding="12" Margin="0,14,0,0">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnDailyTapped" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Border x:Name="DailyThumb" StrokeThickness="0" WidthRequest="60" HeightRequest="80"
+                                BackgroundColor="#5AA6FF" VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="14" />
+                            </Border.StrokeShape>
+                            <Image x:Name="DailyImage" Aspect="AspectFill" />
+                        </Border>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="-2" VerticalOptions="Center">
+                            <Label Text="DAILY CHALLENGE" FontFamily="Baloo2ExtraBold" FontSize="12"
+                                   TextColor="#D4611A" CharacterSpacing="1" />
+                            <controls:FitLabel x:Name="DailyTitle" MinFontSize="12"
+                                   FontFamily="Baloo2ExtraBold" FontSize="18" TextColor="#111114"
+                                   MaxLines="2" />
+                            <Label x:Name="DailySub" FontFamily="Baloo2Medium" FontSize="13"
+                                   TextColor="#3A3A46" />
+                        </VerticalStackLayout>
+
+                        <Border Grid.Column="2" Style="{StaticResource PopPillDark}"
+                                Padding="12,6" MinimumWidthRequest="64" VerticalOptions="Center">
+                            <VerticalStackLayout Spacing="0">
+                                <Label x:Name="StreakLabel" Text="🔥 0" FontFamily="Baloo2ExtraBold" FontSize="16"
+                                       TextColor="#FFFFFF" HorizontalOptions="Center" />
+                                <Label Text="streak" FontFamily="Baloo2Medium" FontSize="11"
+                                       TextColor="#CFD2DC" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </Border>
+
                 <!-- Section title + search -->
                 <Label Text="Pick your game" Style="{StaticResource PopSection}" FontSize="26" Margin="2,22,0,10" />
                 <Border BackgroundColor="#F2FFFFFF" StrokeThickness="0" Padding="16,2,16,2">

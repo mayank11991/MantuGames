@@ -21,6 +21,7 @@
     <Compile Include="..\MantuGames\Models\AnimalCrushPuzzle.cs" Link="Models\AnimalCrushPuzzle.cs" />
     <Compile Include="..\MantuGames\Models\ArrowLinesPuzzle.cs" Link="Models\ArrowLinesPuzzle.cs" />
     <Compile Include="..\MantuGames\Models\MazePuzzle.cs" Link="Models\MazePuzzle.cs" />
+    <Compile Include="..\MantuGames\Models\DailyRules.cs" Link="Models\DailyRules.cs" />
   </ItemGroup>
 
 </Project>

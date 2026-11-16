@@ -28,13 +28,60 @@ public partial class CoinShopPopup : ContentView
     /// <summary>Opened from "Show Solution" when the player can't afford it.</summary>
     public void ShowForGame(string gameId)
     {
-        MessageLabel.Text = $"You need {CoinService.SolutionCost} coins for Show Solution.\nBeat levels to earn coins, or grab a pack:";
+        MessageLabel.Text = $"You need {CoinService.SolutionCost} coins for Show Solution.\nBeat levels, watch an ad, or grab a pack:";
         RefreshBalance();
         ShowStatus("");
         AnimateIn();
     }
 
-    private void RefreshBalance() => BalanceLabel.Text = $"You have {CoinService.Balance} coins";
+    private void RefreshBalance()
+    {
+        BalanceLabel.Text = $"You have {CoinService.Balance} coins";
+        RefreshFreeCoins();
+    }
+
+    // ── Free coins (opt-in rewarded ad) ─────────────────────────────────────
+    private void RefreshFreeCoins()
+    {
+        int left = RewardService.FreeCoinsLeftToday;
+        FreeCoinsRow.IsVisible = RewardService.CanOffer;
+        FreeCoinsRow.Opacity = left > 0 ? 1 : 0.5;
+        FreeCoinsTitle.Text = $"+{RewardService.FreeCoinsAmount} free coins";
+        FreeCoinsHint.Text = left > 0
+            ? $"Watch a short ad · {left} left today"
+            : "All used today · come back tomorrow";
+        if (FreeCoinsRow.IsVisible && left > 0) RewardService.Preload();
+    }
+
+    private async void OnFreeCoinsTapped(object? sender, TappedEventArgs e)
+    {
+        if (_busy || RewardService.FreeCoinsLeftToday <= 0) return;
+        _busy = true;
+        try
+        {
+            AudioService.Instance.Play("tap");
+            ShowStatus("Loading ad…", ok: true);
+            if (await RewardService.WatchForFreeCoinsAsync())
+            {
+                RefreshBalance();
+                ShowStatus($"+{RewardService.FreeCoinsAmount} coins added!", ok: true);
+                CoinsChanged?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                ShowStatus("No reward this time. Please try again in a bit.", ok: false);
+            }
+        }
+        catch (Exception ex)
+        {
+            CrashGuardService.Log(ex);
+            ShowStatus("No reward this time. Please try again in a bit.", ok: false);
+        }
+        finally
+        {
+            _busy = false;
+        }
+    }
 
     private void AnimateIn()
     {
