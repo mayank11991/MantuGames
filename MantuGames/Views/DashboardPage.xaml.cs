@@ -21,6 +21,7 @@ public partial class DashboardPage : ContentPage
         SettingsPopup.ProfileSwitchRequested += OnSwitchProfile;
         SettingsPopup.CoinShopRequested += OnCoinShopClicked;
         CoinShopPopup.CoinsChanged += OnCoinsChanged;
+        SkinService.Changed += (s, e) => RefreshSkin();
         ProfilePicker.ProfileSelected += OnProfileSelected;
         ProfilePicker.AddProfileRequested += (s, e) => ProfilePopup.Show();
         ProfilePopup.ProfileCreated += (s, p) => ProfilePicker.Show();
@@ -86,6 +87,11 @@ public partial class DashboardPage : ContentPage
         // Block the back key while a start gate is open — both answers are mandatory.
         if (ProfilePicker.IsVisible || AgeGate.IsVisible)
             return true;
+        if (SkinShop.IsVisible)
+        {
+            SkinShop.Hide();
+            return true;
+        }
         return base.OnBackButtonPressed();
     }
 
@@ -140,6 +146,28 @@ public partial class DashboardPage : ContentPage
         WinsStat.Text = StatsService.GetTotals().Won.ToString();
 
         RefreshDaily();
+        RefreshSkin();
+    }
+
+    // ── Skins ───────────────────────────────────────────────────────────────
+    private void RefreshSkin()
+    {
+        var skin = SkinService.Current;
+        HeroMascot.Source = skin.Mascot;
+        SkinPillMascot.Source = skin.Mascot;
+    }
+
+    private async void OnSkinsClicked(object? sender, TappedEventArgs e)
+    {
+        AudioService.Instance.Play("tap");
+        VibrationHelper.Click();
+        SkinShop.Show();
+        try
+        {
+            await HeroMascot.ScaleToAsync(1.15, 90);
+            await HeroMascot.ScaleToAsync(1, 120);
+        }
+        catch { }
     }
 
     // ── Daily challenge card ────────────────────────────────────────────────

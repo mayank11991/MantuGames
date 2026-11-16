@@ -1,3 +1,5 @@
+using MantuGames.Services;
+
 namespace MantuGames.Views.Controls;
 
 public enum BackdropVariant
@@ -38,12 +40,21 @@ public partial class ClayBackground : ContentView
         // Each screen has one backdrop: it colours the system bars whenever its page shows
         // (including when returning from another page, e.g. dark game -> light level map).
         Loaded += OnLoaded;
+        Unloaded += (s, e) => SkinService.Changed -= OnSkinChanged;
     }
+
+    // The home (Lime) and game (Night) backdrops follow the player's skin.
+    private void OnSkinChanged(object? sender, EventArgs e) => Apply();
+
+    private static Color Hex(string hex) => Color.FromArgb(hex);
 
     private Page? _page;
 
     private void OnLoaded(object? sender, EventArgs e)
     {
+        SkinService.Changed -= OnSkinChanged;
+        SkinService.Changed += OnSkinChanged;
+        Apply();
         ApplySystemBars();
         if (_page != null) return;
         Element? p = Parent;
@@ -77,7 +88,7 @@ public partial class ClayBackground : ContentView
         switch (Variant)
         {
             case BackdropVariant.Night:
-                Helpers.SystemBars.Apply(Color.FromArgb("#6EC6FF"), Color.FromArgb("#5DB83A"), darkIcons: true);
+                Helpers.SystemBars.Apply(Hex(SkinService.Current.GameTop), Color.FromArgb("#5DB83A"), darkIcons: true);
                 break;
             case BackdropVariant.Accent:
                 Helpers.SystemBars.Apply(AccentColor, Color.FromArgb("#5DB83A"), darkIcons: true);
@@ -86,7 +97,7 @@ public partial class ClayBackground : ContentView
                 Helpers.SystemBars.Apply(Color.FromArgb("#5AA6FF"), Color.FromArgb("#F4F8FF"), darkIcons: true);
                 break;
             default:
-                Helpers.SystemBars.Apply(Color.FromArgb("#8FE3B4"), Color.FromArgb("#FFFFFF"), darkIcons: true);
+                Helpers.SystemBars.Apply(Hex(SkinService.Current.ShellTop), Color.FromArgb("#FFFFFF"), darkIcons: true);
                 break;
         }
     }
@@ -107,6 +118,19 @@ public partial class ClayBackground : ContentView
                 new GradientStop(a, 0f),
                 new GradientStop(a.WithAlpha(0.35f), 0.55f),
                 new GradientStop(Colors.White, 1f),
+            }, new Point(0, 0), new Point(0, 1));
+        }
+        else if (Variant is BackdropVariant.Lime or BackdropVariant.Night)
+        {
+            var skin = SkinService.Current;
+            (string top, string mid, string bottom) = Variant == BackdropVariant.Lime
+                ? (skin.ShellTop, skin.ShellMid, "#FFFFFF")
+                : (skin.GameTop, skin.GameMid, skin.GameBottom);
+            Root.Background = new LinearGradientBrush(new GradientStopCollection
+            {
+                new GradientStop(Hex(top), 0f),
+                new GradientStop(Hex(mid), 0.55f),
+                new GradientStop(Hex(bottom), 1f),
             }, new Point(0, 0), new Point(0, 1));
         }
         else if (Application.Current?.Resources.TryGetValue(key, out var brush) == true && brush is Brush b)

@@ -1,3 +1,4 @@
+using MantuGames.Models;
 using Plugin.InAppBilling;
 
 namespace MantuGames.Services;
@@ -83,6 +84,15 @@ public static class IapService
     {
         if (purchase.State != PurchaseState.Purchased) return;
 
+        if (SkinCatalog.IsSkinProduct(purchase.ProductId))
+        {
+            // Skins are non-consumable: remember ownership and acknowledge once.
+            SkinService.MarkOwned(purchase.ProductId);
+            if (purchase.IsAcknowledged != true)
+                await billing.FinalizePurchaseAsync(new[] { purchase.PurchaseToken });
+            return;
+        }
+
         if (purchase.ProductId == RemoveAdsId)
         {
             SetRemoveAdsOwned(true);
@@ -133,7 +143,8 @@ public static class IapService
             int before = CoinService.Balance;
             try { await ProcessOutstandingCoreAsync(billing); }
             catch (Exception inner) { CrashGuardService.Log(inner); return PurchaseOutcome.Failed; }
-            return productId == RemoveAdsId || CoinService.Balance > before ? PurchaseOutcome.Purchased : PurchaseOutcome.Failed;
+            bool nonConsumable = productId == RemoveAdsId || SkinCatalog.IsSkinProduct(productId);
+            return nonConsumable || CoinService.Balance > before ? PurchaseOutcome.Purchased : PurchaseOutcome.Failed;
         }
         catch (Exception ex)
         {
@@ -145,6 +156,36 @@ public static class IapService
             try { if (billing != null) await billing.DisconnectAsync(); } catch { }
             _billingLock.Release();
         }
+    }
+
+    /// <summary>
+    /// Localised prices from Google Play (e.g. "₹49.00"), keyed by product id.
+    /// Returns an empty map when Play can't be reached; callers show a fallback.
+    /// </summary>
+    public static async Task<Dictionary<string, string>> GetPricesAsync(IEnumerable<string> productIds)
+    {
+        var prices = new Dictionary<string, string>();
+        await _billingLock.WaitAsync();
+        IInAppBilling? billing = null;
+        try
+        {
+            billing = CrossInAppBilling.Current;
+            if (!await billing.ConnectAsync()) return prices;
+            var products = await billing.GetProductInfoAsync(ItemType.InAppPurchase, productIds.ToArray());
+            foreach (var p in products ?? Enumerable.Empty<InAppBillingProduct>())
+                if (!string.IsNullOrEmpty(p.ProductId) && !string.IsNullOrEmpty(p.LocalizedPrice))
+                    prices[p.ProductId] = p.LocalizedPrice;
+        }
+        catch (Exception ex)
+        {
+            CrashGuardService.Log(ex);
+        }
+        finally
+        {
+            try { if (billing != null) await billing.DisconnectAsync(); } catch { }
+            _billingLock.Release();
+        }
+        return prices;
     }
 
     /// <summary>

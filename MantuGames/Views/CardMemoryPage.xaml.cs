@@ -149,6 +149,9 @@ public partial class CardMemoryPage : ContentPage
         }
     }
 
+    // Face-down cards wear the player's skin colour.
+    private static Color CardBack => Color.FromArgb(SkinService.Current.Accent);
+
     private Border CreateCardBorder(CardViewModel card, int size)
     {
         var cardImage = new Image
@@ -219,7 +222,7 @@ public partial class CardMemoryPage : ContentPage
         var border = new Border
         {
             StrokeThickness = 0,
-            BackgroundColor = Color.FromArgb("#7C5CFF"),
+            BackgroundColor = CardBack,
             HeightRequest = size,
             WidthRequest = size,
             Content = contentGrid
@@ -245,14 +248,14 @@ public partial class CardMemoryPage : ContentPage
             }
             else if (card.IsFlipped)
             {
-                border.BackgroundColor = Color.FromArgb("#9B7BFF");
+                border.BackgroundColor = CardBack.AddLuminosity(0.12f);
                 cardImage.Source = ImageSource.FromFile(card.Image);
                 questionMark.IsVisible = false;
                 SetScrewsVisible(false);
             }
             else
             {
-                border.BackgroundColor = Color.FromArgb("#7C5CFF");
+                border.BackgroundColor = CardBack;
                 cardImage.Source = null;
                 questionMark.IsVisible = true;
                 SetScrewsVisible(true);

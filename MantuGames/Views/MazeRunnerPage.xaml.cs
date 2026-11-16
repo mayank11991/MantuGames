@@ -164,6 +164,7 @@ public partial class MazeRunnerPage : ContentPage
     {
         base.OnAppearing();
         AudioService.Instance.StartMusic();
+        PlayerImage.Source = SkinService.Current.Mascot;
         StartLevel();
         this.Opacity = 0;
         this.FadeToAsync(1, 350);

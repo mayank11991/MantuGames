@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="MantuGames.Views.Controls.SkinShopPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls"
+    IsVisible="False">
+
+    <Grid x:Name="Overlay" BackgroundColor="#991F2A44">
+        <Border x:Name="Card"
+                BackgroundColor="#FFFFFF"
+                Stroke="#111114"
+                StrokeThickness="3"
+                Padding="18,18,18,16"
+                Margin="18,40"
+                MaximumWidthRequest="460"
+                VerticalOptions="Center">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="28" />
+            </Border.StrokeShape>
+            <Border.Shadow>
+                <Shadow Brush="#FFC83D" Offset="7,9" Radius="0" Opacity="1" />
+            </Border.Shadow>
+
+            <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" RowSpacing="12">
+                <controls:FitLabel Text="SKINS"
+                                   FontFamily="Display" FontSize="30"
+                                   TextColor="#111114" HorizontalOptions="Center" />
+
+                <Label Grid.Row="1"
+                       Text="Change the colours, your buddy and the game pieces."
+                       FontFamily="Baloo2Medium" FontSize="14"
+                       TextColor="#6E6E7C" HorizontalTextAlignment="Center" />
+
+                <ScrollView Grid.Row="2">
+                    <VerticalStackLayout Spacing="12">
+                        <!-- Bundle: every paid skin in one purchase (hidden once all are owned) -->
+                        <Border x:Name="BundleRow"
+                                BackgroundColor="#FFF4CC" Stroke="#FFC83D" StrokeThickness="2"
+                                Padding="14,10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="18" />
+                            </Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBundleTapped" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                <VerticalStackLayout Spacing="-2" VerticalOptions="Center">
+                                    <Label Text="ALL 10 SKINS" FontFamily="Display" FontSize="18" TextColor="#111114" />
+                                    <Label Text="Best value · unlock every skin forever"
+                                           FontFamily="Baloo2Medium" FontSize="12" TextColor="#6E6E7C" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="1" Style="{StaticResource CtaPillYellow}"
+                                        Padding="14,6" Margin="0,0,0,5" InputTransparent="True" VerticalOptions="Center">
+                                    <Label x:Name="BundlePrice" Text="BUY" Style="{StaticResource CtaPillLabelDark}" FontSize="16" />
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Skin cards (built in code-behind, 2 columns) -->
+                        <VerticalStackLayout x:Name="SkinsLayout" Spacing="12" />
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <Label Grid.Row="3" x:Name="StatusLabel"
+                       FontFamily="Baloo2ExtraBold" FontSize="13"
+                       TextColor="#20B26B" HorizontalTextAlignment="Center" />
+
+                <Border Grid.Row="4" Style="{StaticResource CtaPillBlue}" HorizontalOptions="Center">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnClose" />
+                    </Border.GestureRecognizers>
+                    <Label Text="CLOSE" Style="{StaticResource CtaPillLabel}" />
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

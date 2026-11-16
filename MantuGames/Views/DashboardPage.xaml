@@ -36,6 +36,19 @@
                         </Image>
                     </Border>
 
+                    <!-- Skins: shows the current buddy, opens the skin shop -->
+                    <Border Grid.Column="1" Style="{StaticResource PopPillLight}"
+                            Padding="6,4,14,4" HorizontalOptions="End" VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSkinsClicked" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6">
+                            <Image x:Name="SkinPillMascot" Source="cat.png" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" />
+                            <Label Text="SKINS" FontFamily="Display" FontSize="15"
+                                   TextColor="#111114" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+
                     <!-- Coin balance pill -->
                     <Border Grid.Column="2" Style="{StaticResource PopPillDark}"
                             Padding="12,8,16,8" VerticalOptions="Center">
@@ -65,12 +78,21 @@
                            FontSize="76"
                            HorizontalOptions="Start"
                            VerticalOptions="Start" />
-                    <VerticalStackLayout HorizontalOptions="Start" Spacing="0" Margin="2,0,0,0">
-                        <Label Text="Hey" Style="{StaticResource PopBody}" FontSize="16" />
-                        <controls:FitLabel x:Name="HeaderPlayerName" Text="Player"
-                               FontFamily="Baloo2ExtraBold" FontSize="26"
-                               />
-                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" Margin="2,0,0,0">
+                        <VerticalStackLayout HorizontalOptions="Start" Spacing="0">
+                            <Label Text="Hey" Style="{StaticResource PopBody}" FontSize="16" />
+                            <controls:FitLabel x:Name="HeaderPlayerName" Text="Player"
+                                   FontFamily="Baloo2ExtraBold" FontSize="26"
+                                   />
+                        </VerticalStackLayout>
+                        <Image x:Name="HeroMascot" Grid.Column="1" Source="cat.png"
+                               WidthRequest="78" HeightRequest="78" Margin="0,-14,4,0"
+                               VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSkinsClicked" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Grid>
                 </VerticalStackLayout>
 
                 <!-- Stats strip: progress only. Coins live in the wallet pill above;
@@ -208,6 +230,7 @@
         <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:StatsPopup x:Name="StatsPopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:UpdatePopup x:Name="UpdatePopup" IsVisible="False" Grid.RowSpan="2" />
+        <controls:SkinShopPopup x:Name="SkinShop" IsVisible="False" Grid.RowSpan="2" />
         <controls:AgeGatePopup x:Name="AgeGate" IsVisible="False" Grid.RowSpan="2" />
     </Grid>
 </ContentPage>
