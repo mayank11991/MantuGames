@@ -15,37 +15,37 @@ public static class MauiProgram
             .UseMauiMTAdmob()
             .ConfigureFonts(fonts =>
             {
-                // Display type: Anton (tall condensed headings, OFL — see licenses/Anton-OFL.txt)
-                fonts.AddFont("Anton-Regular.ttf", "Display");
+                // Whole app uses Lilita One (chunky rounded cartoon type, OFL — see licenses/LilitaOne-OFL.txt)
+                fonts.AddFont("LilitaOne-Regular.ttf", "Display");
 
-                // Body type: Baloo 2 (rounded, friendly)
-                fonts.AddFont("Baloo2-Regular.ttf", "Baloo2");
-                fonts.AddFont("Baloo2-Medium.ttf", "Baloo2Medium");
-                fonts.AddFont("Baloo2-SemiBold.ttf", "Baloo2SemiBold");
-                fonts.AddFont("Baloo2-Bold.ttf", "Baloo2Bold");
-                fonts.AddFont("Baloo2-ExtraBold.ttf", "Baloo2ExtraBold");
+                // Body aliases point at the same face
+                fonts.AddFont("LilitaOne-Regular.ttf", "Baloo2");
+                fonts.AddFont("LilitaOne-Regular.ttf", "Baloo2Medium");
+                fonts.AddFont("LilitaOne-Regular.ttf", "Baloo2SemiBold");
+                fonts.AddFont("LilitaOne-Regular.ttf", "Baloo2Bold");
+                fonts.AddFont("LilitaOne-Regular.ttf", "Baloo2ExtraBold");
 
                 // Legacy alias: every XAML page uses MadimiOne
-                fonts.AddFont("Baloo2-Medium.ttf", "MadimiOne");
+                fonts.AddFont("LilitaOne-Regular.ttf", "MadimiOne");
 
                 // Legacy aliases remapped to the clay type family
-                fonts.AddFont("Baloo2-Medium.ttf", "MomoTrustDisplay");
-                fonts.AddFont("Baloo2-Medium.ttf", "Milkyway");
-                fonts.AddFont("Baloo2-SemiBold.ttf", "Orbitron");
-                fonts.AddFont("Baloo2-Regular.ttf", "Inter");
-                fonts.AddFont("Baloo2-Medium.ttf", "InterMedium");
-                fonts.AddFont("Baloo2-SemiBold.ttf", "InterSemiBold");
-                fonts.AddFont("Baloo2-Bold.ttf", "InterBold");
-                fonts.AddFont("Baloo2-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("Baloo2-SemiBold.ttf", "OpenSansSemibold");
-                fonts.AddFont("Baloo2-ExtraBold.ttf", "PressStart2P");
-                fonts.AddFont("Baloo2-Medium.ttf", "Fredoka");
-                fonts.AddFont("Baloo2-SemiBold.ttf", "FredokaSemiBold");
-                fonts.AddFont("Baloo2-Regular.ttf", "Nunito");
-                fonts.AddFont("Baloo2-Bold.ttf", "NunitoBold");
-                fonts.AddFont("Baloo2-ExtraBold.ttf", "NunitoExtraBold");
-                fonts.AddFont("Baloo2-SemiBold.ttf", "BrickSans");
-                fonts.AddFont("Baloo2-Medium.ttf", "SagoMini");
+                fonts.AddFont("LilitaOne-Regular.ttf", "MomoTrustDisplay");
+                fonts.AddFont("LilitaOne-Regular.ttf", "Milkyway");
+                fonts.AddFont("LilitaOne-Regular.ttf", "Orbitron");
+                fonts.AddFont("LilitaOne-Regular.ttf", "Inter");
+                fonts.AddFont("LilitaOne-Regular.ttf", "InterMedium");
+                fonts.AddFont("LilitaOne-Regular.ttf", "InterSemiBold");
+                fonts.AddFont("LilitaOne-Regular.ttf", "InterBold");
+                fonts.AddFont("LilitaOne-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("LilitaOne-Regular.ttf", "OpenSansSemibold");
+                fonts.AddFont("LilitaOne-Regular.ttf", "PressStart2P");
+                fonts.AddFont("LilitaOne-Regular.ttf", "Fredoka");
+                fonts.AddFont("LilitaOne-Regular.ttf", "FredokaSemiBold");
+                fonts.AddFont("LilitaOne-Regular.ttf", "Nunito");
+                fonts.AddFont("LilitaOne-Regular.ttf", "NunitoBold");
+                fonts.AddFont("LilitaOne-Regular.ttf", "NunitoExtraBold");
+                fonts.AddFont("LilitaOne-Regular.ttf", "BrickSans");
+                fonts.AddFont("LilitaOne-Regular.ttf", "SagoMini");
             });
 
         builder.AddAudio();
