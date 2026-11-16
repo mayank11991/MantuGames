@@ -36,9 +36,24 @@ public static class ConsentService
     private static bool _adsInitialised;
     private static bool _gathering;
 
+    private static bool _waitingForAge;
+
     public static void Gather(MauiAppCompatActivity activity)
     {
         _activity = activity;
+
+        // Ads wait for the one-time age question, so children are never sent
+        // an ad request that could carry the advertising ID.
+        if (!AgeService.IsKnown)
+        {
+            if (!_waitingForAge)
+            {
+                _waitingForAge = true;
+                AgeService.Answered += OnAgeAnswered;
+            }
+            return;
+        }
+
         if (_gathering) return;
         _gathering = true;
 
@@ -46,10 +61,8 @@ public static class ConsentService
         {
             _info = UserMessagingPlatform.GetConsentInformation(activity);
 
-            // The Play target audience includes children, so every player is
-            // treated as under the age of consent (Families policy, COPPA, GDPR-K).
             var parameters = new ConsentRequestParameters.Builder()
-                .SetTagForUnderAgeOfConsent(true)
+                .SetTagForUnderAgeOfConsent(AgeService.IsUnderAgeOfConsent)
                 .Build();
 
             _info.RequestConsentInfoUpdate(
@@ -81,6 +94,14 @@ public static class ConsentService
         }
     }
 
+    private static void OnAgeAnswered(object? sender, EventArgs e)
+    {
+        AgeService.Answered -= OnAgeAnswered;
+        _waitingForAge = false;
+        if (_activity != null)
+            MainThread.BeginInvokeOnMainThread(() => Gather(_activity));
+    }
+
     private static void Finish()
     {
         _gathering = false;
@@ -98,12 +119,15 @@ public static class ConsentService
             {
                 try
                 {
-                    // Child-directed, family-safe ads only: no personalised ads,
-                    // nothing above a G content rating.
-                    CrossMauiMTAdmob.Current.TagForChildDirectedTreatment =
-                        MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentTrue;
-                    CrossMauiMTAdmob.Current.TagForUnderAgeOfConsent =
-                        MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentTrue;
+                    // Children get child-directed ads (COPPA): no personalised ads and
+                    // the advertising ID is never sent. Under-16s also get the GDPR
+                    // under-age treatment. Every ad stays G-rated to match the app.
+                    CrossMauiMTAdmob.Current.TagForChildDirectedTreatment = AgeService.IsChild
+                        ? MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentTrue
+                        : MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentFalse;
+                    CrossMauiMTAdmob.Current.TagForUnderAgeOfConsent = AgeService.IsUnderAgeOfConsent
+                        ? MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentTrue
+                        : MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentFalse;
                     CrossMauiMTAdmob.Current.MaxAdContentRating = MTMaxAdContentRating.MaxAdContentRatingG;
 
                     CrossMauiMTAdmob.Current.Init(

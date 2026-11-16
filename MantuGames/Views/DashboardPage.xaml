@@ -171,5 +171,6 @@
         <controls:CoinShopPopup x:Name="CoinShopPopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:StatsPopup x:Name="StatsPopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:UpdatePopup x:Name="UpdatePopup" IsVisible="False" Grid.RowSpan="2" />
+        <controls:AgeGatePopup x:Name="AgeGate" IsVisible="False" Grid.RowSpan="2" />
     </Grid>
 </ContentPage>

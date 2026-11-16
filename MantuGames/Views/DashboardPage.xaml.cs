@@ -54,11 +54,7 @@ public partial class DashboardPage : ContentPage
         // Check for app updates (once per session)
         _ = CheckForUpdatesAsync();
 
-        // Netflix-style gate: a profile must be picked or created — no skip.
-        if (ProfileService.Active == null)
-        {
-            ProfilePicker.Show();
-        }
+        _ = ShowStartGatesAsync();
 
         SettingsPopup.ProgressReset += OnProgressReset;
         RefreshCoins();
@@ -67,10 +63,28 @@ public partial class DashboardPage : ContentPage
         AudioService.Instance.StartMusic();
     }
 
+    // First the one-time age question (ads wait for it), then the profile gate.
+    private async Task ShowStartGatesAsync()
+    {
+        try
+        {
+            if (!AgeService.IsKnown && !AgeGate.IsVisible)
+                await AgeGate.ShowAsync();
+
+            // Netflix-style gate: a profile must be picked or created — no skip.
+            if (ProfileService.Active == null)
+                ProfilePicker.Show();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in start gates: {ex.Message}");
+        }
+    }
+
     protected override bool OnBackButtonPressed()
     {
-        // Block the back key while the profile gate is open — selection is mandatory.
-        if (ProfilePicker.IsVisible)
+        // Block the back key while a start gate is open — both answers are mandatory.
+        if (ProfilePicker.IsVisible || AgeGate.IsVisible)
             return true;
         return base.OnBackButtonPressed();
     }
