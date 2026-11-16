@@ -49,6 +49,27 @@ public static class SkinCatalog
 
     public static Skin Default => All[0];
 
+    /// <summary>Pieces for the classic skin: the original animals.</summary>
+    private static readonly string[] ClassicPieces =
+    {
+        "cat.png", "elephant.png", "lion.png", "owl.png", "butterfly.png",
+        "panda.png", "penguin.png", "sheep.png", "sloth.png", "dino.png",
+        "hedge.png", "crab.png", "chick.png", "chicken.png", "bee.png",
+        "bat.png", "octopus.png", "giraffe.png",
+    };
+
+    /// <summary>Number of themed pieces every other skin has (pc_&lt;id&gt;_1..10.png).</summary>
+    public const int PiecesPerSkin = 10;
+
+    /// <summary>
+    /// The pictures a skin uses inside the games (Sudoku uses the first 5, Puzzle Pets
+    /// the first 7, Memory Match up to 10). They are ordered most-distinct first.
+    /// </summary>
+    public static IReadOnlyList<string> PiecesFor(Skin skin) =>
+        skin.Id == DefaultId
+            ? ClassicPieces
+            : Enumerable.Range(1, PiecesPerSkin).Select(i => $"pc_{skin.Id}_{i}.png").ToArray();
+
     public static Skin Get(string? id) => All.FirstOrDefault(s => s.Id == id) ?? Default;
 
     public static Skin? ForProduct(string productId) => All.FirstOrDefault(s => s.ProductId == productId);

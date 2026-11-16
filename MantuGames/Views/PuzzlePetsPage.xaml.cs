@@ -8,11 +8,8 @@ namespace MantuGames.Views;
 [QueryProperty(nameof(Level), "level")]
 public partial class PuzzlePetsPage : ContentPage
 {
-    private static readonly string[] AnimalImages =
-    {
-        "butterfly.png", "cat.png", "elephant.png", "girafe.png",
-        "lion.png", "octopas.png", "owl.png"
-    };
+    // Puzzle pictures follow the player's skin (seven of its pieces).
+    private readonly string[] AnimalImages = SkinCatalog.PiecesFor(SkinService.Current).Take(7).ToArray();
 
     private int _level = 1;
     private PuzzlePetsPuzzle _puzzle = null!;

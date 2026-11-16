@@ -23,7 +23,7 @@ public class CardMemoryPuzzle
         "chicken.png", "butterfly.png", "bee.png", "bat.png", "octopus.png", "giraffe.png"
     };
 
-    public static CardMemoryPuzzle Generate(int level)
+    public static CardMemoryPuzzle Generate(int level, IReadOnlyList<string>? pool = null)
     {
         int pairCount, cols, timerSec;
 
@@ -47,8 +47,9 @@ public class CardMemoryPuzzle
         }
 
         // Rotate pool based on level so different levels feel different
-        int offset = (level - 1) * 3 % AnimalPool.Length;
-        var rotated = AnimalPool.Skip(offset).Concat(AnimalPool.Take(offset)).ToList();
+        var source = pool is { Count: > 0 } ? pool.ToArray() : AnimalPool;
+        int offset = (level - 1) * 3 % source.Length;
+        var rotated = source.Skip(offset).Concat(source.Take(offset)).ToList();
 
         var images = rotated.Take(pairCount).ToList();
 

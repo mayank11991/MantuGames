@@ -1,3 +1,4 @@
+using MantuGames.Models;
 ﻿using MantuGames.Helpers;
 using MantuGames.ViewModels;
 using MantuGames.Services;
@@ -8,10 +9,8 @@ namespace MantuGames.Views
     [QueryProperty(nameof(Level), "level")]
     public partial class SudokuPage : ContentPage
     {
-        private static readonly string[] AnimalImages =
-        {
-            "cat.png", "elephant.png", "lion.png", "owl.png", "butterfly.png"
-        };
+        // The five Sudoku symbols are the player's skin pieces (animals for the classic skin).
+        private string[] AnimalImages = SkinCatalog.PiecesFor(SkinService.Current).Take(5).ToArray();
 
         private GameViewModel _vm = null!;
         private int _startLevel = 1;
@@ -27,6 +26,9 @@ namespace MantuGames.Views
         public SudokuPage()
         {
             InitializeComponent();
+            var pieceButtons = new[] { PieceButton1, PieceButton2, PieceButton3, PieceButton4, PieceButton5 };
+            for (int i = 0; i < pieceButtons.Length; i++)
+                pieceButtons[i].Source = AnimalImages[i];
             this.AddBannerAd();
         }
 

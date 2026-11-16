@@ -5,3 +5,7 @@ License: Creative Commons Zero, CC0
 http://creativecommons.org/publicdomain/zero/1.0/
 "You can use this content for personal, educational, and commercial purposes."
 Crediting Kenney is optional; it is included here as thanks.
+
+Game pieces (MantuGames/Resources/Images/pc_*.png) are 3D renders from these
+Kenney packs, all Creative Commons Zero (CC0):
+  Cube Pets, Car Kit, Castle Kit, Food Kit, Pirate Kit, Nature Kit, Holiday Kit

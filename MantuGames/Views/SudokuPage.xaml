@@ -53,36 +53,36 @@
                 <Grid x:Name="SudokuGrid" ColumnSpacing="3" RowSpacing="3" />
             </Border>
 
-            <!-- NUMBER BUTTONS with animal images -->
+            <!-- NUMBER BUTTONS: the skin's first five pieces (set in code-behind) -->
             <Grid Grid.Row="4" ColumnDefinitions="*,*,*,*,*,Auto"
                   ColumnSpacing="6" Padding="4,6">
                 <Border Style="{StaticResource NightCard}" Grid.Column="0" StrokeShape="RoundRectangle 14"
                        Padding="0">
-                    <ImageButton Source="cat.png" BackgroundColor="Transparent"
+                    <ImageButton x:Name="PieceButton1" Source="cat.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="1" />
                 </Border>
                 <Border Style="{StaticResource NightCard}" Grid.Column="1" StrokeShape="RoundRectangle 14"
                        Padding="0">
-                    <ImageButton Source="elephant.png" BackgroundColor="Transparent"
+                    <ImageButton x:Name="PieceButton2" Source="elephant.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="2" />
                 </Border>
                 <Border Style="{StaticResource NightCard}" Grid.Column="2" StrokeShape="RoundRectangle 14"
                        Padding="0">
-                    <ImageButton Source="lion.png" BackgroundColor="Transparent"
+                    <ImageButton x:Name="PieceButton3" Source="lion.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="3" />
                 </Border>
                 <Border Style="{StaticResource NightCard}" Grid.Column="3" StrokeShape="RoundRectangle 14"
                        Padding="0">
-                    <ImageButton Source="owl.png" BackgroundColor="Transparent"
+                    <ImageButton x:Name="PieceButton4" Source="owl.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="4" />
                 </Border>
                 <Border Style="{StaticResource NightCard}" Grid.Column="4" StrokeShape="RoundRectangle 14"
                        Padding="0">
-                    <ImageButton Source="butterfly.png" BackgroundColor="Transparent"
+                    <ImageButton x:Name="PieceButton5" Source="butterfly.png" BackgroundColor="Transparent"
                                  HeightRequest="58" Padding="8"
                                  Command="{Binding EnterNumberCommand}" CommandParameter="5" />
                 </Border>

@@ -60,3 +60,48 @@ public class SkinCatalogTests
             }
     }
 }
+
+public class SkinPiecesTests
+{
+    [Fact]
+    public void EverySkin_HasEnoughDistinctPiecesForAllGames()
+    {
+        foreach (var skin in SkinCatalog.All)
+        {
+            var pieces = SkinCatalog.PiecesFor(skin);
+            Assert.True(pieces.Count >= 10, skin.Id);          // Memory Match uses up to 10 pairs
+            Assert.Equal(pieces.Count, pieces.Distinct().Count());
+        }
+    }
+
+    [Fact]
+    public void ClassicSkin_KeepsTheOriginalSudokuAnimals() =>
+        Assert.Equal(new[] { "cat.png", "elephant.png", "lion.png", "owl.png", "butterfly.png" },
+                     SkinCatalog.PiecesFor(SkinCatalog.Default).Take(5));
+
+    [Fact]
+    public void ThemedSkins_UseTheirOwnPieceFiles()
+    {
+        var lion = SkinCatalog.Get("lion");
+        Assert.Equal("pc_lion_1.png", SkinCatalog.PiecesFor(lion)[0]);
+        Assert.Equal("pc_lion_10.png", SkinCatalog.PiecesFor(lion)[9]);
+    }
+
+    [Fact]
+    public void PieceFiles_ExistInTheApp()
+    {
+        var images = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "MantuGames", "Resources", "Images");
+        foreach (var skin in SkinCatalog.All.Where(s => s.Id != SkinCatalog.DefaultId))
+            foreach (var file in SkinCatalog.PiecesFor(skin))
+                Assert.True(File.Exists(Path.Combine(images, file)), file);
+    }
+
+    [Fact]
+    public void MemoryPuzzle_UsesTheGivenPool()
+    {
+        var pool = SkinCatalog.PiecesFor(SkinCatalog.Get("bee"));
+        var puzzle = CardMemoryPuzzle.Generate(20, pool);
+        Assert.All(puzzle.Cards, c => Assert.Contains(c.Image, pool));
+        Assert.Equal(puzzle.PairCount * 2, puzzle.Cards.Count);
+    }
+}

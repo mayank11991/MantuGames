@@ -1,3 +1,4 @@
+using MantuGames.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -105,7 +106,8 @@ public class CardMemoryViewModel : INotifyPropertyChanged
         IsGameOver   = false;
         MatchedPairs = 0;
 
-        var puzzle = CardMemoryPuzzle.Generate(level);
+        // Card faces follow the player's skin.
+        var puzzle = CardMemoryPuzzle.Generate(level, SkinCatalog.PiecesFor(SkinService.Current));
         CurrentLevel          = level;
         Columns               = puzzle.Columns;
         _pairCount            = puzzle.PairCount;

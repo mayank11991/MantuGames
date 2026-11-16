@@ -23,6 +23,7 @@
     <Compile Include="..\MantuGames\Models\MazePuzzle.cs" Link="Models\MazePuzzle.cs" />
     <Compile Include="..\MantuGames\Models\DailyRules.cs" Link="Models\DailyRules.cs" />
     <Compile Include="..\MantuGames\Models\Skin.cs" Link="Models\Skin.cs" />
+    <Compile Include="..\MantuGames\Models\CardMemoryPuzzle.cs" Link="Models\CardMemoryPuzzle.cs" />
   </ItemGroup>
 
 </Project>
