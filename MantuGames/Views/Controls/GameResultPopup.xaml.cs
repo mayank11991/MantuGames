@@ -114,7 +114,9 @@ public partial class GameResultPopup : ContentView
             PopupCard.FadeToAsync(1.0, 260)
         );
 
-        _ = MaybeRateNudgeAsync();
+        // Only on a fresh win (coins awarded), so replays never trigger it.
+        if (_isWin && _completionCoins > 0)
+            _ = AskForRatingAsync();
     }
 
     public void Hide()
@@ -122,41 +124,18 @@ public partial class GameResultPopup : ContentView
         IsVisible = false;
     }
 
-    // ── RATE US NUDGE ─────────────────────────────────────────────
-    // Shown after every 5th completed game until the player rates or
-    // dismisses it twice. Never interrupts wins that award coins.
-    private async System.Threading.Tasks.Task MaybeRateNudgeAsync()
+    // Google Play's in-app rating card, shown on top of the win popup once the
+    // stars have landed. ReviewService decides when (3rd win, then rarely).
+    private static async Task AskForRatingAsync()
     {
         try
         {
-            if (!_isWin || _completionCoins == 0) return;
-            if (Preferences.Get("rate_done", false)) return;
-
-            int completed = Preferences.Get("games_completed", 0) + 1;
-            Preferences.Set("games_completed", completed);
-            if (completed % 5 != 0) return;
-
-            int dismissed = Preferences.Get("rate_dismissed", 0);
-            if (dismissed >= 2) { Preferences.Set("rate_done", true); return; }
-
-            bool rate = await Application.Current!.Windows[0].Page!.DisplayAlertAsync(
-                "Enjoying Mantu Games?",
-                "Your rating helps other players discover the games. Rate us on Google Play!",
-                "Rate Now", "Not Now");
-
-            if (rate)
-            {
-                Preferences.Set("rate_done", true);
-                await Launcher.OpenAsync(AppConfig.PlayStoreUrl);
-            }
-            else
-            {
-                Preferences.Set("rate_dismissed", dismissed + 1);
-            }
+            await Task.Delay(1200);
+            await ReviewService.OnLevelWonAsync();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error in MaybeRateNudgeAsync: {ex.Message}");
+            Console.WriteLine($"Error asking for rating: {ex.Message}");
         }
     }
 

@@ -92,6 +92,9 @@
         <PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
         <PackageReference Include="Plugin.MauiMTAdmob" Version="2.4.0" />
         <PackageReference Include="Plugin.InAppBilling" Version="10.0.0" />
+		<PackageReference Include="Xamarin.Google.Android.Play.Review" Version="2.0.2.10" Condition="$(TargetFramework.Contains('-android'))" />
+		<!-- Play Review pulls AndroidX Fragment 1.9, which absorbed fragment-ktx; keep ktx on the same version so classes are not duplicated. -->
+		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.9.0" Condition="$(TargetFramework.Contains('-android'))" />
     </ItemGroup>
 
     <ItemGroup>
