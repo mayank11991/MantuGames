@@ -53,8 +53,8 @@ public partial class LevelMapPage : ContentPage
         if (Width <= 0 || string.IsNullOrEmpty(GameTitleLabel.Text)) return;
         double avail = Width - 40 /* page padding */ - 150 /* hero art */ - 8;
         int longest = GameTitleLabel.Text.Split(' ').Max(w => w.Length);
-        // Anton is condensed: ~0.5em per uppercase glyph.
-        GameTitleLabel.FontSize = Math.Clamp(avail / (longest * 0.5), 28, 50);
+        // Lilita One uppercase averages ~0.62em per glyph.
+        GameTitleLabel.FontSize = Math.Clamp(avail / (longest * 0.62), 26, 50);
     }
 
     private void BuildMap()

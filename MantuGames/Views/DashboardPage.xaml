@@ -60,16 +60,16 @@
 
                 <!-- Hero: WELCOME! + player name -->
                 <VerticalStackLayout Margin="0,18,0,0" Spacing="0">
-                    <Label Text="WELCOME!"
+                    <controls:FitLabel Text="WELCOME!"
                            Style="{StaticResource PopHero}"
                            FontSize="76"
                            HorizontalOptions="Start"
                            VerticalOptions="Start" />
                     <VerticalStackLayout HorizontalOptions="Start" Spacing="0" Margin="2,0,0,0">
                         <Label Text="Hey" Style="{StaticResource PopBody}" FontSize="16" />
-                        <Label x:Name="HeaderPlayerName" Text="Player"
+                        <controls:FitLabel x:Name="HeaderPlayerName" Text="Player"
                                FontFamily="Baloo2ExtraBold" FontSize="26"
-                               LineBreakMode="TailTruncation" MaxLines="1" />
+                               />
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 
@@ -78,13 +78,13 @@
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,18,0,0">
                     <Border Grid.Column="0" Style="{StaticResource PopCard}" Padding="12,10">
                         <VerticalStackLayout Spacing="-4" HorizontalOptions="Center">
-                            <Label x:Name="LevelsStat" Text="0" FontFamily="Display" FontSize="22" HorizontalOptions="Center" />
+                            <controls:FitLabel x:Name="LevelsStat" Text="0" FontFamily="Display" FontSize="22" HorizontalOptions="Center" />
                             <Label Text="levels done" Style="{StaticResource PopMutedLabel}" FontSize="11" HorizontalOptions="Center" />
                         </VerticalStackLayout>
                     </Border>
                     <Border Grid.Column="1" Style="{StaticResource PopCard}" Padding="12,10">
                         <VerticalStackLayout Spacing="-4" HorizontalOptions="Center">
-                            <Label x:Name="WinsStat" Text="0" FontFamily="Display" FontSize="22" HorizontalOptions="Center" />
+                            <controls:FitLabel x:Name="WinsStat" Text="0" FontFamily="Display" FontSize="22" HorizontalOptions="Center" />
                             <Label Text="games won" Style="{StaticResource PopMutedLabel}" FontSize="11" HorizontalOptions="Center" />
                         </VerticalStackLayout>
                     </Border>

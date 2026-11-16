@@ -294,26 +294,29 @@ public partial class DashboardPage : ContentPage
             Shadow = new Shadow { Brush = Colors.White, Offset = new Point(2, 2), Radius = 0, Opacity = 1 },
         };
 
-        var title = new Label
+        var title = new Controls.FitLabel
         {
+            MinFontSize = 11,
             Text = game.Title,
             FontFamily = "Baloo2ExtraBold",
-            FontSize = 17,
+            FontSize = 15.5,
             TextColor = Color.FromArgb("#111114"),
             LineBreakMode = LineBreakMode.TailTruncation,
             MaxLines = 1,
-            Margin = new Thickness(30, 4, 2, 0),
+            // Clear the big corner number; two digits are wider.
+            Margin = new Thickness(number < 10 ? 30 : 46, 4, 2, 0),
         };
 
-        var tagline = new Label
+        var tagline = new Controls.FitLabel
         {
+            MinFontSize = 9,
             Text = game.Description,
             FontFamily = "Baloo2Medium",
-            FontSize = 12.5,
+            FontSize = 12,
             TextColor = Color.FromArgb("#6E6E7C"),
-            MaxLines = 2,
+            MaxLines = 1,
             LineBreakMode = LineBreakMode.TailTruncation,
-            Margin = new Thickness(30, -2, 2, 2),
+            Margin = new Thickness(number < 10 ? 30 : 46, -2, 2, 2),
         };
 
         var thumbHost = new Grid { Children = { thumb, numberLabel } };

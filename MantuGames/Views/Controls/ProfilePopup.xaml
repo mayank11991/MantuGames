@@ -2,7 +2,8 @@
 <ContentView
     x:Class="MantuGames.Views.Controls.ProfilePopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls">
 
     <Grid x:Name="Overlay"
           BackgroundColor="#991F2A44"
@@ -27,7 +28,7 @@
 
                 <VerticalStackLayout Spacing="16">
 
-                    <Label Text="Create Profile"
+                    <controls:FitLabel Text="Create Profile"
                            FontFamily="Display"
                            FontSize="30"
                            TextColor="#111114"

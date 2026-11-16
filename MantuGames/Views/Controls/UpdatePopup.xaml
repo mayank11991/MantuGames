@@ -2,7 +2,8 @@
 <ContentView
     x:Class="MantuGames.Views.Controls.UpdatePopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls">
 
     <Grid x:Name="Overlay" BackgroundColor="#99111114" InputTransparent="False">
         <Grid VerticalOptions="Center"
@@ -26,7 +27,7 @@
 
                 <VerticalStackLayout Spacing="18" HorizontalOptions="Center">
 
-                    <Label x:Name="TitleLabel"
+                    <controls:FitLabel x:Name="TitleLabel"
                            Text="Update Available"
                            FontFamily="Display"
                            FontSize="26"

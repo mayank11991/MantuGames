@@ -2,7 +2,8 @@
 <ContentView
     x:Class="MantuGames.Views.Controls.ProfilePickerPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls">
 
     <Grid x:Name="Overlay" BackgroundColor="#99111114">
         <Grid.GestureRecognizers>
@@ -79,7 +80,7 @@
                 <Border.Shadow>
                     <Shadow Brush="#D9F84A" Offset="5,6" Radius="0" Opacity="1" />
                 </Border.Shadow>
-                <Label Text="WHO'S PLAYING?" FontFamily="Display" FontSize="32" TextColor="#FFFFFF" />
+                <controls:FitLabel SideInset="90" Text="WHO'S PLAYING?" FontFamily="Display" FontSize="32" TextColor="#FFFFFF" />
             </Border>
         </Grid>
     </Grid>

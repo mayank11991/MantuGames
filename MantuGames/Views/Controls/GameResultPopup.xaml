@@ -3,6 +3,7 @@
     x:Class="MantuGames.Views.Controls.GameResultPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls"
     IsVisible="False">
 
     <Grid>
@@ -48,7 +49,7 @@
                 </StackLayout>
 
                 <!-- Title -->
-                <Label x:Name="TitleLabel"
+                <controls:FitLabel x:Name="TitleLabel"
                        FontFamily="Display"
                        FontSize="36"
                        HorizontalOptions="Center" HorizontalTextAlignment="Center"

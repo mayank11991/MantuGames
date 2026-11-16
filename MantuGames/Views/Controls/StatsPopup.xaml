@@ -2,7 +2,8 @@
 <ContentView
     x:Class="MantuGames.Views.Controls.StatsPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls">
 
     <Grid x:Name="Overlay" BackgroundColor="#99111114" InputTransparent="False">
         <Grid.GestureRecognizers>
@@ -28,7 +29,7 @@
 
                 <VerticalStackLayout Spacing="16">
 
-                    <Label Text="STATISTICS"
+                    <controls:FitLabel Text="STATISTICS"
                            FontFamily="Display"
                            FontSize="26"
                            TextColor="#111114"
