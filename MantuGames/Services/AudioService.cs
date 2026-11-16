@@ -31,31 +31,23 @@ public class AudioService
             try
             {
                 var stream = await FileSystem.OpenAppPackageFileAsync($"{name}.wav");
-                _cache[name] = _audio.CreatePlayer(stream);
+                var player = _audio.CreatePlayer(stream);
+                player.Volume = 0.7;   // keep taps and effects soft
+                _cache[name] = player;
             }
             catch { _cache[name] = null; }
         }
 
         try
         {
-            var bgStream = await FileSystem.OpenAppPackageFileAsync("bg_new.mp3");
+            // Cheerful kids-game loop (Ogg loops without a gap on Android).
+            var bgStream = await FileSystem.OpenAppPackageFileAsync("bg_music.ogg");
             _bgPlayer = _audio.CreatePlayer(bgStream);
             _bgPlayer.Loop = true;
-            _bgPlayer.Volume = 0.5; // background track — keep it decently low
+            _bgPlayer.Volume = 0.35; // sits quietly behind the game
             _bgPlayer.PlaybackEnded += OnBgPlaybackEnded;
         }
-        catch
-        {
-            // Fall back to the legacy track if the new one is missing
-            try
-            {
-                var bgStream = await FileSystem.OpenAppPackageFileAsync("bgmusic.wav");
-                _bgPlayer = _audio.CreatePlayer(bgStream);
-                _bgPlayer.Loop = true;
-                _bgPlayer.PlaybackEnded += OnBgPlaybackEnded;
-            }
-            catch { }
-        }
+        catch { }
     }
 
     private void OnBgPlaybackEnded(object? sender, EventArgs e)
