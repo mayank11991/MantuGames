@@ -149,7 +149,7 @@ public partial class ConnectTheDotsPage : ContentPage
         {
             AudioService.Instance.Play("tap");
             _vm?.PauseTimer();
-            bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave", "Stay");
+            bool leave = ResultPopup.IsVisible || await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave", "Stay");
             if (!leave)
             {
                 try { _vm?.ResumeTimer(); } catch { }

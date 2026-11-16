@@ -482,7 +482,7 @@ public partial class BlockPuzzlePage : ContentPage
     {
         try
         {
-            bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave", "Stay");
+            bool leave = ResultPopup.IsVisible || await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave", "Stay");
             if (!leave) return;
             Cleanup();
             await Shell.Current.GoToAsync("..");

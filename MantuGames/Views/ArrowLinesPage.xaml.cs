@@ -186,7 +186,7 @@ public partial class ArrowLinesPage : ContentPage
     private async void OnBackClicked(object? sender, EventArgs e)
     {
         AudioService.Instance.Play("tap");
-        bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost.", "Leave", "Stay");
+        bool leave = ResultPopup.IsVisible || await ConfirmPopup.Show("Leave Game?", "Your progress will be lost.", "Leave", "Stay");
         if (!leave) return;
         _vm?.Cleanup();
         await Shell.Current.GoToAsync("..");

@@ -1,6 +1,7 @@
 #if ANDROID
 using Android.App;
 using Plugin.MauiMtAdmob;
+using Plugin.MauiMtAdmob.Extra;
 using Xamarin.Google.UserMesssagingPlatform;
 #endif
 
@@ -45,8 +46,10 @@ public static class ConsentService
         {
             _info = UserMessagingPlatform.GetConsentInformation(activity);
 
+            // The Play target audience includes children, so every player is
+            // treated as under the age of consent (Families policy, COPPA, GDPR-K).
             var parameters = new ConsentRequestParameters.Builder()
-                .SetTagForUnderAgeOfConsent(false) // audience is 13+
+                .SetTagForUnderAgeOfConsent(true)
                 .Build();
 
             _info.RequestConsentInfoUpdate(
@@ -95,6 +98,14 @@ public static class ConsentService
             {
                 try
                 {
+                    // Child-directed, family-safe ads only: no personalised ads,
+                    // nothing above a G content rating.
+                    CrossMauiMTAdmob.Current.TagForChildDirectedTreatment =
+                        MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentTrue;
+                    CrossMauiMTAdmob.Current.TagForUnderAgeOfConsent =
+                        MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentTrue;
+                    CrossMauiMTAdmob.Current.MaxAdContentRating = MTMaxAdContentRating.MaxAdContentRatingG;
+
                     CrossMauiMTAdmob.Current.Init(
                         activity: _activity,
                         appId: AppConfig.AdMobAppId,

@@ -572,7 +572,7 @@ public partial class MazeRunnerPage : ContentPage
     {
         try
         {
-            bool leave = await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave",
+            bool leave = ResultPopup.IsVisible || await ConfirmPopup.Show("Leave Game?", "Your progress will be lost if you leave.", "Leave",
                 "Stay");
             if (!leave) return;
             await Shell.Current.GoToAsync("..");
