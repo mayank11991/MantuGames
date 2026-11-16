@@ -1,0 +1,7 @@
+Skin characters (MantuGames/Resources/Images/char_*.png) are 3D renders of
+"Mini Characters" (2.0) by Kenney - www.kenney.nl
+
+License: Creative Commons Zero, CC0
+http://creativecommons.org/publicdomain/zero/1.0/
+"You can use this content for personal, educational, and commercial purposes."
+Crediting Kenney is optional; it is included here as thanks.

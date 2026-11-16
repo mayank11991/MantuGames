@@ -90,7 +90,7 @@ public partial class SkinShopPopup : ContentView
             {
                 Children =
                 {
-                    new Image { Source = skin.Mascot, HeightRequest = 64, WidthRequest = 64,
+                    new Image { Source = skin.Mascot, HeightRequest = 86, WidthRequest = 86,
                                 HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center },
                     // Accent chip: the colour used for game pieces.
                     new Border

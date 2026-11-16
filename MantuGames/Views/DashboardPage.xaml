@@ -86,7 +86,7 @@
                                    />
                         </VerticalStackLayout>
                         <Image x:Name="HeroMascot" Grid.Column="1" Source="cat.png"
-                               WidthRequest="78" HeightRequest="78" Margin="0,-14,4,0"
+                               WidthRequest="92" HeightRequest="92" Margin="0,-22,4,0"
                                VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnSkinsClicked" />
