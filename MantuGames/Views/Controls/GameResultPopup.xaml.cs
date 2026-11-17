@@ -1,3 +1,4 @@
+using MantuGames.Models;
 using MantuGames.Helpers;
 using MantuGames.Services;
 
@@ -49,6 +50,10 @@ public partial class GameResultPopup : ContentView
 
         // A solved level of today's featured game completes the daily challenge.
         DailyReward? daily = isWin && !assisted ? DailyService.OnLevelWon(gameId, levelNumber) : null;
+        if (daily != null) ReminderService.Reschedule();
+
+        // Badges earned by this result (their coins are paid inside BadgeService).
+        var badges = BadgeService.CheckNew();
         _doubled = false;
 
         AudioService.Instance.Play(isWin ? "win" : "lose");
@@ -74,6 +79,15 @@ public partial class GameResultPopup : ContentView
             }
             else
                 PointsBadge.IsVisible = false;
+
+            BadgeBanner.IsVisible = badges.Count > 0;
+            if (badges.Count > 0)
+            {
+                BadgeIcon.Source = badges[0].Icon;
+                BadgeLabel.Text = badges.Count == 1
+                    ? $"New badge: {badges[0].Title.TrimEnd('!')} · +{BadgeCatalog.Reward}"
+                    : $"{badges.Count} new badges · +{BadgeCatalog.Reward * badges.Count}";
+            }
 
             DailyBadge.IsVisible = daily != null;
             if (daily != null)
@@ -106,6 +120,7 @@ public partial class GameResultPopup : ContentView
 
             StarsRow.IsVisible    = false;
             PointsBadge.IsVisible = false;
+            BadgeBanner.IsVisible = badges.Count > 0;
             DailyBadge.IsVisible  = false;
             DoubleBorder.IsVisible = false;
 
@@ -128,14 +143,66 @@ public partial class GameResultPopup : ContentView
         PopupCard.Scale     = 0.5;
         PopupCard.Opacity   = 0;
 
+        if (isWin)
+        {
+            // Stars start hidden and pop in one by one after the card lands.
+            foreach (var star in new[] { StarImg1, StarImg2, StarImg3 }) star.Scale = 0;
+            if (coins > 0) PointsLabel.Text = "+0 coins";
+            HeroIcon.Rotation = -12;
+        }
+
         await Task.WhenAll(
             PopupCard.ScaleToAsync(1.0, 380, Easing.SpringOut),
             PopupCard.FadeToAsync(1.0, 260)
         );
 
+        if (isWin)
+            _ = CelebrateAsync(stars, coins);
+
         // Only on a fresh win (coins awarded), so replays never trigger it.
         if (_isWin && _completionCoins > 0)
             _ = AskForRatingAsync();
+    }
+
+    // Confetti, stars popping in one by one, a wiggling trophy and the coins counting up.
+    private async Task CelebrateAsync(int stars, int coins)
+    {
+        try
+        {
+            Confetti.Burst(stars >= 3 ? 1.4 : 0.9);
+            _ = HeroIcon.RotateToAsync(0, 500, Easing.SpringOut);
+
+            var starViews = new[] { StarImg1, StarImg2, StarImg3 };
+            for (int i = 0; i < starViews.Length; i++)
+            {
+                await Task.Delay(140);
+                if (i < stars) AudioService.Instance.Play("star");
+                await starViews[i].ScaleToAsync(1.25, 140, Easing.CubicOut);
+                await starViews[i].ScaleToAsync(1.0, 120, Easing.SpringOut);
+            }
+
+            if (coins > 0 && PointsBadge.IsVisible)
+            {
+                int steps = Math.Min(coins, 12);
+                for (int k = 1; k <= steps; k++)
+                {
+                    PointsLabel.Text = $"+{coins * k / steps} coins";
+                    await Task.Delay(45);
+                }
+                await PointsBadge.ScaleToAsync(1.15, 110);
+                await PointsBadge.ScaleToAsync(1.0, 140, Easing.SpringOut);
+            }
+
+            if (BadgeBanner.IsVisible)
+            {
+                BadgeBanner.Scale = 0.6;
+                await BadgeBanner.ScaleToAsync(1.0, 300, Easing.SpringOut);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Celebration error: {ex.Message}");
+        }
     }
 
     public void Hide()

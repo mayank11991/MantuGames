@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="MantuGames.Views.Controls.BadgesPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MantuGames.Views.Controls"
+    IsVisible="False">
+
+    <Grid BackgroundColor="#991F2A44">
+        <Grid.GestureRecognizers><TapGestureRecognizer /></Grid.GestureRecognizers>
+        <Border x:Name="Card"
+                BackgroundColor="#FFFFFF"
+                Stroke="#111114"
+                StrokeThickness="3"
+                Padding="18,18,18,14"
+                Margin="18,40"
+                MaximumWidthRequest="460"
+                VerticalOptions="Center">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="28" />
+            </Border.StrokeShape>
+            <Border.Shadow>
+                <Shadow Brush="#FFC83D" Offset="7,9" Radius="0" Opacity="1" />
+            </Border.Shadow>
+
+            <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="12">
+                <controls:FitLabel Text="BADGES"
+                                   FontFamily="{DynamicResource ThemeTitleFont}" FontSize="30"
+                                   TextColor="#111114" HorizontalOptions="Center" />
+
+                <Label Grid.Row="1" x:Name="CountLabel"
+                       FontFamily="Baloo2Medium" FontSize="14"
+                       TextColor="#6E6E7C" HorizontalTextAlignment="Center" />
+
+                <ScrollView Grid.Row="2" MaximumHeightRequest="440">
+                    <VerticalStackLayout x:Name="BadgesLayout" Spacing="10" />
+                </ScrollView>
+
+                <Grid Grid.Row="3" ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Border Style="{StaticResource CtaPillYellow}">
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnStats" /></Border.GestureRecognizers>
+                        <Label Text="STATISTICS" Style="{StaticResource CtaPillLabelDark}" FontSize="15" HorizontalOptions="Center" />
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource CtaPillBlue}">
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnClose" /></Border.GestureRecognizers>
+                        <Label Text="CLOSE" Style="{StaticResource CtaPillLabel}" FontSize="15" HorizontalOptions="Center" />
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

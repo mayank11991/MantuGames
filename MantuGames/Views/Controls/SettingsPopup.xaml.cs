@@ -18,6 +18,7 @@ public partial class SettingsPopup : ContentView
         ThemeStyler.RegisterDialog(DialogCard);
         MusicSwitch.IsToggled = AudioService.Instance.MusicEnabled;
         SfxSwitch.IsToggled = AudioService.Instance.SfxEnabled;
+        ReminderSwitch.IsToggled = ReminderService.Enabled;
         VersionLabel.Text = $"Version {AppInfo.VersionString} ({AppInfo.BuildString})";
         UpdateRemoveAdsStatus();
     }
@@ -79,6 +80,13 @@ public partial class SettingsPopup : ContentView
     private void OnSfxToggled(object? sender, ToggledEventArgs e)
     {
         AudioService.Instance.SfxEnabled = e.Value;
+    }
+
+    private void OnReminderToggled(object? sender, ToggledEventArgs e)
+    {
+        if (ReminderService.Enabled == e.Value) return;
+        ReminderService.Enabled = e.Value;
+        if (e.Value) _ = ReminderService.AskOnceAndScheduleAsync();
     }
 
     private void OnVibrationToggled(object? sender, ToggledEventArgs e)

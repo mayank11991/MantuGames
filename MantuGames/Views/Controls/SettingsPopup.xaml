@@ -122,6 +122,21 @@
                                         Toggled="OnSfxToggled" />
                             </Grid>
 
+                            <!-- Daily reminder notification (6 pm, only while today's challenge is open) -->
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0"
+                                       Text="Daily Reminder"
+                                       FontFamily="MadimiOne"
+                                       FontSize="16"
+                                       TextColor="#111114"
+                                       VerticalOptions="Center" />
+                                <Switch x:Name="ReminderSwitch"
+                                        Grid.Column="1"
+                                        OnColor="#111114"
+                                        ThumbColor="#111114"
+                                        Toggled="OnReminderToggled" />
+                            </Grid>
+
                             <BoxView HeightRequest="1" Color="#B3FFFFFF" />
 
                             <!-- App Version -->

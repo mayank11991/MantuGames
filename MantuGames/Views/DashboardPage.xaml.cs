@@ -20,6 +20,7 @@ public partial class DashboardPage : ContentPage
         SettingsPopup.UpdateCheckRequested += OnUpdateCheckRequested;
         SettingsPopup.ProfileSwitchRequested += OnSwitchProfile;
         EditProfilePopup.SkinShopRequested += (s, e) => SkinShop.Show();
+        BadgesPopup.StatisticsRequested += (s, e) => StatsPopup.Show();
         SettingsPopup.CoinShopRequested += OnCoinShopClicked;
         CoinShopPopup.CoinsChanged += OnCoinsChanged;
         SkinService.Changed += (s, e) => RefreshSkin();
@@ -72,6 +73,10 @@ public partial class DashboardPage : ContentPage
                 await Onboarding.ShowAsync();
                 RefreshCoins();
             }
+
+            // Daily reminder: ask for notification permission once, then (re)schedule.
+            if (ProfileService.IsOnboarded)
+                await ReminderService.AskOnceAndScheduleAsync();
         }
         catch (Exception ex)
         {
@@ -86,6 +91,7 @@ public partial class DashboardPage : ContentPage
             return true;
         // Back closes whichever popup is open before it ever leaves the app.
         if (SkinShop.IsVisible) { SkinShop.Hide(); return true; }
+        if (BadgesPopup.IsVisible) { BadgesPopup.Hide(); return true; }
         if (SettingsPopup.IsVisible) { SettingsPopup.Hide(); return true; }
         if (CoinShopPopup.IsVisible) { CoinShopPopup.Hide(); return true; }
         if (EditProfilePopup.IsVisible) { EditProfilePopup.Hide(); return true; }
@@ -284,9 +290,12 @@ public partial class DashboardPage : ContentPage
         _ = GamesScroll.ScrollToAsync(0, 0, true);
     }
 
+    // The trophy opens the badge collection (statistics are one tap away inside it).
     private void OnNavStatsClicked(object? sender, TappedEventArgs e)
     {
-        ShowStats();
+        AudioService.Instance.Play("tap");
+        VibrationHelper.Click();
+        BadgesPopup.Show();
     }
 
     private void OnNavSettingsClicked(object? sender, TappedEventArgs e)

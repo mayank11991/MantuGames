@@ -91,6 +91,24 @@
                            Padding="14,5"/>
                 </Border>
 
+                <!-- New badge earned with this result -->
+                <Border x:Name="BadgeBanner"
+                        BackgroundColor="#FFF4CC"
+                        Stroke="#FFC83D" StrokeThickness="2"
+                        HorizontalOptions="Center"
+                        IsVisible="False"
+                        Padding="10,5,14,5"
+                        Margin="0,2,0,4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16"/>
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout Spacing="8">
+                        <Image x:Name="BadgeIcon" WidthRequest="26" HeightRequest="26" VerticalOptions="Center" />
+                        <Label x:Name="BadgeLabel" FontFamily="Baloo2ExtraBold" FontSize="13"
+                               TextColor="#111114" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+
                 <!-- Opt-in rewarded ad: double this level's coins -->
                 <Border x:Name="DoubleBorder" Style="{StaticResource CtaPillYellow}"
                         HorizontalOptions="Center" Padding="16,7" Margin="0,6,0,4" IsVisible="False">
@@ -142,6 +160,9 @@
 
             </StackLayout>
         </Border>
+
+        <!-- Win celebration: confetti over everything, never blocks taps -->
+        <controls:ConfettiView x:Name="Confetti" InputTransparent="True" />
 
     </Grid>
 </ContentView>

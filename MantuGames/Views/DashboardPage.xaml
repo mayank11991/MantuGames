@@ -219,6 +219,7 @@
         <controls:StatsPopup x:Name="StatsPopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:UpdatePopup x:Name="UpdatePopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:SkinShopPopup x:Name="SkinShop" IsVisible="False" Grid.RowSpan="2" />
+        <controls:BadgesPopup x:Name="BadgesPopup" IsVisible="False" Grid.RowSpan="2" />
         <controls:OnboardingPopup x:Name="Onboarding" IsVisible="False" Grid.RowSpan="2" />
     </Grid>
 </ContentPage>
