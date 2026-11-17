@@ -15,7 +15,7 @@ public static class SkinService
     /// TESTING ONLY: every skin is unlocked so all themes can be tried without buying.
     /// Set back to false before the release build so paid skins need a purchase again.
     /// </summary>
-    public const bool UnlockAllForTesting = true;
+    public const bool UnlockAllForTesting = false;
 
     /// <summary>Raised on the main thread when the active skin or ownership changes.</summary>
     public static event EventHandler? Changed;

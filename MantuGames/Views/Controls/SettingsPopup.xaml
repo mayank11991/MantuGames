@@ -232,13 +232,19 @@
                                         <TapGestureRecognizer Tapped="OnRemoveAds" />
                                     </Label.GestureRecognizers>
                                 </Label>
-                                <Label x:Name="RemoveAdsStatus"
-                                       Grid.Column="1"
-                                       FontFamily="MadimiOne"
-                                       FontSize="11"
-                                       FontAttributes="Bold"
-                                       TextColor="#111114"
-                                       VerticalOptions="Center" />
+                                <!-- Yellow BUY pill with dark text (readable on white); plain green text once bought -->
+                                <Border x:Name="RemoveAdsPill" Grid.Column="1"
+                                        Style="{StaticResource CtaPillYellow}"
+                                        Padding="14,5" Margin="0,0,0,5" VerticalOptions="Center">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnRemoveAds" />
+                                    </Border.GestureRecognizers>
+                                    <Label x:Name="RemoveAdsStatus"
+                                           FontFamily="{DynamicResource ThemeTitleFont}"
+                                           FontSize="14"
+                                           TextColor="#1F2A44"
+                                           HorizontalOptions="Center" />
+                                </Border>
                             </Grid>
 
                         </VerticalStackLayout>

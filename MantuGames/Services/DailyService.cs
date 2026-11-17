@@ -19,6 +19,26 @@ public static class DailyService
     private static string LastDoneKey => ProfileService.Key("daily_last_done");
     private static string StreakKey => ProfileService.Key("daily_streak");
     private static string BestKey => ProfileService.Key("daily_best_streak");
+    private static string LevelDayKey => ProfileService.Key("daily_level_day");
+    private static string LevelKey => ProfileService.Key("daily_level");
+
+    /// <summary>
+    /// Today's challenge level in <see cref="TodayGame"/>. Picked once per day from the
+    /// levels already unlocked and remembered, so it doesn't move when more unlock.
+    /// </summary>
+    public static int TodayLevel
+    {
+        get
+        {
+            string today = Today.ToString("yyyy-MM-dd");
+            if (Preferences.Default.Get(LevelDayKey, "") == today)
+                return Math.Max(1, Preferences.Default.Get(LevelKey, 1));
+            int level = DailyRules.LevelFor(Today, ProgressService.Instance.GetHighestUnlocked(TodayGame.Id));
+            Preferences.Default.Set(LevelDayKey, today);
+            Preferences.Default.Set(LevelKey, level);
+            return level;
+        }
+    }
 
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.Now);
 
@@ -54,13 +74,13 @@ public static class DailyService
     public static int RewardFor(int streak) => DailyRules.RewardFor(streak);
 
     /// <summary>
-    /// Call after a solved (non-assisted) level. Completes today's challenge when the
-    /// game matches and it is not done yet; returns the reward, or null if nothing changed.
+    /// Call after a solved (non-assisted) level. Completes today's challenge only for
+    /// today's game and today's level; returns the reward, or null if nothing changed.
     /// </summary>
-    public static DailyReward? OnLevelWon(string? gameId)
+    public static DailyReward? OnLevelWon(string? gameId, int level)
     {
         if (string.IsNullOrEmpty(gameId) || ProfileService.Active == null) return null;
-        if (IsDoneToday || gameId != TodayGame.Id) return null;
+        if (IsDoneToday || gameId != TodayGame.Id || level != TodayLevel) return null;
 
         int streak = DailyRules.NextStreak(LastDone, Preferences.Default.Get(StreakKey, 0), Today);
         int coins = RewardFor(streak);

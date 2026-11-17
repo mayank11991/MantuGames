@@ -19,6 +19,16 @@ public static class DailyRules
         return (int)((day.DayNumber * (long)step) % gameCount);
     }
 
+    /// <summary>
+    /// Today's challenge level: a fixed pick among the levels the player has already
+    /// unlocked (1..<paramref name="highestUnlocked"/>), so it is always playable.
+    /// </summary>
+    public static int LevelFor(DateOnly day, int highestUnlocked)
+    {
+        int max = Math.Max(1, highestUnlocked);
+        return 1 + (int)((day.DayNumber * 7L + 3) % max);
+    }
+
     /// <summary>Coins for finishing the challenge on day <paramref name="streak"/> of a streak.</summary>
     public static int RewardFor(int streak)
     {

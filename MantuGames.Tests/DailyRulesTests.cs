@@ -46,4 +46,19 @@ public class DailyRulesTests
         Assert.Equal(1, DailyRules.NextStreak(today.AddDays(-2), 3, today));
         Assert.Equal(1, DailyRules.NextStreak(null, 0, today));
     }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(4)]
+    [InlineData(50)]
+    public void LevelFor_IsAlwaysAnUnlockedLevel(int highest)
+    {
+        var day = new DateOnly(2026, 1, 1);
+        for (int i = 0; i < 120; i++, day = day.AddDays(1))
+            Assert.InRange(DailyRules.LevelFor(day, highest), 1, highest);
+    }
+
+    [Fact]
+    public void LevelFor_IsStableForTheSameDay() =>
+        Assert.Equal(DailyRules.LevelFor(new DateOnly(2026, 11, 17), 9), DailyRules.LevelFor(new DateOnly(2026, 11, 17), 9));
 }

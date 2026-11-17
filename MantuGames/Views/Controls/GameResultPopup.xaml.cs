@@ -48,7 +48,7 @@ public partial class GameResultPopup : ContentView
         StatsService.RecordGame(gameId, isWin, coins);
 
         // A solved level of today's featured game completes the daily challenge.
-        DailyReward? daily = isWin && !assisted ? DailyService.OnLevelWon(gameId) : null;
+        DailyReward? daily = isWin && !assisted ? DailyService.OnLevelWon(gameId, levelNumber) : null;
         _doubled = false;
 
         AudioService.Instance.Play(isWin ? "win" : "lose");

@@ -32,19 +32,6 @@
                                WidthRequest="42" HeightRequest="42" />
                     </Border>
 
-                    <!-- Skins: shows the current buddy, opens the skin shop -->
-                    <Border Grid.Column="1" Style="{StaticResource PopPillLight}"
-                            Padding="6,4,14,4" HorizontalOptions="End" VerticalOptions="Center">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnSkinsClicked" />
-                        </Border.GestureRecognizers>
-                        <HorizontalStackLayout Spacing="6">
-                            <Image x:Name="SkinPillMascot" Source="cat.png" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" />
-                            <Label Text="SKINS" FontFamily="{DynamicResource ThemeTitleFont}" FontSize="15"
-                                   TextColor="#111114" VerticalOptions="Center" />
-                        </HorizontalStackLayout>
-                    </Border>
-
                     <!-- Coin balance pill -->
                     <Border Grid.Column="2" Style="{StaticResource PopPillDark}"
                             Padding="12,8,16,8" VerticalOptions="Center">
@@ -59,12 +46,19 @@
                         </HorizontalStackLayout>
                     </Border>
 
-                    <Border Grid.Column="3" Style="{StaticResource CtaCircleBlue}" VerticalOptions="Center">
+                    <!-- Skins (top right; Settings lives in the bottom bar): shows the current buddy, opens the skin shop -->
+                    <Border Grid.Column="3" Style="{StaticResource PopPillLight}"
+                            Padding="6,4,14,4" VerticalOptions="Center">
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnSettingsClicked" />
+                            <TapGestureRecognizer Tapped="OnSkinsClicked" />
                         </Border.GestureRecognizers>
-                        <Image Source="ic_gear_white.png" WidthRequest="24" HeightRequest="24" />
+                        <HorizontalStackLayout Spacing="6">
+                            <Image x:Name="SkinPillMascot" Source="cat.png" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" />
+                            <Label Text="SKINS" FontFamily="{DynamicResource ThemeTitleFont}" FontSize="15"
+                                   TextColor="#111114" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
                     </Border>
+
                 </Grid>
 
                 <!-- Hero: WELCOME! + player name -->

@@ -24,10 +24,17 @@ public partial class SettingsPopup : ContentView
 
     private void UpdateRemoveAdsStatus()
     {
-        RemoveAdsStatus.Text = IapService.RemoveAdsOwned ? "Purchased" : "BUY";
-        RemoveAdsStatus.TextColor = IapService.RemoveAdsOwned
-            ? Color.FromArgb("#20B26B")
-            : Color.FromArgb("#D9F84A");
+        bool owned = IapService.RemoveAdsOwned;
+        RemoveAdsStatus.Text = owned ? "PURCHASED ✓" : "BUY";
+        RemoveAdsStatus.TextColor = Color.FromArgb(owned ? "#168A50" : "#1F2A44");
+        // Bought: drop the pill look so it reads as a status, not a button.
+        RemoveAdsPill.Style = owned ? null : (Style)Application.Current!.Resources["CtaPillYellow"];
+        if (owned)
+        {
+            RemoveAdsPill.BackgroundColor = Colors.Transparent;
+            RemoveAdsPill.StrokeThickness = 0;
+            RemoveAdsPill.Shadow = null!;
+        }
     }
 
     /// <summary>Refreshes the profile + coins section (called on Show and when data changes).</summary>

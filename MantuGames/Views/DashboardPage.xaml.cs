@@ -84,11 +84,12 @@ public partial class DashboardPage : ContentPage
         // Block the back key during the first-launch setup: it can't be skipped.
         if (Onboarding.IsVisible)
             return true;
-        if (SkinShop.IsVisible)
-        {
-            SkinShop.Hide();
-            return true;
-        }
+        // Back closes whichever popup is open before it ever leaves the app.
+        if (SkinShop.IsVisible) { SkinShop.Hide(); return true; }
+        if (SettingsPopup.IsVisible) { SettingsPopup.Hide(); return true; }
+        if (CoinShopPopup.IsVisible) { CoinShopPopup.Hide(); return true; }
+        if (EditProfilePopup.IsVisible) { EditProfilePopup.Hide(); return true; }
+        if (StatsPopup.IsVisible) { StatsPopup.Hide(); return true; }
         return base.OnBackButtonPressed();
     }
 
@@ -189,10 +190,10 @@ public partial class DashboardPage : ContentPage
         else
         {
             DailyCard.BackgroundColor = Color.FromArgb("#FFE0C2");
-            DailyTitle.Text = $"Win a level in {game.Title}";
+            DailyTitle.Text = $"Level {DailyService.TodayLevel} · {game.Title}";
             DailySub.Text = DailyService.CurrentStreak > 0
-                ? $"+{DailyService.RewardForToday} coins · keep your streak going!"
-                : $"+{DailyService.RewardForToday} coins · start a streak!";
+                ? $"Tap to play · +{DailyService.RewardForToday} coins · keep your streak!"
+                : $"Tap to play · +{DailyService.RewardForToday} coins · start a streak!";
         }
     }
 
@@ -204,7 +205,12 @@ public partial class DashboardPage : ContentPage
             VibrationHelper.Click();
             await DailyCard.ScaleToAsync(0.97, 70);
             await DailyCard.ScaleToAsync(1, 90);
-            await Shell.Current.GoToAsync($"levelmap?gameId={DailyService.TodayGame.Id}");
+            // Straight into today's level (not the level map), so it feels like its own challenge.
+            var game = DailyService.TodayGame;
+            if (DailyService.IsDoneToday)
+                await Shell.Current.GoToAsync($"levelmap?gameId={game.Id}");
+            else
+                await Shell.Current.GoToAsync($"{game.Route}?level={DailyService.TodayLevel}");
         }
         catch (Exception ex)
         {
