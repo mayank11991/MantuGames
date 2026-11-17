@@ -9,7 +9,7 @@
           BackgroundColor="#99111114"
           InputTransparent="False">
 
-        <Border Background="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}"
+        <Border x:Name="DialogCard" Background="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}"
                 Stroke="{AppThemeBinding Light=#B3FFFFFF, Dark=#B3FFFFFF}"
                 StrokeThickness="1"
                 Padding="24"
@@ -22,7 +22,7 @@
             <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
                 <controls:FitLabel x:Name="TitleLabel"
                        Text="How to Play"
-                       FontFamily="Display"
+                       FontFamily="{DynamicResource ThemeTitleFont}"
                        FontSize="28"
                        TextColor="#111114"
                        HorizontalOptions="Center" />

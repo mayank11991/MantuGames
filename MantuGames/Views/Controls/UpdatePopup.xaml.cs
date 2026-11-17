@@ -10,6 +10,7 @@ public partial class UpdatePopup : ContentView
     public UpdatePopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(DialogCard);
     }
 
     public void Show(UpdateInfo info)

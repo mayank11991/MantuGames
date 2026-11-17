@@ -251,8 +251,11 @@ public class ChoiceViewModel : INotifyPropertyChanged
     /// <summary>Slot in the 2x2 grid; picks the candy colour of the button.</summary>
     public int Slot { get; set; }
 
-    private static readonly string[] Faces = { "#2F8CFF", "#9B6BFF", "#3DC86A", "#FF8A3D" };
-    private static readonly string[] Lips = { "#1A62C9", "#6E43D6", "#239448", "#D4611A" };
+    private static readonly string[] DefaultFaces = { "#2F8CFF", "#9B6BFF", "#3DC86A", "#FF8A3D" };
+    private static readonly string[] DefaultLips = { "#1A62C9", "#6E43D6", "#239448", "#D4611A" };
+    // Premium skins colour the four answer buttons from their palette.
+    private string[] Faces => DefaultFaces.Select((hex, i) => ThemeColors.Hex(i, hex)).ToArray();
+    private string[] Lips => DefaultLips.Select((hex, i) => ThemeColors.Shade(i, hex)).ToArray();
 
     public string LipColor => State switch
     {

@@ -7,6 +7,7 @@ public partial class ConfirmPopup : ContentView
     public ConfirmPopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(DialogCard);
     }
 
     public async Task<bool> Show(string title, string message, string confirm = "Leave", string cancel = "Stay")

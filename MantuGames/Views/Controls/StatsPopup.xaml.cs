@@ -8,6 +8,7 @@ public partial class StatsPopup : ContentView
     public StatsPopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(DialogCard);
     }
 
     public void Show()

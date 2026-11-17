@@ -29,7 +29,7 @@ public partial class PuzzlePetsPage : ContentPage
     private double _lastPanX;
     private double _lastPanY;
 
-    private static readonly Color[] PiecePalette =
+    private static readonly Color[] DefaultPiecePalette =
     {
         Color.FromArgb("#E0568F"), Color.FromArgb("#3D8BFD"),
         Color.FromArgb("#2F9E7F"), Color.FromArgb("#FF5722"),
@@ -38,6 +38,10 @@ public partial class PuzzlePetsPage : ContentPage
         Color.FromArgb("#8BC34A"), Color.FromArgb("#FF4081"),
         Color.FromArgb("#7C5CFF"), Color.FromArgb("#00E676"),
     };
+    // Tray tile colours follow a premium skin's palette.
+    private readonly Color[] PiecePalette = ThemeColors.Active
+        ? Enumerable.Range(0, 10).Select(i => ThemeColors.Get(i, "#7C5CFF")).ToArray()
+        : DefaultPiecePalette;
 
     public string Level
     {

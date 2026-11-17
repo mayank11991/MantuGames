@@ -1,3 +1,4 @@
+using MantuGames.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,8 +53,9 @@ public partial class GameTimerView : ContentView
 
         if (progress > 0.5)
         {
-            barColor = Color.FromArgb("#4C8DFF");
-            glowColor = Color.FromArgb("#4C8DFF");
+            // Plenty of time left: the bar wears the skin's colour.
+            barColor = ThemeColors.Get(0, "#4C8DFF");
+            glowColor = barColor;
             TimerLabel.TextColor = Color.FromArgb("#1F2A44");
             TimerHint.TextColor = barColor;
         }

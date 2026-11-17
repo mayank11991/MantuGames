@@ -11,6 +11,12 @@ public static class SkinService
 {
     private const string OwnedKey = "skins_owned";
 
+    /// <summary>
+    /// TESTING ONLY: every skin is unlocked so all themes can be tried without buying.
+    /// Set back to false before the release build so paid skins need a purchase again.
+    /// </summary>
+    public const bool UnlockAllForTesting = true;
+
     /// <summary>Raised on the main thread when the active skin or ownership changes.</summary>
     public static event EventHandler? Changed;
 
@@ -34,7 +40,14 @@ public static class SkinService
     public static bool BundleOwned => OwnedProducts.Contains(SkinCatalog.BundleProductId);
 
     public static bool IsOwned(Skin skin) =>
-        skin.IsFree || BundleOwned || OwnedProducts.Contains(skin.ProductId!);
+        UnlockAllForTesting || skin.IsFree || BundleOwned || OwnedProducts.Contains(skin.ProductId!);
+
+    /// <summary>Title font alias for the current skin (code-built labels use this).</summary>
+    public static string TitleFont => Current.Theme?.TitleFont ?? "Display";
+
+    /// <summary>Palette colour <paramref name="i"/> of the current premium theme, or <paramref name="fallback"/>.</summary>
+    public static Color PaletteColor(int i, Color fallback) =>
+        Current.Theme is { } t ? Color.FromArgb(t.Color(i)) : fallback;
 
     public static bool AllPaidOwned => SkinCatalog.All.All(IsOwned);
 
@@ -79,5 +92,18 @@ public static class SkinService
         var button = Color.FromArgb(Current.Button);
         res["SkinButton"] = button;
         res["SkinButtonLipBrush"] = new SolidColorBrush(button.WithLuminosity(Math.Max(0, button.GetLuminosity() - 0.15f)));
+        res["ThemeTitleFont"] = TitleFont;
+
+        // Round buttons: palette colours for premium skins, the classic candy colours otherwise.
+        foreach (var (key, index, face, lip) in new[]
+        {
+            ("Orange", 0, "#FF8A3D", "#D4611A"), ("Pink", 1, "#FF6FA5", "#D2437A"),
+            ("Green", 2, "#3DC86A", "#239448"), ("Yellow", 3, "#FFC83D", "#D99A00"),
+        })
+        {
+            res["Circle" + key] = Color.FromArgb(ThemeColors.Hex(index, face));
+            res["Circle" + key + "LipBrush"] = new SolidColorBrush(Color.FromArgb(ThemeColors.Shade(index, lip)));
+        }
+        Views.Controls.ThemeStyler.RefreshAll();
     }
 }

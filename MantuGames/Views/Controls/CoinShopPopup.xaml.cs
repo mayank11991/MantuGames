@@ -13,6 +13,7 @@ public partial class CoinShopPopup : ContentView
     public CoinShopPopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(DialogCard);
         BuildPacks();
     }
 
@@ -162,7 +163,7 @@ public partial class CoinShopPopup : ContentView
             buy.Content = new Label
             {
                 Text = "BUY",
-                FontFamily = "Display",
+                FontFamily = SkinService.TitleFont,
                 FontSize = 15,
                 TextColor = Colors.White,
                 HorizontalOptions = LayoutOptions.Center,

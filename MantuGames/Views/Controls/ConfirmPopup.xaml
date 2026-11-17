@@ -12,7 +12,7 @@
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
 
-        <Border Background="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}"
+        <Border x:Name="DialogCard" Background="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}"
                 Stroke="#1F2A44"
                 StrokeThickness="3"
                 Padding="28"
@@ -29,7 +29,7 @@
             <VerticalStackLayout Spacing="20" HorizontalOptions="Fill">
 
                 <controls:FitLabel x:Name="TitleLabel"
-                       FontFamily="Display"
+                       FontFamily="{DynamicResource ThemeTitleFont}"
                        FontSize="26"
                        HorizontalOptions="Center">
                     <controls:FitLabel.TextColor>

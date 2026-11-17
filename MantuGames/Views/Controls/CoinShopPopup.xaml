@@ -12,7 +12,7 @@
                   WidthRequest="340"
                   InputTransparent="False">
 
-                <Border Background="#FFFFFF"
+                <Border x:Name="DialogCard" Background="#FFFFFF"
                         Stroke="#111114"
                         StrokeThickness="3"
                         Padding="24"
@@ -28,7 +28,7 @@
                     <VerticalStackLayout Spacing="16">
 
                         <controls:FitLabel Text="COIN SHOP"
-                               FontFamily="Display"
+                               FontFamily="{DynamicResource ThemeTitleFont}"
                                FontSize="28"
                                TextColor="#111114"
                                HorizontalOptions="Center" />
@@ -87,7 +87,7 @@
                                     </Border.Shadow>
                                     <HorizontalStackLayout Spacing="5">
                                         <Image Source="ic_play_ink.png" WidthRequest="13" HeightRequest="13" VerticalOptions="Center" />
-                                        <Label Text="WATCH" FontFamily="Display" FontSize="15" TextColor="#1F2A44" VerticalOptions="Center" />
+                                        <Label Text="WATCH" FontFamily="{DynamicResource ThemeTitleFont}" FontSize="15" TextColor="#1F2A44" VerticalOptions="Center" />
                                     </HorizontalStackLayout>
                                 </Border>
                             </Grid>

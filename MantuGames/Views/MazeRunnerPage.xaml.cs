@@ -19,10 +19,11 @@ internal sealed class MazeDrawable : IDrawable
     public float OffsetX { get; private set; }
     public float OffsetY { get; private set; }
 
-    private static readonly Color WallColor = Color.FromArgb("#5DB83A");
-    private static readonly Color RimColor = Color.FromArgb("#3E8E25");
-    private static readonly Color FloorColor = Color.FromArgb("#FFEFC2");
-    private static readonly Color TrailColor = Color.FromArgb("#FFC83D");
+    // Premium skins recolour the maze: walls from the palette, a light floor and a bright trail.
+    private static Color WallColor => ThemeColors.Get(0, "#5DB83A");
+    private static Color RimColor => Color.FromArgb(ThemeColors.Shade(0, "#3E8E25"));
+    private static Color FloorColor => Color.FromArgb(ThemeColors.Tint(1, 0.82, "#FFEFC2"));
+    private static Color TrailColor => ThemeColors.Get(3, "#FFC83D");
 
     public void Draw(ICanvas canvas, RectF bounds)
     {

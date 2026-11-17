@@ -10,7 +10,7 @@
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnOverlayTapped" />
         </Grid.GestureRecognizers>
-        <Border Style="{StaticResource NightCard}"
+        <Border x:Name="DialogCard" Style="{StaticResource NightCard}"
                 Padding="44,30"
                 HorizontalOptions="Center"
                 VerticalOptions="Center">

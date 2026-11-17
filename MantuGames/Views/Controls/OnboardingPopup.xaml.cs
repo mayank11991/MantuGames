@@ -20,6 +20,7 @@ public partial class OnboardingPopup : ContentView
     public OnboardingPopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(Card);
         int thisYear = DateTime.Now.Year;
         YearPicker.ItemsSource = Enumerable.Range(0, 101).Select(i => (thisYear - i).ToString()).ToList();
     }

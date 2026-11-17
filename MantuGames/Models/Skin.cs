@@ -19,6 +19,9 @@ public sealed record Skin(
 {
     public bool IsFree => ProductId == null;
 
+    /// <summary>Full premium look (font, dialogs, palette, scenery); null for free skins.</summary>
+    public SkinTheme? Theme => SkinThemes.For(this);
+
     /// <summary>Colour of the primary buttons. The classic skin keeps the original blue.</summary>
     public string Button => Id == SkinCatalog.DefaultId ? "#2F8CFF" : Accent;
 }
@@ -36,15 +39,15 @@ public static class SkinCatalog
         new Skin("classic",   "Smart Sam",         "char_male_a.png",   null,            "#8FE3B4", "#DDF8E8", "#6EC6FF", "#BFE8FF", "#E6F8D8", "#7C5CFF"),
         new Skin("penguin",   "Sunny Mia",         "char_female_b.png", null,            "#9FD8FF", "#E3F3FF", "#7FB8FF", "#D6E8FF", "#F2F8FF", "#2F6FD6"),
         new Skin("lion",      "Builder Bob",       "char_worker.png",   "skin_lion",     "#FFC27A", "#FFEBD2", "#FFB36B", "#FFE2BF", "#FFF6E6", "#E8792B"),
-        new Skin("panda",     "Brave Knight",      "char_knight.png",   "skin_panda",    "#A8E6A1", "#E6F8E2", "#8BD88A", "#D8F3D3", "#F4FFF0", "#2E3440"),
+        new Skin("panda",     "Brave Knight",      "char_knight.png",   "skin_panda",    "#9ED58C", "#FFF4DC", "#86C873", "#E7F5D8", "#FFF8E8", "#3B3F5C"),
         new Skin("owl",       "Professor Pip",     "char_male_e.png",   "skin_owl",      "#8CE0B9", "#E0F7EC", "#5FCF9F", "#CFF2E1", "#F0FFF8", "#2FA66A"),
         new Skin("octopus",   "DJ Riya",           "char_female_c.png", "skin_octopus",  "#FFA3CF", "#FFE4F1", "#FF8FC0", "#FFD6EA", "#FFF3F9", "#E8458B"),
-        new Skin("dino",      "Captain Patch",     "char_male_g.png",   "skin_dino",     "#C3EE6A", "#EEFBD0", "#A6E04A", "#E2F6BE", "#FAFFEE", "#3BA55C"),
-        new Skin("bee",       "Officer Ollie",     "char_male_c.png",   "skin_bee",      "#FFE16B", "#FFF6C9", "#FFD43B", "#FFF0B0", "#FFFBEA", "#F2A900"),
-        new Skin("sheep",     "Zib the Alien",     "char_alien.png",    "skin_sheep",    "#C9B8FF", "#EEE8FF", "#B39CFF", "#E4DBFF", "#F8F5FF", "#8A6BEF"),
+        new Skin("dino",      "Captain Patch",     "char_male_g.png",   "skin_dino",     "#7FD6EA", "#FFF1D0", "#5CC6E6", "#CDEFF8", "#FFF3D6", "#8B5A2B"),
+        new Skin("bee",       "Officer Ollie",     "char_male_c.png",   "skin_bee",      "#8FB4FF", "#E6EEFF", "#6F9BFF", "#D4E2FF", "#F2F6FF", "#1F4FBF"),
+        new Skin("sheep",     "Zib the Alien",     "char_alien.png",    "skin_sheep",    "#9C88F0", "#E4DCFF", "#8A74E6", "#D9CFFF", "#F4F0FF", "#7B4DFF"),
         new Skin("sloth",     "Explorer Ella",     "char_female_f.png", "skin_sloth",    "#7FE0D6", "#DDF7F4", "#5ACFC3", "#CCF1ED", "#F0FFFD", "#1F9E93"),
         new Skin("elephant",  "Robo Buddy",        "char_robot.png",    "skin_elephant", "#9CC4FF", "#E2EDFF", "#7AA8FF", "#D3E3FF", "#F3F7FF", "#4C6FFF"),
-        new Skin("butterfly", "Boss Sara",         "char_female_d.png", "skin_butterfly","#FFA6D1", "#C7B3FF", "#FF9AC8", "#B9A8FF", "#E6FFF4", "#A35CFF"),
+        new Skin("butterfly", "Boss Sara",         "char_female_d.png", "skin_butterfly","#C8D8FF", "#F2F6FF", "#B7C9FF", "#E8EEFF", "#FFFFFF", "#A35CFF"),
     };
 
     public static Skin Default => All[0];

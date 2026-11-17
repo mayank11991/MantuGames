@@ -15,7 +15,7 @@
               Margin="20"
               InputTransparent="False">
 
-            <Border Background="#FFFFFF"
+            <Border x:Name="DialogCard" Background="#FFFFFF"
                     Stroke="#111114"
                     StrokeThickness="3"
                     Padding="0"
@@ -31,7 +31,7 @@
                 <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="10" Padding="20,16">
                     <controls:FitLabel Grid.Row="0"
                            Text="SETTINGS"
-                           FontFamily="Display"
+                           FontFamily="{DynamicResource ThemeTitleFont}"
                            FontSize="28"
                            TextColor="#111114"
                            HorizontalOptions="Center" />

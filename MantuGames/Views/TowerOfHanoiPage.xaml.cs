@@ -12,14 +12,10 @@ public partial class TowerOfHanoiPage : ContentPage
     private int _startLevel = 1;
 
     // disc size (1=smallest) → color — fixed, never changes during gameplay
-    private static readonly Color[] DiscColors =
-    {
-        Color.FromArgb("#E0566F"), // size 1 smallest = red
-        Color.FromArgb("#FF9F43"), // size 2 = orange
-        Color.FromArgb("#FDD835"), // size 3 = yellow
-        Color.FromArgb("#2F9E7F"), // size 4 = green
-        Color.FromArgb("#42A5F5"), // size 5 largest = blue
-    };
+    // Smallest to largest; premium skins swap in their own palette.
+    private static readonly string[] DefaultDiscColors = { "#E0566F", "#FF9F43", "#FDD835", "#2F9E7F", "#42A5F5" };
+    private readonly Color[] DiscColors =
+        DefaultDiscColors.Select((hex, i) => ThemeColors.Get(i, hex)).ToArray();
 
     private readonly Grid[] _polePanels = new Grid[5];
 

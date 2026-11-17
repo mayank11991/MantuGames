@@ -1,3 +1,4 @@
+using MantuGames.Services;
 using MantuGames.ViewModels;
 using Microsoft.Maui.Graphics;
 
@@ -35,7 +36,7 @@ public class CtdDrawable : IDrawable
     private void DrawGrid(int rows, int cols, ICanvas canvas)
     {
         // Night board background
-        canvas.FillColor = Color.FromArgb("#EAF2FB");
+        canvas.FillColor = Color.FromArgb(ThemeColors.Tint(0, 0.88, "#EAF2FB"));
         canvas.FillRectangle(_offsetX, _offsetY, _cellSize * cols, _cellSize * rows);
 
         // Subtle grid lines

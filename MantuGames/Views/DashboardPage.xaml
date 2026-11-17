@@ -40,7 +40,7 @@
                         </Border.GestureRecognizers>
                         <HorizontalStackLayout Spacing="6">
                             <Image x:Name="SkinPillMascot" Source="cat.png" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" />
-                            <Label Text="SKINS" FontFamily="Display" FontSize="15"
+                            <Label Text="SKINS" FontFamily="{DynamicResource ThemeTitleFont}" FontSize="15"
                                    TextColor="#111114" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </Border>
@@ -96,13 +96,13 @@
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,18,0,0">
                     <Border Grid.Column="0" Style="{StaticResource PopCard}" Padding="12,10">
                         <VerticalStackLayout Spacing="-4" HorizontalOptions="Center">
-                            <controls:FitLabel x:Name="LevelsStat" Text="0" FontFamily="Display" FontSize="22" HorizontalOptions="Center" />
+                            <controls:FitLabel x:Name="LevelsStat" Text="0" FontFamily="{DynamicResource ThemeTitleFont}" FontSize="22" HorizontalOptions="Center" />
                             <Label Text="levels done" Style="{StaticResource PopMutedLabel}" FontSize="11" HorizontalOptions="Center" />
                         </VerticalStackLayout>
                     </Border>
                     <Border Grid.Column="1" Style="{StaticResource PopCard}" Padding="12,10">
                         <VerticalStackLayout Spacing="-4" HorizontalOptions="Center">
-                            <controls:FitLabel x:Name="WinsStat" Text="0" FontFamily="Display" FontSize="22" HorizontalOptions="Center" />
+                            <controls:FitLabel x:Name="WinsStat" Text="0" FontFamily="{DynamicResource ThemeTitleFont}" FontSize="22" HorizontalOptions="Center" />
                             <Label Text="games won" Style="{StaticResource PopMutedLabel}" FontSize="11" HorizontalOptions="Center" />
                         </VerticalStackLayout>
                     </Border>

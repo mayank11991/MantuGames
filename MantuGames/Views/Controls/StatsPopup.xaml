@@ -14,7 +14,7 @@
               Padding="28"
               InputTransparent="False">
 
-            <Border Background="#FFFFFF"
+            <Border x:Name="DialogCard" Background="#FFFFFF"
                     Stroke="#111114"
                     StrokeThickness="3"
                     Padding="24"
@@ -30,7 +30,7 @@
                 <VerticalStackLayout Spacing="16">
 
                     <controls:FitLabel Text="STATISTICS"
-                           FontFamily="Display"
+                           FontFamily="{DynamicResource ThemeTitleFont}"
                            FontSize="26"
                            TextColor="#111114"
                            HorizontalOptions="Center" />

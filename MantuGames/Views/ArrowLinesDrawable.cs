@@ -1,3 +1,4 @@
+using MantuGames.Services;
 using MantuGames.Models;
 
 namespace MantuGames.Views;
@@ -10,7 +11,7 @@ namespace MantuGames.Views;
 public class ArrowLinesDrawable : IDrawable
 {
     private static readonly Color Ink = Color.FromArgb("#1F2A44");
-    private static readonly Color Move = Color.FromArgb("#2F8CFF");
+    private static Color Move => ThemeColors.Get(0, "#2F8CFF");
     private static readonly Color Bump = Color.FromArgb("#FF5C7A");
     private static readonly Color Dot = Color.FromArgb("#D6E4F0");
     private static readonly Color Hint = Color.FromArgb("#3DC86A");

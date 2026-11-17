@@ -11,7 +11,7 @@
               Padding="28"
               InputTransparent="False">
 
-            <Border Background="#FFFFFF"
+            <Border x:Name="DialogCard" Background="#FFFFFF"
                     Stroke="#111114"
                     StrokeThickness="3"
                     Padding="24"
@@ -29,7 +29,7 @@
 
                     <controls:FitLabel x:Name="TitleLabel"
                            Text="Update Available"
-                           FontFamily="Display"
+                           FontFamily="{DynamicResource ThemeTitleFont}"
                            FontSize="26"
                            TextColor="#111114"
                            HorizontalOptions="Center" />

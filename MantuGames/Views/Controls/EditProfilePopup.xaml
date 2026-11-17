@@ -29,7 +29,7 @@
 
                 <controls:FitLabel Grid.Row="0"
                        Text="EDIT PROFILE"
-                       FontFamily="Display"
+                       FontFamily="{DynamicResource ThemeTitleFont}"
                        FontSize="26"
                        TextColor="#111114"
                        HorizontalOptions="Center" />

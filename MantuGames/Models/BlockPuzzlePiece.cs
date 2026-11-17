@@ -3,7 +3,20 @@ namespace MantuGames.Models;
 public class BlockPiece
 {
     public int[,]  Shape { get; init; } = null!;
-    public Color   PieceColor  { get; init; } = null!;
+    private readonly Color _pieceColor = null!;
+
+    /// <summary>
+    /// Block colour. Premium skins recolour each piece type from their palette
+    /// (set by the app through <see cref="ThemeOverride"/>); free skins keep the classic colours.
+    /// </summary>
+    public Color PieceColor
+    {
+        get => ThemeOverride?.Invoke(Name) ?? _pieceColor;
+        init => _pieceColor = value;
+    }
+
+    /// <summary>Maps a piece name to a themed colour, or null to keep the default.</summary>
+    public static Func<string, Color?>? ThemeOverride { get; set; }
     public string  Name  { get; init; } = "";
 
     // Rotate shape 90 degrees clockwise

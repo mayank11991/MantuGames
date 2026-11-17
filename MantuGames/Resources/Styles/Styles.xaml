@@ -39,19 +39,19 @@
     </Style>
 
     <Style TargetType="Label" x:Key="PopHero">
-        <Setter Property="FontFamily" Value="Display" />
+        <Setter Property="FontFamily" Value="{DynamicResource ThemeTitleFont}" />
         <Setter Property="FontSize" Value="56" />
         <Setter Property="TextColor" Value="{StaticResource PopInk}" />
         <Setter Property="LineHeight" Value="0.95" />
     </Style>
     <Style TargetType="Label" x:Key="PopTitle">
-        <Setter Property="FontFamily" Value="Display" />
+        <Setter Property="FontFamily" Value="{DynamicResource ThemeTitleFont}" />
         <Setter Property="FontSize" Value="30" />
         <Setter Property="TextColor" Value="{StaticResource PopInk}" />
         <Setter Property="LineHeight" Value="1" />
     </Style>
     <Style TargetType="Label" x:Key="PopSection">
-        <Setter Property="FontFamily" Value="Baloo2ExtraBold" />
+        <Setter Property="FontFamily" Value="{DynamicResource ThemeTitleFont}" />
         <Setter Property="FontSize" Value="22" />
         <Setter Property="TextColor" Value="{StaticResource PopInk}" />
     </Style>
@@ -66,7 +66,7 @@
         <Setter Property="TextColor" Value="{StaticResource PopMuted}" />
     </Style>
     <Style TargetType="Label" x:Key="NightTitle">
-        <Setter Property="FontFamily" Value="Display" />
+        <Setter Property="FontFamily" Value="{DynamicResource ThemeTitleFont}" />
         <Setter Property="FontSize" Value="26" />
         <Setter Property="TextColor" Value="{StaticResource NightText}" />
         <Setter Property="CharacterSpacing" Value="0.5" />
@@ -310,7 +310,7 @@
     <Style TargetType="Border" x:Key="CtaCircleYellow">
         <!-- room for the hard-shadow lip so parents don't clip it -->
         <Setter Property="Margin" Value="0,0,0,7" />
-        <Setter Property="BackgroundColor" Value="{StaticResource CtaYellow}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource CircleYellow}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="StrokeShape">
@@ -320,13 +320,13 @@
         <Setter Property="HeightRequest" Value="52" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource CtaYellowLip}" Offset="0,5" Radius="0" Opacity="1" />
+            <Shadow Brush="{DynamicResource CircleYellowLipBrush}" Offset="0,5" Radius="0" Opacity="1" />
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaCircleGreen">
         <!-- room for the hard-shadow lip so parents don't clip it -->
         <Setter Property="Margin" Value="0,0,0,7" />
-        <Setter Property="BackgroundColor" Value="{StaticResource CtaGreen}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource CircleGreen}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="StrokeShape">
@@ -336,13 +336,13 @@
         <Setter Property="HeightRequest" Value="52" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource CtaGreenLip}" Offset="0,5" Radius="0" Opacity="1" />
+            <Shadow Brush="{DynamicResource CircleGreenLipBrush}" Offset="0,5" Radius="0" Opacity="1" />
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaCirclePink">
         <!-- room for the hard-shadow lip so parents don't clip it -->
         <Setter Property="Margin" Value="0,0,0,7" />
-        <Setter Property="BackgroundColor" Value="{StaticResource CtaPink}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource CirclePink}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="StrokeShape">
@@ -352,13 +352,13 @@
         <Setter Property="HeightRequest" Value="52" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource CtaPinkLip}" Offset="0,5" Radius="0" Opacity="1" />
+            <Shadow Brush="{DynamicResource CirclePinkLipBrush}" Offset="0,5" Radius="0" Opacity="1" />
         </Setter>
     </Style>
     <Style TargetType="Border" x:Key="CtaCircleOrange">
         <!-- room for the hard-shadow lip so parents don't clip it -->
         <Setter Property="Margin" Value="0,0,0,7" />
-        <Setter Property="BackgroundColor" Value="{StaticResource CtaOrange}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource CircleOrange}" />
         <Setter Property="Stroke" Value="#FFFFFF" />
         <Setter Property="StrokeThickness" Value="3" />
         <Setter Property="StrokeShape">
@@ -368,7 +368,7 @@
         <Setter Property="HeightRequest" Value="52" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Shadow">
-            <Shadow Brush="{StaticResource CtaOrangeLip}" Offset="0,5" Radius="0" Opacity="1" />
+            <Shadow Brush="{DynamicResource CircleOrangeLipBrush}" Offset="0,5" Radius="0" Opacity="1" />
         </Setter>
     </Style>
     <Style TargetType="Button" x:Key="CtaButtonYellow">
@@ -451,7 +451,7 @@
     </Style>
     <Style TargetType="Label" x:Key="CtaPillLabel">
         <Setter Property="LineBreakMode" Value="NoWrap" />
-        <Setter Property="FontFamily" Value="Display" />
+        <Setter Property="FontFamily" Value="{DynamicResource ThemeTitleFont}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="TextColor" Value="#FFFFFF" />
         <Setter Property="HorizontalOptions" Value="Center" />

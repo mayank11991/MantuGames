@@ -140,7 +140,7 @@ public partial class MathGamePage : ContentPage
         {
             Text = choice.Value.ToString(),
             FontSize = 30,
-            FontFamily = "Display",
+            FontFamily = SkinService.TitleFont,
             TextColor = Colors.White,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,

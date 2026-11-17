@@ -17,6 +17,7 @@ public partial class EditProfilePopup : ContentView
     public EditProfilePopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(Sheet);
     }
 
     public void Show(PlayerProfile profile)

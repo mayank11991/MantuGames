@@ -91,7 +91,8 @@ public partial class ClayBackground : ContentView
                 Helpers.SystemBars.Apply(Hex(SkinService.Current.GameTop), Color.FromArgb("#5DB83A"), darkIcons: true);
                 break;
             case BackdropVariant.Accent:
-                Helpers.SystemBars.Apply(AccentColor, Color.FromArgb("#5DB83A"), darkIcons: true);
+                Helpers.SystemBars.Apply(SkinService.Current.Theme != null ? Hex(SkinService.Current.GameTop) : AccentColor,
+                                         Color.FromArgb("#5DB83A"), darkIcons: true);
                 break;
             case BackdropVariant.Sky:
                 Helpers.SystemBars.Apply(Color.FromArgb("#5AA6FF"), Color.FromArgb("#F4F8FF"), darkIcons: true);
@@ -110,7 +111,8 @@ public partial class ClayBackground : ContentView
             BackdropVariant.Night => "GradNight",
             _ => "GradLime",
         };
-        if (Variant == BackdropVariant.Accent)
+        var theme = SkinService.Current.Theme;
+        if (Variant == BackdropVariant.Accent && theme == null)
         {
             var a = AccentColor;
             Root.Background = new LinearGradientBrush(new GradientStopCollection
@@ -120,7 +122,7 @@ public partial class ClayBackground : ContentView
                 new GradientStop(Colors.White, 1f),
             }, new Point(0, 0), new Point(0, 1));
         }
-        else if (Variant is BackdropVariant.Lime or BackdropVariant.Night)
+        else if (Variant is BackdropVariant.Lime or BackdropVariant.Night or BackdropVariant.Accent)
         {
             var skin = SkinService.Current;
             (string top, string mid, string bottom) = Variant == BackdropVariant.Lime
@@ -152,6 +154,10 @@ public partial class ClayBackground : ContentView
         {
             new GradientStop(g2, 0f), new GradientStop(Colors.Transparent, 1f),
         });
+
+        // Premium skins bring their own scenery (sky details on top, themed hills below).
+        Clouds.Source = theme?.SceneTop ?? "scene_clouds.png";
+        Hills.Source = theme?.SceneBottom ?? "scene_hills.png";
 
         // Dashboard (Lime) keeps a clean bottom for its nav; everything else gets the full scene.
         Hills.IsVisible = Variant != BackdropVariant.Lime;

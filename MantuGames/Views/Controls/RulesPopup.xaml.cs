@@ -5,6 +5,7 @@ public partial class RulesPopup : ContentView
     public RulesPopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(DialogCard);
     }
 
     public void Show(string body)

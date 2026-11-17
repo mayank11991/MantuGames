@@ -32,7 +32,7 @@
                 </HorizontalStackLayout>
 
                 <controls:FitLabel Grid.Row="1" x:Name="TitleLabel" Text="PICK YOUR BUDDY"
-                                   FontFamily="Display" FontSize="28" MaxLines="1"
+                                   FontFamily="{DynamicResource ThemeTitleFont}" FontSize="28" MaxLines="1"
                                    TextColor="#111114" HorizontalOptions="Center" />
 
                 <Label Grid.Row="2" x:Name="SubLabel"
@@ -58,7 +58,7 @@
                                Placeholder="Type your name"
                                PlaceholderColor="#9AA3B2"
                                TextColor="#111114"
-                               FontFamily="Display" FontSize="20"
+                               FontFamily="{DynamicResource ThemeTitleFont}" FontSize="20"
                                HorizontalTextAlignment="Center"
                                MaxLength="20"
                                TextChanged="OnNameChanged" />
@@ -78,7 +78,7 @@
                                 Title="Choose a year"
                                 TitleColor="#9AA3B2"
                                 TextColor="#111114"
-                                FontFamily="Display"
+                                FontFamily="{DynamicResource ThemeTitleFont}"
                                 FontSize="20"
                                 HorizontalTextAlignment="Center"
                                 SelectedIndexChanged="OnYearChanged" />
@@ -90,7 +90,7 @@
                        TextColor="#D4611A" HorizontalTextAlignment="Center" />
 
                 <Grid Grid.Row="5" ColumnDefinitions="Auto,*" ColumnSpacing="14">
-                    <Label x:Name="BackLabel" Text="BACK" FontFamily="Display" FontSize="17"
+                    <Label x:Name="BackLabel" Text="BACK" FontFamily="{DynamicResource ThemeTitleFont}" FontSize="17"
                            TextColor="#6E6E7C" VerticalOptions="Center" Padding="6,0" IsVisible="False">
                         <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnBack" /></Label.GestureRecognizers>
                     </Label>

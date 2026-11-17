@@ -26,7 +26,9 @@ public class NmCell : INotifyPropertyChanged
     private bool _isSelected;
     public bool IsSelected { get => _isSelected; set { _isSelected = value; OnPropertyChanged(); OnPropertyChanged(nameof(CellBg)); } }
 
-    public string CellBg => IsEliminated ? "#F2F6FB" : IsSelected ? "#FFC83D" : "#EAF3FF";
+    public string CellBg => IsEliminated ? "#F2F6FB"
+        : IsSelected ? ThemeColors.Hex(3, "#FFC83D")
+        : ThemeColors.Tint(0, 0.85, "#EAF3FF");
     public bool TextVisibility => true;
     public string ValueTextColor => IsEliminated ? "#C3CEDB" : "#1F2A44";
 

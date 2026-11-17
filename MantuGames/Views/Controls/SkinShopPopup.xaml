@@ -24,7 +24,7 @@
 
             <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" RowSpacing="12">
                 <controls:FitLabel Text="SKINS"
-                                   FontFamily="Display" FontSize="30"
+                                   FontFamily="{DynamicResource ThemeTitleFont}" FontSize="30"
                                    TextColor="#111114" HorizontalOptions="Center" />
 
                 <Label Grid.Row="1"
@@ -46,7 +46,7 @@
                             </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
                                 <VerticalStackLayout Spacing="-2" VerticalOptions="Center">
-                                    <Label Text="ALL 10 SKINS" FontFamily="Display" FontSize="18" TextColor="#111114" />
+                                    <Label Text="ALL 10 SKINS" FontFamily="{DynamicResource ThemeTitleFont}" FontSize="18" TextColor="#111114" />
                                     <Label Text="Best value · unlock every skin forever"
                                            FontFamily="Baloo2Medium" FontSize="12" TextColor="#6E6E7C" />
                                 </VerticalStackLayout>

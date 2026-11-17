@@ -150,6 +150,7 @@ public partial class DashboardPage : ContentPage
     // ── Skins ───────────────────────────────────────────────────────────────
     private void RefreshSkin()
     {
+        PopulateGamesFlex(SearchEntry.Text?.Trim() ?? "");
         var skin = SkinService.Current;
         HeroMascot.Source = skin.Mascot;
         SkinPillMascot.Source = skin.Mascot;
@@ -372,7 +373,7 @@ public partial class DashboardPage : ContentPage
         var numberLabel = new Label
         {
             Text = number.ToString(),
-            FontFamily = "Display",
+            FontFamily = SkinService.TitleFont,
             FontSize = 46,
             TextColor = Color.FromArgb("#1F2A44"),
             HorizontalOptions = LayoutOptions.Start,
@@ -411,13 +412,18 @@ public partial class DashboardPage : ContentPage
         // Chunky green "PLAY" call-to-action, like a candy button with a darker lip.
         var play = new Border
         {
-            BackgroundColor = Color.FromArgb("#3DC86A"),
+            // Green PLAY for free skins; premium skins use their button colour.
+            BackgroundColor = Color.FromArgb(SkinService.Current.Theme != null ? SkinService.Current.Button : "#3DC86A"),
             StrokeThickness = 0,
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 999 },
             Padding = new Thickness(14, 6, 16, 7),
             Margin = new Thickness(0, 8, 0, 8),
             HorizontalOptions = LayoutOptions.Fill,
-            Shadow = new Shadow { Brush = Color.FromArgb("#239448"), Offset = new Point(0, 4), Radius = 0, Opacity = 1 },
+            Shadow = new Shadow
+            {
+                Brush = Color.FromArgb(SkinService.Current.Theme != null ? ThemeColors.Shade(0, "#239448") : "#239448"),
+                Offset = new Point(0, 4), Radius = 0, Opacity = 1,
+            },
             Content = new HorizontalStackLayout
             {
                 Spacing = 6,
@@ -425,7 +431,7 @@ public partial class DashboardPage : ContentPage
                 Children =
                 {
                     new Image { Source = "ic_play_white.png", WidthRequest = 16, HeightRequest = 16, VerticalOptions = LayoutOptions.Center },
-                    new Label { Text = "PLAY", FontFamily = "Display", FontSize = 17, TextColor = Colors.White, VerticalOptions = LayoutOptions.Center },
+                    new Label { Text = "PLAY", FontFamily = SkinService.TitleFont, FontSize = 17, TextColor = Colors.White, VerticalOptions = LayoutOptions.Center },
                 },
             },
         };

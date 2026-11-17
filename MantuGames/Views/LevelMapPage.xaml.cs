@@ -99,12 +99,12 @@ public partial class LevelMapPage : ContentPage
             IsCompleted = lp.IsCompleted,
             IsCurrent = current,
             Stars = lp.IsCompleted ? lp.Stars : 0,
-            BgColor = lp.IsLocked ? Color.FromArgb("#80FFFFFF") : current ? Color.FromArgb("#FF8A3D") : Colors.White,
+            BgColor = lp.IsLocked ? Color.FromArgb("#80FFFFFF") : current ? Color.FromArgb(ThemeColors.Hex(0, "#FF8A3D")) : Colors.White,
             StrokeColor = lp.IsLocked ? Colors.Transparent : current ? Colors.White : Color.FromArgb("#3DC86A"),
             FaceColor = Colors.Transparent,
             FaceOpacity = lp.IsLocked ? 0.75 : 1.0,
             // Candy-button lip: orange for "play me next", green for cleared levels.
-            ShadowBrush = lp.IsLocked ? Brush.Transparent : new SolidColorBrush(Color.FromArgb(current ? "#D4611A" : "#239448")),
+            ShadowBrush = lp.IsLocked ? Brush.Transparent : new SolidColorBrush(Color.FromArgb(current ? ThemeColors.Shade(0, "#D4611A") : "#239448")),
             ShowStars = lp.IsCompleted,
             LevelText = lp.LevelNumber.ToString(),
         };
@@ -205,7 +205,7 @@ public class LevelTileViewModel : INotifyPropertyChanged
         : new Label
         {
             Text = LevelText,
-            FontFamily = "Display",
+            FontFamily = SkinService.TitleFont,
             FontSize = 26,
             TextColor = IsCurrent ? Colors.White : Color.FromArgb("#111114"),
             HorizontalOptions = LayoutOptions.Center,

@@ -51,6 +51,17 @@
     <!-- Primary (blue) buttons follow the player's skin; SkinService swaps these at runtime. -->
     <Color x:Key="SkinButton">#2F8CFF</Color>
     <SolidColorBrush x:Key="SkinButtonLipBrush" Color="#1A62C9" />
+    <!-- Title font alias; premium skins swap it (see SkinService.ApplyTheme). -->
+    <x:String x:Key="ThemeTitleFont">Display</x:String>
+    <!-- Round icon buttons (nav, game headers); premium skins recolour them from their palette. -->
+    <Color x:Key="CircleOrange">#FF8A3D</Color>
+    <SolidColorBrush x:Key="CircleOrangeLipBrush" Color="#D4611A" />
+    <Color x:Key="CircleGreen">#3DC86A</Color>
+    <SolidColorBrush x:Key="CircleGreenLipBrush" Color="#239448" />
+    <Color x:Key="CircleYellow">#FFC83D</Color>
+    <SolidColorBrush x:Key="CircleYellowLipBrush" Color="#D99A00" />
+    <Color x:Key="CirclePink">#FF6FA5</Color>
+    <SolidColorBrush x:Key="CirclePinkLipBrush" Color="#D2437A" />
     <Color x:Key="CtaBlueLip">#1A62C9</Color>
     <Color x:Key="CtaYellow">#FFC83D</Color>
     <Color x:Key="CtaYellowLip">#D99A00</Color>

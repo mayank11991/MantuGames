@@ -7,6 +7,7 @@ public partial class PauseOverlay : ContentView
     public PauseOverlay()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(DialogCard);
     }
 
     public void Show()

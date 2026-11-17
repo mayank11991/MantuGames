@@ -161,7 +161,7 @@ public partial class WordFinderPage : ContentPage
         {
             if (cell.IsFound)
             {
-                frame.BackgroundColor = Color.FromArgb("#2F9E7F");
+                frame.BackgroundColor = ThemeColors.Get(0, "#2F9E7F");
                 label.TextColor = Colors.White;
             }
             else if (cell.IsHinted)
@@ -171,7 +171,7 @@ public partial class WordFinderPage : ContentPage
             }
             else if (cell.IsSelected)
             {
-                frame.BackgroundColor = Color.FromArgb("#FFD166");
+                frame.BackgroundColor = Color.FromArgb(ThemeColors.Tint(3, 0.25, "#FFD166"));
                 label.TextColor = Color.FromArgb("#333333");
             }
             else

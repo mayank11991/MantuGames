@@ -165,11 +165,11 @@ namespace MantuGames.Views
 
             void UpdateBackground()
             {
-                if (cell.IsSelected) border.BackgroundColor = Color.FromArgb("#FFD166");
+                if (cell.IsSelected) border.BackgroundColor = Color.FromArgb(ThemeColors.Tint(3, 0.3, "#FFD166"));
                 else if (cell.IsError) border.BackgroundColor = Color.FromArgb("#FF7A90");
                 else if (cell.IsRevealed) border.BackgroundColor = Color.FromArgb("#EDE7F6");
-                else if (cell.IsFixed) border.BackgroundColor = Color.FromArgb("#B8E4FF");
-                else if (cell.IsHighlighted) border.BackgroundColor = Color.FromArgb("#EEF6FF");
+                else if (cell.IsFixed) border.BackgroundColor = Color.FromArgb(ThemeColors.Tint(0, 0.7, "#B8E4FF"));
+                else if (cell.IsHighlighted) border.BackgroundColor = Color.FromArgb(ThemeColors.Tint(0, 0.9, "#EEF6FF"));
                 else if (cell.Value == 0) border.BackgroundColor = Color.FromArgb("#FFF8E7");
                 else border.BackgroundColor = Color.FromArgb("#F0FFF0");
             }

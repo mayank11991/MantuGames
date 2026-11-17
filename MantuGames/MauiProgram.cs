@@ -46,6 +46,13 @@ public static class MauiProgram
                 fonts.AddFont("LilitaOne-Regular.ttf", "NunitoExtraBold");
                 fonts.AddFont("LilitaOne-Regular.ttf", "BrickSans");
                 fonts.AddFont("LilitaOne-Regular.ttf", "SagoMini");
+
+                // Title fonts for the premium skin themes (all SIL OFL, see licenses/)
+                fonts.AddFont("LilitaOne-Regular.ttf", "TitleLilita");
+                fonts.AddFont("Anton-Regular.ttf", "TitleAnton");
+                fonts.AddFont("Orbitron.ttf", "TitleOrbitron");
+                fonts.AddFont("MadimiOne-Regular.ttf", "TitleMadimi");
+                fonts.AddFont("Baloo2-ExtraBold.ttf", "TitleBaloo");
             });
 
         builder.AddAudio();

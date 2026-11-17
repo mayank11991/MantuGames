@@ -20,6 +20,7 @@ public partial class GameResultPopup : ContentView
     public GameResultPopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(PopupCard);
     }
 
     public async Task Show(bool isWin, int levelNumber, int elapsedSeconds,

@@ -15,6 +15,7 @@ public partial class SettingsPopup : ContentView
     public SettingsPopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(DialogCard);
         MusicSwitch.IsToggled = AudioService.Instance.MusicEnabled;
         SfxSwitch.IsToggled = AudioService.Instance.SfxEnabled;
         VersionLabel.Text = $"Version {AppInfo.VersionString} ({AppInfo.BuildString})";

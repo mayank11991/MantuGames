@@ -19,6 +19,7 @@ public partial class SkinShopPopup : ContentView
     public SkinShopPopup()
     {
         InitializeComponent();
+        ThemeStyler.RegisterDialog(Card);
         SkinService.Changed += (s, e) => { if (IsVisible) Rebuild(); };
     }
 
